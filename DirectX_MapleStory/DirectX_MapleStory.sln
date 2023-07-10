@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEngineBase", "GameEngineBase\GameEngineBase.vcxproj", "{43E95582-82FC-46C5-A7CA-7D887CD0432B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameEnginePlatform", "GameEnginePlatform\GameEnginePlatform.vcxproj", "{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level0", "Level0", "{C71546C7-FE27-43F5-BF83-3AF4CA9CA3FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level1", "Level1", "{2D0168C9-FA30-4B1C-9A22-B7EDD2CE0F27}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level2", "Level2", "{4968B7DA-3FF0-4CE4-AFA9-AFB57B62BF82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level9", "Level9", "{BC51E2CE-B7F7-441B-AADA-BA1CB3587A2D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MapleStory", "MapleStory\MapleStory.vcxproj", "{C97E10B8-A97E-4118-A11F-E321D5C79AD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Debug|x64.ActiveCfg = Debug|x64
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Debug|x64.Build.0 = Debug|x64
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Debug|x86.ActiveCfg = Debug|Win32
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Debug|x86.Build.0 = Debug|Win32
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Release|x64.ActiveCfg = Release|x64
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Release|x64.Build.0 = Release|x64
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Release|x86.ActiveCfg = Release|Win32
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B}.Release|x86.Build.0 = Release|Win32
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Debug|x64.ActiveCfg = Debug|x64
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Debug|x64.Build.0 = Debug|x64
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Debug|x86.ActiveCfg = Debug|Win32
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Debug|x86.Build.0 = Debug|Win32
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Release|x64.ActiveCfg = Release|x64
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Release|x64.Build.0 = Release|x64
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Release|x86.ActiveCfg = Release|Win32
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7}.Release|x86.Build.0 = Release|Win32
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Debug|x64.ActiveCfg = Debug|x64
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Debug|x64.Build.0 = Debug|x64
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Debug|x86.ActiveCfg = Debug|Win32
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Debug|x86.Build.0 = Debug|Win32
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Release|x64.ActiveCfg = Release|x64
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Release|x64.Build.0 = Release|x64
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Release|x86.ActiveCfg = Release|Win32
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{43E95582-82FC-46C5-A7CA-7D887CD0432B} = {C71546C7-FE27-43F5-BF83-3AF4CA9CA3FC}
+		{A4198B71-D72C-4C1A-9FA2-6A2A1290C0E7} = {2D0168C9-FA30-4B1C-9A22-B7EDD2CE0F27}
+		{C97E10B8-A97E-4118-A11F-E321D5C79AD7} = {BC51E2CE-B7F7-441B-AADA-BA1CB3587A2D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4EBBB94B-2807-4B77-8C80-65BA89E67C20}
+	EndGlobalSection
+EndGlobal

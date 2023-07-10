@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="GameEngineDebug.cpp" />
+    <ClCompile Include="GameEngineRandom.cpp" />
+    <ClCompile Include="GameEngineString.cpp" />
+    <ClCompile Include="GameEngineMath.cpp" />
+    <ClCompile Include="GameEngineTime.cpp" />
+    <ClCompile Include="GameEnginePath.cpp" />
+    <ClCompile Include="GameEngineDirectory.cpp" />
+    <ClCompile Include="GameEngineFile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameEngineDebug.h" />
+    <ClInclude Include="GameEngineRandom.h" />
+    <ClInclude Include="GameEngineString.h" />
+    <ClInclude Include="GameEngineMath.h" />
+    <ClInclude Include="GameEngineTime.h" />
+    <ClInclude Include="GameEnginePath.h" />
+    <ClInclude Include="GameEngineDirectory.h" />
+    <ClInclude Include="GameEngineFile.h" />
+  </ItemGroup>
+</Project>
