@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 #include <string>
+#include <string_view>
+#include <memory>
 
 #include <map>
 #include <list>
