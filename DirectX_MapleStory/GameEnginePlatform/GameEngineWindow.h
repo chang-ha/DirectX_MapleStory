@@ -3,8 +3,6 @@
 #include <string>
 #include "GameEngineWindowTexture.h"
 
-#pragma comment(lib, "GameEngineBase.lib")
-
 // Ό³Έν :
 class GameEngineWindow
 {

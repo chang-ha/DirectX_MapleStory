@@ -1,3 +1,4 @@
+#include "PreCompile.h"
 #include "GameEngineSound.h"
 #include <GameEngineBase/GameEngineString.h>
 #include <GameEngineBase/GameEngineDebug.h>
