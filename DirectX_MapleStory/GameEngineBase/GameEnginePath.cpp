@@ -7,7 +7,7 @@ GameEnginePath::GameEnginePath()
 	SetCurrentPath();
 }
 
-GameEnginePath::GameEnginePath(const std::string& _path) 
+GameEnginePath::GameEnginePath(const std::string_view& _path)
 	: Path(_path)
 {
 
@@ -33,7 +33,7 @@ void GameEnginePath::MoveParent()
 	Path = Path.parent_path();
 }
 
-void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
+void GameEnginePath::MoveParentToExistsChild(const std::string_view& _ChildPath)
 {
 	while (true)
 	{
@@ -52,14 +52,14 @@ void GameEnginePath::MoveParentToExistsChild(const std::string& _ChildPath)
 
 		if (Path == Path.root_path())
 		{
-			MsgBoxAssert("루트 경로까지 샅샅히 뒤졌지만" + _ChildPath + "파일이나 폴더를 하위로 가지고 있는 경로를 찾지 못했습니다");
+			MsgBoxAssert("루트 경로까지 샅샅히 뒤졌지만" + std::string(_ChildPath) + "파일이나 폴더를 하위로 가지고 있는 경로를 찾지 못했습니다");
 		}
 	}
 
 
 }
 
-void GameEnginePath::MoveChild(const std::string& _ChildPath)
+void GameEnginePath::MoveChild(const std::string_view& _ChildPath)
 {
 	std::filesystem::path CheckPath = Path;
 
@@ -74,7 +74,7 @@ void GameEnginePath::MoveChild(const std::string& _ChildPath)
 	// Path.append(_ChildPath);
 }
 
-std::string GameEnginePath::PlusFilePath(const std::string& _ChildPath)
+std::string GameEnginePath::PlusFilePath(const std::string_view& _ChildPath)
 {
 	std::filesystem::path CheckPath = Path;
 

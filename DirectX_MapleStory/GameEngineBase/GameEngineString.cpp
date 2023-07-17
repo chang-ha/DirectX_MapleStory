@@ -13,11 +13,11 @@ GameEngineString::~GameEngineString()
 
 // "" => L""
 
-std::wstring GameEngineString::AnsiToUnicode(const std::string& _Text)
+std::wstring GameEngineString::AnsiToUnicode(const std::string_view& _Text)
 {
 	// CP_ACP 운영체제가 사용하는거니
 	// 아무것도 넣지 않으면 => _Text.c_str()이 몇바이트가 되어야 widechar로 변환할수 있는지를 리턴해줍니다.
-	int Size = MultiByteToWideChar(CP_ACP, 0, _Text.c_str(), static_cast<int>(_Text.size()), nullptr, 0);
+	int Size = MultiByteToWideChar(CP_ACP, 0, _Text.data(), static_cast<int>(_Text.size()), nullptr, 0);
 
 	if (0 == Size)
 	{
@@ -32,7 +32,7 @@ std::wstring GameEngineString::AnsiToUnicode(const std::string& _Text)
 	Result.resize(Size);
 
 
-	Size = MultiByteToWideChar(CP_ACP, 0, _Text.c_str(), static_cast<int>(_Text.size()), &Result[0], Size);
+	Size = MultiByteToWideChar(CP_ACP, 0, _Text.data(), static_cast<int>(_Text.size()), &Result[0], Size);
 
 	if (0 == Size)
 	{
@@ -43,11 +43,11 @@ std::wstring GameEngineString::AnsiToUnicode(const std::string& _Text)
 	return Result;
 }
 
-std::string GameEngineString::UnicodeToAnsi(const std::wstring& _Text)
+std::string GameEngineString::UnicodeToAnsi(const std::wstring_view& _Text)
 {
 	// CP_ACP 운영체제가 사용하는거니
 // 아무것도 넣지 않으면 => _Text.c_str()이 몇바이트가 되어야 widechar로 변환할수 있는지를 리턴해줍니다.
-	int Size = WideCharToMultiByte(CP_ACP, 0, _Text.c_str(), static_cast<int>(_Text.size()), nullptr, 0, nullptr, 0);
+	int Size = WideCharToMultiByte(CP_ACP, 0, _Text.data(), static_cast<int>(_Text.size()), nullptr, 0, nullptr, 0);
 
 	if (0 == Size)
 	{
@@ -62,7 +62,7 @@ std::string GameEngineString::UnicodeToAnsi(const std::wstring& _Text)
 	Result.resize(Size);
 
 
-	Size = WideCharToMultiByte(CP_ACP, 0, _Text.c_str(), static_cast<int>(_Text.size()), &Result[0], Size, nullptr, nullptr);
+	Size = WideCharToMultiByte(CP_ACP, 0, _Text.data(), static_cast<int>(_Text.size()), &Result[0], Size, nullptr, nullptr);
 
 	if (0 == Size)
 	{
@@ -73,11 +73,11 @@ std::string GameEngineString::UnicodeToAnsi(const std::wstring& _Text)
 	return Result;
 }
 
-std::string GameEngineString::UnicodeToUTF8(const std::wstring& _Text)
+std::string GameEngineString::UnicodeToUTF8(const std::wstring_view& _Text)
 {
 	// CP_ACP 운영체제가 사용하는거니
 // 아무것도 넣지 않으면 => _Text.c_str()이 몇바이트가 되어야 widechar로 변환할수 있는지를 리턴해줍니다.
-	int Size = WideCharToMultiByte(CP_UTF8, 0, _Text.c_str(), static_cast<int>(_Text.size()), nullptr, 0, nullptr, 0);
+	int Size = WideCharToMultiByte(CP_UTF8, 0, _Text.data(), static_cast<int>(_Text.size()), nullptr, 0, nullptr, 0);
 
 	if (0 == Size)
 	{
@@ -92,7 +92,7 @@ std::string GameEngineString::UnicodeToUTF8(const std::wstring& _Text)
 	Result.resize(Size);
 
 
-	Size = WideCharToMultiByte(CP_UTF8, 0, _Text.c_str(), static_cast<int>(_Text.size()), &Result[0], Size, nullptr, nullptr);
+	Size = WideCharToMultiByte(CP_UTF8, 0, _Text.data(), static_cast<int>(_Text.size()), &Result[0], Size, nullptr, nullptr);
 
 	if (0 == Size)
 	{
@@ -103,7 +103,7 @@ std::string GameEngineString::UnicodeToUTF8(const std::wstring& _Text)
 	return Result;
 }
 
-std::string GameEngineString::AnsiToUTF8(const std::string& _Text)
+std::string GameEngineString::AnsiToUTF8(const std::string_view& _Text)
 {
 	std::wstring UniCode = AnsiToUnicode(_Text);
 	return UnicodeToUTF8(UniCode);

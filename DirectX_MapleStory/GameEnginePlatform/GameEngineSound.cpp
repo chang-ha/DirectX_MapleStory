@@ -107,7 +107,7 @@ GameEngineSound::~GameEngineSound()
 //	IsOnce = true;
 //}
 
-GameEngineSound* GameEngineSound::FindSound(const std::string& _Name)
+GameEngineSound* GameEngineSound::FindSound(const std::string_view& _Name)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
@@ -121,7 +121,7 @@ GameEngineSound* GameEngineSound::FindSound(const std::string& _Name)
 	return FindIter->second;
 }
 
-void GameEngineSound::SoundLoad(const std::string& _Name, const std::string& _Path)
+void GameEngineSound::SoundLoad(const std::string_view& _Name, const std::string_view& _Path)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
@@ -132,7 +132,7 @@ void GameEngineSound::SoundLoad(const std::string& _Name, const std::string& _Pa
 	AllSound.insert(std::make_pair(UpperName, NewSound));
 }
 
-GameEngineSoundPlayer GameEngineSound::SoundPlay(const std::string& _Name, int _Loop)
+GameEngineSoundPlayer GameEngineSound::SoundPlay(const std::string_view& _Name, int _Loop)
 {
 	GameEngineSound* FindSoundPtr = FindSound(_Name);
 
@@ -171,7 +171,7 @@ void GameEngineSound::Release()
 
 
 
-void GameEngineSound::Load(const std::string& _Path)
+void GameEngineSound::Load(const std::string_view& _Path)
 {
 	// 멀티바이트 => UTF-8 인코딩으로 변환해줄 함수가 필요하다.
 
