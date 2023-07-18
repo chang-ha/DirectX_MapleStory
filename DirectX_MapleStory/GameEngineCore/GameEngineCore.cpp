@@ -8,7 +8,6 @@ std::shared_ptr<GameEngineObject> GameEngineCore::CoreObject;
 GameEngineTime GameEngineCore::MainTime;
 GameEngineWindow GameEngineCore::MainWindow;
 
-
 GameEngineCore::GameEngineCore() 
 {
 }

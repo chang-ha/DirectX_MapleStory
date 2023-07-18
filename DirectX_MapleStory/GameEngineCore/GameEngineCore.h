@@ -1,7 +1,11 @@
 #pragma once
-#include "GameEngineObject.h"
+#include <memory>
+
 #include <GameEngineBase/GameEngineTime.h>
+
 #include <GameEnginePlatform/GameEngineWindow.h>
+
+#include "GameEngineObject.h"
 
 // Ό³Έν :
 class GameEngineCore
@@ -38,8 +42,5 @@ private:
 	static void Start();
 	static void Update();
 	static void Release();
-	
-
-
 };
 

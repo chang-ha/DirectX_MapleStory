@@ -15,10 +15,12 @@ void MapleStoryCore::Start()
 {
 	
 }
+
 void MapleStoryCore::Update(float _Delta)
 {
 	GameEngineCore::MainWindow.DoubleBuffering();
 }
+
 void MapleStoryCore::Release()
 {
 
