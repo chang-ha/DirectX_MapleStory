@@ -31,7 +31,7 @@ public:
 		ScaleCheck();
 	}
 
-	void ResCreate(const float4& _Scale);
+	void ResCreate(HDC _HDC, const float4& _Scale);
 
 
 	HDC GetImageDC() 
