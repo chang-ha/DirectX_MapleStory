@@ -1,5 +1,5 @@
 #pragma once
-#include <memory>
+#include <memory> // 헤더 지워지면 shared_ptr못씀
 
 #include <GameEngineBase/GameEngineTime.h>
 
