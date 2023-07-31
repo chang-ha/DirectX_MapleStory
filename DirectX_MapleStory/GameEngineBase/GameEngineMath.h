@@ -31,9 +31,13 @@ public:
 	static const float4 RIGHT;
 	static const float4 UP;
 	static const float4 DOWN;
+	static const float4 FORWARD;
+	static const float4 BACKWARD;
 
 	union 
 	{
+		float Arr1D[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+
 		struct 
 		{
 			float X;
@@ -42,9 +46,14 @@ public:
 			float W;
 		};
 
-		float Arr1D[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		float Arr2D[1][4];
 	};
+
+	float4(float _X = 0.0f, float _Y = 0.0f, float _Z = 0.0f, float _W = 1.0f)
+		: X(_X), Y(_Y), Z(_Z), W(_W)
+	{
+
+	}
 
 	inline int iX() const
 	{
@@ -138,6 +147,49 @@ public:
 
 		return ReturnValue;
 	}
+
+	float4 operator/(const float4& _Other) const
+	{
+		float4 ReturnValue;
+
+		ReturnValue.X = X / _Other.X;
+		ReturnValue.Y = Y / _Other.Y;
+		ReturnValue.Z = Z / _Other.Z;
+
+		return ReturnValue;
+	}
+
+
+	float4 operator/(const float _Value) const
+	{
+		float4 ReturnValue;
+
+		ReturnValue.X = X / _Value;
+		ReturnValue.Y = Y / _Value;
+		ReturnValue.Z = Z / _Value;
+
+		return ReturnValue;
+	}
+
+	float4& operator/=(const float4 _Value)
+	{
+		X /= _Value.X;
+		Y /= _Value.Y;
+		Z /= _Value.Z;
+
+		return *this;
+	}
+
+
+	float4& operator/=(const float _Value)
+	{
+		X /= _Value;
+		Y /= _Value;
+		Z /= _Value;
+
+		return *this;
+	}
+
 
 	float4& operator+=(const float4& _Other)
 	{
@@ -252,10 +304,17 @@ public:
 	}
 
 
-	float4 VectorRotationToDegX(const float _Deg)
+	float4 VectorRotationToDegXReturn(const float _Deg)
 	{
 		return VectorRotationToDegX(*this, _Deg);
 	}
+
+	static float DotProduct3D(const float4& _Left, const float4& _Right)
+	{
+		float Result = (_Left.X * _Right.X) + (_Left.Y * _Right.Y) + (_Left.Z * _Right.Z);
+		return Result;
+	}
+
 
 	static float4 Cross3D(const float4& _Left, const float4& _Right)
 	{
@@ -271,21 +330,9 @@ public:
 		return VectorRotationToRadX(_Value, _Deg * GameEngineMath::D2R);
 	}
 
-	static float4 VectorRotationToRadX(const float4& _Value, const float _Rad)
-	{
-		//Rot.X = _Value.X * cosf(_Rad) - _Value.Y * sinf(_Rad);
-		//Rot.Y = _Value.X * sinf(_Rad) + _Value.Y * cosf(_Rad);
+	static float4 VectorRotationToRadX(const float4& _Value, const float _Rad);
 
-
-		// 왜 이 공식인지를 이해해야 합니다.
-		float4 Rot;
-		Rot.X = _Value.X;
-		Rot.Y = _Value.Z * sinf(_Rad) + _Value.Y * cosf(_Rad);
-		Rot.Z = _Value.Z * cosf(_Rad) - _Value.Y * sinf(_Rad);
-		return Rot;
-	}
-
-	float4 VectorRotationToDegY(const float _Deg)
+	float4 VectorRotationToDegYReturn(const float _Deg)
 	{
 		return VectorRotationToDegY(*this, _Deg);
 	}
@@ -296,17 +343,9 @@ public:
 		return VectorRotationToRadY(_Value, _Deg * GameEngineMath::D2R);
 	}
 
-	static float4 VectorRotationToRadY(const float4& _Value, const float _Rad)
-	{
-		// 왜 이 공식인지를 이해해야 합니다.
-		float4 Rot;
-		Rot.X = _Value.X * cosf(_Rad) - _Value.Z * sinf(_Rad);
-		Rot.Y = _Value.Y;
-		Rot.Z = _Value.X * sinf(_Rad) + _Value.Z * cosf(_Rad);
-		return Rot;
-	}
+	static float4 VectorRotationToRadY(const float4& _Value, const float _Rad);
 
-	float4 VectorRotationToDegZ(const float _Deg)
+	float4 VectorRotationToDegZReturn(const float _Deg)
 	{
 		return VectorRotationToDegZ(*this, _Deg);
 	}
@@ -316,16 +355,20 @@ public:
 		return VectorRotationToRadZ(_Value, _Deg * GameEngineMath::D2R);
 	}
 
-	static float4 VectorRotationToRadZ(const float4& _Value, const float _Rad)
-	{
-		// 왜 이 공식인지를 이해해야 합니다.
-		float4 Rot;
-		Rot.X = _Value.X * cosf(_Rad) - _Value.Y * sinf(_Rad);
-		Rot.Y = _Value.X * sinf(_Rad) + _Value.Y * cosf(_Rad);
-		Rot.Z = _Value.Z;
-		return Rot;
-	}
+	static float4 VectorRotationToRadZ(const float4& _Value, const float _Rad);
 
+	void VectorRotationToDegX(const float _Rad)
+	{
+		*this = VectorRotationToDegX(*this, _Rad);
+	}
+	void VectorRotationToDegY(const float _Rad)
+	{
+		*this = VectorRotationToDegY(*this, _Rad);
+	}
+	void VectorRotationToDegZ(const float _Rad)
+	{
+		*this = VectorRotationToDegZ(*this, _Rad);
+	}
 
 	//                                       90.0f
 	static float4 GetUnitVectorFromRad(const float _Rad)
@@ -359,7 +402,8 @@ public:
 		return GetUnitVectorFromRad(_Degree * GameEngineMath::D2R);
 	}
 
-	float4 operator*(const class float4x4& _Other);
+	float4 operator*(const class float4x4& _Other) const;
+	float4& operator*=(const class float4x4& _Other);
 };
 
 class GameEngineRect
@@ -433,9 +477,12 @@ public:
 class float4x4
 {
 public:
+	static const int MatrixYCount = 4;
+	static const int MatrixXCount = 4;
+
 	union
 	{
-		float Arr2D[4][4] =
+		float Arr2D[MatrixYCount][MatrixXCount] =
 		{
 			// 00   01   02    03
 			{1.0f, 0.0f, 0.0f, 0.0f},
@@ -443,6 +490,8 @@ public:
 			{0.0f, 0.0f, 1.0f, 0.0f},
 			{0.0f, 0.0f, 0.0f, 1.0f}
 		};
+
+		float4 ArrVector[4];
 
 		struct
 		{
@@ -467,7 +516,7 @@ public:
 			float _33;
 		};
 
-		float Arr1D[16];
+		float Arr1D[MatrixYCount * MatrixXCount];
 
 	};
 
@@ -478,7 +527,7 @@ public:
 
 	void Identity() 
 	{
-		memset(&Arr1D, 0, sizeof(Arr1D));
+		memset(Arr1D, 0, sizeof(Arr1D));
 
 		Arr2D[0][0] = 1.0f;
 		Arr2D[1][1] = 1.0f;
@@ -497,14 +546,6 @@ public:
 		Arr2D[2][2] = _Value.Z;
 	}
 
-	void Pos(const float4& _Value)
-	{
-		Identity();
-
-		Arr2D[3][0] = _Value.X;
-		Arr2D[3][1] = _Value.Y;
-		Arr2D[3][2] = _Value.Z;
-	}
 
 
 	void RotationXDegs(const float _Value)
@@ -579,6 +620,158 @@ public:
 
 		// 회전을 시킬수 있는 행렬이 되어야 할거빈다.
 
+	}
+
+	void Pos(const float4& _Value)
+	{
+		Identity();
+
+		Arr2D[3][0] = _Value.X;
+		Arr2D[3][1] = _Value.Y;
+		Arr2D[3][2] = _Value.Z;
+	}
+
+	void TransPose()
+	{
+		// [][][][]
+		// [][][][]
+		// [][][][]
+		// [][][][]
+
+		float4x4 This = *this;
+		Identity();
+		for (size_t y = 0; y < MatrixYCount; ++y)
+		{
+			for (size_t x = 0; x < MatrixXCount; ++x)
+			{
+				Arr2D[x][y] = This.Arr2D[y][x];
+			}
+		}
+	}
+
+	void LookAtLH(const float4& _EyePos, const float4& _EyeDir, const float4& _EyeUp)
+	{
+		Identity();
+
+		float4 EyePos = _EyePos;
+		float4 EyeForward = _EyeDir;
+		float4 EyeUp = _EyeUp;
+
+		// 카메라의 Z앞
+		EyeForward.Normalize();
+		// 카마라의 Y위 
+		EyeUp.Normalize();
+		// 카마라의 X위 
+		float4 EyeRight = float4::Cross3D(EyeUp, EyeForward);
+
+		// 회전행렬을 벡터만으로 만드는 방법.
+		// float4x4 RotMat;
+		ArrVector[0] = EyeRight;
+		ArrVector[1] = EyeUp;
+		ArrVector[2] = EyeForward;
+
+		// 45도 돌아간 카메라라면 
+		// 다른 모든 물체는 -45도 돌아야 한다.
+		TransPose();
+
+		// XYZ돌아서 어떤 물체를 바라보고 있는 카메라
+		// 회전행렬을 역으로 돌려야 한다.
+		// -X-Y-Z돌아서 어떤 물체를 원점으로 돌리게 만들어야 하는데.
+		// 전치행렬 Transpose를 만들어야 한다..
+
+		float4 NegEyePos = -EyePos;
+
+		// 모든 물체가 이동해야할 방향을 구하고 있다.
+		float XValue = float4::DotProduct3D(EyeRight, NegEyePos);
+		float YValue = float4::DotProduct3D(EyeUp, NegEyePos);
+		float ZValue = float4::DotProduct3D(EyeForward, NegEyePos);
+
+		// 위치
+		ArrVector[3] = { XValue, YValue, ZValue };
+	}
+
+	//               보통 모니터 크기를 넣어주는데
+	//               그냥 보고싶은 너비와 높이의 수치만 넣어주면 됩니다.
+	//                      1280                 720           5000
+	void OrthographicLH(float _Width, float _Height, float _Far, float _Near)
+	{
+		// DirectX::XMMatrixOrthographicLH
+		Identity();
+		//                     5000 - 0.1
+		float fRange = 1.0f / (_Far - _Near);
+		Arr2D[0][0] = 2.0f / _Width;
+		Arr2D[1][1] = 2.0f / _Height;
+		Arr2D[2][2] = fRange;
+		Arr2D[3][2] = -fRange * _Near;
+	}
+
+	//      60도를 본다.                    200              100
+	// 수직
+	void PerspectiveFovLH(float _FovAngle, float _Width, float _Height, float _Far, float _Near)
+	{
+		PerspectiveFovLH(_FovAngle, _Width / _Height, _Far, _Near);
+	}
+
+	// 수직 시야각 
+	// 1000.0f 0.1f
+	void PerspectiveFovLH(float _FovAngle, float _AspectRatio, float _Far, float _Near)
+	{
+		Identity();
+
+		// DirectX::XMMatrixPerspectiveFovLH()
+
+		float YFOV = _FovAngle * GameEngineMath::D2R;
+
+		// 원근 투영행렬에서 특징적인 부분.
+		Arr2D[2][3] = 1.0f;
+		Arr2D[3][3] = 0.0f;
+
+		// 투영행렬의 규칙은
+		// 모든 오브젝트의 모든 점을 -1 사이의 공간에 넣는것이다.
+
+		// 요 2값은 제대로된 
+		
+		// x와 곱해질 비율
+		Arr2D[0][0] = 1.0f / (tanf(YFOV / 2.0f) * _AspectRatio); // / 600
+
+
+		// y와 곱해질 비율
+		// 1나누기를 하는 이유는?
+		// -1 1사이의 값으로 만들려고.
+		
+		// 근본적인 원근투영의 원리는
+		// z값이 클수록 y값이 줄어든다.
+		// 이 y * 
+		Arr2D[1][1] = 1.0f / tanf(YFOV / 2.0f);  // / 600
+
+		// 1000 
+
+		//     100    100   100 * 투영
+		//  * 0.5f          *0.5f
+		//                  50.0f
+
+		// 범위안에 있는 녀석들 다 0~1사이의 값으로 바꿉니다.
+		// 1000 * 0.9784123f
+		//           1000  / (1000 - 0.1f);
+		Arr2D[2][2] = _Far / (_Far - _Near);
+
+		// 이동이 이 좀 들어가기는 했는데
+		Arr2D[3][2] = -(_Near * _Far) / (_Far - _Near);
+	}
+
+
+	void ViewPort(float _Width, float _Height, float _Left, float _Right, float _ZMin = 0.0f, float _ZMax = 1.0f)
+	{
+		Identity();
+
+		Arr2D[0][0] = _Width * 0.5f;
+		Arr2D[1][1] = -_Height * 0.5f; // 여기서 y축 반전을 시킨다.
+		Arr2D[2][2] = _ZMax != 0.0f ? 1.0f : _ZMin / _ZMax;
+
+		Arr2D[3][0] = Arr2D[0][0] + _Left;
+		Arr2D[3][1] = -Arr2D[1][1] + _Right;
+		Arr2D[3][2] = _ZMax != 0.0f ? 0.0f : _ZMin / _ZMax;
+		Arr2D[3][3] = 1.0f;
 	}
 
 	float4x4 operator*(const float4x4& _Other)
