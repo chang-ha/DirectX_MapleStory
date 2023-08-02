@@ -261,9 +261,9 @@ void GameEngineWindowTexture::PlgCopy(GameEngineWindowTexture* _CopyTexture
 	float4 LeftBot = Rect.CenterLeftBot();
 	// float4 RightBot = Rect.CenterRightBot();
 
-	ArrPoint[0] = (LeftTop.VectorRotationToDegZ(_Angle) + _Pos).WindowPOINT();
-	ArrPoint[1] = (RightTop.VectorRotationToDegZ(_Angle) + _Pos).WindowPOINT();
-	ArrPoint[2] = (LeftBot.VectorRotationToDegZ(_Angle) + _Pos).WindowPOINT();
+	ArrPoint[0] = (LeftTop.VectorRotationToDegZReturn(_Angle) + _Pos).WindowPOINT();
+	ArrPoint[1] = (RightTop.VectorRotationToDegZReturn(_Angle) + _Pos).WindowPOINT();
+	ArrPoint[2] = (LeftBot.VectorRotationToDegZReturn(_Angle) + _Pos).WindowPOINT();
 
 	HDC CopyImageDC = _CopyTexture->GetImageDC();
 

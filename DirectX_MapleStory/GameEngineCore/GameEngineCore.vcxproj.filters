@@ -25,6 +25,7 @@
     <ClInclude Include="GameEngineObject.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineTransform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -43,5 +44,6 @@
     <ClCompile Include="GameEngineObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineTransform.cpp" />
   </ItemGroup>
 </Project>
