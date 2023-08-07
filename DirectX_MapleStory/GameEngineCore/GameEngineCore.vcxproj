@@ -175,11 +175,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineCamera.h" />
     <ClInclude Include="GameEngineComponent.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineCore.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineCoreObject.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -191,6 +196,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineRenderer.h" />
     <ClInclude Include="GameEngineTransform.h">
       <SubType>
       </SubType>
@@ -202,11 +208,16 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineCamera.cpp" />
     <ClCompile Include="GameEngineComponent.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineCoreObject.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -218,6 +229,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineRenderer.cpp" />
     <ClCompile Include="GameEngineTransform.cpp">
       <SubType>
       </SubType>

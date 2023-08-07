@@ -1,4 +1,6 @@
-﻿#pragma comment(lib, "GameEngineContents.lib")
+﻿#include <GameEngineContents/PreCompile.h>
+
+#pragma comment(lib, "GameEngineContents.lib")
 
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineContents/MapleStoryCore.h>
