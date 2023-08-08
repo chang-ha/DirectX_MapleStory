@@ -8,6 +8,9 @@
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MapleStoryCore.h" />
@@ -17,6 +20,9 @@
     <ClInclude Include="TitleLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -24,6 +30,9 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{cb2f0316-6985-41b7-806e-7ea3d324d2d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{29686895-0276-4b14-b5e6-d934b2ffb772}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

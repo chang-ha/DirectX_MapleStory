@@ -15,7 +15,9 @@ public:
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
 protected:
+	void Start() override;
 
+	void Update(float _Delta) override;
 private:
 
 };

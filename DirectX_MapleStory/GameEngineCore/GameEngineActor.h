@@ -1,7 +1,6 @@
 #pragma once
 #include "GameEngineCoreObject.h"
 #include <list>
-
 // 설명 :
 class GameEngineActor : public GameEngineCoreObject
 {
@@ -21,9 +20,8 @@ public:
 	std::shared_ptr<ObjectType> CreateComponent(int _Order = 0)
 	{
 		std::shared_ptr<class GameEngineComponent> NewChild = std::make_shared<ObjectType>();
-		NewChild->SetParent(this);
-		NewChild->Start();
-		Childs[_Order].push_back(NewChild);
+		ComponentInit(NewChild, _Order);
+
 
 		// GameEngineObject형으로 사용하고 있다면
 		// 내가 잘못형변환하면 Monster 였는데? Player <= 미친듯한 메모리 크러시를 일으킵니다.
@@ -40,6 +38,7 @@ public:
 protected:
 
 private:
+	void ComponentInit(std::shared_ptr<class GameEngineComponent> _Component, int _Order);
 	// 다형성은 무조건 위쪽을 가질수록 범용성이 높아집니다.
 	// 그리고 + 이런 기능은 
 	// Renderer와 Collision : GameEngineComponent

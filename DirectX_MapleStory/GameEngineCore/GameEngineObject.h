@@ -1,6 +1,6 @@
 #pragma once
 #include "GameEngineTransform.h"
-
+#include <memory>
 // 우리엔진의 가장 기본적인
 // Start 이녀석이 시작될때
 // Update 이녀석이 업데이트될때
@@ -93,10 +93,11 @@ public:
 
 	virtual void AllUpdate(float _Delta);
 
-	void SetParent(GameEngineObject* _Parent)
+	void SetParent(GameEngineObject* _Parent, int _Order)
 	{
 		Parent = _Parent;
-		// Parent->Transform.SetParent(_Parent->Transform);
+		Parent->Childs[_Order].push_back(shared_from_this());
+		Transform.SetParent(_Parent->Transform);
 	}
 
 	template<typename ParentType>

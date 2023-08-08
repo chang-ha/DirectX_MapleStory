@@ -1,6 +1,6 @@
 #pragma once
 #include "GameEngineObject.h"
-
+#include <memory>
 // 설명 :
 // class GameEngineActor; 이래도되고
 class GameEngineLevel : public GameEngineObject
@@ -20,6 +20,12 @@ public:
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
 	std::shared_ptr<class GameEngineCamera> CreateCamera(int _Order, int _CameraOrder);
+
+	template<typename ObjectType, typename EnumType>
+	std::shared_ptr<ObjectType> CreateActor(EnumType _Order)
+	{
+		return CreateActor<ObjectType>(static_cast<int>(_Order));
+	}
 
 	template<typename ObjectType>
 	std::shared_ptr<ObjectType> CreateActor(int _Order = 0)

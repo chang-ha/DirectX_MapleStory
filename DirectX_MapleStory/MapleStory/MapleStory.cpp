@@ -1,7 +1,13 @@
 ﻿#include <GameEngineContents/PreCompile.h>
 
+#pragma comment(lib, "GameEngineBase.lib")
+#pragma comment(lib, "GameEnginePlatform.lib")
+#pragma comment(lib, "GameEngineCore.lib")
 #pragma comment(lib, "GameEngineContents.lib")
 
+#include <iostream>
+#include <Windows.h>
+#include <memory>
 #include <GameEngineCore/GameEngineCore.h>
 #include <GameEngineContents/MapleStoryCore.h>
 

@@ -35,7 +35,7 @@ public:
 
 protected:
 	void Start();
-	void Render(float _Delta);
+	virtual void Render(GameEngineCamera* _Camera, float _Delta);
 
 private:
 	std::map<class GameEngineCamera*, int> ViewInfo;
