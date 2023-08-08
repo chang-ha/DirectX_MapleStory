@@ -1,6 +1,5 @@
 #pragma once
 #include "GameEngineObject.h"
-#include <memory>
 // 설명 :
 // class GameEngineActor; 이래도되고
 class GameEngineLevel : public GameEngineObject

@@ -1,3 +1,6 @@
+// PreCompile은 항상 최상단에 두자...
+// #include 순서로 오류 발생 가능 << 잡기 정말 힘들다
+
 #include "PreCompile.h"
 
 #include <GameEngineCore/GameEngineRenderer.h>
