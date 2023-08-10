@@ -26,6 +26,8 @@ public:
 	// 윈도우에서 만들었기 때문에
 	// 근간인 HWND를 많이 요구합니다.
 	// 그런데 선생님구조는 그 window를 또 감싼다.
+
+	// 
 	void Initiallize(const class GameEngineWindow& _Window);
 
 
@@ -33,6 +35,8 @@ public:
 protected:
 
 private:
+	const GameEngineWindow* Window;
+
 	IDXGIAdapter* GetHighPerformanceAdapter();
 
 	// 그래픽카드의 메모리관련 접근권한 인터페이스
@@ -49,6 +53,7 @@ private:
 
 	IDXGISwapChain* SwapChain = nullptr;
 
+	std::shared_ptr<class GameEngineTexture> BackBufferTexture;
 
 	void CreateSwapChain();
 };

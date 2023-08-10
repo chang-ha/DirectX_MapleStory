@@ -1,6 +1,7 @@
 #pragma once
-#include "GameEngineLevel.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
+#include "GameEngineLevel.h"
+#include "GameEngineDevice.h"
 
 // Ό³Έν :
 class GameEngineCore

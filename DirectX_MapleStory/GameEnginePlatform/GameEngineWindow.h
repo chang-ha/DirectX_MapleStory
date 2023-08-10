@@ -35,17 +35,17 @@ public:
 		return hWnd;
 	}
 
-	float4 GetScale()
+	float4 GetScale() const
 	{
 		return Scale;
 	}
 
-	GameEngineWindowTexture* GetWindowBuffer()
+	GameEngineWindowTexture* GetWindowBuffer() const
 	{
 		return WindowBuffer;
 	}
 
-	GameEngineWindowTexture* GetBackBuffer()
+	GameEngineWindowTexture* GetBackBuffer() const
 	{
 		return BackBuffer;
 	}
