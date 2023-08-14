@@ -189,6 +189,8 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineDevice.h" />
+    <ClInclude Include="GameEngineDirectBuffer.h" />
+    <ClInclude Include="GameEngineInputLayOut.h" />
     <ClInclude Include="GameEngineLevel.h">
       <SubType>
       </SubType>
@@ -211,6 +213,8 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineVertex.h" />
+    <ClInclude Include="GameEngineVertexBuffer.h" />
     <ClInclude Include="PreCompile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +236,9 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineDevice.cpp" />
+    <ClCompile Include="GameEngineDevice_Resources.cpp" />
+    <ClCompile Include="GameEngineDirectBuffer.cpp" />
+    <ClCompile Include="GameEngineInputLayOut.cpp" />
     <ClCompile Include="GameEngineLevel.cpp">
       <SubType>
       </SubType>
@@ -254,6 +261,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineVertex.cpp" />
+    <ClCompile Include="GameEngineVertexBuffer.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
