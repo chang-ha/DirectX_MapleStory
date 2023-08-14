@@ -22,9 +22,17 @@ public:
 		return NewRes;
 	}
 
+	inline ID3D11RenderTargetView* GetRTV()
+	{
+		return RTV;
+	}
+
+	void CreateRenderTargetView();
+
 protected:
 
 private:
 	ID3D11Texture2D* Texture2D = nullptr;
+	ID3D11RenderTargetView* RTV = nullptr;
 };
 

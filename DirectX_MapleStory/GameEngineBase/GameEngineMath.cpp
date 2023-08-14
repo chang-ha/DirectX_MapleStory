@@ -14,6 +14,10 @@ const float4 float4::DOWN = { 0.0f, -1.0f, 0.0f, 0.0f };
 const float4 float4::FORWARD = { 0.0f, 0.0f, 1.0f, 0.0f };
 const float4 float4::BACKWARD = { 0.0f, 0.0f, -1.0f, 0.0f };
 
+const float4 float4::RED = { 1.0f, 0.0f, 0.0f, 1.0f };
+const float4 float4::GREEN = { 0.0f, 1.0f, 0.0f, 1.0f };
+const float4 float4::BLUE = { 0.0f, 0.0f, 1.0f, 1.0f };
+
 const float GameEngineMath::PI = 3.14159265358979323846264338327950288419716939937510f;
 const float GameEngineMath::PI2 = PI * 2.0f;
 

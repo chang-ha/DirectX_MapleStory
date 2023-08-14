@@ -68,23 +68,11 @@ void GameEngineCore::Update()
 	CurLevel->AddLiveTime(DeltaTime);
 	CurLevel->AllUpdate(DeltaTime);
 
-	HDC DC;
-	{
-		DC = GameEngineCore::MainWindow.GetBackBuffer()->GetImageDC();
-		float4 WinScale = GameEngineCore::MainWindow.GetScale();
-		Rectangle(DC, 0, 0, WinScale.iX(), WinScale.iY());
-	}
+	MainDevice.RenderStart();
 
 	CurLevel->Render(DeltaTime);
 
-	GameEngineCore::MainWindow.DoubleBuffering();
-
-	// GameEngineWindow::MainWindow.ClearBackBuffer();
-	// CurLevel->ActorRender(Delta);
-	// CurLevel->Render(Delta);
-	// GameEngineWindow::MainWindow.DoubleBuffering();
-	// 프레임의 가장 마지막에 Release가 될겁니다.
-	// CurLevel->ActorRelease();
+	MainDevice.RenderEnd();
 }
 
 void GameEngineCore::Release() 

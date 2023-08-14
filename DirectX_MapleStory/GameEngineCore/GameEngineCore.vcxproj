@@ -198,6 +198,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineRenderer.h" />
+    <ClInclude Include="GameEngineRenderTarget.h" />
     <ClInclude Include="GameEngineResources.h">
       <SubType>
       </SubType>
@@ -240,6 +241,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineRenderer.cpp" />
+    <ClCompile Include="GameEngineRenderTarget.cpp" />
     <ClCompile Include="GameEngineResources.cpp">
       <SubType>
       </SubType>

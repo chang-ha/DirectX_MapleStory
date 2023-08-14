@@ -16,6 +16,12 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{e9edc5fb-cf91-472a-93b3-a487ee09a159}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Texture">
+      <UniqueIdentifier>{8fcefe58-74b8-4349-8b38-3070caa4eb2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Buffer">
+      <UniqueIdentifier>{d50501de-7165-484e-aa17-5ca47fbad06d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineActor.h">
@@ -51,8 +57,9 @@
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="GameEngineTexture.h">
-      <Filter>Resources</Filter>
+      <Filter>Resources\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineRenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -88,7 +95,8 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="GameEngineTexture.cpp">
-      <Filter>Resources</Filter>
+      <Filter>Resources\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineRenderTarget.cpp" />
   </ItemGroup>
 </Project>
