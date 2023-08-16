@@ -1,8 +1,9 @@
 #include "PreCompile.h"
 #include "GameEngineDevice.h"
 #include "GameEngineVertex.h"
-
 #include "GameEngineVertexBuffer.h"
+// #include "GameEngineShader.h"
+#include "GameEngineVertexShader.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -10,6 +11,19 @@ void GameEngineDevice::ResourcesInit()
 	// 기본 매쉬
 	// 기본 텍스처
 	// 여기에서 자기 텍스처 로드하지마세요.
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("GameEngineCoreShader");
+		Dir.MoveChild("GameEngineCoreShader");
+		std::vector<GameEngineFile> Files =  Dir.GetAllFile({".fx"});
+		for (size_t i = 0; i < Files.size(); i++) 
+		{
+			GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
+			// GameEngineShader::AutoCompile();
+		}
+	}
+
 
 	{
 		std::vector<GameEngineVertex2D> Vertex;
