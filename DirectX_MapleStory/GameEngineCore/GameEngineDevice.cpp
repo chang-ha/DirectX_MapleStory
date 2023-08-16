@@ -299,6 +299,11 @@ void GameEngineDevice::CreateSwapChain()
 
 void GameEngineDevice::RenderStart()
 {
+	if (nullptr == Device)
+	{
+		return;
+	}
+
 	// 도화지를 한번 싹 지워요.
 	BackBufferRenderTarget->Clear();
 
@@ -308,6 +313,11 @@ void GameEngineDevice::RenderStart()
 
 void GameEngineDevice::RenderEnd()
 {
+	if (nullptr == Device)
+	{
+		return;
+	}
+
 	// 스왑체인에 연결된 텍스처에 그려져있는 색상을 화면에 출력하라는것.
 	HRESULT Result = SwapChain->Present(0, 0);
 	if (Result == DXGI_ERROR_DEVICE_REMOVED || Result == DXGI_ERROR_DEVICE_RESET)

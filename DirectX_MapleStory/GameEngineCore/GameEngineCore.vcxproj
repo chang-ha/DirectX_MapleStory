@@ -205,6 +205,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineShader.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineTexture.h">
       <SubType>
       </SubType>
@@ -215,6 +219,10 @@
     </ClInclude>
     <ClInclude Include="GameEngineVertex.h" />
     <ClInclude Include="GameEngineVertexBuffer.h" />
+    <ClInclude Include="GameEngineVertexShader.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PreCompile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +261,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineShader.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineTexture.cpp">
       <SubType>
       </SubType>
@@ -263,6 +275,10 @@
     </ClCompile>
     <ClCompile Include="GameEngineVertex.cpp" />
     <ClCompile Include="GameEngineVertexBuffer.cpp" />
+    <ClCompile Include="GameEngineVertexShader.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

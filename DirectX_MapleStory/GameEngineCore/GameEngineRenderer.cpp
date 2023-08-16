@@ -44,12 +44,13 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 	ViewInfo[Camera.get()] = _Order;
 }
 
-int A = 0;
-
-void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
+ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
 	{
 		std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
-		VertexBuffer->Setting();
+		if (nullptr != VertexBuffer)
+		{
+			VertexBuffer->Setting();
+		}
 	}
 }
