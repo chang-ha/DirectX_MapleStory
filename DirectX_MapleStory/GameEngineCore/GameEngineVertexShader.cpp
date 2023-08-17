@@ -44,5 +44,22 @@ void GameEngineVertexShader::ShaderLoad(const std::string_view& _Path, const std
 	{
 		std::string ErrorString = reinterpret_cast<char*>(Error->GetBufferPointer());
 		MsgBoxAssert(ErrorString);
+		return;
 	}
+
+	Result = GameEngineCore::MainDevice.GetDevice()->CreateVertexShader(
+		BinaryCode->GetBufferPointer(),
+		BinaryCode->GetBufferSize(),
+		nullptr,
+		&ShaderPtr);
+
+	if (S_OK != Result)
+	{
+		MsgBoxAssert("버텍스 쉐이더 생성에 실패했습니다.");
+	}
+}
+
+void GameEngineVertexShader::Setting()
+{
+	GameEngineCore::MainDevice.GetContext()->VSSetShader(ShaderPtr, nullptr, 0);
 }

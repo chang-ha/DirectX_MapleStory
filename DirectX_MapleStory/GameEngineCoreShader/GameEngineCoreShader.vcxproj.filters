@@ -4,4 +4,7 @@
     <FxCompile Include="ColorShader.fx" />
     <FxCompile Include="TextureShader.fx" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="쉐이더 규칙.txt" />
+  </ItemGroup>
 </Project>

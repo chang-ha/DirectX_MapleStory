@@ -1,8 +1,12 @@
 #pragma once
+#include "GameEngineInputLayOut.h"
 
 // Ό³Έν :
 class GameEngineVertex2D
 {
+public:
+	static GameEngineInputLayOutInfo VertexInfo;
+
 public:
 	float4 TEXCOORD;
 	float4 COLOR;
@@ -12,6 +16,9 @@ public:
 
 class GameEngine3DVertex
 {
+public:
+	static GameEngineInputLayOutInfo VertexInfo;
+
 public:
 	float4 POSITION;
 	float4 TEXCOORD;

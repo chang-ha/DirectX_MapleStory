@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "GameEngineInputLayOut.h"
+#include "GameEngineVertexShader.h"
 
 GameEngineInputLayOut::GameEngineInputLayOut() 
 {
@@ -14,7 +15,7 @@ GameEngineInputLayOut::~GameEngineInputLayOut()
 	}
 }
 
-void GameEngineInputLayOut::ResCreate()
+void GameEngineInputLayOut::ResCreate(const std::vector<D3D11_INPUT_ELEMENT_DESC>& _ArrLayOutInfo, std::shared_ptr<class GameEngineVertexShader> _Shader)
 {
 	//const D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, 버텍스의 형태정보
 	//UINT NumElements, 형태정보의 개수
@@ -26,6 +27,13 @@ void GameEngineInputLayOut::ResCreate()
 	// pShaderBytecodeWithInputSignature 쉐이더 코드 달라고 하는 겁니다.
 
 	// GameEngineCore::MainDevcie.GetDevice()->CreateInputLayout(InputElementDescs, 20,  &LayOut);
+
+	GameEngineCore::MainDevice.GetDevice()->CreateInputLayout(
+		&_ArrLayOutInfo[0],
+		_ArrLayOutInfo.size(),
+		_Shader->BinaryCode->GetBufferPointer(),
+		_Shader->BinaryCode->GetBufferSize(),
+		&LayOut);
 }
 
 void GameEngineInputLayOut::Setting()

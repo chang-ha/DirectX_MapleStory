@@ -195,6 +195,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineSerializer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineString.cpp">
       <SubType>
       </SubType>
@@ -232,6 +236,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineRandom.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineSerializer.h">
       <SubType>
       </SubType>
     </ClInclude>

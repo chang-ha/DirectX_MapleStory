@@ -19,8 +19,9 @@ void GameEngineDevice::ResourcesInit()
 		std::vector<GameEngineFile> Files =  Dir.GetAllFile({".fx"});
 		for (size_t i = 0; i < Files.size(); i++) 
 		{
-			GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
-			// GameEngineShader::AutoCompile();
+			// GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
+			GameEngineFile& File = Files[i];
+			GameEngineShader::AutoCompile(File);
 		}
 	}
 

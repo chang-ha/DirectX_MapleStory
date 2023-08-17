@@ -39,6 +39,7 @@ protected:
 
 private:
 	std::map<class GameEngineCamera*, int> ViewInfo;
+	std::shared_ptr<class GameEngineInputLayOut> LayOut = nullptr;
 
 	// int CameraOrder = 0;
 };

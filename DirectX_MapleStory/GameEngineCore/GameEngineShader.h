@@ -25,6 +25,7 @@ public:
 	GameEngineShader& operator=(const GameEngineShader& _Other) = delete;
 	GameEngineShader& operator=(GameEngineShader&& _Other) noexcept = delete;
 
+	static bool AutoCompile(GameEngineFile& _File);
 
 protected:
 	void CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _VersionLow);
