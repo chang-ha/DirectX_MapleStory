@@ -95,6 +95,9 @@
     <ClInclude Include="GameEngineIndexBuffer.h">
       <Filter>Resources\Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="GameEnginePixelShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -161,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineIndexBuffer.cpp">
       <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnginePixelShader.cpp">
+      <Filter>Resources\Shader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

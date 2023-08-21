@@ -42,6 +42,10 @@ public:
 		return Context;
 	}
 
+	std::shared_ptr<class GameEngineRenderTarget> GetBackBufferRenderTarget() 
+	{
+		return BackBufferRenderTarget;
+	}
 protected:
 
 private:

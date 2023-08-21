@@ -13,7 +13,7 @@ GameEngineIndexBuffer::~GameEngineIndexBuffer()
 
 void GameEngineIndexBuffer::ResCreate(const void* _Data, size_t _IndexCount)
 {
-	IndexCount = _IndexCount;
+	IndexCount = static_cast<UINT>(_IndexCount);
 
 	BufferInfo.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	BufferInfo.ByteWidth = static_cast<UINT>(IndexSize * IndexCount);

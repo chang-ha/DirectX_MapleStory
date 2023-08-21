@@ -46,6 +46,7 @@ void GameEngineShader::CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _
 }
 
 #include "GameEngineVertexShader.h"
+#include "GameEnginePixelShader.h"
 
 bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 {
@@ -65,7 +66,9 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 		size_t EntryIndex = ShaderCode.find("_PS(");
 		if (EntryIndex != std::string::npos)
 		{
-			int a = 0;
+			size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
+			std::string_view EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex + 2);
+			GameEnginePixelShader::Load(_File.GetStringPath(), EntryName);
 		}
 	}
 	return true;

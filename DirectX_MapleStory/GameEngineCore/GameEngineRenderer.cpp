@@ -11,6 +11,9 @@
 #include "GameEngineVertexShader.h"
 #include "GameEngineInputLayOut.h"
 #include "GameEngineIndexBuffer.h"
+#include "GameEngineRasterizer.h"
+#include "GameEnginePixelShader.h"
+#include "GameEngineRenderTarget.h"
 
 GameEngineRenderer::GameEngineRenderer() 
 {
@@ -50,12 +53,15 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
  void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
 	{
+		//////////////// VertexBuffer
 		std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
 		if (nullptr != VertexBuffer)
 		{
 			VertexBuffer->Setting();
 		}
+		////////////////
 
+		//////////////// VertexShader
 		std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("ColorShader_VS");
 		if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
 		{
@@ -72,7 +78,9 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 		{
 			VertexShader->Setting();
 		}
+		////////////////
 		
+		//////////////// IndexBuffer
 		std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
 		if (nullptr != IndexBuffer)
 		{
@@ -80,5 +88,44 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 		}
 		
 		GameEngineCore::MainDevice.GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		////////////////
+
+		//////////////// VierPort
+		D3D11_VIEWPORT ViewPort = {};
+
+		// DirectX에서 자동으로 X, Y값에 /2를 해줌
+		ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
+		ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
+		ViewPort.MinDepth = 0.0f;
+		ViewPort.MaxDepth = 1.0f;
+		ViewPort.TopLeftX = 0.0f;
+		ViewPort.TopLeftY = 0.0f;
+
+		GameEngineCore::MainDevice.GetContext()->RSSetViewports(1, &ViewPort);
+		////////////////
+
+		//////////////// Rasterizer 
+		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Find("EngineRasterizer");
+		if (nullptr != Rasterizer)
+		{
+			Rasterizer->Setting();
+		}
+		////////////////
+
+		//////////////// PixelShader
+		std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("ColorShader_PS");
+		if (nullptr != PixelShader)
+		{
+			PixelShader->Setting();
+		}
+		////////////////
+
+		//////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
+		std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::MainDevice.GetBackBufferRenderTarget();
+		if (nullptr != BackBufferRenderTarget)
+		{
+			BackBufferRenderTarget->Setting();
+		}
+		////////////////
 	}
 }
