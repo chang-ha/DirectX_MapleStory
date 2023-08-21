@@ -6,6 +6,8 @@
 class GameEngineVertexBuffer :
 	public GameEngineResources<GameEngineVertexBuffer>, public GameEngineDirectBuffer
 {
+	friend class GameEngineInputLayOut;
+
 public:
 	// constrcuter destructer
 	GameEngineVertexBuffer();
@@ -22,6 +24,7 @@ public:
 	{
 		std::shared_ptr<GameEngineVertexBuffer> Res = GameEngineResources::CreateRes(_Name);
 		Res->ResCreate(&_Data[0], sizeof(VertexType), _Data.size());
+		Res->VertexInfoPtr = &VertexType::VertexInfo;
 		return nullptr;
 	}
 
@@ -35,4 +38,6 @@ private:
 	UINT VertexSize = 0;
 	UINT VertexCount = 0;
 	UINT Offset = 0;
+
+	const class GameEngineInputLayOutInfo* VertexInfoPtr;
 };

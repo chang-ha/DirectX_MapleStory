@@ -8,7 +8,11 @@ GameEngineVertexShader::GameEngineVertexShader()
 
 GameEngineVertexShader::~GameEngineVertexShader()
 {
-
+	if (nullptr != ShaderPtr)
+	{
+		ShaderPtr->Release();
+		ShaderPtr = nullptr;
+	}
 }
 
 void GameEngineVertexShader::ShaderLoad(const std::string_view& _Path, const std::string_view& _EntryPoint, UINT _VersionHight, UINT _VersionLow)
