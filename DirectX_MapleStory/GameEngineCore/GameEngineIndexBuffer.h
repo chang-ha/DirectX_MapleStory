@@ -1,5 +1,4 @@
 #pragma once
-#include "GameEngineResources.h"
 #include "GameEngineDirectBuffer.h"
 
 class GameEngineIndexBuffer : public GameEngineResources<GameEngineIndexBuffer>, public GameEngineDirectBuffer
@@ -21,8 +20,7 @@ public:
 	{
 		std::shared_ptr<GameEngineIndexBuffer> Res = GameEngineResources::CreateRes(_Name);
 		Res->ResCreate(&_Data[0], _Data.size());
-		return nullptr;
-		// return Res;
+		return Res;
 	}
 
 	void Setting();

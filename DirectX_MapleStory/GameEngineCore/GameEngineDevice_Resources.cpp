@@ -6,6 +6,7 @@
 #include "GameEngineVertexShader.h"
 #include "GameEngineIndexBuffer.h"
 #include "GameEngineRasterizer.h"
+#include "GameEngineConstantBuffer.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -115,6 +116,11 @@ void GameEngineDevice::ResourcesInit()
 		};
 
 		GameEngineIndexBuffer::Create("FullRect", Index);
+	}
+
+	{
+		// BytePadding방식이 CPU와 GPU간의 차이가 있을 수 있으니 이상하면 여기 체크
+		GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
 	}
 
 	{

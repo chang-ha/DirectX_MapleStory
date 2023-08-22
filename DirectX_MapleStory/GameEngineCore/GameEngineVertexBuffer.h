@@ -1,5 +1,4 @@
 #pragma once
-#include "GameEngineResources.h"
 #include "GameEngineDirectBuffer.h"
 
 // Ό³Έν :
@@ -25,7 +24,7 @@ public:
 		std::shared_ptr<GameEngineVertexBuffer> Res = GameEngineResources::CreateRes(_Name);
 		Res->ResCreate(&_Data[0], sizeof(VertexType), _Data.size());
 		Res->VertexInfoPtr = &VertexType::VertexInfo;
-		return nullptr;
+		return Res;
 	}
 
 	void Setting();

@@ -14,6 +14,7 @@
 #include "GameEngineRasterizer.h"
 #include "GameEnginePixelShader.h"
 #include "GameEngineRenderTarget.h"
+#include "GameEngineConstantBuffer.h"
 
 GameEngineRenderer::GameEngineRenderer() 
 {
@@ -81,7 +82,15 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 			VertexShader->Setting();
 		}
 		////////////////
-		
+
+		//////////////// ConstantBuffer
+		std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
+
+		const TransformData& Data = Transform.GetConstTransformDataRef();
+
+		ConstantBuffer->Setting();
+		////////////////
+
 		//////////////// IndexBuffer
 		std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
 		if (nullptr != IndexBuffer)

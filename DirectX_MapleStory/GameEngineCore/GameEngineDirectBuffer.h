@@ -1,4 +1,5 @@
 #pragma once
+#include "GameEngineResources.h"
 
 class GameEngineDirectBuffer
 {
