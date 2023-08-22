@@ -8,9 +8,8 @@ public:
 	static GameEngineInputLayOutInfo VertexInfo;
 
 public:
-	float4 TEXCOORD;
-	float4 COLOR;
 	float4 POSITION;
+	float4 COLOR;
 };
 
 
