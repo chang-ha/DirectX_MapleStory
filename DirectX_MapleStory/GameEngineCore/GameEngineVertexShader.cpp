@@ -51,7 +51,7 @@ void GameEngineVertexShader::ShaderLoad(const std::string_view& _Path, const std
 		return;
 	}
 
-	Result = GameEngineCore::MainDevice.GetDevice()->CreateVertexShader(
+	Result = GameEngineCore::GetDevice()->CreateVertexShader(
 		BinaryCode->GetBufferPointer(),
 		BinaryCode->GetBufferSize(),
 		nullptr,
@@ -65,5 +65,5 @@ void GameEngineVertexShader::ShaderLoad(const std::string_view& _Path, const std
 
 void GameEngineVertexShader::Setting()
 {
-	GameEngineCore::MainDevice.GetContext()->VSSetShader(ShaderPtr, nullptr, 0);
+	GameEngineCore::GetContext()->VSSetShader(ShaderPtr, nullptr, 0);
 }

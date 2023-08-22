@@ -24,7 +24,7 @@ void GameEngineIndexBuffer::ResCreate(const void* _Data, size_t _IndexCount)
 	D3D11_SUBRESOURCE_DATA Data;
 	Data.pSysMem = _Data;
 
-	if (S_OK != GameEngineCore::MainDevice.GetDevice()->CreateBuffer(&BufferInfo, &Data, &Buffer))
+	if (S_OK != GameEngineCore::GetDevice()->CreateBuffer(&BufferInfo, &Data, &Buffer))
 	{
 		MsgBoxAssert("버텍스 버퍼 생성에 실패했습니다.");
 		return;
@@ -38,5 +38,5 @@ void GameEngineIndexBuffer::Setting()
 		MsgBoxAssert("만들어지지도 않은 버텍스 버퍼를 세팅할 수는 없습니다.");
 	}
 
-	GameEngineCore::MainDevice.GetContext()->IASetIndexBuffer(Buffer, Format, Offset);
+	GameEngineCore::GetContext()->IASetIndexBuffer(Buffer, Format, Offset);
 }

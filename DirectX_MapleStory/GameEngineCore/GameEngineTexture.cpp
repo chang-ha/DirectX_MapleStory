@@ -35,7 +35,7 @@ void GameEngineTexture::CreateRenderTargetView()
 
 	// 이미지를 수정할수 있는 권한을 '만든다'
 
-	HRESULT Result = GameEngineCore::MainDevice.GetDevice()->CreateRenderTargetView(Texture2D, nullptr, &RTV);
+	HRESULT Result = GameEngineCore::GetDevice()->CreateRenderTargetView(Texture2D, nullptr, &RTV);
 
 	if (S_OK != Result)
 	{

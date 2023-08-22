@@ -53,6 +53,8 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
  void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
 	{
+		float4x4 WorldViewProjection = Transform.GetWorldViewPorjectionMatrix();
+
 		//////////////// VertexBuffer
 		std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
 		if (nullptr != VertexBuffer)
@@ -87,7 +89,7 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 			IndexBuffer->Setting();
 		}
 		
-		GameEngineCore::MainDevice.GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		GameEngineCore::GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		////////////////
 
 		//////////////// VierPort
@@ -101,7 +103,7 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 		ViewPort.TopLeftX = 0.0f;
 		ViewPort.TopLeftY = 0.0f;
 
-		GameEngineCore::MainDevice.GetContext()->RSSetViewports(1, &ViewPort);
+		GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
 		////////////////
 
 		//////////////// Rasterizer 
@@ -121,11 +123,15 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 		////////////////
 
 		//////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
-		std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::MainDevice.GetBackBufferRenderTarget();
+		std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
 		if (nullptr != BackBufferRenderTarget)
 		{
 			BackBufferRenderTarget->Setting();
 		}
-		////////////////
+		////////////////	
+
+		//////////////// 그리기
+		GameEngineCore::GetContext()->DrawIndexed(6, 0, 0);
+
 	}
 }

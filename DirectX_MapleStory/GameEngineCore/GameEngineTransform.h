@@ -160,6 +160,11 @@ public:
 		return TransData.WorldMatrix.ArrVector[1].NormalizeReturn();
 	}
 
+	float4x4 GetWorldViewPorjectionMatrix()
+	{
+		return TransData.WorldViewPorjectionMatrix;
+	}
+
 	void CalculationViewAndProjection(const TransformData& _Transform);
 
 	void CalculationViewAndProjection(const float4x4& _View, const float4x4& _Projection);

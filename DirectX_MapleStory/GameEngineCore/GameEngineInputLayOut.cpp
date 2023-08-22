@@ -30,7 +30,7 @@ void GameEngineInputLayOut::ResCreate(std::shared_ptr<class GameEngineVertexBuff
 	// GameEngineCore::MainDevcie.GetDevice()->CreateInputLayout(InputElementDescs, 20,  &LayOut);
 
 	const std::vector<D3D11_INPUT_ELEMENT_DESC>& Infos = _Buffer->VertexInfoPtr->Infos;
-	GameEngineCore::MainDevice.GetDevice()->CreateInputLayout(
+	GameEngineCore::GetDevice()->CreateInputLayout(
 		&Infos[0],
 		static_cast<UINT>(Infos.size()),
 		_Shader->BinaryCode->GetBufferPointer(),
@@ -51,7 +51,7 @@ void GameEngineInputLayOut::Setting()
 	}
 
 	// 버텍스버퍼를 여러개 넣어줄수 있다.
-	GameEngineCore::MainDevice.GetContext()->IASetInputLayout(LayOut);
+	GameEngineCore::GetContext()->IASetInputLayout(LayOut);
 }
 
 void GameEngineInputLayOutInfo::AddInputLayOutDesc(

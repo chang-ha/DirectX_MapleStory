@@ -47,7 +47,7 @@ void GameEnginePixelShader::ShaderLoad(const std::string_view& _Path, const std:
 		return;
 	}
 
-	Result = GameEngineCore::MainDevice.GetDevice()->CreatePixelShader(
+	Result = GameEngineCore::GetDevice()->CreatePixelShader(
 		BinaryCode->GetBufferPointer(),
 		BinaryCode->GetBufferSize(),
 		nullptr,
@@ -66,5 +66,5 @@ void GameEnginePixelShader::Setting()
 		MsgBoxAssert("쉐이더를 생성하지 않았습니다. 먼저 ShaderLoad함수를 호출해 주세요");
 	}
 
-	GameEngineCore::MainDevice.GetContext()->PSSetShader(ShaderPtr, nullptr, 0);
+	GameEngineCore::GetContext()->PSSetShader(ShaderPtr, nullptr, 0);
 }
