@@ -35,7 +35,7 @@ public:
 
 protected:
 	void Start();
-	virtual void Render(GameEngineCamera* _Camera, float _Delta);
+	virtual void Render(class GameEngineCamera* _Camera, float _Delta);
 
 	void ResSetting();
 	void Draw();

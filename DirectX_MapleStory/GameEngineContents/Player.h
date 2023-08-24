@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+class GameEngineSpriteRenderer;
 // Ό³Έν :
 class Player : public GameEngineActor
 {
@@ -20,6 +21,6 @@ protected:
 	void Update(float _Delta);
 
 private:
-
+	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
 };
 

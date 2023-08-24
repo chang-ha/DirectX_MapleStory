@@ -6,6 +6,10 @@
 #include <GameEngineCore/GameEngineRenderer.h>
 
 #include "Player.h"
+#include <GameEngineCore/GameEngineSpriteRenderer.h>
+
+// Test Code
+#include <GameEngineCore/GameEngineTexture.h>
 
 Player::Player() 
 {
@@ -19,25 +23,34 @@ Player::~Player()
 void Player::Start()
 {
 	{
-		std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
+		GameEngineTexture::Load("힝", "응애");
+
+		Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
+
+		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
+		Renderer->SetSprite("NSet.png");
+	}
+
+	{
+		Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
 		Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });
 	}
 
 	{
-		std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
+		Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
 		Renderer->Transform.SetLocalPosition({ 0, -150, 0 });
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });
 	}
 
 	{
-		std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
+		Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
 		Renderer->Transform.SetLocalPosition({ -150, 0, 0 });
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });
 	}
 
 	{
-		std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
+		Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
 		Renderer->Transform.SetLocalPosition({ 150, 0, 0 });
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });
 	}

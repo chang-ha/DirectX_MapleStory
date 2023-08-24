@@ -2,6 +2,12 @@
 #include "GameEngineTexture.h"
 #include "GameEngineCore.h"
 
+#ifdef _DEBUG
+#pragma comment(lib, "..\\GameEngineCore\\ThirdParty\\DirectXTex\\lib\\Debug\\DirectXTex.lib")
+#else
+#pragma comment(lib, "..\\GameEngineCore\\ThirdParty\\DirectXTex\\lib\\Release\\DirectXTex.lib")
+#endif
+
 GameEngineTexture::GameEngineTexture() 
 {
 }
@@ -47,5 +53,6 @@ void GameEngineTexture::CreateRenderTargetView()
 
 void GameEngineTexture::ResLoad(std::string_view _Path)
 {
+	DirectX::LoadFromWICFile(L"¾ÈµÉ°Å »·ÇÔ", DirectX::WIC_FLAGS_NONE, &Data, Image);
 	int a = 0;
 }
