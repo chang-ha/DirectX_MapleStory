@@ -17,7 +17,7 @@ public:
 	//GameEngineResources& operator=(const GameEngineResources& _Other) = delete;
 	//GameEngineResources& operator=(GameEngineResources&& _Other) noexcept = delete;
 
-	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name)
+	static std::shared_ptr<ResourcesType> Find(std::string_view _Name)
 	{
 		std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
@@ -46,7 +46,7 @@ protected:
 		return NewRes;
 	}
 
-	static std::shared_ptr<ResourcesType> CreateRes(const std::string_view& _Name)
+	static std::shared_ptr<ResourcesType> CreateRes(std::string_view _Name)
 	{
 		std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 		std::shared_ptr<ResourcesType> NewRes = std::make_shared<ResourcesType>();
@@ -55,7 +55,7 @@ protected:
 		return NewRes;
 	}
 
-	static std::shared_ptr<ResourcesType> CreateRes(const std::string_view& _Name, const std::string_view& _Path)
+	static std::shared_ptr<ResourcesType> CreateRes(std::string_view _Name, std::string_view _Path)
 	{
 		std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 		std::shared_ptr<ResourcesType> NewRes = std::make_shared<ResourcesType>(ResourcesType);

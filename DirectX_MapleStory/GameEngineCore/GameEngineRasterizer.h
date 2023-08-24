@@ -14,7 +14,7 @@ public:
 	GameEngineRasterizer& operator=(const GameEngineRasterizer& _Other) = delete;
 	GameEngineRasterizer& operator=(GameEngineRasterizer&& _Other) noexcept = delete;
 
-	static std::shared_ptr<GameEngineRasterizer> Create(const std::string_view& _Name, const D3D11_RASTERIZER_DESC& _Desc)
+	static std::shared_ptr<GameEngineRasterizer> Create(std::string_view _Name, const D3D11_RASTERIZER_DESC& _Desc)
 	{
 		std::shared_ptr<GameEngineRasterizer> Res = GameEngineResources::CreateRes(_Name);
 		Res->ResCreate(_Desc);

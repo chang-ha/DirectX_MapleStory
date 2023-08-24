@@ -15,7 +15,7 @@ GameEnginePixelShader::~GameEnginePixelShader()
 	}
 }
 
-void GameEnginePixelShader::ShaderLoad(const std::string_view& _Path, const std::string_view& _EntryPoint, UINT _VersionHight, UINT _VersionLow)
+void GameEnginePixelShader::ShaderLoad(std::string_view _Path, std::string_view _EntryPoint, UINT _VersionHight, UINT _VersionLow)
 {
 	std::wstring UniPath = GameEngineString::AnsiToUnicode(_Path);
 	CreateVersion(ShaderType::Pixel, _VersionHight, _VersionLow);

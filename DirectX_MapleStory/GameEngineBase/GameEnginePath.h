@@ -8,7 +8,7 @@ class GameEnginePath
 public:
 	// constrcuter destructer
 	GameEnginePath();
-	GameEnginePath(const std::string_view& _path);
+	GameEnginePath(std::string_view _path);
 	~GameEnginePath();
 
 	//// delete Function
@@ -21,10 +21,10 @@ public:
 
 	void SetCurrentPath();
 	void MoveParent();
-	void MoveParentToExistsChild(const std::string_view& _ChildPath);
-	void MoveChild(const std::string_view& _ChildPath);
+	void MoveParentToExistsChild(std::string_view _ChildPath);
+	void MoveChild(std::string_view _ChildPath);
 
-	std::string PlusFilePath(const std::string_view& _ChildPath);
+	std::string PlusFilePath(std::string_view _ChildPath);
 
 	std::string GetStringPath() 
 	{

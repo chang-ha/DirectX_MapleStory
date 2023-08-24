@@ -7,7 +7,7 @@ class GameEngineDirectory : public GameEnginePath
 public:
 	// constrcuter destructer
 	GameEngineDirectory();
-	GameEngineDirectory(const std::string_view& _path);
+	GameEngineDirectory(std::string_view _path);
 	~GameEngineDirectory();
 
 	// delete Function

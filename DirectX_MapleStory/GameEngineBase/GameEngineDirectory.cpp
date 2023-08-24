@@ -11,7 +11,7 @@ GameEngineDirectory::~GameEngineDirectory()
 {
 }
 
-GameEngineDirectory::GameEngineDirectory(const std::string_view& _path) 
+GameEngineDirectory::GameEngineDirectory(std::string_view _path) 
 	: GameEnginePath(_path)
 {
 	if (false == IsDirectory())

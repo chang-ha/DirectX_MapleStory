@@ -16,11 +16,11 @@
 #include "GameEngineRenderTarget.h"
 #include "GameEngineConstantBuffer.h"
 
-GameEngineRenderer::GameEngineRenderer() 
+GameEngineRenderer::GameEngineRenderer()
 {
 }
 
-GameEngineRenderer::~GameEngineRenderer() 
+GameEngineRenderer::~GameEngineRenderer()
 {
 }
 
@@ -51,96 +51,114 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 	ViewInfo[Camera.get()] = _Order;
 }
 
- void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
+void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
+	ResSetting();
+	Draw();
+}
+
+void GameEngineRenderer::ResSetting()
+{
+	float4x4 WorldViewProjection = Transform.GetWorldViewPorjectionMatrix();
+
+	//////////////// VertexBuffer
+	std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
+	if (nullptr != VertexBuffer)
 	{
-		float4x4 WorldViewProjection = Transform.GetWorldViewPorjectionMatrix();
-
-		//////////////// VertexBuffer
-		std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
-		if (nullptr != VertexBuffer)
-		{
-			VertexBuffer->Setting();
-		}
-		////////////////
-
-		//////////////// VertexShader
-		std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("ColorShader_VS");
-		if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
-		{
-			LayOut = std::make_shared<GameEngineInputLayOut>();
-			LayOut->ResCreate(VertexBuffer, VertexShader);
-		}
-
-		if (nullptr != LayOut)
-		{
-			LayOut->Setting();
-		}
-
-		if (nullptr != VertexShader)
-		{
-			VertexShader->Setting();
-		}
-		////////////////
-
-		//////////////// ConstantBuffer
-		std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
-
-		const TransformData& Data = Transform.GetConstTransformDataRef();
-
-		ConstantBuffer->Setting();
-		////////////////
-
-		//////////////// IndexBuffer
-		std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
-		if (nullptr != IndexBuffer)
-		{
-			IndexBuffer->Setting();
-		}
-		
-		GameEngineCore::GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		////////////////
-
-		//////////////// VierPort
-		D3D11_VIEWPORT ViewPort = {};
-
-		// DirectX에서 자동으로 X, Y값에 /2를 해줌
-		ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
-		ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
-		ViewPort.MinDepth = 0.0f;
-		ViewPort.MaxDepth = 1.0f;
-		ViewPort.TopLeftX = 0.0f;
-		ViewPort.TopLeftY = 0.0f;
-
-		GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
-		////////////////
-
-		//////////////// Rasterizer 
-		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Find("EngineRasterizer");
-		if (nullptr != Rasterizer)
-		{
-			Rasterizer->Setting();
-		}
-		////////////////
-
-		//////////////// PixelShader
-		std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("ColorShader_PS");
-		if (nullptr != PixelShader)
-		{
-			PixelShader->Setting();
-		}
-		////////////////
-
-		//////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
-		std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
-		if (nullptr != BackBufferRenderTarget)
-		{
-			BackBufferRenderTarget->Setting();
-		}
-		////////////////	
-
-		//////////////// 그리기
-		GameEngineCore::GetContext()->DrawIndexed(6, 0, 0);
-
+		VertexBuffer->Setting();
 	}
+	////////////////
+
+	//////////////// VertexShader
+	std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("ColorShader_VS");
+	if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
+	{
+		LayOut = std::make_shared<GameEngineInputLayOut>();
+		LayOut->ResCreate(VertexBuffer, VertexShader);
+	}
+
+	if (nullptr != LayOut)
+	{
+		LayOut->Setting();
+	}
+
+	if (nullptr != VertexShader)
+	{
+		VertexShader->Setting();
+	}
+	////////////////
+
+	//////////////// ConstantBuffer
+	std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
+
+	const TransformData& Data = Transform.GetConstTransformDataRef();
+
+	if (nullptr != ConstantBuffer)
+	{
+		const TransformData& Data = Transform.GetConstTransformDataRef();
+		ConstantBuffer->ChangeData(Data);
+		ConstantBuffer->Setting();
+	}
+
+	////////////////
+
+	//////////////// IndexBuffer
+	std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
+	if (nullptr != IndexBuffer)
+	{
+		IndexBuffer->Setting();
+	}
+
+	GameEngineCore::GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	////////////////
+
+	//////////////// VierPort
+	D3D11_VIEWPORT ViewPort = {};
+
+	// DirectX에서 자동으로 X, Y값에 /2를 해줌
+	ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
+	ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
+	ViewPort.MinDepth = 0.0f;
+	ViewPort.MaxDepth = 1.0f;
+	ViewPort.TopLeftX = 0.0f;
+	ViewPort.TopLeftY = 0.0f;
+
+	GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
+	////////////////
+
+	//////////////// Rasterizer 
+	std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Find("EngineRasterizer");
+	if (nullptr != Rasterizer)
+	{
+		Rasterizer->Setting();
+	}
+	////////////////
+
+	//////////////// PixelShader
+	std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("ColorShader_PS");
+	if (nullptr != PixelShader)
+	{
+		PixelShader->Setting();
+	}
+	////////////////
+
+	//////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
+	std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
+	if (nullptr != BackBufferRenderTarget)
+	{
+		BackBufferRenderTarget->Setting();
+	}
+}
+
+void GameEngineRenderer::Draw()
+{
+	////////////////	
+	std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
+	if (nullptr == IndexBuffer)
+	{
+		return;
+	}
+
+	GameEngineCore::GetContext()->DrawIndexed(IndexBuffer->GetIndexCount(), 0, 0);
+	//////////////// 그리기
 }

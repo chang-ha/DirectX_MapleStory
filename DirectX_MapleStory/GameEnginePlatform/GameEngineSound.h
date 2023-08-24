@@ -54,18 +54,18 @@ public:
 		return GlobalVolume;
 	}
 
-	static void SoundLoad(const std::string_view& _Path)
+	static void SoundLoad(std::string_view _Path)
 	{
 		GameEnginePath Path = GameEnginePath(_Path);
 		SoundLoad(Path.GetFileName(), _Path);
 	}
 
-	static GameEngineSound* FindSound(const std::string_view& _path);
+	static GameEngineSound* FindSound(std::string_view _path);
 
-	static void SoundLoad(const std::string_view& _Name, const std::string_view& _Path);
+	static void SoundLoad(std::string_view _Name, std::string_view _Path);
 
 	// 1번의 재생을 하고 끝나면 그냥 종료하고 나는 컨트롤할수 없다.
-	static GameEngineSoundPlayer SoundPlay(const std::string_view& _Name, int _Loop = 0);
+	static GameEngineSoundPlayer SoundPlay(std::string_view _Name, int _Loop = 0);
 
 	static void Release();
 
@@ -92,7 +92,7 @@ private:
 	FMOD::Sound* SoundHandle = nullptr;
 
 	FMOD::Channel* Play();
-	void Load(const std::string_view& _Path);
+	void Load(std::string_view _Path);
 
 };
 

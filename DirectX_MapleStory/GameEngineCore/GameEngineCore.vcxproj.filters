@@ -101,6 +101,8 @@
     <ClInclude Include="GameEngineConstantBuffer.h">
       <Filter>Resources\Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineSprite.h" />
+    <ClInclude Include="GameEngineSpriteRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -174,5 +176,7 @@
     <ClCompile Include="GameEngineConstantBuffer.cpp">
       <Filter>Resources\Buffer</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineSprite.cpp" />
+    <ClCompile Include="GameEngineSpriteRenderer.cpp" />
   </ItemGroup>
 </Project>
