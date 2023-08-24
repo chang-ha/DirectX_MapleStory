@@ -31,6 +31,21 @@
     <Filter Include="Resources\Shader">
       <UniqueIdentifier>{b31b4c4c-17ba-4c99-8ddf-fbdd58aa7ae5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Transform">
+      <UniqueIdentifier>{857b9e43-a1ad-4c0a-a6dd-bf2274dfb0fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{0d38f6cd-fa49-40f2-ac27-1b1e6aeaa9d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Debug">
+      <UniqueIdentifier>{10a88856-5032-4cf0-b97d-190caa3abc48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Release">
+      <UniqueIdentifier>{d9eb3f7d-c278-46d0-8bc9-04da9d53c1e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\inc">
+      <UniqueIdentifier>{89c50ef6-17dc-406a-84e9-313029d9209f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineActor.h">
@@ -49,7 +64,6 @@
     <ClInclude Include="GameEngineObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineTransform.h" />
     <ClInclude Include="GameEngineRenderer.h">
       <Filter>Rendering</Filter>
     </ClInclude>
@@ -101,8 +115,18 @@
     <ClInclude Include="GameEngineConstantBuffer.h">
       <Filter>Resources\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineSprite.h" />
-    <ClInclude Include="GameEngineSpriteRenderer.h" />
+    <ClInclude Include="GameEngineSpriteRenderer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineSprite.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineTransform.h">
+      <Filter>Object\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\DirectXTex\inc\DirectXTex.h">
+      <Filter>ThirdParty\inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -121,7 +145,6 @@
     <ClCompile Include="GameEngineObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineTransform.cpp" />
     <ClCompile Include="GameEngineRenderer.cpp">
       <Filter>Rendering</Filter>
     </ClCompile>
@@ -176,7 +199,33 @@
     <ClCompile Include="GameEngineConstantBuffer.cpp">
       <Filter>Resources\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineSprite.cpp" />
-    <ClCompile Include="GameEngineSpriteRenderer.cpp" />
+    <ClCompile Include="GameEngineSpriteRenderer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineSprite.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineTransform.cpp">
+      <Filter>Object\Transform</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\DirectXTex\inc\DirectXTex.inl">
+      <Filter>ThirdParty\inc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\DirectXTex\lib\Debug\DirectXTex.lib">
+      <Filter>ThirdParty\Debug</Filter>
+    </Library>
+    <Library Include="ThirdParty\DirectXTex\lib\Release\DirectXTex.lib">
+      <Filter>ThirdParty\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\DirectXTex\lib\Release\DirectXTex.pdb">
+      <Filter>ThirdParty\Release</Filter>
+    </Library>
+    <Library Include="ThirdParty\DirectXTex\lib\Debug\DirectXTex.pdb">
+      <Filter>ThirdParty\Debug</Filter>
+    </Library>
   </ItemGroup>
 </Project>

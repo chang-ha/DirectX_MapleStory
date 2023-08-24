@@ -22,6 +22,13 @@ public:
 		return NewRes;
 	}
 
+	static std::shared_ptr<GameEngineTexture> Load(std::string_view _Path, std::string_view _Name) 
+	{
+		std::shared_ptr<GameEngineTexture> NewRes = CreateRes(_Name);
+		NewRes->ResLoad(_Path);
+		return NewRes;
+	}
+
 	inline ID3D11RenderTargetView* GetRTV()
 	{
 		return RTV;
@@ -34,5 +41,7 @@ protected:
 private:
 	ID3D11Texture2D* Texture2D = nullptr;
 	ID3D11RenderTargetView* RTV = nullptr;
+
+	void ResLoad(std::string_view _Path);
 };
 
