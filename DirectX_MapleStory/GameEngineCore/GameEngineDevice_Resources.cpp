@@ -9,6 +9,7 @@
 #include "GameEngineConstantBuffer.h"
 #include "GameEngineTexture.h"
 #include "GameEngineSampler.h"
+#include "GameEngineSprite.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -20,8 +21,8 @@ void GameEngineDevice::ResourcesInit()
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("GameEngineCoreShader");
 		Dir.MoveChild("GameEngineCoreShader");
-		std::vector<GameEngineFile> Files =  Dir.GetAllFile({".fx"});
-		for (size_t i = 0; i < Files.size(); i++) 
+		std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
+		for (size_t i = 0; i < Files.size(); i++)
 		{
 			// GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
 			GameEngineFile& File = Files[i];
@@ -43,16 +44,17 @@ void GameEngineDevice::ResourcesInit()
 			GameEngineFile& File = Files[i];
 			GameEngineTexture::Load(File.GetStringPath());
 		}
+		GameEngineSprite::CreateSingle("NSet.png");
 	}
 
 	{
 		std::vector<GameEngineVertex2D> Vertex;
 		Vertex.resize(4);
 
-		Vertex[0] = { { -1.0f, -1.0f, 0.0f, 1.0f }, {}, {0.0f, 0.0f} };
-		Vertex[1] = { { 1.0f, -1.0f, 0.0f, 1.0f }, {}, {1.0f, 0.0f} };
-		Vertex[2] = { { 1.0f, 1.0f, 0.0f, 1.0f }, {}, {1.0f, 1.0f} };
-		Vertex[3] = { { -1.0f, 1.0f, 0.0f, 1.0f }, {}, {0.0f, 1.0f} };
+		Vertex[0] = { { -0.5f, 0.5f, 0.0f, 1.0f }, {0.0f, 0.0f} };
+		Vertex[1] = { { 0.5f, 0.5f, 0.0f, 1.0f } , {1.0f, 0.0f} };
+		Vertex[2] = { { 0.5f, -0.5f, 0.0f, 1.0f }  , {1.0f, 1.0f} };
+		Vertex[3] = { { -0.5f, -0.5f, 0.0f, 1.0f } , {0.0f, 1.0f} };
 
 		GameEngineVertexBuffer::Create("Rect", Vertex);
 
@@ -69,10 +71,10 @@ void GameEngineDevice::ResourcesInit()
 		std::vector<GameEngineVertex2D> Vertex;
 		Vertex.resize(4);
 
-		Vertex[0] = { { -1.0f, -1.0f, 0.0f, 1.0f } };
-		Vertex[1] = { { 1.0f, -1.0f, 0.0f, 1.0f } };
-		Vertex[2] = { { 1.0f, 1.0f, 0.0f, 1.0f } };
-		Vertex[3] = { { -1.0f, 1.0f, 0.0f, 1.0f } };
+		Vertex[0] = { { -1.0f, 1.0f, 0.0f, 1.0f }, {0.0f, 0.0f} };
+		Vertex[1] = { { 1.0f, 1.0f, 0.0f, 1.0f },  {1.0f, 0.0f} };
+		Vertex[2] = { { 1.0f, -1.0f, 0.0f, 1.0f },   {1.0f, 1.0f} };
+		Vertex[3] = { { -1.0f, -1.0f, 0.0f, 1.0f },  {0.0f, 1.0f} };
 
 		GameEngineVertexBuffer::Create("FullRect", Vertex);
 
@@ -110,7 +112,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 
 		Desc.MipLODBias = 0.0f;
-		Desc.MaxAnisotropy = static_cast<UINT>(1.0f);
+		Desc.MaxAnisotropy = 1;
 		Desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 		Desc.MinLOD = -FLT_MAX;
 		Desc.MaxLOD = FLT_MAX;

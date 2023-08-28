@@ -21,6 +21,6 @@ protected:
 	void Update(float _Delta);
 
 private:
-	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 };
 

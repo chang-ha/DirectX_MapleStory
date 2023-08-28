@@ -59,7 +59,7 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 
 void GameEngineRenderer::ResSetting()
 {
-	float4x4 WorldViewProjection = Transform.GetWorldViewPorjectionMatrix();
+	float4x4 WorldViewProjection = Transform.GetWorldViewProjectionMatrix();
 
 	//////////////// VertexBuffer
 	std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
@@ -70,7 +70,7 @@ void GameEngineRenderer::ResSetting()
 	////////////////
 
 	//////////////// VertexShader
-	std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("ColorShader_VS");
+	std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("TextureShader_VS");
 	if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
 	{
 		LayOut = std::make_shared<GameEngineInputLayOut>();

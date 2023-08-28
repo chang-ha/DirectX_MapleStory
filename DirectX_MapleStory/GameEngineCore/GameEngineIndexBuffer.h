@@ -32,8 +32,6 @@ public:
 protected:
 
 private:
-	const class GameEngineInputLayOutInfo* VertexInfoPtr;
-	
 	void ResCreate(const void* _Data, size_t _IndexCount);
 
 	UINT IndexCount = 0;

@@ -8,7 +8,7 @@
 // 의미있는 버텍드 쉐이더이다.
 float4 ColorShader_VS(float4 pos : POSITION) : SV_Position
 {
-    return mul(pos, WorldViewPorjectionMatrix);
+    return mul(pos, WorldViewProjectionMatrix);
 }
 
 float4 ColorShader_PS(float4 pos : SV_Position) : SV_Target0

@@ -1,9 +1,12 @@
 #pragma once
 #include "GameEngineTexture.h"
 
-class SpriteData
+class SpriteDataInfo
 {
+public:
 	std::shared_ptr<GameEngineTexture> Texture;
+	float4 SpriteData;
+	float4 GetScale();
 };
 
 // 설명 :
@@ -28,14 +31,26 @@ public:
 	}
 
 	// 스프라이트 1장을 잘라서 사용함
-	static std::shared_ptr<GameEngineSprite> CreateCut()
+	static std::shared_ptr<GameEngineSprite> CreateCut(std::string_view _Name, unsigned int _X, unsigned int _Y)
 	{
-		std::shared_ptr<GameEngineSprite> NewRes = CreateRes();
+		std::shared_ptr<GameEngineSprite> NewRes = CreateRes(_Name);
+		NewRes->ResCreateCut(_Name, _X, _Y);
 		return NewRes;
 	}
+
+	static std::shared_ptr<GameEngineSprite> CreateSingle(std::string_view _Name)
+	{
+		std::shared_ptr<GameEngineSprite> NewRes = CreateRes(_Name);
+		NewRes->ResCreateCut(_Name, 1, 1);
+		return NewRes;
+	}
+
+	const SpriteDataInfo& GetSpriteData(unsigned int _Index);
+
 protected:
+	void ResCreateCut(std::string_view _Name, unsigned int _X, unsigned int _Y);
 
 private:
-	std::vector<SpriteData> GameEngineSpriteData;
+	std::vector<SpriteDataInfo> SpriteDatas;
 };
 

@@ -37,7 +37,7 @@ public:
 	float4x4 ViewPort;
 
 	// 로컬 => 월드 => 뷰 => 프로젝션 
-	float4x4 WorldViewPorjectionMatrix;
+	float4x4 WorldViewProjectionMatrix;
 
 	void LocalCalculation()
 	{
@@ -50,7 +50,7 @@ public:
 
 	void WorldViewProjectionCalculation()
 	{
-		WorldViewPorjectionMatrix = WorldMatrix * ViewMatrix * ProjectionMatrix;
+		WorldViewProjectionMatrix = WorldMatrix * ViewMatrix * ProjectionMatrix;
 	}
 };
 
@@ -160,9 +160,9 @@ public:
 		return TransData.WorldMatrix.ArrVector[1].NormalizeReturn();
 	}
 
-	float4x4 GetWorldViewPorjectionMatrix()
+	float4x4 GetWorldViewProjectionMatrix()
 	{
-		return TransData.WorldViewPorjectionMatrix;
+		return TransData.WorldViewProjectionMatrix;
 	}
 
 	void CalculationViewAndProjection(const TransformData& _Transform);

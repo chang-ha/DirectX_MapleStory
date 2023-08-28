@@ -10,7 +10,7 @@ public:
 	{
 		// 생성자를 활용해서 Init을 자동으로 수행
 		GameEngineVertex2D::VertexInfo.AddInputLayOutDesc("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT);
-		GameEngineVertex2D::VertexInfo.AddInputLayOutDesc("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		// GameEngineVertex2D::VertexInfo.AddInputLayOutDesc("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
 		GameEngineVertex2D::VertexInfo.AddInputLayOutDesc("TEXCOORD", DXGI_FORMAT_R32G32B32A32_FLOAT);
 	}
 };

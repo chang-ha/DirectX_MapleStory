@@ -8,7 +8,11 @@ GameEngineSampler::GameEngineSampler()
 
 GameEngineSampler::~GameEngineSampler()
 {
-
+	if (nullptr != State)
+	{
+		State->Release();
+		State = nullptr;
+	}
 }
 
 void GameEngineSampler::ResCreate(const D3D11_SAMPLER_DESC& _Desc)

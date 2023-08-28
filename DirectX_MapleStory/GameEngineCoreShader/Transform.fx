@@ -19,7 +19,7 @@ cbuffer TransformData : register(b0)
     float4x4 ViewMatrix;
     float4x4 ProjectionMatrix;
     float4x4 ViewPort;
-    float4x4 WorldViewPorjectionMatrix;
+    float4x4 WorldViewProjectionMatrix;
     // 0, 0, 0, 0
     // 0, 0, 0, 0
     // 0, 0, 0, 0
