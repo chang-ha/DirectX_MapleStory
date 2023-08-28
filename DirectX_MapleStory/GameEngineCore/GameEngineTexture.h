@@ -24,6 +24,12 @@ public:
 		return NewRes;
 	}
 
+	static std::shared_ptr<GameEngineTexture> Load(std::string_view _Path)
+	{
+		GameEnginePath Path = _Path;
+		return Load(Path.GetStringPath(), Path.GetFileName());
+	}
+
 	static std::shared_ptr<GameEngineTexture> Load(std::string_view _Path, std::string_view _Name) 
 	{
 		std::shared_ptr<GameEngineTexture> NewRes = CreateRes(_Name);
@@ -36,13 +42,28 @@ public:
 		return RTV;
 	}
 
+	inline float4 GetScale()
+	{
+		return { static_cast<float>(Desc.Width), static_cast<float>(Desc.Height) };
+	}
+
+	inline ID3D11ShaderResourceView* GetSRV()
+	{
+		return SRV;
+	}
+
+	void VSSetting(UINT _Slot);
+	void PSSetting(UINT _Slot);
 	void CreateRenderTargetView();
 
 protected:
 
 private:
+	D3D11_TEXTURE2D_DESC Desc; 
+
 	ID3D11Texture2D* Texture2D = nullptr;
 	ID3D11RenderTargetView* RTV = nullptr;
+	ID3D11ShaderResourceView* SRV = nullptr;
 
 	DirectX::TexMetadata Data;
 	DirectX::ScratchImage Image;

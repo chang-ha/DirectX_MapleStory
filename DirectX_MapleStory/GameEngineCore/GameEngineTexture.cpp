@@ -14,6 +14,12 @@ GameEngineTexture::GameEngineTexture()
 
 GameEngineTexture::~GameEngineTexture() 
 {
+	if (nullptr != SRV)
+	{
+		SRV->Release();
+		SRV = nullptr;
+	}
+
 	if (nullptr != RTV)
 	{
 		RTV->Release();
@@ -53,6 +59,55 @@ void GameEngineTexture::CreateRenderTargetView()
 
 void GameEngineTexture::ResLoad(std::string_view _Path)
 {
-	DirectX::LoadFromWICFile(L"안될거 뻔함", DirectX::WIC_FLAGS_NONE, &Data, Image);
-	int a = 0;
+	GameEnginePath NewPath = _Path;
+
+	std::string Ext = GameEngineString::ToUpperReturn(NewPath.GetExtension());
+
+	std::wstring wPath = GameEngineString::AnsiToUnicode(_Path);
+
+	// 그래픽 
+	if (Ext == ".DDS")
+	{
+		if (S_OK != DirectX::LoadFromDDSFile(wPath.c_str(), DirectX::DDS_FLAGS_NONE, &Data, Image))
+		{
+			MsgBoxAssert("텍스처 로드에 실패했습니다." + std::string(_Path.data()));
+		}
+	}
+	else if (Ext == ".TGA")
+	{
+		if (S_OK != DirectX::LoadFromTGAFile(wPath.c_str(), DirectX::TGA_FLAGS_NONE, &Data, Image))
+		{
+			MsgBoxAssert("텍스처 로드에 실패했습니다." + std::string(_Path.data()));
+		}
+
+	}
+	else if (S_OK != DirectX::LoadFromWICFile(wPath.c_str(), DirectX::WIC_FLAGS_NONE, &Data, Image))
+	{
+		MsgBoxAssert("텍스처 로드에 실패했습니다." + std::string(_Path.data()));
+	}
+
+	if (S_OK != DirectX::CreateShaderResourceView
+	(
+		GameEngineCore::GetDevice(),
+		Image.GetImages(),
+		Image.GetImageCount(),
+		Image.GetMetadata(),
+		&SRV
+	))
+	{
+		MsgBoxAssert("텍스처 로드에 실패했습니다." + std::string(_Path.data()));
+	}
+
+	Desc.Width = static_cast<UINT>(Data.width);
+	Desc.Height = static_cast<UINT>(Data.height);
+}
+
+void GameEngineTexture::VSSetting(UINT _Slot)
+{
+	GameEngineCore::GetContext()->VSSetShaderResources(_Slot, 1, &SRV);
+}
+
+void GameEngineTexture::PSSetting(UINT _Slot)
+{
+	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &SRV);
 }

@@ -135,7 +135,7 @@ void GameEngineRenderer::ResSetting()
 	////////////////
 
 	//////////////// PixelShader
-	std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("ColorShader_PS");
+	std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("TextureShader_PS");
 	if (nullptr != PixelShader)
 	{
 		PixelShader->Setting();

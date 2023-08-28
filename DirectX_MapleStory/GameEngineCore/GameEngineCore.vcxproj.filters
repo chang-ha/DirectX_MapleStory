@@ -127,6 +127,9 @@
     <ClInclude Include="ThirdParty\DirectXTex\inc\DirectXTex.h">
       <Filter>ThirdParty\inc</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineSampler.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -207,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineTransform.cpp">
       <Filter>Object\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineSampler.cpp">
+      <Filter>Resources\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

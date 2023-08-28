@@ -27,6 +27,10 @@ void GameEnginePath::SetCurrentPath()
 	Path = std::filesystem::current_path();
 }
 
+std::string GameEnginePath::GetExtension()
+{
+	return Path.extension().string();
+}
 
 void GameEnginePath::MoveParent() 
 {

@@ -24,12 +24,14 @@ public:
 	void MoveParentToExistsChild(std::string_view _ChildPath);
 	void MoveChild(std::string_view _ChildPath);
 
-	std::string PlusFilePath(std::string_view _ChildPath);
-
 	std::string GetStringPath() 
 	{
 		return Path.string();
 	}
+
+	std::string PlusFilePath(std::string_view _ChildPath);
+
+	std::string GetExtension();
 
 	bool IsDirectory();
 
