@@ -2,8 +2,6 @@
 #include "TitleLevel.h"
 #include "Player.h"
 
-#include <GameEngineCore\GameEngineSprite.h>
-
 TitleLevel::TitleLevel()
 {
 
@@ -40,5 +38,16 @@ void TitleLevel::Start()
 
 void TitleLevel::Update(float _Delta)
 {
-	int a = 0;
+	if (GameEngineInput::IsPress(VK_F2))
+	{
+		GameEngineCore::ChangeLevel("PlayLevel");
+	}
+}
+
+void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
+{
+}
+
+void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
+{
 }

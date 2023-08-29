@@ -11,6 +11,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="PlayLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MapleStoryCore.h" />
@@ -22,6 +25,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayLevel.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
