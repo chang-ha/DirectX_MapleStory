@@ -83,7 +83,7 @@ void GameEngineCore::Release()
 void GameEngineCore::EngineProcess(HINSTANCE _Inst, const std::string& _WindowName, float4 _Pos, float4 _Size)
 {
 	// 릭체크 해주고
-	GameEngineDebug::LeckCheck();
+	GameEngineDebug::LeakCheck();
 
 	// 윈도우 만들고
 	MainWindow.Open(_WindowName, _Inst);

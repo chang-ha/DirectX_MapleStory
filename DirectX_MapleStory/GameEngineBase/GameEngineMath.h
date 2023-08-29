@@ -387,7 +387,7 @@ public:
 
 	// GetUnitVectorFromDeg(45)
 
-	static float4 LerpClimp(const float4& Start, const float4& _End, float _Ratio)
+	static float4 LerpClamp(const float4& Start, const float4& _End, float _Ratio)
 	{
 		if (1.0f <= _Ratio)
 		{
