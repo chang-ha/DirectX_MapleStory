@@ -29,7 +29,7 @@ void TitleLevel::Start()
 			GameEngineFile& File = Files[i];
 			GameEngineTexture::Load(File.GetStringPath());
 		}
-		GameEngineSprite::CreateCut("TestPlayer.png", 9, 1);
+		GameEngineSprite::CreateCut("TestPlayer.png", 6, 6);
 	}
 
 	GetMainCamera()->Transform.SetLocalPosition({ 0.0f, 0.0f, -500.0f });

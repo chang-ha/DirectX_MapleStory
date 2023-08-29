@@ -42,7 +42,7 @@ public:
 		return Res;
 	}
 
-	void Setting();
+	void Setting(UINT _Slot);
 
 	template<typename DataType>
 	void ChangeData(const DataType& _Data)

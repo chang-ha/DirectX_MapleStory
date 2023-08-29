@@ -22,7 +22,8 @@ protected:
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
 
 private:
+	int Index = 0;
 	std::shared_ptr<GameEngineSprite> Sprite;
-	SpriteDataInfo CurSprite;
+	SpriteData CurSprite;
 };
 

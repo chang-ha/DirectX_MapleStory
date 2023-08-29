@@ -1,11 +1,11 @@
 #pragma once
 #include "GameEngineTexture.h"
 
-class SpriteDataInfo
+class SpriteData
 {
 public:
 	std::shared_ptr<GameEngineTexture> Texture;
-	float4 SpriteData;
+	float4 SpritePivot;
 	float4 GetScale();
 };
 
@@ -45,12 +45,12 @@ public:
 		return NewRes;
 	}
 
-	const SpriteDataInfo& GetSpriteData(unsigned int _Index);
+	SpriteData GetSpriteData(unsigned int _Index);
 
 protected:
 	void ResCreateCut(std::string_view _Name, unsigned int _X, unsigned int _Y);
 
 private:
-	std::vector<SpriteDataInfo> SpriteDatas;
+	std::vector<SpriteData> SpriteDatas;
 };
 

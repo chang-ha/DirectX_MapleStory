@@ -50,6 +50,14 @@ public:
 			float W;
 		};
 
+		struct
+		{
+			float Pos2DX;
+			float Pos2DY;
+			float Scale2DX;
+			float Scale2DY;
+		};
+
 		float Arr2D[1][4];
 		DirectX::XMVECTOR DirectXVector;
 	};

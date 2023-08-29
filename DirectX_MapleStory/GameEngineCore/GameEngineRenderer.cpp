@@ -97,7 +97,7 @@ void GameEngineRenderer::ResSetting()
 	{
 		const TransformData& Data = Transform.GetConstTransformDataRef();
 		ConstantBuffer->ChangeData(Data);
-		ConstantBuffer->Setting();
+		ConstantBuffer->Setting(0);
 	}
 
 	////////////////

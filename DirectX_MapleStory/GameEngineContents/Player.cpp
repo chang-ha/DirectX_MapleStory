@@ -4,9 +4,9 @@
 #include "PreCompile.h"
 
 #include <GameEngineCore/GameEngineRenderer.h>
+#include <GameEngineCore/GameEngineSpriteRenderer.h>
 
 #include "Player.h"
-#include <GameEngineCore/GameEngineSpriteRenderer.h>
 
 Player::Player() 
 {
