@@ -15,7 +15,10 @@ struct PixelOutPut
 
 cbuffer SpriteData : register(b1)
 {
-    float4 Sprite;
+    float Pos2DX;
+    float Pos2DY;
+    float Scale2DX;
+    float Scale2DY;
 };
 
 PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
@@ -25,13 +28,8 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 
     Result.POSITION = mul(_Input.POSITION, WorldViewProjectionMatrix);
 
-    float SizeX = 1.0f / 6.0f;
-    float SizeY = 1.0f / 6.0f;
-    float StartX = SizeX * 5.0f;
-    float StartY = SizeY * 0.0f;
-    
-    Result.TEXCOORD.x = (_Input.TEXCOORD.x * SizeX) + StartX;
-    Result.TEXCOORD.y = (_Input.TEXCOORD.y * SizeY) + StartY;
+    Result.TEXCOORD.x = (_Input.TEXCOORD.x * Scale2DX) + Pos2DX;
+    Result.TEXCOORD.y = (_Input.TEXCOORD.y * Scale2DY) + Pos2DY;
     
     return Result;
 }

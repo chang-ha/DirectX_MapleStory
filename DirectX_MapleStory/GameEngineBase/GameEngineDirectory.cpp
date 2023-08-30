@@ -79,3 +79,31 @@ std::vector<GameEngineFile> GameEngineDirectory::GetAllFile(std::vector<std::str
 
 	return Result;
 }
+
+std::vector<GameEngineDirectory> GameEngineDirectory::GetAllDirectory()
+{
+	std::vector<GameEngineDirectory> Result;
+	RecursiveAllDirectory(Path.string(), Result);
+	return Result;
+}
+
+void GameEngineDirectory::RecursiveAllDirectory(std::string _Path, std::vector<GameEngineDirectory>& _Result)
+{
+	std::filesystem::directory_iterator DirIter = std::filesystem::directory_iterator(_Path);
+
+	for (const std::filesystem::directory_entry& Entry : DirIter)
+	{
+		std::filesystem::path Path = Entry.path();
+		// std::filesystem::path Ext = Entry.path().extension();
+
+		if (true == Entry.is_directory())
+		{
+			// emplace_back은 메모리 크기 예약 개념이라고 보면 됨
+			GameEngineDirectory& Dir = _Result.emplace_back();
+			Dir.Path = Path;
+			RecursiveAllDirectory(Path.string(), _Result);
+		}
+	}
+
+	return;
+}

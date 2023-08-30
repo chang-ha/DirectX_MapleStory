@@ -55,3 +55,22 @@ SpriteData GameEngineSprite::GetSpriteData(unsigned int _Index)
 
 	return SpriteDatas[_Index];
 }
+
+void GameEngineSprite::ResCreateFolder(std::string_view _Path)
+{
+	GameEngineDirectory Dir = _Path;
+	std::vector<GameEngineFile> Files = Dir.GetAllFile();
+	SpriteDatas.resize(Files.size());
+
+	for (size_t i = 0; i < Files.size(); i++)
+	{
+		GameEngineFile& File = Files[i];
+		std::shared_ptr<GameEngineTexture> Texture = GameEngineTexture::Load(File.GetStringPath());
+		SpriteDatas[i].Texture = Texture;
+		// Because use Image Original Size
+		// Not Cut Image
+		// Z = float Scale2DX;
+		// W = float Scale2DY;
+		SpriteDatas[i].SpritePivot = float4(0, 0, 1.0f, 1.0f);
+	}
+}

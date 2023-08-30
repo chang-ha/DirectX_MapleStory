@@ -24,9 +24,17 @@ public:
 	GameEngineSprite& operator=(GameEngineSprite&& _Other) noexcept = delete;
 
 	// 폴더에 있는 이미지를 전부 불러옴
-	static std::shared_ptr<GameEngineSprite> CreateFolder()
+	static std::shared_ptr<GameEngineSprite> CreateFolder(std::string_view _Path)
 	{
-		std::shared_ptr<GameEngineSprite> NewRes = CreateRes();
+		GameEngineDirectory Dir = _Path;
+
+		return CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+
+	static std::shared_ptr<GameEngineSprite> CreateFolder(std::string_view _Name, std::string_view _Path)
+	{
+		std::shared_ptr<GameEngineSprite> NewRes = CreateRes(_Name);
+		NewRes->ResCreateFolder(_Path);
 		return NewRes;
 	}
 
@@ -45,10 +53,17 @@ public:
 		return NewRes;
 	}
 
+	// Get 함수
 	SpriteData GetSpriteData(unsigned int _Index);
+
+	unsigned int GetSpriteCount()
+	{
+		return static_cast<unsigned int>(SpriteDatas.size());
+	}
 
 protected:
 	void ResCreateCut(std::string_view _Name, unsigned int _X, unsigned int _Y);
+	void ResCreateFolder(std::string_view _Path);
 
 private:
 	std::vector<SpriteData> SpriteDatas;

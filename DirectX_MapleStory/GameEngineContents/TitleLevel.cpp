@@ -25,15 +25,16 @@ void TitleLevel::Start()
 		for (size_t i = 0; i < Files.size(); i++)
 		{
 			GameEngineFile& File = Files[i];
-			GameEngineTexture::Load(File.GetStringPath());
+			GameEngineTexture::Load(File.GetStringPath(), "Test1");
 		}
-		GameEngineSprite::CreateCut("TestPlayer.png", 6, 6);
+		GameEngineSprite::CreateCut("Test1", 6, 6);
 	}
 
 	GetMainCamera()->Transform.SetLocalPosition({ 0.0f, 0.0f, -500.0f });
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Perspective);
 
 	std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
+	NewPlayer->TestInit("Test1", 0, 35);
 }
 
 void TitleLevel::Update(float _Delta)

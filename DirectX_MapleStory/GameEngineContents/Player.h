@@ -16,10 +16,11 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+	void TestInit(std::string_view _SpriteName, UINT _Start, UINT _End);
+
 protected:
 	void Start();
 	void Update(float _Delta);
-
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 };
