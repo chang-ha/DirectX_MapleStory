@@ -1,4 +1,11 @@
 #pragma once
+#define IDLE_ANI_SPEED 0.5f
+#define WALK_ANI_SPEED 0.15f
+#define SHOOT1_ANI_SPEED 0.2f
+#define ROPE_ANI_SPEED 0.2f
+#define ATT_ANI_SPEED 0.3f
+#define DOWN_ATT_ANI_SPEED 0.5f
+
 #include "ContentActor.h"
 
 class Player : public ContentActor

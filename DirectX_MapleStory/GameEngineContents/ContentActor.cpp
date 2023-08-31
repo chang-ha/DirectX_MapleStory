@@ -1,5 +1,5 @@
-﻿#include "ContentActor.h"
-
+﻿#include "PreCompile.h"
+#include "ContentActor.h"
 
 ContentActor::ContentActor()
 {
