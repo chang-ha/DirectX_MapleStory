@@ -21,6 +21,7 @@ GameEngineLevel* GameEngineActor::GetLevel()
 
 void GameEngineActor::ComponentInit(std::shared_ptr<GameEngineComponent> _Component, int _Order)
 {
+	_Component->SetOrder(_Order);
 	_Component->SetParent(this, _Order);
 	_Component->Start();
 }

@@ -34,6 +34,7 @@ public:
 	static const float4 FORWARD;
 	static const float4 BACKWARD;
 
+	static const float4 WHITE;
 	static const float4 RED;
 	static const float4 GREEN;
 	static const float4 BLUE;
@@ -50,6 +51,14 @@ public:
 			float W;
 		};
 
+		struct
+		{
+			float R;
+			float G;
+			float B;
+			float A;
+		};
+		
 		struct
 		{
 			float Pos2DX;
@@ -82,6 +91,16 @@ public:
 	inline int iY() const
 	{
 		return static_cast<int>(Y);
+	}
+
+	inline UINT uiX() const
+	{
+		return static_cast<unsigned int>(X);
+	}
+
+	inline UINT uiY() const
+	{
+		return static_cast<unsigned int>(Y);
 	}
 
 	inline float hX() const

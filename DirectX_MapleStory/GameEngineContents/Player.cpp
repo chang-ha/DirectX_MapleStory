@@ -3,11 +3,10 @@
 
 #include "PreCompile.h"
 
-#include <GameEngineCore/GameEngineRenderer.h>
-#include <GameEngineCore/GameEngineSpriteRenderer.h>
-#include <GameEngineCore\GameEngineSprite.h>
+#include <GameEngineCore\GameEngineCamera.h>
 
 #include "Player.h"
+#include "ContentLevel.h"
 
 Player::Player() 
 {
@@ -21,7 +20,7 @@ Player::~Player()
 void Player::Start()
 {
 	ContentActor::Start();
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>();
+	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(static_cast<int>(RenderOrder::Play));
 
 	{
 		GameEngineDirectory Dir;
@@ -55,26 +54,32 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
+	float4 CurPos = Transform.GetWorldPosition();
+	CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -500.0f});
 	float Speed = 100.0f;
 
-	if (GameEngineInput::IsPress('A'))
+	if (GameEngineInput::IsPress(VK_LEFT))
 	{
 		Transform.AddLocalPosition(float4::LEFT * _Delta * Speed);
 	}
 
-	if (GameEngineInput::IsPress('D'))
+	if (GameEngineInput::IsPress(VK_RIGHT))
 	{
 		Transform.AddLocalPosition(float4::RIGHT * _Delta * Speed);
 	}
 
-	if (GameEngineInput::IsPress('W'))
+	if (GameEngineInput::IsPress(VK_UP))
 	{
-		Transform.AddLocalPosition(float4::UP * _Delta * Speed);
+		// Transform.AddLocalPosition(float4::UP * _Delta * Speed);
 	}
 
-	if (GameEngineInput::IsPress('S'))
+	if (GameEngineInput::IsPress(VK_DOWN))
 	{
-		Transform.AddLocalPosition(float4::DOWN * _Delta * Speed);
+		MainSpriteRenderer->ChangeAnimation("Down");
+	}
+	else if (GameEngineInput::IsUp(VK_DOWN))
+	{
+		MainSpriteRenderer->ChangeAnimation("Idle");
 	}
 
 	if (GameEngineInput::IsPress('Q'))
@@ -132,13 +137,8 @@ void Player::Update(float _Delta)
 		MainSpriteRenderer->ChangeAnimation("Down_Attack");
 	}
 
-	if (GameEngineInput::IsDown(VK_MENU))
+	if (GameEngineInput::IsDown('D'))
 	{
 		MainSpriteRenderer->ChangeAnimation("Jump");
-	}
-
-	if (GameEngineInput::IsDown(VK_DOWN))
-	{
-		MainSpriteRenderer->ChangeAnimation("Down");
 	}
 }

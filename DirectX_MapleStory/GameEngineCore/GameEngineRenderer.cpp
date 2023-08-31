@@ -47,7 +47,7 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 		return;
 	}
 
-	Camera->Renderers[_Order].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
+	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
 	ViewInfo[Camera.get()] = _Order;
 }
 

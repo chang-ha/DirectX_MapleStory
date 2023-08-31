@@ -22,6 +22,9 @@
     <ClCompile Include="ContentActor.cpp">
       <Filter>Actor\Core</Filter>
     </ClCompile>
+    <ClCompile Include="ContentMap.cpp">
+      <Filter>Actor\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -46,6 +49,9 @@
       <Filter>Actor\Global</Filter>
     </ClInclude>
     <ClInclude Include="ContentActor.h">
+      <Filter>Actor\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentMap.h">
       <Filter>Actor\Core</Filter>
     </ClInclude>
   </ItemGroup>

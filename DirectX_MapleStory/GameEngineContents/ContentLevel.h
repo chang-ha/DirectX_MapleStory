@@ -2,6 +2,7 @@
 #include <GameEngineCore\GameEngineLevel.h>
 
 // Ό³Έν :
+class ContentMap;
 class ContentLevel : public GameEngineLevel
 {
 public:
@@ -15,6 +16,11 @@ public:
 	ContentLevel& operator=(const ContentLevel& _Other) = delete;
 	ContentLevel& operator=(ContentLevel&& _Other) noexcept = delete;
 
+	std::shared_ptr<ContentMap> GetCurMap()
+	{
+		return CurMap;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -22,6 +28,7 @@ protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
+	std::shared_ptr<ContentMap> CurMap = nullptr;
 private:
 
 };

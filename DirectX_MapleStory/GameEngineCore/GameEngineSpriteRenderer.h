@@ -35,6 +35,11 @@ public:
 	GameEngineSpriteRenderer& operator=(const GameEngineSpriteRenderer& _Other) = delete;
 	GameEngineSpriteRenderer& operator=(GameEngineSpriteRenderer&& _Other) noexcept = delete;
 
+	inline void SetAutoScaleRatio(float _Ratio)
+	{
+		AutoScaleRatio = _Ratio;
+	}
+
 	void SetSprite(std::string_view _Name, unsigned int Index = 0);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, float _Inter = 0.1f, unsigned int _Start = -1, unsigned int _End = -1, bool _Loop = true);
 	void ChangeAnimation(std::string_view _AnimationName);
@@ -53,6 +58,7 @@ private:
 
 	/////////// Animation Member
 	bool IsImageSize = false; // Rendering ImageSize
+	float AutoScaleRatio = 1.0f; // Rendering ScaleRation
 	std::shared_ptr<GameEngineFrameAnimation> CurFrameAnimations;
 	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>> FrameAnimations;
 };
