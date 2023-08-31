@@ -31,7 +31,7 @@ void PlayLevel::Start()
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Perspective);
 
 	std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
-	NewPlayer->TestInit("Test2", -1, -1);
+	// NewPlayer->TestInit("Test2", -1, -1);
 
 }
 

@@ -5,6 +5,7 @@
 
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
+#include <GameEngineCore\GameEngineSprite.h>
 
 #include "Player.h"
 
@@ -20,6 +21,23 @@ Player::~Player()
 void Player::Start()
 {
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>();
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Character");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& ChildDir = Directorys[i];
+			GameEngineSprite::CreateFolder(ChildDir.GetStringPath());
+		}
+	}
+
+	MainSpriteRenderer->CreateAnimation("Idle", "Idle", 0.5f);
+	MainSpriteRenderer->ChangeAnimation("Idle"); 
+	MainSpriteRenderer->AutoSpriteSizeOn();
 }
 
 void Player::Update(float _Delta)

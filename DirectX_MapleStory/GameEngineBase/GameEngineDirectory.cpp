@@ -26,7 +26,6 @@ GameEngineDirectory::GameEngineDirectory(std::string_view _path)
 // 
 std::vector<GameEngineFile> GameEngineDirectory::GetAllFile(std::vector<std::string> _Ext) 
 {
-
 	std::filesystem::directory_iterator DirIter = std::filesystem::directory_iterator(Path);
 
 	std::vector<std::string> UpperFilter;

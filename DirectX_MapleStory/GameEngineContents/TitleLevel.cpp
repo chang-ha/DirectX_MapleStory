@@ -34,7 +34,7 @@ void TitleLevel::Start()
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Perspective);
 
 	std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
-	NewPlayer->TestInit("Test1", 0, 35);
+	// NewPlayer->TestInit("Test1", 0, 35);
 }
 
 void TitleLevel::Update(float _Delta)
