@@ -20,6 +20,7 @@ Player::~Player()
 
 void Player::Start()
 {
+	ContentActor::Start();
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>();
 
 	{
@@ -42,6 +43,7 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
+	ContentActor::Update(_Delta);
 	float Speed = 100.0f;
 
 	if (GameEngineInput::IsPress('A'))

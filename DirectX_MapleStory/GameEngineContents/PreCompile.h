@@ -11,3 +11,4 @@
 // Rendering
 #include <GameEngineCore/GameEngineRenderer.h>
 #include <GameEngineCore/GameEngineSprite.h>
+#include <GameEngineCore\GameEngineSpriteRenderer.h>

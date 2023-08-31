@@ -171,6 +171,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ContentActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ContentLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MapleStoryCore.cpp">
       <SubType>
       </SubType>
@@ -196,6 +204,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ContentActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ContentEnum.h" />
+    <ClInclude Include="ContentLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MapleStoryCore.h">
       <SubType>
       </SubType>

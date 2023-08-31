@@ -1,7 +1,7 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
+#include "ContentLevel.h"
 
-class TitleLevel : public GameEngineLevel
+class TitleLevel : public ContentLevel
 {
 public:
 	// constructer destructer

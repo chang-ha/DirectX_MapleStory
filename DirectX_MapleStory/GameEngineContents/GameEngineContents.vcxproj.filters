@@ -1,33 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="MapleStoryCore.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="MapleStoryCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentLevel.cpp">
+      <Filter>Level\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Global</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentActor.cpp">
+      <Filter>Actor\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MapleStoryCore.h" />
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="PlayLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentEnum.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="MapleStoryCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentLevel.h">
+      <Filter>Level\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentActor.h">
+      <Filter>Actor\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +58,21 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{29686895-0276-4b14-b5e6-d934b2ffb772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{58f17629-03a3-4a80-8f55-b552f165d41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Core">
+      <UniqueIdentifier>{3a42b00d-1ff1-4e2d-9d42-76d5309435f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor">
+      <UniqueIdentifier>{f9c9bcd2-c7c9-43f3-a6c6-c217934d2f02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global">
+      <UniqueIdentifier>{9adc8a88-6577-4c75-9691-de3e25d825de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Core">
+      <UniqueIdentifier>{235a7afc-badc-4ac2-8e10-884433bb746f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

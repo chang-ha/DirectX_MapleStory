@@ -1,9 +1,7 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+#include "ContentActor.h"
 
-class GameEngineSpriteRenderer;
-// Ό³Έν :
-class Player : public GameEngineActor
+class Player : public ContentActor
 {
 public:
 	// constrcuter destructer
@@ -17,10 +15,9 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 protected:
-	void Start();
-	void Update(float _Delta);
+	void Start() override;
+	void Update(float _Delta) override;
 
 private:
-	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 };
 
