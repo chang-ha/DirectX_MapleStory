@@ -74,10 +74,3 @@ void Player::Update(float _Delta)
 		Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
 	}
 }
-
-void Player::TestInit(std::string_view _SpriteName, UINT _Start, UINT _End)
-{
-	MainSpriteRenderer->CreateAnimation("Run", _SpriteName, 0.1f, _Start, _End, true);
-	MainSpriteRenderer->ChangeAnimation("Run");
-	MainSpriteRenderer->AutoSpriteSizeOn();
-}
