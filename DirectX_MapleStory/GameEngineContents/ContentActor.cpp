@@ -3,6 +3,7 @@
 #include "ContentLevel.h"
 #include "ContentMap.h"
 
+#define AIR_RES_SPEED 150.0f
 ContentActor::ContentActor()
 {
 
@@ -22,6 +23,7 @@ void ContentActor::Start()
 void ContentActor::Update(float _Delta)
 {
 	Gravity(_Delta);
+	AirResistence(_Delta);
 }
 
 void ContentActor::Gravity(float _Delta)
@@ -31,15 +33,47 @@ void ContentActor::Gravity(float _Delta)
 		return;
 	}
 
-	GameEngineColor GroundColor = CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
+	GravityForce.Y -= _Delta * GravitySpeed;
+	Transform.AddLocalPosition(GravityForce * _Delta);
 
-	if (GameEngineColor(255, 255, 255, 255) != GroundColor)
+	GameEngineColor GroundColor = CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
+	if (GameEngineColor(255, 255, 255, 255) == GroundColor && GravityForce.Y <= 0.0f)
 	{
-		GravityForce.Y -= _Delta * 100.0f;
-		Transform.AddLocalPosition(GravityForce * _Delta);
+		GravityReset();
 	}
-	else
+
+	//if (GameEngineColor(255, 255, 255, 255) != GroundColor)
+	//{
+	//	GravityForce.Y -= _Delta * GravitySpeed;
+	//	Transform.AddLocalPosition(GravityForce * _Delta);
+	//}
+	//else
+	//{
+	//	GravityReset();
+	//}
+}
+
+void ContentActor::AirResistence(float _Delta)
+{
+	if (0 == GravityForce.Y)
 	{
-		GravityForce = 0.0f;
+		return;
+	}
+
+	if (0 > GravityForce.X)
+	{
+		GravityForce.X += AIR_RES_SPEED * _Delta;
+		if (0 <= GravityForce.X)
+		{
+			GravityForce.X = 0.0f;
+		}
+	}
+	else if (0 < GravityForce.X)
+	{
+		GravityForce.X -= AIR_RES_SPEED * _Delta;
+		if (0 >= GravityForce.X)
+		{
+			GravityForce.X = 0.0f;
+		}
 	}
 }

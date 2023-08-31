@@ -22,6 +22,7 @@ void Player::Start()
 	ContentActor::Start();
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(static_cast<int>(RenderOrder::Play));
 
+	if (nullptr == GameEngineSprite::Find("Idle"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
@@ -35,110 +36,144 @@ void Player::Start()
 		}
 	}
 
-	MainSpriteRenderer->CreateAnimation("Idle", "Idle", IDLE_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Alert", "Alert", IDLE_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Walk", "Walk", WALK_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Shoot1", "Shoot1", SHOOT1_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Rope", "Rope", ROPE_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Ladder", "Ladder", ROPE_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Attack1", "Attack1", ATT_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Attack2", "Attack2", ATT_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Attack3", "Attack3", ATT_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Down_Attack", "Down_Attack", DOWN_ATT_ANI_SPEED);
-	MainSpriteRenderer->CreateAnimation("Down", "Down");
-	MainSpriteRenderer->CreateAnimation("Jump", "Jump");
+	// if (nullptr == GameEngineSpriteRenderer::FindAnimation("Idle"))
+	{
+		MainSpriteRenderer->CreateAnimation("Idle", "Idle", IDLE_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Alert", "Alert", IDLE_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Walk", "Walk", WALK_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Shoot", "Shoot1", SHOOT1_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Shooting", "Shoot1", 0.1f, 1, 1);
+		MainSpriteRenderer->CreateAnimation("Rope", "Rope", ROPE_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Ladder", "Ladder", ROPE_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Attack1", "Attack1", ATT_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Attack2", "Attack2", ATT_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Attack3", "Attack3", ATT_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Down_Attack", "Down_Attack", DOWN_ATT_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Down", "Down");
+		MainSpriteRenderer->CreateAnimation("Jump", "Jump");
+	}
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
+	State = PlayerState::Idle;
 }
 
 void Player::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
+	StateUpdate(_Delta);
 	float4 CurPos = Transform.GetWorldPosition();
-	CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -500.0f});
-	float Speed = 100.0f;
-
-	if (GameEngineInput::IsPress(VK_LEFT))
-	{
-		Transform.AddLocalPosition(float4::LEFT * _Delta * Speed);
-	}
-
-	if (GameEngineInput::IsPress(VK_RIGHT))
-	{
-		Transform.AddLocalPosition(float4::RIGHT * _Delta * Speed);
-	}
+	CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -1.0f});
 
 	if (GameEngineInput::IsPress(VK_UP))
 	{
 		// Transform.AddLocalPosition(float4::UP * _Delta * Speed);
 	}
 
-	if (GameEngineInput::IsPress(VK_DOWN))
+	//if (GameEngineInput::IsPress('Q'))
+	//{
+	//	Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
+	//}
+
+	//if (GameEngineInput::IsPress('E'))
+	//{
+	//	Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
+	//}
+
+	//if (GameEngineInput::IsDown('1'))
+	//{
+	//}
+
+	//if (GameEngineInput::IsDown('2'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Walk");
+	//}
+
+	//if (GameEngineInput::IsDown('3'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Shoot1");
+	//}
+
+	//if (GameEngineInput::IsDown('4'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Rope");
+	//}
+
+	//if (GameEngineInput::IsDown('5'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Ladder");
+	//}
+
+	//if (GameEngineInput::IsDown('6'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Attack1");
+	//}
+
+	//if (GameEngineInput::IsDown('7'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Attack2");
+	//}
+
+	//if (GameEngineInput::IsDown('8'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Attack3");
+	//}
+
+	//if (GameEngineInput::IsDown('9'))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Down_Attack");
+	//}
+
+
+}
+
+void Player::ChangeState(PlayerState _State)
+{
+	if (_State != State)
 	{
-		MainSpriteRenderer->ChangeAnimation("Down");
-	}
-	else if (GameEngineInput::IsUp(VK_DOWN))
-	{
-		MainSpriteRenderer->ChangeAnimation("Idle");
+		switch (_State)
+		{
+		case PlayerState::Idle:
+			IdleStart();
+			break;
+		case PlayerState::Alert:
+			AlertStart();
+			break;
+		case PlayerState::Walk:
+			WalkStart();
+			break;
+		case PlayerState::Jump:
+			JumpStart();
+			break;
+		case PlayerState::Down:
+			DownStart();
+			break;
+		case PlayerState::Null:
+		default:
+			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
+			break;
+		}
 	}
 
-	if (GameEngineInput::IsPress('Q'))
-	{
-		Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
-	}
+	State = _State;
+}
 
-	if (GameEngineInput::IsPress('E'))
+void Player::StateUpdate(float _Delta)
+{
+	switch (State)
 	{
-		Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
-	}
-
-	if (GameEngineInput::IsDown('1'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Idle");
-	}
-
-	if (GameEngineInput::IsDown('2'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Walk");
-	}
-
-	if (GameEngineInput::IsDown('3'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Shoot1");
-	}
-
-	if (GameEngineInput::IsDown('4'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Rope");
-	}
-
-	if (GameEngineInput::IsDown('5'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Ladder");
-	}
-
-	if (GameEngineInput::IsDown('6'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Attack1");
-	}
-
-	if (GameEngineInput::IsDown('7'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Attack2");
-	}
-
-	if (GameEngineInput::IsDown('8'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Attack3");
-	}
-
-	if (GameEngineInput::IsDown('9'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Down_Attack");
-	}
-
-	if (GameEngineInput::IsDown('D'))
-	{
-		MainSpriteRenderer->ChangeAnimation("Jump");
+	case PlayerState::Idle:
+		return IdleUpdate(_Delta);
+	case PlayerState::Alert:
+		return AlertUpdate(_Delta);
+	case PlayerState::Walk:
+		return WalkUpdate(_Delta);
+	case PlayerState::Jump:
+		return JumpUpdate(_Delta);
+	case PlayerState::Down:
+		return DownUpdate(_Delta);
+	case PlayerState::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
+		break;
 	}
 }

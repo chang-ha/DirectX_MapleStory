@@ -25,6 +25,9 @@
     <ClCompile Include="ContentMap.cpp">
       <Filter>Actor\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
