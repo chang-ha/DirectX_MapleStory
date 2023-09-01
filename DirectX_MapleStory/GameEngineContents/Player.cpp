@@ -22,6 +22,7 @@ void Player::Start()
 {
 	ContentActor::Start();
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(static_cast<int>(RenderOrder::Play));
+	MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
 	if (nullptr == GameEngineSprite::Find("Idle"))
 	{
