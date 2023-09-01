@@ -33,6 +33,24 @@ public:
 		return FindIter->second;
 	}
 
+	// 이름으로 로드한 애는 지울수 있습니다.
+	static void Release(std::string_view _Name)
+	{
+		std::string UpperName = GameEngineString::ToUpperReturn(_Name);
+
+		// 템플릿으로 다른 템플릿을 사용할때도 꼬일때가 있다.
+		// 꼬인거 풀려면 템플릿 안에서 다른 템플릿 사용할때 typename을 앞에 붙여주면 된다.
+		typename std::map<std::string, std::shared_ptr<ResourcesType>>::iterator FindIter = NameRes.find(UpperName);
+
+		if (FindIter == NameRes.end())
+		{
+			MsgBoxAssert("존재하지도 않는 리소스를 지우려고 했습니다.");
+			return;
+		}
+
+		return NameRes.erase(FindIter);
+	}
+
 	void SetName(std::string_view _Name)
 	{
 		Name = _Name;

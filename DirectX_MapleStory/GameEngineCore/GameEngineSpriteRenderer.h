@@ -73,7 +73,10 @@ public:
 	void SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function);
-
+	
+	void AnimationPauseSwitch();
+	void AnimationPauseOn();
+	void AnimationPauseOff();
 protected:
 	void Update(float _Delta) override;
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
@@ -85,6 +88,7 @@ private:
 	SpriteData CurSprite;
 
 	/////////// Animation Member
+	bool IsPause = false;
 	bool IsImageSize = false; // Rendering ImageSize
 	float AutoScaleRatio = 1.0f; // Rendering ScaleRation
 	std::shared_ptr<GameEngineFrameAnimation> CurFrameAnimations;
