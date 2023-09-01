@@ -22,17 +22,20 @@ void Player::WalkStart()
 void Player::JumpStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Jump");
-	if (GameEngineInput::IsPress(VK_LEFT))
+	if (true == IsGround)
 	{
-		PlusGravity(float4(-JUMP_ACC, JUMP_HEIGHT));
-	}
-	else if (GameEngineInput::IsPress(VK_RIGHT))
-	{
-		PlusGravity(float4(JUMP_ACC, JUMP_HEIGHT));
-	}
-	else
-	{
-		PlusGravity(float4(0, JUMP_HEIGHT));
+		if (GameEngineInput::IsPress(VK_LEFT))
+		{
+			PlusGravity(float4(-JUMP_ACC, JUMP_HEIGHT));
+		}
+		else if (GameEngineInput::IsPress(VK_RIGHT))
+		{
+			PlusGravity(float4(JUMP_ACC, JUMP_HEIGHT));
+		}
+		else
+		{
+			PlusGravity(float4(0, JUMP_HEIGHT));
+		}
 	}
 }
 

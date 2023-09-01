@@ -33,12 +33,14 @@ public:
 
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
+	void CheckGround();
 
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
 private:
+	bool IsGround = true;
 	float Speed = 300.0f;
 	float AirSpeed = 100.0f;
 	PlayerState State = PlayerState::Null;

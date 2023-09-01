@@ -7,6 +7,7 @@
 
 #include "Player.h"
 #include "ContentLevel.h"
+#include "ContentMap.h"
 
 Player::Player() 
 {
@@ -61,6 +62,9 @@ void Player::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
 	StateUpdate(_Delta);
+	CheckGround();
+
+	// Camera Setting
 	float4 CurPos = Transform.GetWorldPosition();
 	CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -1.0f});
 
@@ -69,6 +73,10 @@ void Player::Update(float _Delta)
 		// Transform.AddLocalPosition(float4::UP * _Delta * Speed);
 	}
 
+	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
+	{
+		ChangeState(PlayerState::Jump);
+	}
 	//if (GameEngineInput::IsPress('Q'))
 	//{
 	//	Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
@@ -166,5 +174,18 @@ void Player::StateUpdate(float _Delta)
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
 		break;
+	}
+}
+
+void Player::CheckGround()
+{
+	GameEngineColor GroundColor = CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
+	if (GameEngineColor(255, 255, 255, 255) == GroundColor)
+	{
+		IsGround = true;
+	}
+	else
+	{
+		IsGround = false;
 	}
 }

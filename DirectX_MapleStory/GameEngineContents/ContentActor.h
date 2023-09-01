@@ -58,7 +58,7 @@ protected:
 
 private:
 	bool IsGravity = true;
-	float GravitySpeed = 700.0f;
+	float GravitySpeed = 1000.0f;
 	float4 GravityForce = float4::ZERO;
 };
 
