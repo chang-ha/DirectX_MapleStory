@@ -31,6 +31,11 @@ public:
 		GravityForce += _Force;
 	}
 
+	inline void SetGravityX(float _X)
+	{
+		GravityForce.X = _X;
+	}
+
 	inline const float4 GetGravityForce()
 	{
 		return GravityForce;
@@ -42,7 +47,7 @@ public:
 	}
 
 	void Gravity(float _Delta);
-	void AirResistence(float _Delta);
+	// void AirResistence(float _Delta);
 
 protected:
 	void Start() override;
@@ -53,7 +58,7 @@ protected:
 
 private:
 	bool IsGravity = true;
-	float GravitySpeed = 500.0f;
+	float GravitySpeed = 700.0f;
 	float4 GravityForce = float4::ZERO;
 };
 

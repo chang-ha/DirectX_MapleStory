@@ -79,15 +79,6 @@ void Player::Update(float _Delta)
 	//	Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
 	//}
 
-	//if (GameEngineInput::IsDown('1'))
-	//{
-	//}
-
-	//if (GameEngineInput::IsDown('2'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Walk");
-	//}
-
 	//if (GameEngineInput::IsDown('3'))
 	//{
 	//	MainSpriteRenderer->ChangeAnimation("Shoot1");

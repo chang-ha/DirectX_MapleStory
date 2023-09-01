@@ -1,6 +1,6 @@
 #pragma once
 #define IDLE_ANI_SPEED 0.5f
-#define WALK_ANI_SPEED 0.15f
+#define WALK_ANI_SPEED 0.1f
 #define SHOOT1_ANI_SPEED 0.2f
 #define ROPE_ANI_SPEED 0.2f
 #define ATT_ANI_SPEED 0.3f
@@ -40,7 +40,7 @@ protected:
 
 private:
 	float Speed = 300.0f;
-	float AirSpeed = 60.0f;
+	float AirSpeed = 100.0f;
 	PlayerState State = PlayerState::Null;
 
 	//////////// State 

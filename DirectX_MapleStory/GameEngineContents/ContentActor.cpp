@@ -3,7 +3,6 @@
 #include "ContentLevel.h"
 #include "ContentMap.h"
 
-#define AIR_RES_SPEED 150.0f
 ContentActor::ContentActor()
 {
 
@@ -23,7 +22,7 @@ void ContentActor::Start()
 void ContentActor::Update(float _Delta)
 {
 	Gravity(_Delta);
-	AirResistence(_Delta);
+	// AirResistence(_Delta);
 }
 
 void ContentActor::Gravity(float _Delta)
@@ -53,27 +52,27 @@ void ContentActor::Gravity(float _Delta)
 	//}
 }
 
-void ContentActor::AirResistence(float _Delta)
-{
-	if (0 == GravityForce.Y)
-	{
-		return;
-	}
-
-	if (0 > GravityForce.X)
-	{
-		GravityForce.X += AIR_RES_SPEED * _Delta;
-		if (0 <= GravityForce.X)
-		{
-			GravityForce.X = 0.0f;
-		}
-	}
-	else if (0 < GravityForce.X)
-	{
-		GravityForce.X -= AIR_RES_SPEED * _Delta;
-		if (0 >= GravityForce.X)
-		{
-			GravityForce.X = 0.0f;
-		}
-	}
-}
+//void ContentActor::AirResistence(float _Delta)
+//{
+//	if (0 == GravityForce.Y)
+//	{
+//		return;
+//	}
+//
+//	if (0 > GravityForce.X)
+//	{
+//		GravityForce.X += AIR_RES_SPEED * _Delta;
+//		if (0 <= GravityForce.X)
+//		{
+//			GravityForce.X = 0.0f;
+//		}
+//	}
+//	else if (0 < GravityForce.X)
+//	{
+//		GravityForce.X -= AIR_RES_SPEED * _Delta;
+//		if (0 >= GravityForce.X)
+//		{
+//			GravityForce.X = 0.0f;
+//		}
+//	}
+//}
