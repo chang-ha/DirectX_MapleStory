@@ -11,6 +11,8 @@ ContentLevel::~ContentLevel()
 
 }
 
+ContentLevel* ContentLevel::CurContentLevel = nullptr;
+
 void ContentLevel::Start()
 {
 
@@ -31,7 +33,7 @@ void ContentLevel::Update(float _Delta)
 
 void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	
+	CurContentLevel = this;
 }
 
 void ContentLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -10,19 +10,22 @@ ContentActor::ContentActor()
 
 ContentActor::~ContentActor()
 {
-
 }
 
 void ContentActor::Start()
 {
-	ContentLevel* CurLevel = dynamic_cast<ContentLevel*>(GetLevel());
-	CurContentLevel = std::shared_ptr<ContentLevel>(CurLevel);
+	// std::shared_ptr<GameEngineLevel> CurLevel = std::make_shared<GameEngineLevel>(GetLevel());
+	// CurContentLevel = std::dynamic_pointer_cast<ContentLevel>(CurLevel);
+	// ContentLevel* CurLevel = dynamic_cast<ContentLevel*>(GetLevel());
+	// if (nullptr != CurLevel)
+	// {
+	// 	CurContentLevel = std::make_shared<ContentLevel>(CurLevel);
+	// }
 }
 
 void ContentActor::Update(float _Delta)
 {
 	Gravity(_Delta);
-	// AirResistence(_Delta);
 }
 
 void ContentActor::Gravity(float _Delta)
@@ -32,15 +35,15 @@ void ContentActor::Gravity(float _Delta)
 		return;
 	}
 
-	GravityForce.Y -= _Delta * GravitySpeed;
-	Transform.AddLocalPosition(GravityForce * _Delta);
-
-	GameEngineColor GroundColor = CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
+	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
 	if (GameEngineColor(255, 255, 255, 255) == GroundColor && GravityForce.Y <= 0.0f)
 	{
 		GravityReset();
+		return;
 	}
 
+	GravityForce.Y -= _Delta * GravitySpeed;
+	Transform.AddLocalPosition(GravityForce * _Delta);
 	//if (GameEngineColor(255, 255, 255, 255) != GroundColor)
 	//{
 	//	GravityForce.Y -= _Delta * GravitySpeed;

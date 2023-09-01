@@ -6,6 +6,9 @@ class ContentMap;
 class ContentLevel : public GameEngineLevel
 {
 public:
+	static ContentLevel* CurContentLevel;
+
+public:
 	// constructer destructer
 	ContentLevel();
 	~ContentLevel();

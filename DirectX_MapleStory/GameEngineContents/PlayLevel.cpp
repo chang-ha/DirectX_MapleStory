@@ -13,6 +13,7 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start()
 {
+	ContentLevel::Start();
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
 	std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
@@ -27,8 +28,10 @@ void PlayLevel::Update(float _Delta)
 
 void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	ContentLevel::LevelStart(_PrevLevel);
 }
 
 void PlayLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	ContentLevel::LevelEnd(_NextLevel);
 }

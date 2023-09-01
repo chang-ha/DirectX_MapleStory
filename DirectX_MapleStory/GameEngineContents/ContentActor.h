@@ -54,7 +54,6 @@ protected:
 	void Update(float _Delta) override;
 
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
-	std::shared_ptr<ContentLevel> CurContentLevel = nullptr;
 
 private:
 	bool IsGravity = true;

@@ -15,6 +15,7 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Start()
 {
+	ContentLevel::Start();
 	GetMainCamera()->Transform.SetLocalPosition({ 0.0f, 0.0f, -500.0f });
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
@@ -28,8 +29,10 @@ void TitleLevel::Update(float _Delta)
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	ContentLevel::LevelStart(_PrevLevel);
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	ContentLevel::LevelEnd(_NextLevel);
 }

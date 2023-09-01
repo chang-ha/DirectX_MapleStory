@@ -37,7 +37,7 @@ void Player::Start()
 		}
 	}
 
-	// if (nullptr == GameEngineSpriteRenderer::FindAnimation("Idle"))
+	// Create Animation
 	{
 		MainSpriteRenderer->CreateAnimation("Idle", "Idle", IDLE_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Alert", "Alert", IDLE_ANI_SPEED);
@@ -66,7 +66,7 @@ void Player::Update(float _Delta)
 
 	// Camera Setting
 	float4 CurPos = Transform.GetWorldPosition();
-	CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -1.0f});
+	ContentLevel::CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -1.0f});
 
 	if (GameEngineInput::IsPress(VK_UP))
 	{
@@ -179,7 +179,7 @@ void Player::StateUpdate(float _Delta)
 
 void Player::CheckGround()
 {
-	GameEngineColor GroundColor = CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
+	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
 	if (GameEngineColor(255, 255, 255, 255) == GroundColor)
 	{
 		IsGround = true;
