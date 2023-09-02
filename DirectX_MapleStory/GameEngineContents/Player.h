@@ -38,11 +38,14 @@ public:
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
+	void DirCheck();
 
 private:
 	bool IsGround = true;
+	bool GroundJump = false;
 	float Speed = 300.0f;
-	float AirSpeed = 100.0f;
+	float AirSpeed = 200.0f;
+	float JumpAirSpeed = 30.0f;
 	PlayerState State = PlayerState::Null;
 
 	//////////// State 

@@ -2,7 +2,7 @@
 #include "Player.h"
 
 #define JUMP_HEIGHT 400.0f
-#define JUMP_ACC 200.0f
+#define JUMP_DISTANCE 200.0f
 // State함수들 구현
 void Player::IdleStart()
 {
@@ -26,16 +26,17 @@ void Player::JumpStart()
 	{
 		if (GameEngineInput::IsPress(VK_LEFT))
 		{
-			PlusGravity(float4(-JUMP_ACC, JUMP_HEIGHT));
+			PlusGravity(float4(-JUMP_DISTANCE, JUMP_HEIGHT));
 		}
 		else if (GameEngineInput::IsPress(VK_RIGHT))
 		{
-			PlusGravity(float4(JUMP_ACC, JUMP_HEIGHT));
+			PlusGravity(float4(JUMP_DISTANCE, JUMP_HEIGHT));
 		}
 		else
 		{
 			PlusGravity(float4(0, JUMP_HEIGHT));
 		}
+		GroundJump = true;
 	}
 }
 
@@ -96,22 +97,33 @@ void Player::JumpUpdate(float _Delta)
 	if (0.0f == GetGravityForce().Y)
 	{
 		ChangeState(PlayerState::Idle);
+		GroundJump = false;
 	}
 
-	if ((0 < GetGravityForce().X && GameEngineInput::IsFree(VK_RIGHT)) || (0 > GetGravityForce().X && GameEngineInput::IsFree(VK_LEFT)))
+	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
 	{
-		SetGravityX(0.0f);
-	}
-
-	if (GameEngineInput::IsPress(VK_LEFT))
-	{
-		// PlusGravity(float4::LEFT * _Delta * AirSpeed);
-		Transform.AddLocalPosition(float4::LEFT * _Delta * AirSpeed);
-	}
-	else if (GameEngineInput::IsPress(VK_RIGHT))
-	{
-		// PlusGravity(float4::RIGHT * _Delta * AirSpeed);
-		Transform.AddLocalPosition(float4::RIGHT * _Delta * AirSpeed);
+		float4 MoveDir = float4::ZERO;
+		switch (Dir)
+		{
+		case ActorDir::Right:
+			MoveDir = float4::RIGHT;
+			break;
+		case ActorDir::Left:
+			MoveDir = float4::LEFT;
+			break;
+		case ActorDir::Null:
+		default:
+			break;
+		}
+		switch (GroundJump)
+		{
+		case true:
+			Transform.AddLocalPosition(MoveDir * _Delta * JumpAirSpeed);
+			break;
+		case false:
+			Transform.AddLocalPosition(MoveDir * _Delta * AirSpeed);
+			break;
+		}
 	}
 }
 

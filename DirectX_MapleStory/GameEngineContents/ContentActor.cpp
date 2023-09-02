@@ -44,38 +44,4 @@ void ContentActor::Gravity(float _Delta)
 
 	GravityForce.Y -= _Delta * GravitySpeed;
 	Transform.AddLocalPosition(GravityForce * _Delta);
-	//if (GameEngineColor(255, 255, 255, 255) != GroundColor)
-	//{
-	//	GravityForce.Y -= _Delta * GravitySpeed;
-	//	Transform.AddLocalPosition(GravityForce * _Delta);
-	//}
-	//else
-	//{
-	//	GravityReset();
-	//}
 }
-
-//void ContentActor::AirResistence(float _Delta)
-//{
-//	if (0 == GravityForce.Y)
-//	{
-//		return;
-//	}
-//
-//	if (0 > GravityForce.X)
-//	{
-//		GravityForce.X += AIR_RES_SPEED * _Delta;
-//		if (0 <= GravityForce.X)
-//		{
-//			GravityForce.X = 0.0f;
-//		}
-//	}
-//	else if (0 < GravityForce.X)
-//	{
-//		GravityForce.X -= AIR_RES_SPEED * _Delta;
-//		if (0 >= GravityForce.X)
-//		{
-//			GravityForce.X = 0.0f;
-//		}
-//	}
-//}

@@ -1,6 +1,13 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+enum class ActorDir
+{
+	Null,
+	Right,
+	Left
+};
+
 class GameEngineSpriteRenderer;
 class ContentLevel;
 class ContentActor : public GameEngineActor
@@ -53,6 +60,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	ActorDir Dir = ActorDir::Null;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 
 private:

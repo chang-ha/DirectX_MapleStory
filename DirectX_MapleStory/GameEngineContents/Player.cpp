@@ -23,7 +23,9 @@ void Player::Start()
 	ContentActor::Start();
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(static_cast<int>(RenderOrder::Play));
 	MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
+	MainSpriteRenderer->Transform.SetLocalPosition({0, 40});
 
+	// Create Sprite 
 	if (nullptr == GameEngineSprite::Find("Idle"))
 	{
 		GameEngineDirectory Dir;
@@ -57,6 +59,7 @@ void Player::Start()
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
+	Dir = ActorDir::Left;
 }
 
 void Player::Update(float _Delta)
@@ -64,15 +67,11 @@ void Player::Update(float _Delta)
 	ContentActor::Update(_Delta);
 	StateUpdate(_Delta);
 	CheckGround();
+	DirCheck();
 
 	// Camera Setting
 	float4 CurPos = Transform.GetWorldPosition();
 	ContentLevel::CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -1.0f});
-
-	if (GameEngineInput::IsPress(VK_UP))
-	{
-		// Transform.AddLocalPosition(float4::UP * _Delta * Speed);
-	}
 
 	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
 	{
@@ -124,6 +123,32 @@ void Player::Update(float _Delta)
 	//}
 
 
+}
+
+void Player::DirCheck()
+{
+	ActorDir CheckDir = ActorDir::Null;
+	// bool ChangeDir = false;
+
+	if (true == GameEngineInput::IsPress(VK_LEFT))
+	{
+		CheckDir = ActorDir::Left;
+	}
+	else if (true == GameEngineInput::IsPress(VK_RIGHT))
+	{
+		CheckDir = ActorDir::Right;
+	}
+
+	if (ActorDir::Null != CheckDir)
+	{
+		Dir = CheckDir;
+		// ChangeDir = true;
+	}
+
+	//if (PlayerDir::Null != CheckDir && true == ChangeDir)
+	//{
+	//	ChangeAnimationState(CurState);
+	//}
 }
 
 void Player::ChangeState(PlayerState _State)
