@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "ContentLevel.h"
 #include "ContentMap.h"
+#include "GlobalValue.h"
 
 Player::Player() 
 {
@@ -16,6 +17,16 @@ Player::Player()
 
 Player::~Player() 
 {
+}
+
+void Player::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
+}
+
+void Player::LevelEnd(GameEngineLevel* _NextLevel)
+{
+
 }
 
 void Player::Start()
@@ -70,8 +81,32 @@ void Player::Update(float _Delta)
 	DirCheck();
 
 	// Camera Setting
-	float4 CurPos = Transform.GetWorldPosition();
-	ContentLevel::CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ CurPos.X, CurPos.Y, -1.0f});
+	{
+		float4 PlayerPos = Transform.GetWorldPosition();
+		float4 MovePos = PlayerPos;
+		// ContentLevel::CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y, -1.0f });
+		// float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();
+		// float4 MovePos = float4::ZERO;
+		// CurMapScale;
+		if (GlobalValue::WinScale.hX() >= PlayerPos.X)
+		{
+			MovePos.X = GlobalValue::WinScale.hX();
+		}
+		else if (CurMapScale.X - GlobalValue::WinScale.hX() <= PlayerPos.X)
+		{
+			MovePos.X = CurMapScale.X - GlobalValue::WinScale.hX();
+		}
+
+		if (GlobalValue::WinScale.hY() >= -PlayerPos.Y)
+		{
+			MovePos.Y = -GlobalValue::WinScale.hY();
+		}
+		else if (CurMapScale.Y - GlobalValue::WinScale.hY() <= -PlayerPos.Y)
+		{
+			MovePos.Y = -(CurMapScale.Y - GlobalValue::WinScale.hY());
+		}
+		ContentLevel::CurContentLevel->GetMainCamera()->Transform.SetLocalPosition(MovePos);
+	}
 
 	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
 	{

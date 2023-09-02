@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 
-#define JUMP_HEIGHT 400.0f
+#define JUMP_HEIGHT 500.0f
 #define JUMP_DISTANCE 200.0f
 // State함수들 구현
 void Player::IdleStart()
@@ -26,15 +26,15 @@ void Player::JumpStart()
 	{
 		if (GameEngineInput::IsPress(VK_LEFT))
 		{
-			PlusGravity(float4(-JUMP_DISTANCE, JUMP_HEIGHT));
+			PlusMoveVectorForce(float4(-JUMP_DISTANCE, JUMP_HEIGHT));
 		}
 		else if (GameEngineInput::IsPress(VK_RIGHT))
 		{
-			PlusGravity(float4(JUMP_DISTANCE, JUMP_HEIGHT));
+			PlusMoveVectorForce(float4(JUMP_DISTANCE, JUMP_HEIGHT));
 		}
 		else
 		{
-			PlusGravity(float4(0, JUMP_HEIGHT));
+			PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
 		}
 		GroundJump = true;
 	}
@@ -94,7 +94,7 @@ void Player::WalkUpdate(float _Delta)
 
 void Player::JumpUpdate(float _Delta)
 {
-	if (0.0f == GetGravityForce().Y)
+	if (0.0f == GetMoveVectorForce().Y)
 	{
 		ChangeState(PlayerState::Idle);
 		GroundJump = false;
@@ -123,6 +123,15 @@ void Player::JumpUpdate(float _Delta)
 		case false:
 			Transform.AddLocalPosition(MoveDir * _Delta * AirSpeed);
 			break;
+		}
+	}
+
+	if (GameEngineInput::IsDown('D'))
+	{
+		if (GameEngineInput::IsPress(VK_UP))
+		{
+			GravityReset();
+			PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
 		}
 	}
 }

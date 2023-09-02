@@ -2,6 +2,7 @@
 #include "PlayLevel.h"
 #include "Player.h"
 #include "ContentMap.h"
+#include "GlobalValue.h"
 
 PlayLevel::PlayLevel()
 {

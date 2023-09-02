@@ -28,6 +28,9 @@
     <ClCompile Include="Player_State.cpp">
       <Filter>Actor\Global</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalValue.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="ContentMap.h">
       <Filter>Actor\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalValue.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

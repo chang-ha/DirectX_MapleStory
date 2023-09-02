@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+#define MAX_GRAVITY 1500.0f
 enum class ActorDir
 {
 	Null,
@@ -33,28 +34,32 @@ public:
 		IsGravity = false;
 	}
 
-	inline void PlusGravity(float4 _Force)
+	inline void PlusMoveVectorForce(float4 _Force)
 	{
-		GravityForce += _Force;
+		MoveVectorForce += _Force;
 	}
 
-	inline void SetGravityX(float _X)
+	inline void SetMoveVectorForceX(float _X)
 	{
-		GravityForce.X = _X;
+		MoveVectorForce.X = _X;
 	}
 
-	inline const float4 GetGravityForce()
+	inline const float4 GetMoveVectorForce()
 	{
-		return GravityForce;
+		return MoveVectorForce;
 	}
 
 	inline void GravityReset()
 	{
-		GravityForce = float4::ZERO;
+		GravityForce = 0.0f;
+	}
+
+	inline void MoveVectorForceReset()
+	{
+		MoveVectorForce = float4::ZERO;
 	}
 
 	void Gravity(float _Delta);
-	// void AirResistence(float _Delta);
 
 protected:
 	void Start() override;
@@ -65,7 +70,8 @@ protected:
 
 private:
 	bool IsGravity = true;
-	float GravitySpeed = 1000.0f;
-	float4 GravityForce = float4::ZERO;
+	float GravitySpeed = 20000.0f;
+	float GravityForce = 0.0f;
+	float4 MoveVectorForce = float4::ZERO;
 };
 

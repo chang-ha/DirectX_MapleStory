@@ -183,6 +183,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="MapleStoryCore.cpp">
       <SubType>
       </SubType>
@@ -219,6 +220,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GlobalValue.h">
       <SubType>
       </SubType>
     </ClInclude>

@@ -36,6 +36,8 @@ public:
 	void CheckGround();
 
 protected:
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 	void DirCheck();
@@ -46,6 +48,7 @@ private:
 	float Speed = 300.0f;
 	float AirSpeed = 200.0f;
 	float JumpAirSpeed = 30.0f;
+	float4 CurMapScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;
 
 	//////////// State 

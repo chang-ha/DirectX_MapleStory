@@ -14,6 +14,11 @@ public:
 	ContentMap& operator=(const ContentMap& _Other) = delete;
 	ContentMap& operator=(ContentMap&& _Other) noexcept = delete;
 
+	inline float4 GetMapScale()
+	{
+		return MapCollisionTexture->GetScale();
+	}
+
 	void Init(std::string_view _MapName);
 	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = { 255, 255, 255, 255 });
 

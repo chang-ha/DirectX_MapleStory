@@ -36,12 +36,18 @@ void ContentActor::Gravity(float _Delta)
 	}
 
 	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
-	if (GameEngineColor(255, 255, 255, 255) == GroundColor && GravityForce.Y <= 0.0f)
+	if (GameEngineColor(255, 255, 255, 255) == GroundColor && MoveVectorForce.Y <= 0.0f)
 	{
 		GravityReset();
+		MoveVectorForceReset();
 		return;
 	}
 
-	GravityForce.Y -= _Delta * GravitySpeed;
-	Transform.AddLocalPosition(GravityForce * _Delta);
+	GravityForce += _Delta * GravitySpeed;
+	if (MAX_GRAVITY <= GravityForce)
+	{
+		GravityForce = MAX_GRAVITY;
+	}
+	MoveVectorForce.Y -= GravityForce * _Delta;
+	Transform.AddLocalPosition(MoveVectorForce * _Delta);
 }
