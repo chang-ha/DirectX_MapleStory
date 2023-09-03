@@ -73,6 +73,7 @@ void Player::AlertUpdate(float _Delta)
 void Player::WalkUpdate(float _Delta)
 {
 	float4 MovePos = float4::ZERO;
+
 	if (GameEngineInput::IsPress(VK_LEFT))
 	{
 		MovePos += float4::LEFT * _Delta * Speed;

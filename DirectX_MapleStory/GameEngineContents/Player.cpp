@@ -82,6 +82,7 @@ void Player::Update(float _Delta)
 	CheckGround();
 	DirCheck();
 	ChasingCamera(_Delta);
+	BlockOutMap();
 
 	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
 	{
@@ -188,6 +189,30 @@ void Player::ChasingCamera(float _Delta)
 		CameraPos.Y = -(CurMapScale.Y - GlobalValue::WinScale.hY());
 	}
 	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(CameraPos);
+}
+
+void Player::BlockOutMap()
+{
+	float4 CurPos = Transform.GetWorldPosition();
+	if (0 >= CurPos.X - PlayerScale.hX())
+	{
+		Transform.SetLocalPosition(float4{ PlayerScale.hX(), CurPos.Y });
+	}
+	else if (CurMapScale.X <= CurPos.X + PlayerScale.hX())
+	{
+		Transform.SetLocalPosition(float4{ CurMapScale.X - PlayerScale.hX(), CurPos.Y });
+	}
+
+	// Need Text More
+	CurPos.Y *= -1.0f;
+	if (0 >= CurPos.Y - PlayerScale.hY())
+	{
+		Transform.SetLocalPosition(float4{ CurPos.X, PlayerScale.hY() });
+	}
+	else if (CurMapScale.Y <= CurPos.Y + PlayerScale.hY())
+	{
+		Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y - PlayerScale.hY() });
+	}
 }
 
 void Player::ChangeState(PlayerState _State)

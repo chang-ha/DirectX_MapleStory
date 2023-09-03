@@ -18,6 +18,7 @@ void PlayLevel::Start()
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
 	std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
+	NewPlayer->Transform.SetLocalPosition(float4(100, -100));
 	CurMap = CreateActor<ContentMap>();
 	CurMap->Init("Lacheln.png");
 }

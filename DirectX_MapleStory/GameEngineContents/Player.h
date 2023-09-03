@@ -42,6 +42,7 @@ protected:
 	void Update(float _Delta) override;
 	void DirCheck();
 	void ChasingCamera(float _Delta);
+	void BlockOutMap();
 
 private:
 	bool IsGround = true;
