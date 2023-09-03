@@ -79,34 +79,7 @@ void Player::Update(float _Delta)
 	StateUpdate(_Delta);
 	CheckGround();
 	DirCheck();
-
-	// Camera Setting
-	{
-		float4 PlayerPos = Transform.GetWorldPosition();
-		float4 MovePos = PlayerPos;
-		// ContentLevel::CurContentLevel->GetMainCamera()->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y, -1.0f });
-		// float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();
-		// float4 MovePos = float4::ZERO;
-		// CurMapScale;
-		if (GlobalValue::WinScale.hX() >= PlayerPos.X)
-		{
-			MovePos.X = GlobalValue::WinScale.hX();
-		}
-		else if (CurMapScale.X - GlobalValue::WinScale.hX() <= PlayerPos.X)
-		{
-			MovePos.X = CurMapScale.X - GlobalValue::WinScale.hX();
-		}
-
-		if (GlobalValue::WinScale.hY() >= -PlayerPos.Y)
-		{
-			MovePos.Y = -GlobalValue::WinScale.hY();
-		}
-		else if (CurMapScale.Y - GlobalValue::WinScale.hY() <= -PlayerPos.Y)
-		{
-			MovePos.Y = -(CurMapScale.Y - GlobalValue::WinScale.hY());
-		}
-		ContentLevel::CurContentLevel->GetMainCamera()->Transform.SetLocalPosition(MovePos);
-	}
+	ChasingCamera(_Delta);
 
 	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
 	{
@@ -184,6 +157,35 @@ void Player::DirCheck()
 	//{
 	//	ChangeAnimationState(CurState);
 	//}
+}
+
+void Player::ChasingCamera(float _Delta)
+{
+	float4 PlayerPos = Transform.GetWorldPosition();
+	float4 CameraPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
+	float4 MovePos = (PlayerPos - CameraPos) * 0.5f * CameraSpeed * _Delta;
+	GetLevel()->GetMainCamera()->Transform.AddLocalPosition(MovePos);
+	CameraPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
+	// Right Left
+	if (GlobalValue::WinScale.hX() >= CameraPos.X)
+	{
+		CameraPos.X = GlobalValue::WinScale.hX();
+	}
+	else if (CurMapScale.X - GlobalValue::WinScale.hX() <= CameraPos.X)
+	{
+		CameraPos.X = CurMapScale.X - GlobalValue::WinScale.hX();
+	}
+
+	// Up Down
+	if (GlobalValue::WinScale.hY() >= -CameraPos.Y)
+	{
+		CameraPos.Y = -GlobalValue::WinScale.hY();
+	}
+	else if (CurMapScale.Y - GlobalValue::WinScale.hY() <= -CameraPos.Y)
+	{
+		CameraPos.Y = -(CurMapScale.Y - GlobalValue::WinScale.hY());
+	}
+	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(CameraPos);
 }
 
 void Player::ChangeState(PlayerState _State)

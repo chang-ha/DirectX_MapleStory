@@ -41,6 +41,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void DirCheck();
+	void ChasingCamera(float _Delta);
 
 private:
 	bool IsGround = true;
@@ -48,6 +49,7 @@ private:
 	float Speed = 300.0f;
 	float AirSpeed = 200.0f;
 	float JumpAirSpeed = 30.0f;
+	float CameraSpeed = 5.0f;
 	float4 CurMapScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;
 
