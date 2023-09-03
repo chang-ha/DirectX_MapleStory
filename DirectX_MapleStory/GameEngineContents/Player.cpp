@@ -34,7 +34,6 @@ void Player::Start()
 	ContentActor::Start();
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(static_cast<int>(RenderOrder::Play));
 	MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
-	MainSpriteRenderer->Transform.SetLocalPosition({0, 40});
 
 	// Create Sprite 
 	if (nullptr == GameEngineSprite::Find("Idle"))
@@ -66,11 +65,14 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Down_Attack", "Down_Attack", DOWN_ATT_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Down", "Down");
 		MainSpriteRenderer->CreateAnimation("Jump", "Jump");
+		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Idle");
+		PlayerScale = Sprite->GetSpriteData(0).GetScale();
 	}
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
 	Dir = ActorDir::Left;
+	MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY()});
 }
 
 void Player::Update(float _Delta)

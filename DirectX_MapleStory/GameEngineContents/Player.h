@@ -52,6 +52,7 @@ private:
 	float JumpAirSpeed = 30.0f;
 	float CameraSpeed = 5.0f;
 	float4 CurMapScale = float4::ZERO;
+	float4 PlayerScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;
 
 	//////////// State 
