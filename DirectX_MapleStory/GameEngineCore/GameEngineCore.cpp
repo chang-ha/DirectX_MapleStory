@@ -53,7 +53,6 @@ void GameEngineCore::Update()
 	}
 
 	GameEngineSound::Update();
-	GameEngineInput::Update(DeltaTime);
 	CoreObject->Update(DeltaTime);
 
 	if (true == GameEngineWindow::IsFocus())

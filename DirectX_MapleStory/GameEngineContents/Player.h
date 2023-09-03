@@ -45,8 +45,9 @@ protected:
 
 private:
 	bool IsGround = true;
+	bool DoubleJump = false;
 	bool GroundJump = false;
-	float Speed = 300.0f;
+	float Speed = 250.0f;
 	float AirSpeed = 200.0f;
 	float JumpAirSpeed = 30.0f;
 	float CameraSpeed = 5.0f;
