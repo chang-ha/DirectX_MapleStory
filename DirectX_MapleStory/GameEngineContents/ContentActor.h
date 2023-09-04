@@ -2,8 +2,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 #define MAX_GRAVITY 1500.0f
-#define GROUND_COLOR GameEngineColor(255, 255, 255, 255)
-#define FLOOR_COLOR GameEngineColor(0, 255, 0, 255)
+
 enum class ActorDir
 {
 	Null,
@@ -67,7 +66,7 @@ protected:
 
 private:
 	bool IsGravity = true;
-	float GravitySpeed = 20000.0f;
+	float GravitySpeed = 15000.0f;
 	float GravityForce = 0.0f;
 	float4 MoveVectorForce = float4::ZERO;
 };

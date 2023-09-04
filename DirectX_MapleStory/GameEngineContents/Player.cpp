@@ -203,7 +203,7 @@ void Player::BlockOutMap()
 		Transform.SetLocalPosition(float4{ CurMapScale.X - PlayerScale.hX(), CurPos.Y });
 	}
 
-	// Need Text More
+	// Need Test More
 	CurPos.Y *= -1.0f;
 	if (0 >= CurPos.Y - PlayerScale.hY())
 	{
@@ -219,6 +219,31 @@ void Player::ChangeState(PlayerState _State)
 {
 	if (_State != State)
 	{
+		// State End
+		switch (State)
+		{
+		case PlayerState::Idle:
+			IdleEnd();
+			break;
+		case PlayerState::Alert:
+			AlertEnd();
+			break;
+		case PlayerState::Walk:
+			WalkEnd();
+			break;
+		case PlayerState::Jump:
+			JumpEnd();
+			break;
+		case PlayerState::Down:
+			DownEnd();
+			break;
+		case PlayerState::Null:
+		default:
+			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
+			break;
+		}
+
+		// State Start
 		switch (_State)
 		{
 		case PlayerState::Idle:

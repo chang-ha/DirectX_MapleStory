@@ -1,6 +1,9 @@
 #pragma once
 #include <GameEngineCore\GameEngineActor.h>
 
+#define GROUND_COLOR GameEngineColor(255, 255, 255, 255)
+#define FLOOR_COLOR GameEngineColor(0, 255, 0, 255)
+#define LADDER_COLOR GameEngineColor(255, 0, 0, 255)
 class ContentMap : public GameEngineActor
 {
 public:
@@ -20,7 +23,7 @@ public:
 	}
 
 	void Init(std::string_view _MapName);
-	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = { 255, 255, 255, 255 });
+	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = GROUND_COLOR);
 
 protected:
 	void Start() override;

@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 
-#define JUMP_HEIGHT 600.0f
+#define JUMP_HEIGHT 550.0f
 #define JUMP_DIS 200.0f
 #define DOUBLE_JUMP_DIS 300.0f
 // State함수들 구현
@@ -47,23 +47,49 @@ void Player::JumpStart()
 void Player::DownStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Down");
+	MainSpriteRenderer->Transform.SetLocalPosition({ -PlayerScale.hX() * 0.45f, PlayerScale.hY() * 0.6f });
+}
+
+void Player::IdleEnd()
+{
+
+}
+
+void Player::AlertEnd()
+{
+
+}
+
+void Player::WalkEnd()
+{
+
+}
+
+void Player::JumpEnd()
+{
+
+}
+
+void Player::DownEnd()
+{
+	MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY() });
 }
 
 void Player::IdleUpdate(float _Delta)
 {
+	if (GameEngineInput::IsPress(VK_DOWN))
+	{
+		ChangeState(PlayerState::Down);
+	}
+	
 	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
 	{
 		ChangeState(PlayerState::Walk);
 	}
 
-	if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
+	if ((GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D')) && GameEngineInput::IsFree(VK_DOWN))
 	{
 		ChangeState(PlayerState::Jump);
-	}
-
-	if (GameEngineInput::IsPress(VK_DOWN))
-	{
-		ChangeState(PlayerState::Down);
 	}
 }
 
@@ -113,7 +139,7 @@ void Player::JumpUpdate(float _Delta)
 			DoubleJump = true;
 			if (GameEngineInput::IsPress(VK_UP))
 			{
-				PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
+				PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 1.2f));
 			}
 			else if (GameEngineInput::IsPress(VK_LEFT))
 			{
@@ -184,7 +210,7 @@ void Player::DownUpdate(float _Delta)
 		if (false == IsGround)
 		{
 			ChangeState(PlayerState::Jump);
-			PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 0.2f));
+			Transform.AddLocalPosition(float4(0, -2));
 		}
 	}
 }

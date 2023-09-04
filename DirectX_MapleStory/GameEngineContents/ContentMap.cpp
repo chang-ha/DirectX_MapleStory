@@ -13,7 +13,7 @@ ContentMap::~ContentMap()
 
 void ContentMap::Start()
 {
-	MapRenderer = CreateComponent<GameEngineSpriteRenderer>(static_cast<int>(RenderOrder::Map));
+	MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Map);
 }
 
 void ContentMap::Init(std::string_view _MapName)
@@ -27,6 +27,7 @@ void ContentMap::Init(std::string_view _MapName)
 		GameEngineTexture::Load(Path.GetStringPath() + std::string(_MapName.data()));
 		GameEngineTexture::Load(Path.GetStringPath() + "Collision_" + std::string(_MapName.data()));
 		GameEngineSprite::CreateSingle(_MapName);
+		GameEngineSprite::CreateSingle("Collision_" + std::string(_MapName.data()));
 	}
 	MapCollisionTexture = GameEngineTexture::Find("Collision_" + std::string(_MapName.data()));
 	MapRenderer->SetSprite(_MapName);
@@ -36,7 +37,7 @@ void ContentMap::Init(std::string_view _MapName)
 }
 
 
-GameEngineColor ContentMap::GetColor(float4 _Pos, GameEngineColor _DefaultColor /*= { 255, 255, 255, 255 }*/)
+GameEngineColor ContentMap::GetColor(float4 _Pos, GameEngineColor _DefaultColor /*= GROUND_COLOR*/)
 {
 	// 플레이어의 위치를 이미지의 좌표계에 맞게 변형한다.
 	// 이미지는 위에서부터 아래로 내려갈수록 +가 되기 때문이다. (DirectX의 Y좌표계는 아래로 내려갈수록 -)

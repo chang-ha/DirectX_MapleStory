@@ -64,6 +64,13 @@ private:
 	void JumpStart();
 	void DownStart();
 
+	/// End
+	void IdleEnd();
+	void AlertEnd();
+	void WalkEnd();
+	void JumpEnd();
+	void DownEnd();
+
 	/// Update
 	void IdleUpdate(float _Delta);
 	void AlertUpdate(float _Delta);
