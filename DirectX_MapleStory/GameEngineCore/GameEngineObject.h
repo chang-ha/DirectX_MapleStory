@@ -48,12 +48,12 @@ public:
 
 	virtual bool IsUpdate()
 	{
-		return Parent == nullptr ? true == IsUpdateValue && false == IsDeathValue : Parent->IsUpdate() && true == IsUpdateValue && false == IsDeathValue;
+		return Parent == nullptr ? true == IsUpdateValue && false == IsDeathValue : Parent->IsUpdate() && true == IsUpdateValue && false == IsDeath();
 	}
 
 	virtual bool IsDeath()
 	{
-		return Parent == nullptr ? IsDeathValue : Parent->IsDeathValue && IsDeathValue;
+		return Parent == nullptr ? IsDeathValue : Parent->IsDeath() || IsDeathValue;
 	}
 
 	int GetOrder()
@@ -93,6 +93,7 @@ public:
 	}
 
 	virtual void AllUpdate(float _Delta);
+	virtual void AllReleaseCheck();
 	void AllLevelStart(class GameEngineLevel* _PrevLevel);
 	void AllLevelEnd(class GameEngineLevel* _NextLevel);
 
