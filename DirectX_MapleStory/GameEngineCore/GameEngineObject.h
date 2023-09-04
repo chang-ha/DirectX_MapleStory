@@ -138,6 +138,29 @@ public:
 		return CameraPtr;
 	}
 
+	template<typename ObjectType>
+	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(int _GroupIndex)
+	{
+		std::list<std::shared_ptr<ObjectType>> Result;
+		std::list<std::shared_ptr<class GameEngineObject>>& Group = Childs[_GroupIndex];
+
+		for (std::shared_ptr<class GameEngineObject> Obejct : Group)
+		{
+			// 컴파일타임어써션을 통해서 애초에 이게 가능한 일인지 알수 있는데
+			// 빠르게 만들어야 하니까.
+			std::shared_ptr<ObjectType> Ptr = Obejct->GetDynamic_Cast_This<ObjectType>();
+
+			if (nullptr == Ptr)
+			{
+				continue;
+			}
+
+			Result.push_back(Ptr);
+		}
+
+		return Result;
+	}
+
 protected:
 	GameEngineObject* Parent = nullptr;
 	// 오더링을 위해서
