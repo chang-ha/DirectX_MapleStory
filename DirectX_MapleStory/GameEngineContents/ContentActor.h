@@ -39,11 +39,6 @@ public:
 		MoveVectorForce += _Force;
 	}
 
-	inline void SetMoveVectorForceX(float _X)
-	{
-		MoveVectorForce.X = _X;
-	}
-
 	inline const float4 GetMoveVectorForce()
 	{
 		return MoveVectorForce;

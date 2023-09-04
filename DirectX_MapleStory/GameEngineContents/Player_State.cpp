@@ -2,7 +2,8 @@
 #include "Player.h"
 
 #define JUMP_HEIGHT 500.0f
-#define JUMP_DISTANCE 200.0f
+#define JUMP_DIS 200.0f
+#define DOUBLE_JUMP_DIS 300.0f
 // State함수들 구현
 void Player::IdleStart()
 {
@@ -22,6 +23,7 @@ void Player::WalkStart()
 void Player::JumpStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Jump");
+
 	if (false == IsGround)
 	{
 		return;
@@ -29,11 +31,11 @@ void Player::JumpStart()
 
 	if (GameEngineInput::IsPress(VK_LEFT))
 	{
-		PlusMoveVectorForce(float4(-JUMP_DISTANCE, JUMP_HEIGHT));
+		PlusMoveVectorForce(float4(-JUMP_DIS, JUMP_HEIGHT));
 	}
 	else if (GameEngineInput::IsPress(VK_RIGHT))
 	{
-		PlusMoveVectorForce(float4(JUMP_DISTANCE, JUMP_HEIGHT));
+		PlusMoveVectorForce(float4(JUMP_DIS, JUMP_HEIGHT));
 	}
 	else
 	{
@@ -111,15 +113,30 @@ void Player::JumpUpdate(float _Delta)
 			DoubleJump = true;
 			if (GameEngineInput::IsPress(VK_UP))
 			{
-				PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 0.3f));
+				PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
 			}
 			else if (GameEngineInput::IsPress(VK_LEFT))
 			{
-				PlusMoveVectorForce(float4(-JUMP_DISTANCE * 1.5f, JUMP_HEIGHT * 0.25f));
+				PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS));
 			}
 			else if (GameEngineInput::IsPress(VK_RIGHT))
 			{
-				PlusMoveVectorForce(float4(JUMP_DISTANCE * 1.5f, JUMP_HEIGHT * 0.25f));
+				PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS));
+			}
+			else
+			{
+				switch (Dir)
+				{
+				case ActorDir::Right:
+					PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS * 1.5f));
+					break;
+				case ActorDir::Left:
+					PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS * 1.5f));
+					break;
+				case ActorDir::Null:
+				default:
+					break;
+				}
 			}
 			GravityReset();
 		}
@@ -128,6 +145,7 @@ void Player::JumpUpdate(float _Delta)
 	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
 	{
 		float4 MoveDir = float4::ZERO;
+
 		switch (Dir)
 		{
 		case ActorDir::Right:
@@ -140,6 +158,7 @@ void Player::JumpUpdate(float _Delta)
 		default:
 			break;
 		}
+
 		switch (GroundJump)
 		{
 		case true:
@@ -150,15 +169,6 @@ void Player::JumpUpdate(float _Delta)
 			break;
 		}
 	}
-
-	if (GameEngineInput::IsDown('D'))
-	{
-		if (GameEngineInput::IsPress(VK_UP))
-		{
-			GravityReset();
-			PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
-		}
-	}
 }
 
 void Player::DownUpdate(float _Delta)
@@ -166,5 +176,10 @@ void Player::DownUpdate(float _Delta)
 	if (GameEngineInput::IsFree(VK_DOWN) || GameEngineInput::IsUp(VK_DOWN))
 	{
 		ChangeState(PlayerState::Idle);
+	}
+
+	if (GameEngineInput::IsDown('D'))
+	{
+		IsGround = false;
 	}
 }
