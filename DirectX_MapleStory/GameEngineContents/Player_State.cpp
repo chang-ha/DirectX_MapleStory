@@ -178,8 +178,13 @@ void Player::DownUpdate(float _Delta)
 		ChangeState(PlayerState::Idle);
 	}
 
-	if (GameEngineInput::IsDown('D'))
+	if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
 	{
-		IsGround = false;
+		IsGround = CheckGround(float4(0, -2));
+		if (false == IsGround)
+		{
+			ChangeState(PlayerState::Jump);
+			PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 0.2f));
+		}
 	}
 }

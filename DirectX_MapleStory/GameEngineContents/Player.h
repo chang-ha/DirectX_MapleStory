@@ -33,7 +33,7 @@ public:
 
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
-	void CheckGround();
+	bool CheckGround(float4 PlusCheckPos = float4::ZERO);
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;

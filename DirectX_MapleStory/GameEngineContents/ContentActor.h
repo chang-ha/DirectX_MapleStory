@@ -2,6 +2,8 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 #define MAX_GRAVITY 1500.0f
+#define GROUND_COLOR GameEngineColor(255, 255, 255, 255)
+#define FLOOR_COLOR GameEngineColor(0, 255, 0, 255)
 enum class ActorDir
 {
 	Null,

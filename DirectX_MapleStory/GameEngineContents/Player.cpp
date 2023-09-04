@@ -78,11 +78,11 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
-	StateUpdate(_Delta);
 	CheckGround();
 	DirCheck();
 	ChasingCamera(_Delta);
 	BlockOutMap();
+	StateUpdate(_Delta);
 
 	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
 	{
@@ -267,10 +267,10 @@ void Player::StateUpdate(float _Delta)
 	}
 }
 
-void Player::CheckGround()
+bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 {
-	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
-	if (GameEngineColor(255, 255, 255, 255) == GroundColor)
+	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
+	if (GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor)
 	{
 		IsGround = true;
 	}
@@ -278,4 +278,6 @@ void Player::CheckGround()
 	{
 		IsGround = false;
 	}
+
+	return IsGround;
 }

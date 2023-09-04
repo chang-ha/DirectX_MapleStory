@@ -35,8 +35,8 @@ void ContentActor::Gravity(float _Delta)
 		return;
 	}
 
-	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GameEngineColor(255, 255, 255, 255));
-	if (GameEngineColor(255, 255, 255, 255) == GroundColor && MoveVectorForce.Y <= 0.0f)
+	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GROUND_COLOR);
+	if ((GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor) && MoveVectorForce.Y <= 0.0f)
 	{
 		GravityReset();
 		MoveVectorForceReset();
