@@ -78,10 +78,11 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
-	CheckGround();
+	IsGround = CheckGround();
 	DirCheck();
 	ChasingCamera(_Delta);
 	BlockOutMap();
+	LadderCheck();
 	StateUpdate(_Delta);
 
 	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
@@ -97,43 +98,6 @@ void Player::Update(float _Delta)
 	//{
 	//	Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
 	//}
-
-	//if (GameEngineInput::IsDown('3'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Shoot1");
-	//}
-
-	//if (GameEngineInput::IsDown('4'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Rope");
-	//}
-
-	//if (GameEngineInput::IsDown('5'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Ladder");
-	//}
-
-	//if (GameEngineInput::IsDown('6'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Attack1");
-	//}
-
-	//if (GameEngineInput::IsDown('7'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Attack2");
-	//}
-
-	//if (GameEngineInput::IsDown('8'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Attack3");
-	//}
-
-	//if (GameEngineInput::IsDown('9'))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Down_Attack");
-	//}
-
-
 }
 
 void Player::DirCheck()
@@ -207,11 +171,41 @@ void Player::BlockOutMap()
 	CurPos.Y *= -1.0f;
 	if (0 >= CurPos.Y - PlayerScale.hY())
 	{
-		Transform.SetLocalPosition(float4{ CurPos.X, PlayerScale.hY() });
+		Transform.SetLocalPosition(float4{ CurPos.X, -PlayerScale.hY() });
+		MoveVectorForceReset();
 	}
 	else if (CurMapScale.Y <= CurPos.Y + PlayerScale.hY())
 	{
 		Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y - PlayerScale.hY() });
+	}
+}
+
+void Player::LadderCheck()
+{
+	if (PlayerState::Alert != State && PlayerState::Down != State && PlayerState::Idle != State && PlayerState::Jump != State && PlayerState::Walk != State)
+	{
+		return;
+	}
+
+	float YPivot = 0.0f;
+	if (GameEngineInput::IsPress(VK_UP))
+	{
+		YPivot = LADDER_Y_PIVOT;
+	}
+	else if(GameEngineInput::IsPress(VK_DOWN))
+	{
+		YPivot = -LADDER_Y_PIVOT;
+	}
+
+	for (int i = -2; i < 4; i++)
+	{
+		GameEngineColor CheckColor = CheckGroundColor(float4(static_cast<float>(i), YPivot));
+		if (LADDER_COLOR == CheckColor && (GameEngineInput::IsPress(VK_DOWN) || GameEngineInput::IsPress(VK_UP)))
+		{
+			Transform.AddLocalPosition(float4(static_cast<float>(i)));
+			ChangeState(PlayerState::Ladder);
+			break;
+		}
 	}
 }
 
@@ -237,9 +231,12 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Down:
 			DownEnd();
 			break;
+		case PlayerState::Ladder:
+			LadderEnd();
+			break;
 		case PlayerState::Null:
 		default:
-			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
+			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
 			break;
 		}
 
@@ -260,6 +257,9 @@ void Player::ChangeState(PlayerState _State)
 			break;
 		case PlayerState::Down:
 			DownStart();
+			break;
+		case PlayerState::Ladder:
+			LadderStart();
 			break;
 		case PlayerState::Null:
 		default:
@@ -285,6 +285,8 @@ void Player::StateUpdate(float _Delta)
 		return JumpUpdate(_Delta);
 	case PlayerState::Down:
 		return DownUpdate(_Delta);
+	case PlayerState::Ladder:
+		return LadderUpdate(_Delta);
 	case PlayerState::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
@@ -294,15 +296,22 @@ void Player::StateUpdate(float _Delta)
 
 bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 {
-	GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
-	if (GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor)
+	bool Result = false;
+	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
+	if (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor)
 	{
-		IsGround = true;
+		Result = true;
 	}
 	else
 	{
-		IsGround = false;
+		Result = false;
 	}
 
-	return IsGround;
+	return Result;
+}
+
+GameEngineColor Player::CheckGroundColor(float4 PlusCheckPos /*= float4::ZERO*/)
+{
+	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
+	return CheckColor;
 }

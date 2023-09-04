@@ -6,6 +6,8 @@
 #define ATT_ANI_SPEED 0.3f
 #define DOWN_ATT_ANI_SPEED 0.5f
 
+#define LADDER_Y_PIVOT 3.0f
+
 enum class PlayerState
 {
 	Null, // StartValue
@@ -14,6 +16,7 @@ enum class PlayerState
 	Walk,
 	Jump,
 	Down,
+	Ladder,
 };
 
 #include "ContentActor.h"
@@ -34,6 +37,7 @@ public:
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
 	bool CheckGround(float4 PlusCheckPos = float4::ZERO);
+	GameEngineColor CheckGroundColor(float4 PlusCheckPos = float4::ZERO);
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -43,6 +47,7 @@ protected:
 	void DirCheck();
 	void ChasingCamera(float _Delta);
 	void BlockOutMap();
+	void LadderCheck();
 
 private:
 	bool IsGround = true;
@@ -63,6 +68,7 @@ private:
 	void WalkStart();
 	void JumpStart();
 	void DownStart();
+	void LadderStart();
 
 	/// End
 	void IdleEnd();
@@ -70,6 +76,7 @@ private:
 	void WalkEnd();
 	void JumpEnd();
 	void DownEnd();
+	void LadderEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -77,6 +84,7 @@ private:
 	void WalkUpdate(float _Delta);
 	void JumpUpdate(float _Delta);
 	void DownUpdate(float _Delta);
+	void LadderUpdate(float _Delta);
 	////////////
 };
 
