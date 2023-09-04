@@ -32,7 +32,7 @@ void Player::LevelEnd(GameEngineLevel* _NextLevel)
 void Player::Start()
 {
 	ContentActor::Start();
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(static_cast<int>(RenderOrder::Play));
+	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Play);
 	MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
 	// Create Sprite 
