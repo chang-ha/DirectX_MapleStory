@@ -65,13 +65,12 @@ private:
 	// 액터관련 기능들
 	void AllUpdate(float _Delta) override;
 
-	//void Render(float _Delta);
-
-	void ActorRelease();
-
 	void ActorInit(std::shared_ptr<class GameEngineActor> _Actor, int _Order);
 
 	void Render(float _Delta);
+
+	void AllReleaseCheck() override;
+	void Release() override;
 
 	// 이미 액터가 child로 관리하고 있지만
 	// 따로 카메라도 들고 있을 겁니다.

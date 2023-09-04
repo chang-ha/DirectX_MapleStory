@@ -72,6 +72,7 @@ void GameEngineCore::Update()
 	CurLevel->Render(DeltaTime);
 
 	MainDevice.RenderEnd();
+	CurLevel->AllReleaseCheck();
 }
 
 void GameEngineCore::Release() 

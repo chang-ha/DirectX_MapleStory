@@ -43,6 +43,8 @@ protected:
 
 	void Render(float _DeltaTime);
 
+	void AllReleaseCheck() override;
+
 private:
 	EPROJECTIONTYPE ProjectionType = EPROJECTIONTYPE::Orthographic;
 	float Far = 1000.0f;

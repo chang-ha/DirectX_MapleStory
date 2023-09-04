@@ -100,3 +100,32 @@ void GameEngineCamera::Render(float _DeltaTime)
 		}
 	}
 }
+
+void GameEngineCamera::AllReleaseCheck()
+{
+	// Map자료구조에 아무것도 안들어있으면 Release를 할 필요가 없음
+	if (true == Renderers.empty())
+	{
+		return;
+	}
+
+	for (std::pair<const int, std::list<std::shared_ptr<GameEngineRenderer>>>& _Pair : Renderers)
+	{
+		std::list<std::shared_ptr<GameEngineRenderer>>& Group = _Pair.second;
+
+		std::list<std::shared_ptr<GameEngineRenderer>>::iterator Start = Group.begin();
+		std::list<std::shared_ptr<GameEngineRenderer>>::iterator End = Group.end();
+
+		for (; Start != End;)
+		{
+			if (false == (*Start)->IsDeath())
+			{
+				(*Start)->AllReleaseCheck();
+				++Start;
+				continue;
+			}
+
+			Start = Group.erase(Start);
+		}
+	}
+}
