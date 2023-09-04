@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 
-#define JUMP_HEIGHT 500.0f
+#define JUMP_HEIGHT 600.0f
 #define JUMP_DIS 200.0f
 #define DOUBLE_JUMP_DIS 300.0f
 // State함수들 구현
@@ -117,21 +117,21 @@ void Player::JumpUpdate(float _Delta)
 			}
 			else if (GameEngineInput::IsPress(VK_LEFT))
 			{
-				PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS));
+				PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS, JUMP_HEIGHT * 0.1f));
 			}
 			else if (GameEngineInput::IsPress(VK_RIGHT))
 			{
-				PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS));
+				PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS, JUMP_HEIGHT * 0.1f));
 			}
 			else
 			{
 				switch (Dir)
 				{
 				case ActorDir::Right:
-					PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS * 1.5f));
+					PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS * 1.5f, JUMP_HEIGHT * 0.1f));
 					break;
 				case ActorDir::Left:
-					PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS * 1.5f));
+					PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS * 1.5f, JUMP_HEIGHT * 0.1f));
 					break;
 				case ActorDir::Null:
 				default:
