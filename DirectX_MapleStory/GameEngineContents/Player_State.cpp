@@ -6,7 +6,7 @@
 #define JUMP_DIS 200.0f
 
 #define DOUBLE_JUMP_DIS 350.0f
-#define DOUBLE_JUMP_HEIGHT 60.0f
+#define DOUBLE_JUMP_HEIGHT 100.0f
 
 #define LADDER_JUMP_HEIGHT 300.0f
 
@@ -107,6 +107,7 @@ void Player::LadderEnd()
 	MainSpriteRenderer->AnimationPauseOff();
 	if (true == GameEngineInput::IsPress(VK_UP))
 	{
+		// 발판의 픽셀(2픽셀)로 올라가기 위해 +3을 해주었음 << 추후 보강
 		Transform.AddLocalPosition(float4(0, 3.0f));
 	}
 }
@@ -317,14 +318,4 @@ void Player::LadderUpdate(float _Delta)
 		ChangeState(PlayerState::Idle);
 		return;
 	}
-	//if (false == IsLadder)
-	//{
-	//	MoveVectorForceReset();
-	//	ChangeState(PlayerState::Idle);
-	//	return;
-	//}
-	//else if (true == IsLadder)
-	//{
-	//	Transform.AddLocalPosition(MovePos);
-	//}
 }
