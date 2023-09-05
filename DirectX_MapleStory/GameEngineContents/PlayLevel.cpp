@@ -2,7 +2,6 @@
 #include "PlayLevel.h"
 #include "Player.h"
 #include "ContentMap.h"
-#include "GlobalValue.h"
 
 PlayLevel::PlayLevel()
 {
@@ -17,9 +16,9 @@ void PlayLevel::Start()
 	ContentLevel::Start();
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
-	std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
+	std::shared_ptr<Player> NewPlayer = CreateActor<Player>(UpdateOrder::Play);
 	NewPlayer->Transform.SetLocalPosition(float4(100, -100));
-	CurMap = CreateActor<ContentMap>();
+	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 	CurMap->Init("Lacheln.png");
 }
 

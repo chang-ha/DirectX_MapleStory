@@ -8,7 +8,6 @@
 #include "Player.h"
 #include "ContentLevel.h"
 #include "ContentMap.h"
-#include "GlobalValue.h"
 
 Player::Player() 
 {
