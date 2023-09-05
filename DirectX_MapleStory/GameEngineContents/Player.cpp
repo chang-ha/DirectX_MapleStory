@@ -107,10 +107,12 @@ void Player::DirCheck()
 	if (true == GameEngineInput::IsPress(VK_LEFT))
 	{
 		CheckDir = ActorDir::Left;
-	}
+		Transform.SetLocalScale(float4(1.0f, 1.0f));
+	} 
 	else if (true == GameEngineInput::IsPress(VK_RIGHT))
 	{
 		CheckDir = ActorDir::Right;
+		Transform.SetLocalScale(float4(-1.0f, 1.0f));
 	}
 
 	if (ActorDir::Null != CheckDir)
@@ -181,12 +183,10 @@ void Player::BlockOutMap()
 
 void Player::LadderCheck()
 {
-	IsLadder = false;
-
-	if (PlayerState::Alert != State && PlayerState::Down != State && PlayerState::Idle != State && PlayerState::Jump != State && PlayerState::Walk != State)
-	{
-		return;
-	}
+	//if (PlayerState::Alert != State && PlayerState::Down != State && PlayerState::Idle != State && PlayerState::Jump != State && PlayerState::Walk != State)
+	//{
+	//	return;
+	//}
 
 	float YPivot = 0.0f;
 	if (GameEngineInput::IsPress(VK_UP))
@@ -198,10 +198,11 @@ void Player::LadderCheck()
 		YPivot = -LADDER_Y_PIVOT;
 	}
 
+	IsLadder = false;
 	for (float i = -2.0f; i < 4.0f; i += 1.0f)
 	{
 		GameEngineColor CheckColor = CheckGroundColor(float4(i, YPivot));
-		if (LADDER_COLOR == CheckColor && (GameEngineInput::IsPress(VK_DOWN) || GameEngineInput::IsPress(VK_UP)))
+		if (LADDER_COLOR == CheckColor)
 		{
 			IsLadder = true;
 			LadderPivot = i;

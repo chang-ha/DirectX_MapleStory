@@ -105,6 +105,10 @@ void Player::LadderEnd()
 	MoveVectorForceReset();
 	GravityOn();
 	MainSpriteRenderer->AnimationPauseOff();
+	if (true == GameEngineInput::IsPress(VK_UP))
+	{
+		Transform.AddLocalPosition(float4(0, 3.0f));
+	}
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -182,7 +186,7 @@ void Player::JumpUpdate(float _Delta)
 	}
 	
 	// Ladder
-	if (true == IsLadder && (GameEngineInput::IsPress(VK_UP) || GameEngineInput::IsPress(VK_DOWN)))
+	if (true == IsLadder && GameEngineInput::IsPress(VK_UP))
 	{
 		ChangeState(PlayerState::Ladder);
 		return;
@@ -305,24 +309,22 @@ void Player::LadderUpdate(float _Delta)
 		MainSpriteRenderer->AnimationPauseOn();
 	}
 
-	bool IsLadder = false;
-	for (int i = -2; i < 4; i++)
-	{
-		GameEngineColor CheckColor = CheckGroundColor(float4(static_cast<float>(i), -3));
-		if (LADDER_COLOR == CheckColor)
-		{
-			IsLadder = true;
-		}
-	}
-
+	Transform.AddLocalPosition(MovePos);
+	LadderCheck();
 	if (false == IsLadder)
 	{
 		MoveVectorForceReset();
 		ChangeState(PlayerState::Idle);
 		return;
 	}
-	else if (true == IsLadder)
-	{
-		Transform.AddLocalPosition(MovePos);
-	}
+	//if (false == IsLadder)
+	//{
+	//	MoveVectorForceReset();
+	//	ChangeState(PlayerState::Idle);
+	//	return;
+	//}
+	//else if (true == IsLadder)
+	//{
+	//	Transform.AddLocalPosition(MovePos);
+	//}
 }

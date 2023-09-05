@@ -1,5 +1,9 @@
 #pragma once
 
+#define GROUND_COLOR GameEngineColor(255, 0, 255, 255)
+#define FLOOR_COLOR GameEngineColor(0, 255, 0, 255)
+#define LADDER_COLOR GameEngineColor(255, 0, 0, 255)
+
 // Ό³Έν :
 class GlobalValue
 {
