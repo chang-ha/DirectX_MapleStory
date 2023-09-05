@@ -51,12 +51,14 @@ protected:
 
 private:
 	bool IsGround = true;
+	bool IsLadder = false;
 	bool DoubleJump = false;
 	bool GroundJump = false;
 	float Speed = 250.0f;
 	float AirSpeed = 200.0f;
 	float JumpAirSpeed = 30.0f;
 	float CameraSpeed = 5.0f;
+	float LadderPivot = 0.0f;
 	float4 CurMapScale = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;

@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-#define MAX_GRAVITY 1500.0f
+#define MAX_GRAVITY 2000.0f
 
 enum class ActorDir
 {

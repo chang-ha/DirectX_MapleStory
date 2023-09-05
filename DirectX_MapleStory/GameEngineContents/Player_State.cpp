@@ -4,8 +4,12 @@
 
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 200.0f
+
 #define DOUBLE_JUMP_DIS 350.0f
-#define DOUBLE_JUMP_HEIGHT 110.0f
+#define DOUBLE_JUMP_HEIGHT 60.0f
+
+#define LADDER_JUMP_HEIGHT 300.0f
+
 // State함수들 구현
 void Player::IdleStart()
 {
@@ -26,24 +30,33 @@ void Player::JumpStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Jump");
 
-	if (false == IsGround)
+	if (true == IsGround)
 	{
-		return;
+		if (GameEngineInput::IsPress(VK_LEFT))
+		{
+			PlusMoveVectorForce(float4(-JUMP_DIS, JUMP_HEIGHT));
+		}
+		else if (GameEngineInput::IsPress(VK_RIGHT))
+		{
+			PlusMoveVectorForce(float4(JUMP_DIS, JUMP_HEIGHT));
+		}
+		else
+		{
+			PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
+		}
+		GroundJump = true;
 	}
-
-	if (GameEngineInput::IsPress(VK_LEFT))
+	else if (PlayerState::Ladder == State)
 	{
-		PlusMoveVectorForce(float4(-JUMP_DIS, JUMP_HEIGHT));
+		if (GameEngineInput::IsPress(VK_LEFT))
+		{
+			PlusMoveVectorForce(float4(-JUMP_DIS, LADDER_JUMP_HEIGHT));
+		}
+		else if (GameEngineInput::IsPress(VK_RIGHT))
+		{
+			PlusMoveVectorForce(float4(JUMP_DIS, LADDER_JUMP_HEIGHT));
+		}
 	}
-	else if (GameEngineInput::IsPress(VK_RIGHT))
-	{
-		PlusMoveVectorForce(float4(JUMP_DIS, JUMP_HEIGHT));
-	}
-	else
-	{
-		PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
-	}
-	GroundJump = true;
 }
 
 void Player::DownStart()
@@ -54,6 +67,8 @@ void Player::DownStart()
 
 void Player::LadderStart()
 {
+	float4 CurPos = Transform.GetWorldPosition();
+	Transform.SetLocalPosition(float4(CurPos.X + LadderPivot, CurPos.Y, CurPos.Z));
 	MainSpriteRenderer->ChangeAnimation("Ladder");
 	GravityOff();
 }
@@ -75,7 +90,8 @@ void Player::WalkEnd()
 
 void Player::JumpEnd()
 {
-
+	GroundJump = false;
+	DoubleJump = false;
 }
 
 void Player::DownEnd()
@@ -95,17 +111,28 @@ void Player::IdleUpdate(float _Delta)
 {
 	if (GameEngineInput::IsPress(VK_DOWN))
 	{
-		ChangeState(PlayerState::Down);
+		if (false == IsLadder)
+		{
+			ChangeState(PlayerState::Down);
+			return;
+		}
+		else if (true == IsLadder)
+		{
+			ChangeState(PlayerState::Ladder);
+			return;
+		}
 	}
 	
 	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
 	{
 		ChangeState(PlayerState::Walk);
+		return;
 	}
 
 	if ((GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D')) && GameEngineInput::IsFree(VK_DOWN))
 	{
 		ChangeState(PlayerState::Jump);
+		return;
 	}
 }
 
@@ -130,13 +157,21 @@ void Player::WalkUpdate(float _Delta)
 	if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
 	{
 		ChangeState(PlayerState::Jump);
+		return;
 	}
 
 	if (0.0f == MovePos.X)
 	{
 		ChangeState(PlayerState::Idle);
+		return;
 	}
 	Transform.AddLocalPosition(MovePos);
+
+	if (true == IsLadder && (GameEngineInput::IsPress(VK_UP) || GameEngineInput::IsPress(VK_DOWN)))
+	{
+		ChangeState(PlayerState::Ladder);
+		return;
+	}
 }
 
 void Player::JumpUpdate(float _Delta)
@@ -144,10 +179,16 @@ void Player::JumpUpdate(float _Delta)
 	if (0.0f == GetMoveVectorForce().Y)
 	{
 		ChangeState(PlayerState::Idle);
-		GroundJump = false;
-		DoubleJump = false;
+	}
+	
+	// Ladder
+	if (true == IsLadder && (GameEngineInput::IsPress(VK_UP) || GameEngineInput::IsPress(VK_DOWN)))
+	{
+		ChangeState(PlayerState::Ladder);
+		return;
 	}
 
+	// Move
 	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
 	{
 		float4 MoveDir = float4::ZERO;
@@ -176,6 +217,7 @@ void Player::JumpUpdate(float _Delta)
 		}
 	}
 
+	////// Double Jump
 	if (true == DoubleJump)
 	{
 		return;
@@ -220,6 +262,7 @@ void Player::DownUpdate(float _Delta)
 	if (GameEngineInput::IsFree(VK_DOWN) || GameEngineInput::IsUp(VK_DOWN))
 	{
 		ChangeState(PlayerState::Idle);
+		return;
 	}
 
 	else if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
@@ -230,6 +273,7 @@ void Player::DownUpdate(float _Delta)
 			IsGround = false;
 			ChangeState(PlayerState::Jump);
 			Transform.AddLocalPosition(float4(0, -3));
+			return;
 		}
 	}
 }
@@ -275,6 +319,7 @@ void Player::LadderUpdate(float _Delta)
 	{
 		MoveVectorForceReset();
 		ChangeState(PlayerState::Idle);
+		return;
 	}
 	else if (true == IsLadder)
 	{

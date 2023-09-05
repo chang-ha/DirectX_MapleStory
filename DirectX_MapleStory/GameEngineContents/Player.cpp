@@ -8,7 +8,6 @@
 #include "Player.h"
 #include "ContentLevel.h"
 #include "ContentMap.h"
-#include "GlobalValue.h"
 
 Player::Player() 
 {
@@ -182,6 +181,8 @@ void Player::BlockOutMap()
 
 void Player::LadderCheck()
 {
+	IsLadder = false;
+
 	if (PlayerState::Alert != State && PlayerState::Down != State && PlayerState::Idle != State && PlayerState::Jump != State && PlayerState::Walk != State)
 	{
 		return;
@@ -197,14 +198,14 @@ void Player::LadderCheck()
 		YPivot = -LADDER_Y_PIVOT;
 	}
 
-	for (int i = -2; i < 4; i++)
+	for (float i = -2.0f; i < 4.0f; i += 1.0f)
 	{
-		GameEngineColor CheckColor = CheckGroundColor(float4(static_cast<float>(i), YPivot));
+		GameEngineColor CheckColor = CheckGroundColor(float4(i, YPivot));
 		if (LADDER_COLOR == CheckColor && (GameEngineInput::IsPress(VK_DOWN) || GameEngineInput::IsPress(VK_UP)))
 		{
-			Transform.AddLocalPosition(float4(static_cast<float>(i)));
-			ChangeState(PlayerState::Ladder);
-			break;
+			IsLadder = true;
+			LadderPivot = i;
+			return;
 		}
 	}
 }
