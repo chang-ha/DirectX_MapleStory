@@ -4,6 +4,7 @@
 #define GROUND_COLOR GameEngineColor(255, 255, 255, 255)
 #define FLOOR_COLOR GameEngineColor(0, 255, 0, 255)
 #define LADDER_COLOR GameEngineColor(255, 0, 0, 255)
+
 class ContentMap : public GameEngineActor
 {
 public:
