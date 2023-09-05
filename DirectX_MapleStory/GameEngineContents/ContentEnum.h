@@ -2,7 +2,9 @@
 
 enum class UpdateOrder
 {
-
+	BackGround,
+	Map,
+	Play,
 };
 
 enum class RenderOrder

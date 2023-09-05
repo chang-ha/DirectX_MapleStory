@@ -39,16 +39,34 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 {
 	GameEngineLevel* Level = GetLevel();
 
-	std::shared_ptr<GameEngineCamera> Camera = Level->GetCamera(_Order);
+	std::shared_ptr<GameEngineCamera> FindCamera = Level->GetCamera(_Order);
 
-	if (nullptr == Camera)
+	if (nullptr == FindCamera)
 	{
 		MsgBoxAssert("카메라가 존재하지 않는데 랜더러를 넣으려고 했습니다.");
 		return;
 	}
 
+	Camera = FindCamera.get();
 	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
-	ViewInfo[Camera.get()] = _Order;
+}
+
+void GameEngineRenderer::SetRenderOrder(int _Order)
+{
+	if (nullptr == Camera)
+	{
+		MsgBoxAssert("카메라가 존재하지 않는 랜더러입니다. 카메라를 먼저 지정해주세요.");
+		return;
+	}
+
+	Camera->Renderers[GetOrder()].remove(GetDynamic_Cast_This<GameEngineRenderer>());
+	GameEngineObject::SetOrder(_Order);
+	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
+}
+
+void GameEngineRenderer::SetCameraOrder(int _Order)
+{
+	SetViewCameraSelect(_Order);
 }
 
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)

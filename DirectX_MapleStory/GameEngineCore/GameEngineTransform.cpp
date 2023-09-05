@@ -48,3 +48,20 @@ void GameEngineTransform::CalChilds()
 		Trans->TransformUpdate();
 	}
 }
+
+bool GameEngineTransform::Collision(const CollisionParameter& _Data)
+{
+	DirectX::BoundingSphere SPHERE;
+	DirectX::BoundingBox AABB;
+	DirectX::BoundingOrientedBox OBB;
+
+	//SPHERE.Center;
+	//SPHERE.Radius;
+
+	//AABB.Center;
+	//AABB.Extents;
+
+	bool Check = SPHERE.Intersects(AABB);
+
+	return true;
+}

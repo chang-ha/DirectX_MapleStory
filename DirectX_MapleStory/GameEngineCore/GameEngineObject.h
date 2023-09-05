@@ -58,7 +58,7 @@ public:
 
 	int GetOrder()
 	{
-		return UpdateOrder;
+		return Order;
 	}
 
 	template<typename EnumType>
@@ -69,7 +69,7 @@ public:
 
 	virtual void SetOrder(int _Order)
 	{
-		UpdateOrder = _Order;
+		Order = _Order;
 	}
 
 	float GetLiveTime()
@@ -128,16 +128,37 @@ public:
 	std::shared_ptr<ConvertType> GetDynamic_Cast_This()
 	{
 		std::shared_ptr<GameEngineObject> ObjectPtr = shared_from_this();
-		std::shared_ptr<ConvertType> CameraPtr = std::dynamic_pointer_cast<ConvertType>(ObjectPtr);
+		std::shared_ptr<ConvertType> ConvertPtr = std::dynamic_pointer_cast<ConvertType>(ObjectPtr);
 
-		if (nullptr == CameraPtr)
+		if (nullptr == ConvertPtr)
 		{
-			MsgBoxAssert("다이나믹 캐스트에 실패했습니다. 가상함수 테이블 부모가 누구인지 확인해보세요. 혹은 부모 생성자에서는 사용이 불가능한 함수입니다.");
+			// MsgBoxAssert("다이나믹 캐스트에 실패했습니다. 가상함수 테이블 부모가 누구인지 확인해보세요. 혹은 부모 생성자에서는 사용이 불가능한 함수입니다.");
+			return nullptr;
 		}
 
-		return CameraPtr;
+		return ConvertPtr;
 	}
 
+	// 값형이라 어마무시한 복사가 일어나서 자주 안쓰는걸 추천 -> Const &붙여서 리턴하면 음... 정말 참조밖에 못함(해당 객체들을 전혀 사용 못함;;)
+	template<typename EnumType>
+	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(EnumType _GroupIndex)
+	{
+		return GetObjectGroup(static_cast<int>(_GroupIndex));
+	}
+
+	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(int _GroupIndex)
+	{
+		std::list<std::shared_ptr<GameEngineObject>>& Group = Childs[_GroupIndex];
+		return Group;
+	}
+
+	template<typename ObjectType, typename EnumType>
+	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(EnumType _GroupIndex)
+	{
+		return GetObjectGroupConvert<ObjectType>(static_cast<int>(_GroupIndex));
+	}
+
+	// 특정그룹에 있는 특정 클래스만 골라서 다이나믹캐스팅 후 리턴해주는 함수
 	template<typename ObjectType>
 	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(int _GroupIndex)
 	{
@@ -170,7 +191,7 @@ private:
 
 	std::string Name;
 	float LiveTime = 0.0f;
-	int UpdateOrder = 0;
+	int Order = 0;
 	bool IsUpdateValue = true; // 이걸 false로 만들면 됩니다.
 	bool IsDeathValue = false; // 아예 메모리에서 날려버리고 싶어.
 
