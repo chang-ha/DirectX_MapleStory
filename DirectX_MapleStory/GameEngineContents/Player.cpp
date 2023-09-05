@@ -84,7 +84,7 @@ void Player::Update(float _Delta)
 	LadderCheck();
 	StateUpdate(_Delta);
 
-	if ((PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
+	if ((PlayerState::Down == State || PlayerState::Alert == State || PlayerState::Idle == State || PlayerState::Walk ==  State) && false == IsGround)
 	{
 		ChangeState(PlayerState::Jump);
 	}
