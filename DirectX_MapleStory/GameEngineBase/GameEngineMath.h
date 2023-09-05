@@ -592,6 +592,10 @@ public:
 		DirectXMatrix = (X * Y * Z).DirectXMatrix;
 	}
 
+	void Decompose(float4& _Scale, float4& _RotQuaternion, float4& _Pos) const
+	{
+		// DirectX::XMMatrixDecompose()
+	}
 
 	void RotationXDeg(const float _Value)
 	{
