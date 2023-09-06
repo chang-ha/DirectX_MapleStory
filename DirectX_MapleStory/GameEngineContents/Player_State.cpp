@@ -158,7 +158,59 @@ void Player::WalkUpdate(float _Delta)
 	{
 		MovePos += float4::RIGHT * _Delta * Speed;
 	}
+	Transform.AddLocalPosition(MovePos);
 
+	//unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
+
+	//if (Color == RGB(255, 255, 255))
+	//{
+	//	// MovePos를 바꿔버리는 방법이 있을것이고.
+	
+	//	if (RGB(255, 255, 255) == GetGroundColor(RGB(255, 255, 255), MovePos))
+	//	{
+	//		float4 XPos = float4::ZERO;
+	//		float4 Dir = MovePos.X <= 0.0f ? float4::RIGHT : float4::LEFT;
+	
+	//		while (RGB(255, 0, 0) != GetGroundColor(RGB(255, 255, 255), MovePos + XPos))
+	//		{
+	//			XPos += Dir;
+	
+	//			if (abs(XPos.X) > 50.0f)
+	//			{
+	//				break;
+	//			}
+	//		}
+	
+	//		float4 YPos = float4::ZERO;
+	//		while (RGB(255, 0, 0) != GetGroundColor(RGB(255, 255, 255), MovePos + YPos))
+	//		{
+	//			YPos.Y += 1;
+	
+	//			if (YPos.Y > 60.0f)
+	//			{
+	//				break;
+	//			}
+	//		}
+	
+	//		if (abs(XPos.X) >= YPos.Y)
+	//		{
+	//			while (RGB(255, 0, 0) != GetGroundColor(RGB(255, 255, 255), MovePos))
+	//			{
+	//				MovePos.Y += 1;
+	//			}
+	//		}
+	//		
+	//	}
+	
+	//	// 내가 움직이려는 
+	//	// GetGroundColor(RGB(255, 255, 255), MovePos);
+	
+	//}
+
+	if (GROUND_COLOR == CheckGroundColor())
+	{
+
+	}
 	if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
 	{
 		ChangeState(PlayerState::Jump);
@@ -170,7 +222,6 @@ void Player::WalkUpdate(float _Delta)
 		ChangeState(PlayerState::Idle);
 		return;
 	}
-	Transform.AddLocalPosition(MovePos);
 
 	if (true == IsLadder && (GameEngineInput::IsPress(VK_UP) || GameEngineInput::IsPress(VK_DOWN)))
 	{
@@ -184,6 +235,7 @@ void Player::JumpUpdate(float _Delta)
 	if (0.0f == GetMoveVectorForce().Y)
 	{
 		ChangeState(PlayerState::Idle);
+		return;
 	}
 	
 	// Ladder

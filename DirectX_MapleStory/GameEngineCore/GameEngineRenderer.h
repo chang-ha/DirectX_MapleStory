@@ -33,6 +33,12 @@ public:
 	// _Order 카메라로 이동하는거.
 	// void SetChangeViewCameraAllClear(int _Order);
 
+	template <typename EnumType>
+	void SetRenderOrder(EnumType _Order)
+	{
+		SetRenderOrder(static_cast<int>(_Order));
+	}
+
 	void SetRenderOrder(int _Order);
 
 	void SetCameraOrder(int _Order);
