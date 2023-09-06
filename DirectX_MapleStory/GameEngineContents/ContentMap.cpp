@@ -16,6 +16,19 @@ void ContentMap::Start()
 	MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Map);
 }
 
+void ContentMap::Update(float _Delta)
+{
+	if (GameEngineInput::IsDown(VK_F1))
+	{
+		MapRenderer->SetSprite(MapName);
+	}
+	else if (GameEngineInput::IsDown(VK_F2))
+	{
+		MapRenderer->SetSprite("Collision_" + MapName);
+	}
+}
+
+
 void ContentMap::Init(std::string_view _MapName)
 {
 	if (nullptr == GameEngineTexture::Find(_MapName))
@@ -29,8 +42,9 @@ void ContentMap::Init(std::string_view _MapName)
 		GameEngineSprite::CreateSingle(_MapName);
 		GameEngineSprite::CreateSingle("Collision_" + std::string(_MapName.data()));
 	}
+	MapName = _MapName;
 	MapCollisionTexture = GameEngineTexture::Find("Collision_" + std::string(_MapName.data()));
-	MapRenderer->SetSprite(_MapName);
+	MapRenderer->SetSprite(MapName);
 	float4 HalfMapScale = MapCollisionTexture->GetScale().Half();
 	HalfMapScale.Y *= -1.0f;
 	this->Transform.SetLocalPosition(HalfMapScale);

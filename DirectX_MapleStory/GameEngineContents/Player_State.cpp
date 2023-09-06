@@ -10,6 +10,8 @@
 
 #define LADDER_JUMP_HEIGHT 300.0f
 
+#define UP_PIXEL_LIMIT 3
+#define DOWN_PIXEL_LIMIT 2
 // State함수들 구현
 void Player::IdleStart()
 {
@@ -90,6 +92,7 @@ void Player::WalkEnd()
 
 void Player::JumpEnd()
 {
+	MoveVectorForceReset();
 	GroundJump = false;
 	DoubleJump = false;
 }
@@ -107,8 +110,8 @@ void Player::LadderEnd()
 	MainSpriteRenderer->AnimationPauseOff();
 	if (true == GameEngineInput::IsPress(VK_UP))
 	{
-		// 발판의 픽셀(2픽셀)로 올라가기 위해 +3을 해주었음 << 추후 보강
-		Transform.AddLocalPosition(float4(0, 3.0f));
+		// 발판의 픽셀(3픽셀)로 올라가기 위해 +4을 해주었음 << 추후 보강
+		Transform.AddLocalPosition(float4(0, 4.0f));
 	}
 }
 
@@ -149,75 +152,80 @@ void Player::AlertUpdate(float _Delta)
 void Player::WalkUpdate(float _Delta)
 {
 	float4 MovePos = float4::ZERO;
+	float4 MoveDir = float4::ZERO;
+	GameEngineColor CheckColor = GROUND_COLOR;
 
-	if (GameEngineInput::IsPress(VK_LEFT))
+	switch (Dir)
 	{
-		MovePos += float4::LEFT * _Delta * Speed;
+	case ActorDir::Right:
+		MoveDir = float4::RIGHT;
+		break;
+	case ActorDir::Left:
+		MoveDir = float4::LEFT;
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
 	}
-	else if (GameEngineInput::IsPress(VK_RIGHT))
+
+	if ((GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT)))
 	{
-		MovePos += float4::RIGHT * _Delta * Speed;
+		MovePos += MoveDir * _Delta * Speed;
+	}
+
+	// 올라가는 경사면
+	CheckColor = CheckGroundColor(MovePos + float4::UP);
+	if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+	{
+		float UpYPivot = 1.0f;
+		GameEngineColor PivotColor = GROUND_COLOR;
+		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
+		{
+			++UpYPivot;
+			PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
+		}
+
+		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		{
+			MovePos += float4::UP;
+			CheckColor = CheckGroundColor(MovePos + float4::UP);
+		}
+
+		while (UP_PIXEL_LIMIT + 1 <= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		{
+			MovePos -= MoveDir * 0.1f;
+			CheckColor = CheckGroundColor(MovePos + float4::UP);
+		}
+	}
+
+	// 내려가는 경사면
+	CheckColor = CheckGroundColor(MovePos);
+	if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+	{
+		float DownYPivot = 0.0f;
+		GameEngineColor PivotColor = LADDER_COLOR;
+		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
+		{
+			--DownYPivot;
+			PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
+		}
+
+		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+		{
+			MovePos += float4::DOWN;
+			CheckColor = CheckGroundColor(MovePos);
+		}
 	}
 	Transform.AddLocalPosition(MovePos);
 
-	//unsigned int Color = GetGroundColor(RGB(255, 255, 255), CheckPos);
-
-	//if (Color == RGB(255, 255, 255))
-	//{
-	//	// MovePos를 바꿔버리는 방법이 있을것이고.
-	
-	//	if (RGB(255, 255, 255) == GetGroundColor(RGB(255, 255, 255), MovePos))
-	//	{
-	//		float4 XPos = float4::ZERO;
-	//		float4 Dir = MovePos.X <= 0.0f ? float4::RIGHT : float4::LEFT;
-	
-	//		while (RGB(255, 0, 0) != GetGroundColor(RGB(255, 255, 255), MovePos + XPos))
-	//		{
-	//			XPos += Dir;
-	
-	//			if (abs(XPos.X) > 50.0f)
-	//			{
-	//				break;
-	//			}
-	//		}
-	
-	//		float4 YPos = float4::ZERO;
-	//		while (RGB(255, 0, 0) != GetGroundColor(RGB(255, 255, 255), MovePos + YPos))
-	//		{
-	//			YPos.Y += 1;
-	
-	//			if (YPos.Y > 60.0f)
-	//			{
-	//				break;
-	//			}
-	//		}
-	
-	//		if (abs(XPos.X) >= YPos.Y)
-	//		{
-	//			while (RGB(255, 0, 0) != GetGroundColor(RGB(255, 255, 255), MovePos))
-	//			{
-	//				MovePos.Y += 1;
-	//			}
-	//		}
-	//		
-	//	}
-	
-	//	// 내가 움직이려는 
-	//	// GetGroundColor(RGB(255, 255, 255), MovePos);
-	
-	//}
-
-	if (GROUND_COLOR == CheckGroundColor())
-	{
-
-	}
 	if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
 	{
 		ChangeState(PlayerState::Jump);
 		return;
 	}
 
-	if (0.0f == MovePos.X)
+	if (GameEngineInput::IsFree(VK_LEFT) && GameEngineInput::IsFree(VK_RIGHT))
 	{
 		ChangeState(PlayerState::Idle);
 		return;
@@ -232,7 +240,7 @@ void Player::WalkUpdate(float _Delta)
 
 void Player::JumpUpdate(float _Delta)
 {
-	if (0.0f == GetMoveVectorForce().Y)
+	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
 		ChangeState(PlayerState::Idle);
 		return;
@@ -324,7 +332,6 @@ void Player::DownUpdate(float _Delta)
 
 	else if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
 	{
-		
 		if (false == CheckGround(float4(0, -3)))
 		{
 			IsGround = false;
