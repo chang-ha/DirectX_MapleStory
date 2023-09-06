@@ -69,6 +69,8 @@ public:
 
 		float Arr2D[1][4];
 		DirectX::XMVECTOR DirectXVector;
+		DirectX::XMFLOAT3 Float3;
+		DirectX::XMFLOAT4 Float4;
 	};
 
 	float4(DirectX::FXMVECTOR& _DirectXVector)
@@ -129,6 +131,11 @@ public:
 		return { hX(), hY(), Z, W };
 	}
 
+	float4 ToABS() const
+	{
+		return DirectX::XMVectorAbs(DirectXVector);
+	}
+
 	float4 operator-() const
 	{
 		float4 ReturnValue = DirectX::XMVectorSet(-X, -Y, -Z, W);
@@ -143,7 +150,44 @@ public:
 		return ReturnValue;
 	}
 
+	float4 QuaternionToEulerDeg()
+	{
+		// 디그리 각도로 바꿔줍니다.
+		return QuaternionToEulerRad() * GameEngineMath::R2D;
+	}
 
+	float4 QuaternionToEulerRad()
+	{
+		// 쿼터니온을 다시 라디안 각도로 변경
+		float4 result;
+
+		float sinrCosp = 2.0f * (W * Z + X * Y);
+		float cosrCosp = 1.0f - 2.0f * (Z * Z + X * X);
+		result.Z = atan2f(sinrCosp, cosrCosp);
+
+		float pitchTest = W * X - Y * Z;
+		float asinThreshold = 0.4999995f;
+		float sinp = 2.0f * pitchTest;
+
+		if (pitchTest < -asinThreshold)
+		{
+			result.X = -(0.5f * GameEngineMath::PI);
+		}
+		else if (pitchTest > asinThreshold)
+		{
+			result.X = (0.5f * GameEngineMath::PI);
+		}
+		else
+		{
+			result.X = asinf(sinp);
+		}
+
+		float sinyCosp = 2.0f * (W * Y + X * Z);
+		float cosyCosp = 1.0f - 2.0f * (X * X + Y * Y);
+		result.Y = atan2f(sinyCosp, cosyCosp);
+
+		return result;
+	}
 
 	float4 operator+(const float4& _Other) const
 	{
@@ -594,7 +638,11 @@ public:
 
 	void Decompose(float4& _Scale, float4& _RotQuaternion, float4& _Pos) const
 	{
-		// DirectX::XMMatrixDecompose()
+		// 이함수에 대해서 오해하면 안되는점이 한가지 있다.
+		// 각도는 같은 기저벡터가 나올수 있으면 아무래도 상관없는 값이 나온다. (ex 0도 == 360도 == -360도 ...)
+		// _RotQuaternion <= 사원수는 뭐냐?
+		// 쿼터니온이 나온다.
+		DirectX::XMMatrixDecompose(&_Scale.DirectXVector, &_RotQuaternion.DirectXVector, &_Pos.DirectXVector, DirectXMatrix);
 	}
 
 	void RotationXDeg(const float _Value)

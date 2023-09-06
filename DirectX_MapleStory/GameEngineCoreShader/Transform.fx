@@ -2,12 +2,15 @@ cbuffer TransformData : register(b0)
 {
     float4 Scale;
     float4 Rotation;
+    float4 Quaternion;
     float4 Position;
     float4 LocalScale;
     float4 LocalRotation;
+    float4 LocalQuaternion;
     float4 LocalPosition;
     float4 WorldScale;
     float4 WorldRotation;
+    float4 WorldQuaternion;
     float4 WorldPosition;
     float4x4 ScaleMatrix; // Å©
     float4x4 RotationMatrix; // ÀÚ
