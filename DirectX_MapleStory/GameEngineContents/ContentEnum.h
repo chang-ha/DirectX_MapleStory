@@ -15,3 +15,10 @@ enum class RenderOrder
 	Play,
 	Skill,
 };
+};
+
+enum class CollisionOrder
+{
+	Player,
+	Monster,
+};

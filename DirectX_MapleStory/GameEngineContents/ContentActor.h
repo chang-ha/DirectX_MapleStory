@@ -58,11 +58,15 @@ public:
 	void Gravity(float _Delta);
 
 protected:
+	bool IsGround = true;
+	ActorDir Dir = ActorDir::Null;
+	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
+
 	void Start() override;
 	void Update(float _Delta) override;
 
-	ActorDir Dir = ActorDir::Null;
-	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
+	bool CheckGround(float4 PlusCheckPos = float4::ZERO);
+	GameEngineColor CheckGroundColor(float4 PlusCheckPos = float4::ZERO);
 
 private:
 	bool IsGravity = true;

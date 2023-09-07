@@ -1,8 +1,6 @@
 #pragma once
 #include <GameEngineCore\GameEngineActor.h>
 
-
-
 class ContentMap : public GameEngineActor
 {
 public:
