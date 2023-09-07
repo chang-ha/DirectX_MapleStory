@@ -10,8 +10,8 @@
 
 #define LADDER_JUMP_HEIGHT 300.0f
 
-#define UP_PIXEL_LIMIT 3
-#define DOWN_PIXEL_LIMIT 3
+#define UP_PIXEL_LIMIT 4
+#define DOWN_PIXEL_LIMIT 4
 // State함수들 구현
 void Player::IdleStart()
 {
@@ -92,6 +92,7 @@ void Player::WalkEnd()
 
 void Player::JumpEnd()
 {
+	GravityReset();
 	MoveVectorForceReset();
 	GroundJump = false;
 	DoubleJump = false;
@@ -192,11 +193,11 @@ void Player::WalkUpdate(float _Delta)
 			CheckColor = CheckGroundColor(MovePos + float4::UP);
 		}
 
-		while (UP_PIXEL_LIMIT + 1 <= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		{
-			MovePos -= MoveDir * 0.1f;
-			CheckColor = CheckGroundColor(MovePos + float4::UP);
-		}
+		//while (UP_PIXEL_LIMIT + 1 <= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		//{
+		//	MovePos -= MoveDir * 0.1f;
+		//	CheckColor = CheckGroundColor(MovePos + float4::UP);
+		//}
 	}
 
 	// 내려가는 경사면
