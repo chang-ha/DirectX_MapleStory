@@ -6,6 +6,7 @@ class GameEngineLevel : public GameEngineObject
 {
 	friend class GameEngineCore;
 	friend class GameEngineCamera;
+	friend class GameEngineCollision;
 
 public:
 	// constrcuter destructer
@@ -72,8 +73,11 @@ private:
 	void AllReleaseCheck() override;
 	void Release() override;
 
+	void PushCollision(std::shared_ptr<class GameEngineCollision> _Collision);
+
 	// 이미 액터가 child로 관리하고 있지만
 	// 따로 카메라도 들고 있을 겁니다.
 	std::map<int, std::shared_ptr<class GameEngineCamera>> Cameras;
+	std::map<int, std::shared_ptr<class GameEngineCollisionGroup>> CollisionGroups;
 };
 

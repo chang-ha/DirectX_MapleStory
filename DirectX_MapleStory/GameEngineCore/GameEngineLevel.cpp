@@ -3,6 +3,8 @@
 #include "GameEngineCore.h"
 #include "GameEngineActor.h"
 #include "GameEngineCamera.h"
+#include "GameEngineCollisionGroup.h"
+#include "GameEngineCollision.h"
 
 GameEngineLevel::GameEngineLevel() 
 {
@@ -77,6 +79,11 @@ void GameEngineLevel::AllReleaseCheck()
 		Pair.second->AllReleaseCheck();
 	}
 
+	for (std::pair<const int, std::shared_ptr<class GameEngineCollisionGroup>>& Pair : CollisionGroups)
+	{
+		Pair.second->AllReleaseCheck();
+	}
+
 	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Childs)
 	{
 		std::list<std::shared_ptr<GameEngineObject>>& Group = _Pair.second;
@@ -101,4 +108,19 @@ void GameEngineLevel::Release()
 {
 	// Level의 Release()는 호출하지 마세요
 	MsgBoxAssert("레벨은 엔진 규칙상 삭제할수 없습니다.");
+}
+
+void GameEngineLevel::PushCollision(std::shared_ptr<GameEngineCollision> _Collision)
+{
+	if (nullptr == _Collision)
+	{
+		MsgBoxAssert("존재하지 않는 콜리전을 넣으려고 했습니다.");
+		return;
+	}
+
+	if (false == CollisionGroups.contains(_Collision->GetOrder()))
+	{
+		CollisionGroups[_Collision->GetOrder()] = std::shared_ptr<GameEngineCollisionGroup>();
+	}
+	CollisionGroups[_Collision->GetOrder()]->PushCollision(_Collision);
 }

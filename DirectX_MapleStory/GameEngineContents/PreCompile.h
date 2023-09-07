@@ -7,6 +7,7 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineCamera.h>
+#include <GameEngineCore\GameEngineCollision.h>
 
 // Rendering
 #include <GameEngineCore/GameEngineRenderer.h>

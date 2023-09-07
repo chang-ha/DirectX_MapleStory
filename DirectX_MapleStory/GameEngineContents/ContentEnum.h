@@ -13,3 +13,9 @@ enum class RenderOrder
 	Map,
 	Play,
 };
+
+enum class CollisionOrder
+{
+	Player,
+	Monster,
+};
