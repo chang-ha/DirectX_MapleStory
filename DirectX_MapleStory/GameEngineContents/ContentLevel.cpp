@@ -20,12 +20,12 @@ void ContentLevel::Start()
 
 void ContentLevel::Update(float _Delta)
 {
-	if (GameEngineInput::IsPress(VK_F1))
+	if (GameEngineInput::IsPress('1'))
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
-	if (GameEngineInput::IsPress(VK_F2))
+	if (GameEngineInput::IsPress('2'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}

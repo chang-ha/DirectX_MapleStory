@@ -26,8 +26,10 @@ public:
 
 protected:
 	void Start() override;
+	void Update(float _Delta) override;
 
 private:
+	std::string MapName = "";
 	std::shared_ptr<GameEngineTexture> MapCollisionTexture = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> MapRenderer = nullptr;
 };
