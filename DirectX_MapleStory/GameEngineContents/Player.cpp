@@ -77,7 +77,6 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
-	IsGround = CheckGround();
 	DirCheck();
 	ChasingCamera(_Delta);
 	BlockOutMap();
@@ -294,26 +293,4 @@ void Player::StateUpdate(float _Delta)
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
 		break;
 	}
-}
-
-bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
-{
-	bool Result = false;
-	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
-	if (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor)
-	{
-		Result = true;
-	}
-	else
-	{
-		Result = false;
-	}
-
-	return Result;
-}
-
-GameEngineColor Player::CheckGroundColor(float4 PlusCheckPos /*= float4::ZERO*/)
-{
-	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
-	return CheckColor;
 }
