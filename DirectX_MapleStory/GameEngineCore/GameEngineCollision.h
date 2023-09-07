@@ -1,12 +1,13 @@
 #pragma once
 #include "GameEngineComponent.h"
+#include "GameEngineObject.h"
 
 class EventParameter
 {
 public:
-	std::function<void(class GameEngineCollision* _Collisions)> Enter = nullptr;
-	std::function<void(class GameEngineCollision* _Collisions)> Stay = nullptr;
-	std::function<void(class GameEngineCollision* _Collisions)> Exit = nullptr;
+	std::function<void(GameEngineCollision* _Collisions)> Enter = nullptr;
+	std::function<void(GameEngineCollision* _Collisions)> Stay = nullptr;
+	std::function<void(GameEngineCollision* _Collisions)> Exit = nullptr;
 };
 
 class GameEngineCollision : public GameEngineComponent

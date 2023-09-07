@@ -1,4 +1,5 @@
 #pragma once
+#include "GameEngineCollision.h"
 
 class GameEngineCollisionGroup : public GameEngineObject
 {
@@ -29,8 +30,8 @@ protected:
 	void AllReleaseCheck() override;
 
 private:
-	std::list<std::shared_ptr<class GameEngineCollision>> Collisions;
+	std::list<std::shared_ptr<GameEngineCollision>> Collisions;
 
-	void PushCollision(std::shared_ptr<class GameEngineCollision> _Collision);
+	void PushCollision(std::shared_ptr<GameEngineCollision> _Collision);
 };
 
