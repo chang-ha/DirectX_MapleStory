@@ -36,54 +36,41 @@ void ContentActor::Gravity(float _Delta)
 		return;
 	}
 
-	GravityForce += _Delta * GravitySpeed;
+	if (true == IsGround && 0 >= MoveVectorForce.Y)
+	{
+		return;
+	}
+
+	GravityForce += GravitySpeed * _Delta;
 	if (MAX_GRAVITY <= GravityForce)
 	{
 		GravityForce = MAX_GRAVITY;
 	}
-	// MoveVectorForce -= GravityForce * _Delta;
-	float Count = 0.0f;
-	float GravityForceDelta = GravityForce * _Delta; 
-	GameEngineColor GroundColor;
-	while (1.0f >= Count && 0.0f >= (MoveVectorForce.Y - GravityForceDelta))
+
+	MoveVectorForce.Y -= GravityForce * _Delta;
+	if (0.0f > MoveVectorForce.Y)
 	{
-		GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + float4(0, GravityForceDelta * Count), GROUND_COLOR);
-		if ((GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor))
+		float4 MoveVectorForceDelta = MoveVectorForce * _Delta;
+		GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GROUND_COLOR);
+		float Count = 0.0f;
+		for (; Count <= static_cast<int>(-MoveVectorForceDelta.Y); Count += 1.0f)
 		{
-			break;
+			if (GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor)
+			{
+				break;
+			}
+			GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() - float4(0, 1.0f * Count), GROUND_COLOR);
 		}
-		Count += 0.1f;
-	}
-	if (0 == Count)
-	{
-		MoveVectorForce.Y -= GravityForceDelta;
+		if (0 != Count)
+		{
+			MoveVectorForceDelta.Y = -1.0f * Count;
+		}
+		Transform.AddLocalPosition(MoveVectorForceDelta);
 	}
 	else
 	{
-		MoveVectorForce.Y -= GravityForceDelta * Count;
+		Transform.AddLocalPosition(MoveVectorForce * _Delta);
 	}
-	Transform.AddLocalPosition(MoveVectorForce * _Delta);
-
-	if ((GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor))
-	{
-		GravityReset();
-		MoveVectorForceReset();
-	}
-
-	//GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GROUND_COLOR);
-	//if ((GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor))
-	//{
-	//	return;
-	//}
-	// 1. 아래에 박히는 경우
-	// -> Vector가 너무 커서 아래에 박혀버림
-	// -> 한번에 이동하지 말고 나눠서 이동해야 하나?
-	// -> 아님 박혔을때 끌어 올려야 하나?
-
-
-	// 2. 그냥 지나치는 경우
-	// -> 위와 동일하게 Vector가 너무 커서 그냥 지나쳐 버림
-	// -> 이것도 위와 비슷하게 해결 가능할듯
 
 
 }
