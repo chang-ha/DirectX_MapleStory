@@ -1,6 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "TitleLevel.h"
 #include "Player.h"
+#include "ContentBackGround.h"
 
 TitleLevel::TitleLevel()
 {
@@ -16,10 +17,12 @@ TitleLevel::~TitleLevel()
 void TitleLevel::Start()
 {
 	ContentLevel::Start();
-	GetMainCamera()->Transform.SetLocalPosition({ 0.0f, 0.0f, -500.0f });
+	float4 WinScale = GlobalValue::WinScale;
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
-
-	// std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
+	std::shared_ptr<ContentBackGround> Back = CreateActor<ContentBackGround>();
+	Back->Init("Title.png", WinScale);
+	WinScale.Y *= -1.0f;
+	GetMainCamera()->Transform.SetLocalPosition(WinScale.Half());
 }
 
 void TitleLevel::Update(float _Delta)

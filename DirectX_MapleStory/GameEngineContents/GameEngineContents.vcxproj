@@ -175,6 +175,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ContentBackGround.cpp" />
     <ClCompile Include="ContentLevel.cpp">
       <SubType>
       </SubType>
@@ -218,6 +219,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ContentBackGround.h" />
     <ClInclude Include="ContentEnum.h" />
     <ClInclude Include="ContentLevel.h">
       <SubType>

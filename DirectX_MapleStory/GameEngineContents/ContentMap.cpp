@@ -50,7 +50,6 @@ void ContentMap::Init(std::string_view _MapName)
 	this->Transform.SetLocalPosition(HalfMapScale);
 }
 
-
 GameEngineColor ContentMap::GetColor(float4 _Pos, GameEngineColor _DefaultColor /*= GROUND_COLOR*/)
 {
 	// 플레이어의 위치를 이미지의 좌표계에 맞게 변형한다.

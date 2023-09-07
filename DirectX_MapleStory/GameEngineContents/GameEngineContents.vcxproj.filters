@@ -19,9 +19,6 @@
     <ClCompile Include="ContentActor.cpp">
       <Filter>Actor\Core</Filter>
     </ClCompile>
-    <ClCompile Include="ContentMap.cpp">
-      <Filter>Actor\Core</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <Filter>Global</Filter>
     </ClCompile>
@@ -34,6 +31,10 @@
     <ClCompile Include="ContentSkill.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="ContentMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentBackGround.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -57,9 +58,6 @@
     <ClInclude Include="ContentActor.h">
       <Filter>Actor\Core</Filter>
     </ClInclude>
-    <ClInclude Include="ContentMap.h">
-      <Filter>Actor\Core</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalValue.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -69,6 +67,10 @@
     <ClInclude Include="ContentSkill.h">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="ContentMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentBackGround.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -100,6 +102,9 @@
     </Filter>
     <Filter Include="Actor\Global\Player\Skill">
       <UniqueIdentifier>{d366f8cd-50bf-4517-b4f1-525391c95c6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{f11cdf64-126b-4b12-b4fb-b924dfe7abbe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
