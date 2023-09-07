@@ -5,6 +5,7 @@ enum class UpdateOrder
 	BackGround,
 	Map,
 	Play,
+	Skill,
 };
 
 enum class RenderOrder
@@ -12,4 +13,5 @@ enum class RenderOrder
 	BackGround,
 	Map,
 	Play,
+	Skill,
 };

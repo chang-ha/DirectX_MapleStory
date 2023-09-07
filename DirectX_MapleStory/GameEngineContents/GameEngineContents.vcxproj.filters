@@ -16,20 +16,23 @@
     <ClCompile Include="ContentLevel.cpp">
       <Filter>Level\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Actor\Global</Filter>
-    </ClCompile>
     <ClCompile Include="ContentActor.cpp">
       <Filter>Actor\Core</Filter>
     </ClCompile>
     <ClCompile Include="ContentMap.cpp">
       <Filter>Actor\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Player_State.cpp">
-      <Filter>Actor\Global</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Actor\Global\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_State.cpp">
+      <Filter>Actor\Global\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentSkill.cpp">
+      <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,9 +54,6 @@
     <ClInclude Include="ContentLevel.h">
       <Filter>Level\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Actor\Global</Filter>
-    </ClInclude>
     <ClInclude Include="ContentActor.h">
       <Filter>Actor\Core</Filter>
     </ClInclude>
@@ -62,6 +62,12 @@
     </ClInclude>
     <ClInclude Include="GlobalValue.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Actor\Global\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentSkill.h">
+      <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +94,12 @@
     </Filter>
     <Filter Include="Actor\Core">
       <UniqueIdentifier>{235a7afc-badc-4ac2-8e10-884433bb746f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player">
+      <UniqueIdentifier>{f810355f-1e8a-4651-bd3d-271785192891}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player\Skill">
+      <UniqueIdentifier>{d366f8cd-50bf-4517-b4f1-525391c95c6b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
