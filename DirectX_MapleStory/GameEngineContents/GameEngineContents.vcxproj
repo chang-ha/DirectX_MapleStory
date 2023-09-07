@@ -188,6 +188,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="DoubleJump.cpp" />
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="MapleStoryCore.cpp">
       <SubType>
@@ -209,6 +210,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Bin\$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Bin\$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
@@ -233,6 +235,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="DoubleJump.h" />
     <ClInclude Include="GlobalValue.h">
       <SubType>
       </SubType>
@@ -247,6 +250,7 @@
     </ClInclude>
     <ClInclude Include="PlayLevel.h" />
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="SkillManager.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>

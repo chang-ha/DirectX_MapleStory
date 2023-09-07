@@ -34,7 +34,15 @@
     <ClCompile Include="ContentMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="ContentBackGround.cpp" />
+    <ClCompile Include="ContentBackGround.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="DoubleJump.cpp">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillManager.cpp">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -70,7 +78,15 @@
     <ClInclude Include="ContentMap.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="ContentBackGround.h" />
+    <ClInclude Include="ContentBackGround.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="DoubleJump.h">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillManager.h">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

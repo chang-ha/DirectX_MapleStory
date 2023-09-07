@@ -136,7 +136,9 @@
     <ClInclude Include="GameEngineCollisionGroup.h">
       <Filter>Collision</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineCollision.h" />
+    <ClInclude Include="GameEngineCollision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -224,7 +226,9 @@
     <ClCompile Include="GameEngineCollisionGroup.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineCollision.cpp" />
+    <ClCompile Include="GameEngineCollision.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThirdParty\DirectXTex\inc\DirectXTex.inl">

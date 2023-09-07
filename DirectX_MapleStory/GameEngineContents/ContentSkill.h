@@ -1,5 +1,4 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
 
 class ContentSkill : public GameEngineActor
 { 
@@ -14,10 +13,13 @@ public:
 	ContentSkill& operator=(const ContentSkill& _Other) = delete;
 	ContentSkill& operator=(ContentSkill&& _Other) noexcept = delete;
 
+	virtual void Init() {}
+
 protected:
-	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer1 = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer2 = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> SkillAfterImageRenderer = nullptr;
 
 private:
-
 };
 
