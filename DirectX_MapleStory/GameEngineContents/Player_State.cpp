@@ -11,7 +11,7 @@
 #define LADDER_JUMP_HEIGHT 300.0f
 
 #define UP_PIXEL_LIMIT 3
-#define DOWN_PIXEL_LIMIT 2
+#define DOWN_PIXEL_LIMIT 3
 // State함수들 구현
 void Player::IdleStart()
 {

@@ -36,8 +36,6 @@ public:
 
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
-	bool CheckGround(float4 PlusCheckPos = float4::ZERO);
-	GameEngineColor CheckGroundColor(float4 PlusCheckPos = float4::ZERO);
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -50,7 +48,6 @@ protected:
 	void LadderCheck();
 
 private:
-	bool IsGround = true;
 	bool IsLadder = false;
 	bool DoubleJump = false;
 	bool GroundJump = false;
