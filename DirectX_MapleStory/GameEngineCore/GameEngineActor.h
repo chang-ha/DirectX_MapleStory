@@ -24,8 +24,8 @@ public:
 	template<typename ObjectType>
 	std::shared_ptr<ObjectType> CreateComponent(int _Order = 0)
 	{
-		std::shared_ptr<class GameEngineComponent> NewChild = std::make_shared<ObjectType>();
-		ComponentInit(NewChild, _Order);
+		// std::shared_ptr<class GameEngineComponent> NewChild = std::make_shared<ObjectType>();
+		// ComponentInit(NewChild, _Order);
 
 
 		// GameEngineObject형으로 사용하고 있다면
@@ -35,7 +35,7 @@ public:
 		// dynamic_cast를 통해서 안전하게 형변환이 가능하다.
 		// std::shared_ptr 진짜 포인터는 아니기 때문에 dynamic_cast 해야할 상황에서
 		// 아래와 같은 함수를 사용하면 된다.
-		return std::dynamic_pointer_cast<ObjectType>(NewChild);
+		return std::dynamic_pointer_cast<ObjectType>(CreateChild<ObjectType>(_Order)); //std::dynamic_pointer_cast<ObjectType>(NewChild);
 	}
 
 	class GameEngineLevel* GetLevel();

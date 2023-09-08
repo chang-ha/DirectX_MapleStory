@@ -34,7 +34,9 @@
     <ClCompile Include="ContentMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="ContentBackGround.cpp" />
+    <ClCompile Include="ContentBackGround.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -70,7 +72,9 @@
     <ClInclude Include="ContentMap.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="ContentBackGround.h" />
+    <ClInclude Include="ContentBackGround.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

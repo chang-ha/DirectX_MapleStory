@@ -44,6 +44,8 @@ public:
 	void SetCameraOrder(int _Order);
 
 protected:
+	GameEngineTransform* DataTransform;
+
 	void Start();
 	virtual void Render(class GameEngineCamera* _Camera, float _Delta);
 

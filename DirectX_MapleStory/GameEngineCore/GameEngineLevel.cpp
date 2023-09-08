@@ -81,6 +81,11 @@ void GameEngineLevel::AllReleaseCheck()
 
 	for (std::pair<const int, std::shared_ptr<class GameEngineCollisionGroup>>& Pair : CollisionGroups)
 	{
+		if (nullptr == Pair.second)
+		{
+			continue;
+		}
+
 		Pair.second->AllReleaseCheck();
 	}
 

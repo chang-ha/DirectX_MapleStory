@@ -26,6 +26,9 @@ GameEngineRenderer::~GameEngineRenderer()
 
 void GameEngineRenderer::Start()
 {
+	// DataTransform 에 나의 Transform을 넣어줌 (Pivot기능을 위해 Transform을 2가지 사용하기 위해)
+	DataTransform = &Transform;
+
 	// 메인카메라에 들어갔다.
 	SetViewCameraSelect(0);
 
@@ -113,7 +116,7 @@ void GameEngineRenderer::ResSetting()
 
 	if (nullptr != ConstantBuffer)
 	{
-		const TransformData& Data = Transform.GetConstTransformDataRef();
+		const TransformData& Data = DataTransform->GetConstTransformDataRef();
 		ConstantBuffer->ChangeData(Data);
 		ConstantBuffer->Setting(0);
 	}
