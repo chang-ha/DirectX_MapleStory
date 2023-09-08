@@ -51,7 +51,7 @@ void ContentActor::Gravity(float _Delta)
 	if (0.0f > MoveVectorForce.Y)
 	{
 		float4 MoveVectorForceDelta = MoveVectorForce * _Delta;
-		GameEngineColor GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition(), GROUND_COLOR);
+		GameEngineColor GroundColor = CheckGroundColor();
 		float Count = 0.0f;
 		for (; Count <= static_cast<int>(-MoveVectorForceDelta.Y); Count += 1.0f)
 		{
@@ -59,7 +59,7 @@ void ContentActor::Gravity(float _Delta)
 			{
 				break;
 			}
-			GroundColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() - float4(0, 1.0f * Count), GROUND_COLOR);
+			GroundColor = CheckGroundColor(-float4(0, 1.0f * Count));
 		}
 		if (0 != Count)
 		{
