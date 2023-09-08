@@ -9,6 +9,8 @@
 #include "ContentLevel.h"
 #include "ContentMap.h"
 
+Player* Player::MainPlayer = nullptr;
+
 Player::Player() 
 {
 	
@@ -21,6 +23,7 @@ Player::~Player()
 void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
+	MainPlayer = this;
 }
 
 void Player::LevelEnd(GameEngineLevel* _NextLevel)

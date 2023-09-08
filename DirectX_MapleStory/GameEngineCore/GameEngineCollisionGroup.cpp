@@ -177,8 +177,8 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 
 void GameEngineCollisionGroup::AllReleaseCheck()
 {
-	std::list<std::shared_ptr<class GameEngineCollision>>::iterator StartIter = Collisions.begin();
-	std::list<std::shared_ptr<class GameEngineCollision>>::iterator EndIter = Collisions.end();
+	std::list<std::shared_ptr<GameEngineCollision>>::iterator StartIter = Collisions.begin();
+	std::list<std::shared_ptr<GameEngineCollision>>::iterator EndIter = Collisions.end();
 
 	for (; StartIter != EndIter; )
 	{
@@ -191,7 +191,7 @@ void GameEngineCollisionGroup::AllReleaseCheck()
 	}
 }
 
-void GameEngineCollisionGroup::PushCollision(std::shared_ptr<class GameEngineCollision> _Collision)
+void GameEngineCollisionGroup::PushCollision(std::shared_ptr<GameEngineCollision> _Collision)
 {
 	if (nullptr == _Collision)
 	{

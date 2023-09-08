@@ -55,6 +55,11 @@ public:
 		MoveVectorForce = float4::ZERO;
 	}
 
+	inline ActorDir GetDir()
+	{
+		return Dir;
+	}
+
 	void Gravity(float _Delta);
 
 protected:

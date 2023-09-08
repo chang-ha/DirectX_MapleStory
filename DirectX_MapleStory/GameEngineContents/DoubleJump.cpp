@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "DoubleJump.h"
+#include "Player.h"
 
 DoubleJump::DoubleJump()
 {
@@ -17,7 +18,24 @@ void DoubleJump::Init()
 
 void DoubleJump::UseSkill()
 {
-	int a = 0;
+	ActorDir Dir = Player::MainPlayer->GetDir();
+	if (GameEngineInput::IsDown(VK_UP))
+	{
+
+	}
+	else
+	{
+		switch (Dir)
+		{
+		case ActorDir::Right:
+			break;
+		case ActorDir::Left:
+			break;
+		case ActorDir::Null:
+		default:
+			break;
+		}
+	}
 }
 
 void DoubleJump::Start() 

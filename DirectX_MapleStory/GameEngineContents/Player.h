@@ -24,6 +24,8 @@ enum class PlayerState
 class Player : public ContentActor
 {
 public:
+	static Player* MainPlayer;
+public:
 	// constrcuter destructer
 	Player();
 	~Player();

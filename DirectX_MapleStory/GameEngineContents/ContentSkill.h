@@ -16,6 +16,7 @@ public:
 
 	virtual void Init() {}
 	virtual void UseSkill() {}
+	void SetScaleSkillRenderer(const float4& _Scale);
 
 protected:
 	void Start() override;
