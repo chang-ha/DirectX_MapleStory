@@ -43,6 +43,7 @@ void GameEngineInput::InputInit()
 	AllKeys[VK_CLEAR] = GameEngineKey(VK_CLEAR);
 	AllKeys[VK_RETURN] = GameEngineKey(VK_RETURN);
 	AllKeys[VK_SHIFT] = GameEngineKey(VK_SHIFT);
+	AllKeys[VK_LSHIFT] = GameEngineKey(VK_LSHIFT);
 	AllKeys[VK_CONTROL] = GameEngineKey(VK_CONTROL);
 	AllKeys[VK_MENU] = GameEngineKey(VK_MENU);
 	AllKeys[VK_PAUSE] = GameEngineKey(VK_PAUSE);

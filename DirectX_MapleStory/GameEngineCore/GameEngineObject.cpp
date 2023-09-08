@@ -33,7 +33,8 @@ void GameEngineObject::AllReleaseCheck()
 {
 	if (true == IsDeath())
 	{
-		Release();
+		AllRelease();
+		return;
 	}
 	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Childs)
 	{
@@ -56,7 +57,7 @@ void GameEngineObject::AllReleaseCheck()
 
 }
 
-void GameEngineObject::AllLevelStart(class GameEngineLevel* _PrevLevel)
+void GameEngineObject::AllLevelStart(GameEngineLevel* _PrevLevel)
 {
 	LevelStart(_PrevLevel);
 	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Childs)
@@ -72,7 +73,7 @@ void GameEngineObject::AllLevelStart(class GameEngineLevel* _PrevLevel)
 		}
 	}
 }
-void GameEngineObject::AllLevelEnd(class GameEngineLevel* _NextLevel)
+void GameEngineObject::AllLevelEnd(GameEngineLevel* _NextLevel)
 {
 	LevelEnd(_NextLevel);
 	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Childs)
@@ -85,6 +86,20 @@ void GameEngineObject::AllLevelEnd(class GameEngineLevel* _NextLevel)
 				continue;
 			}
 			_Child->LevelEnd(_NextLevel);
+		}
+	}
+}
+
+void GameEngineObject::AllRelease()
+{
+	Release();
+
+	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Childs)
+	{
+		std::list<std::shared_ptr<GameEngineObject>>& Group = _Pair.second;
+		for (std::shared_ptr<GameEngineObject> Object : Group)
+		{
+			Object->AllRelease();
 		}
 	}
 }
