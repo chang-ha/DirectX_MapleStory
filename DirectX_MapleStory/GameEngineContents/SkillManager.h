@@ -18,7 +18,7 @@ public:
 	template<typename SkillType>
 	void CreateSkill(std::string _SkillName)
 	{
-		std::shared_ptr<class ContentSkill> NewSkill = std::make_shared<SkillType>();
+		std::shared_ptr<class ContentSkill> NewSkill = GetLevel()->CreateActor<SkillType>();
 		if (false == AllSkills.contains(_SkillName))
 		{
 			AllSkills[_SkillName] = std::shared_ptr<class ContentSkill>();
@@ -27,7 +27,11 @@ public:
 		SkillInit(NewSkill);
 	}
 
+	void UseSkill(std::string_view _SkillName);
+
 protected:
+	void LevelStart(class GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(class GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 

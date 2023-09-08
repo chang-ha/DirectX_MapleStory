@@ -2,6 +2,7 @@
 #include "PlayLevel.h"
 #include "Player.h"
 #include "ContentMap.h"
+#include "SkillManager.h"
 
 PlayLevel::PlayLevel()
 {
@@ -20,6 +21,7 @@ void PlayLevel::Start()
 	NewPlayer->Transform.SetLocalPosition(float4(100, -100));
 	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 	CurMap->Init("Lacheln.png");
+	CreateActor<SkillManager>();
 }
 
 void PlayLevel::Update(float _Delta)

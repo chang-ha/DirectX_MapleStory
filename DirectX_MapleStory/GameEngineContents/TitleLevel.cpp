@@ -2,7 +2,6 @@
 #include "TitleLevel.h"
 #include "Player.h"
 #include "ContentBackGround.h"
-#include "SkillManager.h"
 
 TitleLevel::TitleLevel()
 {
@@ -24,7 +23,6 @@ void TitleLevel::Start()
 	Back->Init("Title.png", WinScale);
 	WinScale.Y *= -1.0f;
 	GetMainCamera()->Transform.SetLocalPosition(WinScale.Half());
-	CreateActor<SkillManager>();
 }
 
 void TitleLevel::Update(float _Delta)

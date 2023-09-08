@@ -15,6 +15,7 @@ public:
 	DoubleJump& operator=(DoubleJump&& _Other) noexcept = delete;
 
 	void Init() override;
+	void UseSkill() override;
 
 protected:
 	void Start() override;

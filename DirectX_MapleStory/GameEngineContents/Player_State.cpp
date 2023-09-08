@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 #include "ContentMap.h"
+#include "SkillManager.h"
 
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 200.0f
@@ -291,6 +292,7 @@ void Player::JumpUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown('D'))
 	{
+		SkillManager::PlayerSkillManager->UseSkill("DoubleJump");
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP))
 		{

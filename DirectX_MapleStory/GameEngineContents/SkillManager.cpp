@@ -15,9 +15,30 @@ SkillManager::~SkillManager()
 
 }
 
-void SkillManager::Start()
+void SkillManager::UseSkill(std::string_view _SkillName)
+{
+	if (false == AllSkills.contains(_SkillName.data()))
+	{
+		MsgBoxAssert("존재하지 않는 스킬을 사용하려고 했습니다.");
+		return;
+	}
+
+	std::shared_ptr<ContentSkill> Skill = AllSkills[_SkillName.data()];
+	Skill->UseSkill();
+}
+
+void SkillManager::LevelStart(class GameEngineLevel* _PrevLevel)
 {
 	PlayerSkillManager = this;
+}
+
+void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
+{
+
+}
+
+void SkillManager::Start()
+{
 	CreateSkill<DoubleJump>("DoubleJump");
 }
 
@@ -28,5 +49,6 @@ void SkillManager::Update(float _Delta)
 
 void SkillManager::SkillInit(std::shared_ptr<ContentSkill> _Skill)
 {
+	_Skill->Start();
 	_Skill->Init();
 }
