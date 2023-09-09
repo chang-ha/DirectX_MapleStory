@@ -36,11 +36,20 @@ enum class SamplerOption
 	POINT,
 };
 
+enum class PivotType
+{
+	Center,
+	Bottom,
+	Left,
+};
+
 // Ό³Έν :
 class GameEngineSpriteRenderer : public GameEngineRenderer
 {
 	friend class GameEngineFrameAnimation;
 public:
+	static std::shared_ptr<class GameEngineSampler> DefaultSampler;
+
 	// constrcuter destructer
 	GameEngineSpriteRenderer();
 	~GameEngineSpriteRenderer();
@@ -77,7 +86,15 @@ public:
 	void AnimationPauseSwitch();
 	void AnimationPauseOn();
 	void AnimationPauseOff();
+
+	void SetPivotType(PivotType _Type);
+	void SetImageScale(const float4& _Scale);
+	void AddImageScale(const float4& _Scale);
+
+	static void SetDefaultSampler(std::string_view _SamplerName);
+
 protected:
+	void Start() override;
 	void Update(float _Delta) override;
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
 
@@ -93,5 +110,8 @@ private:
 	float AutoScaleRatio = 1.0f; // Rendering ScaleRation
 	std::shared_ptr<GameEngineFrameAnimation> CurFrameAnimations;
 	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>> FrameAnimations;
+
+	float4 Pivot = { 0.5f, 0.5f };
+	GameEngineTransform ImageTransform;
 };
 

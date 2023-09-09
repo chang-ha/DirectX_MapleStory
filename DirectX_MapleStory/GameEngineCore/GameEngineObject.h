@@ -97,6 +97,16 @@ public:
 	void AllLevelStart(class GameEngineLevel* _PrevLevel);
 	void AllLevelEnd(class GameEngineLevel* _NextLevel);
 
+	template<typename ChildType>
+	std::shared_ptr<GameEngineObject> CreateChild(int _Order)
+	{
+		std::shared_ptr<GameEngineObject> NewChild = std::make_shared<ChildType>();
+		NewChild->SetOrder(_Order);
+		NewChild->SetParent(this, _Order);
+		NewChild->Start();
+		return NewChild;
+	}
+
 	void SetParent(GameEngineObject* _Parent, int _Order)
 	{
 		Parent = _Parent;
@@ -200,5 +210,6 @@ private:
 		LiveTime += _DeltaTime;
 	}
 
+	void AllRelease();
 };
 

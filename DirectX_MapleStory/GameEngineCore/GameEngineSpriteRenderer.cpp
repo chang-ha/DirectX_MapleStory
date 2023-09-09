@@ -4,6 +4,8 @@
 #include "GameEngineSampler.h"
 #include "GameEngineConstantBuffer.h"
 
+std::shared_ptr<GameEngineSampler> GameEngineSpriteRenderer::DefaultSampler;
+
 void GameEngineFrameAnimation::Reset()
 {
 	CurTime = 0.0f;
@@ -69,11 +71,58 @@ SpriteData GameEngineFrameAnimation::Update(float _Delta)
 
 GameEngineSpriteRenderer::GameEngineSpriteRenderer()
 {
-	Sampler = GameEngineSampler::Find("LINEAR");
+	if (nullptr == DefaultSampler)
+	{
+		MsgBoxAssert("SpriteRenderer에 설정할 기본 샘플러가 없습니다.");
+	}
+
+	Sampler = DefaultSampler;
 }
 
 GameEngineSpriteRenderer::~GameEngineSpriteRenderer()
 {
+}
+
+void GameEngineSpriteRenderer::SetPivotType(PivotType _Type)
+{
+	switch (_Type)
+	{
+	case PivotType::Center:
+		Pivot = { 0.5f, 0.5f };
+		break;
+	case PivotType::Bottom:
+		Pivot = { 0.5f, 1.0f };
+		break;
+	case PivotType::Left:
+		Pivot = { 1.0f, 0.5f };
+		break;
+	default:
+		break;
+	}
+}
+
+void GameEngineSpriteRenderer::SetImageScale(const float4& _Scale)
+{
+	ImageTransform.SetLocalScale(_Scale);
+}
+
+void GameEngineSpriteRenderer::AddImageScale(const float4& _Scale)
+{
+	ImageTransform.AddLocalScale(_Scale);
+}
+
+void GameEngineSpriteRenderer::SetDefaultSampler(std::string_view _SamplerName)
+{
+	DefaultSampler = GameEngineSampler::Find(_SamplerName);
+}
+
+void GameEngineSpriteRenderer::Start()
+{
+	GameEngineRenderer::Start();
+	// DataTransform에 ImageTransform을 넣어줌
+	DataTransform = &ImageTransform;
+	// 부모로는 나(액터)의 Transform을 넣어줌으로서 액터의 Transform과 Renderer의 Transform을 분리함
+	ImageTransform.SetParent(Transform);
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)
@@ -89,7 +138,7 @@ void GameEngineSpriteRenderer::Update(float _Delta)
 		float4 Scale = float4(CurSprite.GetScale());
 		Scale.Z = 1.0f;
 		Scale.W = 0.0f;
-		Transform.SetLocalScale(Scale * AutoScaleRatio);
+		SetImageScale(Scale * AutoScaleRatio);
 	}
 }
 
@@ -103,7 +152,7 @@ void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int In
 	}
 
 	CurSprite = Sprite->GetSpriteData(Index);
-	Transform.SetLocalScale(CurSprite.GetScale());
+	SetImageScale(CurSprite.GetScale());
 }
 
 void GameEngineSpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, float _Inter /*= 0.1f*/, unsigned int _Start /*= -1*/, unsigned int _End /*= -1*/, bool _Loop /*= true*/)
@@ -192,6 +241,20 @@ void GameEngineSpriteRenderer::AutoSpriteSizeOff()
 
 void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
+	float4 ParentScale = Transform.GetLocalScale();
+	float4 ImageScale = ImageTransform.GetLocalScale();
+	float4 CalPivot = Pivot;
+	CalPivot.X -= 0.5f;
+	CalPivot.Y -= 0.5f;
+
+	float4 PivotPos;
+	PivotPos.X = ImageScale.X * CalPivot.X;
+	PivotPos.Y = ImageScale.Y * CalPivot.Y;
+
+	ImageTransform.SetLocalPosition(PivotPos);
+	ImageTransform.TransformUpdate();
+	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
+
 	GameEngineRenderer::ResSetting();
 
 	std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData", ShaderType::Vertex, 1);

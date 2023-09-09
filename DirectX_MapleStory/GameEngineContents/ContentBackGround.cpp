@@ -38,7 +38,7 @@ void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _Ba
 	if (float4::ZERO != _BackGroundScale)
 	{
 		BackScale = _BackGroundScale;
-		BackGroundRenderer->Transform.SetLocalScale(_BackGroundScale);
+		BackGroundRenderer->SetImageScale(_BackGroundScale);
 	}
 	else
 	{

@@ -73,7 +73,8 @@ void Player::Start()
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
-	Dir = ActorDir::Left;
+	Dir = ActorDir::Left; 
+	// MainSpriteRenderer->SetPivotType(PivotType::Bottom);
 	MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY()});
 }
 
