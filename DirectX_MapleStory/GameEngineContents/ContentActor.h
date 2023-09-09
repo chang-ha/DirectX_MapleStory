@@ -3,13 +3,6 @@
 
 #define MAX_GRAVITY 1500.0f
 
-enum class ActorDir
-{
-	Null,
-	Right,
-	Left
-};
-
 class GameEngineSpriteRenderer;
 class ContentLevel;
 class ContentActor : public GameEngineActor

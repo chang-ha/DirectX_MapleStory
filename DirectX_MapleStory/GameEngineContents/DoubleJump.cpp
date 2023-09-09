@@ -18,6 +18,8 @@ void DoubleJump::Init()
 
 void DoubleJump::UseSkill()
 {
+	ContentSkill::UseSkill();
+
 	SkillRenderer1->On();
 	SkillRenderer2->On();
 	SkillAfterImageRenderer->On();
@@ -85,12 +87,11 @@ void DoubleJump::Start()
 	SkillRenderer2->CreateAnimation("Up_Effect2", "Up_Effect2");
 	SkillAfterImageRenderer->CreateAnimation("AfterImage", "AfterImage");
 	SkillAfterImageRenderer->CreateAnimation("Up_AfterImage", "Up_AfterImage");
-
-
 }
 
 void DoubleJump::Update(float _Delta)
 {
+	ContentSkill::Update(_Delta);
 	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
 	SkillRenderer2->Transform.SetLocalPosition(PlayerPos + Pivot);

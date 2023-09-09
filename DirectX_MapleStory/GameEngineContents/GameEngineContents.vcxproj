@@ -211,6 +211,7 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Bin\$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="SkillManager.cpp" />
+    <ClCompile Include="SongOfHeaven.cpp" />
     <ClCompile Include="TitleLevel.cpp">
       <SubType>
       </SubType>
@@ -251,6 +252,7 @@
     <ClInclude Include="PlayLevel.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="SkillManager.h" />
+    <ClInclude Include="SongOfHeaven.h" />
     <ClInclude Include="TitleLevel.h">
       <SubType>
       </SubType>

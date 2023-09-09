@@ -14,8 +14,18 @@ public:
 	ContentSkill& operator=(const ContentSkill& _Other) = delete;
 	ContentSkill& operator=(ContentSkill&& _Other) noexcept = delete;
 
+	void EndSkill()
+	{
+		IsSkillStart = false;
+		IsSkillEnd = true;
+	}
+
 	virtual void Init() {}
-	virtual void UseSkill() {}
+	virtual void UseSkill();
+	bool IsSkillUsing()
+	{
+		return true == IsSkillStart && false == IsSkillEnd ? true : false;
+	}
 	void SetScaleSkillRenderer(const float4& _Scale);
 
 protected:
@@ -24,6 +34,8 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	bool IsSkillStart = false;
+	bool IsSkillEnd = true;
 	float4 PlayerPos = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;
 	float4 Pivot = float4::ZERO;
