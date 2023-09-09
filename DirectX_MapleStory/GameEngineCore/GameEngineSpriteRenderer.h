@@ -48,6 +48,8 @@ class GameEngineSpriteRenderer : public GameEngineRenderer
 {
 	friend class GameEngineFrameAnimation;
 public:
+	static std::shared_ptr<class GameEngineSampler> DefaultSampler;
+
 	// constrcuter destructer
 	GameEngineSpriteRenderer();
 	~GameEngineSpriteRenderer();
@@ -88,6 +90,9 @@ public:
 	void SetPivotType(PivotType _Type);
 	void SetImageScale(const float4& _Scale);
 	void AddImageScale(const float4& _Scale);
+
+	static void SetDefaultSampler(std::string_view _SamplerName);
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
