@@ -74,8 +74,8 @@ void Player::Start()
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
 	Dir = ActorDir::Left; 
-	// MainSpriteRenderer->SetPivotType(PivotType::Bottom);
-	MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY()});
+	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
+	// MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY()});
 }
 
 void Player::Update(float _Delta)

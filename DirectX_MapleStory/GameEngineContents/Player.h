@@ -36,6 +36,11 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+	inline float4 GetPlayerScale() const
+	{
+		return PlayerScale;
+	}
+
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
 

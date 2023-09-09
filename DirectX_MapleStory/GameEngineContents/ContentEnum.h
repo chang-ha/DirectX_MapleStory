@@ -12,8 +12,8 @@ enum class RenderOrder
 {
 	BackGround,
 	Map,
-	Play,
 	Skill,
+	Play,
 };
 
 enum class CollisionOrder

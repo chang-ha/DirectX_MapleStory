@@ -18,7 +18,7 @@ public:
 	template<typename SkillType>
 	void CreateSkill(std::string _SkillName)
 	{
-		std::shared_ptr<class ContentSkill> NewSkill = GetLevel()->CreateActor<SkillType>();
+		std::shared_ptr<class ContentSkill> NewSkill = GetLevel()->CreateActor<SkillType>(UpdateOrder::Skill);
 		if (false == AllSkills.contains(_SkillName))
 		{
 			AllSkills[_SkillName] = std::shared_ptr<class ContentSkill>();
