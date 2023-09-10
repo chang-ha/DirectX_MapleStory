@@ -11,20 +11,20 @@ enum class UpdateOrder
 {
 	BackGround,
 	Map,
+	Monster,
 	Play,
 	Skill,
 	Arrow,
-	Monster,
 };
 
 enum class RenderOrder
 {
 	BackGround,
 	Map,
+	Monster,
 	Skill,
 	Play,
 	Arrow,
-	Monster,
 };
 
 enum class CollisionOrder

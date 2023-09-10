@@ -103,6 +103,9 @@ private:
 	void DownUpdate(float _Delta);
 	void LadderUpdate(float _Delta);
 	void AttackUpdate(float _Delta);
+	
+	//// FrameEvent
+	void AttackEvent(GameEngineRenderer* _Renderer);
 	////////////
 };
 

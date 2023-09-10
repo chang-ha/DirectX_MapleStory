@@ -69,13 +69,16 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Jump", "Jump");
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Idle");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
+		Sprite = nullptr;
 	}
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
 	Dir = ActorDir::Left; 
 	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
-	// MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY()});
+
+	// Event Setting
+	MainSpriteRenderer->SetFrameEvent("Shoot", 1, std::bind(&Player::AttackEvent, this, std::placeholders::_1));
 }
 
 void Player::Update(float _Delta)

@@ -424,7 +424,11 @@ void Player::AttackUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
-		GetLevel()->CreateActor<Arrow>(UpdateOrder::Arrow);
 		ChangeToIdle();
 	}
+}
+
+void Player::AttackEvent(GameEngineRenderer* _Renderer)
+{
+	GetLevel()->CreateActor<Arrow>(UpdateOrder::Arrow);
 }

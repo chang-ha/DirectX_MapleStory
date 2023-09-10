@@ -126,7 +126,7 @@ void GameEngineLevel::PushCollision(std::shared_ptr<GameEngineCollision> _Collis
 
 	if (false == CollisionGroups.contains(_Collision->GetOrder()))
 	{
-		CollisionGroups[_Collision->GetOrder()] = std::shared_ptr<GameEngineCollisionGroup>();
+		CollisionGroups[_Collision->GetOrder()] = std::make_shared<GameEngineCollisionGroup>();
 	}
 	CollisionGroups[_Collision->GetOrder()]->PushCollision(_Collision);
 }

@@ -1,5 +1,11 @@
 #pragma once
 
+enum class MonsterState
+{
+	Idle,
+	Hit,
+	Death,
+};
 class ContentMonster : public GameEngineActor
 {
 public:
@@ -18,6 +24,11 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	float4 MonsterScale = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
+	std::shared_ptr<GameEngineCollision> MainCollision = nullptr;
+
+	//TestCode
+	EventParameter MonsterEvent;
 };
 
