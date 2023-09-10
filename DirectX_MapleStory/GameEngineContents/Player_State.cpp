@@ -65,7 +65,7 @@ void Player::JumpStart()
 void Player::DownStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Down");
-	MainSpriteRenderer->Transform.SetLocalPosition({ -PlayerScale.hX() * 0.45f, PlayerScale.hY() * 0.6f });
+	// MainSpriteRenderer->Transform.SetLocalPosition({ -PlayerScale.hX() * 0.45f, PlayerScale.hY() * 0.6f });
 }
 
 void Player::LadderStart()
@@ -102,7 +102,7 @@ void Player::JumpEnd()
 
 void Player::DownEnd()
 {
-	MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY() });
+	// MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY() });
 }
 
 void Player::LadderEnd()

@@ -2,6 +2,7 @@
 #include "DoubleJump.h"
 #include "Player.h"
 
+#define ANI_SPEED 0.08f
 DoubleJump::DoubleJump()
 {
 
@@ -57,10 +58,15 @@ void DoubleJump::UseSkill()
 			break;
 		}
 	}
-	SkillRenderer1->ChangeAnimation(AniDir + "Effect1");
-	SkillRenderer2->ChangeAnimation(AniDir + "Effect2");
-	SkillAfterImageRenderer->ChangeAnimation(AniDir + "AfterImage");
+	SkillRenderer1->ChangeAnimation(AniDir + "Effect1", true, 0);
+	SkillRenderer2->ChangeAnimation(AniDir + "Effect2", true, 0);
+	SkillAfterImageRenderer->ChangeAnimation(AniDir + "AfterImage", true, 0);
 	SkillAfterImageRenderer->Transform.SetLocalPosition(PlayerPos);
+}
+
+void DoubleJump::EndSkill()
+{
+	ContentSkill::EndSkill();
 }
 
 void DoubleJump::Start() 
@@ -78,18 +84,37 @@ void DoubleJump::Start()
 		GameEngineSprite::CreateFolder(Childs.GetStringPath());
 	}
 
-	SkillRenderer1->CreateAnimation("Effect1", "Effect1");
-	SkillRenderer1->CreateAnimation("Up_Effect1", "Up_Effect1");
-	SkillRenderer2->CreateAnimation("Effect2", "Effect2");
-	SkillRenderer2->CreateAnimation("Up_Effect2", "Up_Effect2");
-	SkillAfterImageRenderer->CreateAnimation("AfterImage", "AfterImage");
-	SkillAfterImageRenderer->CreateAnimation("Up_AfterImage", "Up_AfterImage");
+	SkillRenderer1->CreateAnimation("Effect1", "Effect1", ANI_SPEED);
+	SkillRenderer1->CreateAnimation("Up_Effect1", "Up_Effect1", ANI_SPEED);
+	SkillRenderer2->CreateAnimation("Effect2", "Effect2", ANI_SPEED);
+	SkillRenderer2->CreateAnimation("Up_Effect2", "Up_Effect2", ANI_SPEED);
+	SkillAfterImageRenderer->CreateAnimation("AfterImage", "AfterImage", ANI_SPEED);
+	SkillAfterImageRenderer->CreateAnimation("Up_AfterImage", "Up_AfterImage", ANI_SPEED);
 }
 
 void DoubleJump::Update(float _Delta)
 {
+	// 현재 항상 Update에 들어옴
+	// 추후 스킬 사용시에만 업데이트 들어오도록 최적화 예정
+	//if (false == IsSkillStart)
+	//{
+	//	return;
+	//}
+
 	ContentSkill::Update(_Delta);
-	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+	if (true == SkillRenderer1->IsUpdate() && true == SkillRenderer1->IsCurAnimationEnd())
+	{
+		SkillRenderer1->Off();
+	}
+	if (true == SkillRenderer2->IsUpdate() && true == SkillRenderer2->IsCurAnimationEnd())
+	{
+		SkillRenderer2->Off();
+	}
+	if (true == SkillAfterImageRenderer->IsUpdate() && true == SkillAfterImageRenderer->IsCurAnimationEnd())
+	{
+		SkillAfterImageRenderer->Off();
+	}
+
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
 	SkillRenderer2->Transform.SetLocalPosition(PlayerPos + Pivot);
 }

@@ -16,6 +16,7 @@ public:
 
 	void Init() override;
 	void UseSkill() override;
+	void EndSkill() override;
 
 protected:
 	void Start() override;

@@ -15,7 +15,6 @@ ContentSkill::~ContentSkill()
 void ContentSkill::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	PlayerScale = Player::MainPlayer->GetPlayerScale();
-
 }
 
 void ContentSkill::LevelEnd(GameEngineLevel* _NextLevel)
@@ -38,7 +37,7 @@ void ContentSkill::Start()
 
 void ContentSkill::Update(float _Delta)
 {
-
+	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 }
 
 void ContentSkill::UseSkill()

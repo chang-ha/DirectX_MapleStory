@@ -14,7 +14,7 @@ public:
 	ContentSkill& operator=(const ContentSkill& _Other) = delete;
 	ContentSkill& operator=(ContentSkill&& _Other) noexcept = delete;
 
-	void EndSkill()
+	virtual void EndSkill()
 	{
 		IsSkillStart = false;
 		IsSkillEnd = true;
