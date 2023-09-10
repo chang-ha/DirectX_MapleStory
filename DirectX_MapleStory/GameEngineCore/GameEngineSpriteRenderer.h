@@ -68,7 +68,7 @@ public:
 
 	void SetSprite(std::string_view _Name, unsigned int Index = 0);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, float _Inter = 0.1f, unsigned int _Start = -1, unsigned int _End = -1, bool _Loop = true);
-	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
+	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false, unsigned int _FrameIndex = 0);
 
 	void AutoSpriteSizeOn();
 	void AutoSpriteSizeOff();
@@ -78,6 +78,16 @@ public:
 	bool IsCurAnimationEnd()
 	{
 		return CurFrameAnimations->IsEnd;
+	}
+
+	bool IsCurAnimation(std::string_view _AnimationName)
+	{
+		return _AnimationName == CurFrameAnimations->AnimationName ;
+	}
+
+	inline unsigned int GetCurIndex() const
+	{
+		return CurFrameAnimations->CurIndex;
 	}
 
 	void SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);

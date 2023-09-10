@@ -212,7 +212,7 @@ void GameEngineSpriteRenderer::CreateAnimation(std::string_view _AnimationName, 
 	}
 }
 
-void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _Force /*= false*/)
+void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _Force /*= false*/, unsigned int _FrameIndex /*= 0*/)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_AnimationName);
 	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>>::iterator FindIter = FrameAnimations.find(UpperName);
@@ -230,6 +230,7 @@ void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, 
 
 	CurFrameAnimations = FrameAnimations[UpperName];
 	CurFrameAnimations->Reset();
+	CurFrameAnimations->CurIndex = _FrameIndex;
 }
 
 void GameEngineSpriteRenderer::AutoSpriteSizeOn()
