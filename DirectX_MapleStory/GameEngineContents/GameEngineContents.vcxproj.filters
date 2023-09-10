@@ -43,6 +43,9 @@
     <ClCompile Include="SkillManager.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="SongOfHeaven.cpp">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -85,6 +88,9 @@
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
     <ClInclude Include="SkillManager.h">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SongOfHeaven.h">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
   </ItemGroup>

@@ -41,6 +41,12 @@ void ContentSkill::Update(float _Delta)
 
 }
 
+void ContentSkill::UseSkill()
+{
+	IsSkillStart = true;
+	IsSkillEnd = false;
+}
+
 void ContentSkill::SetScaleSkillRenderer(const float4& _Scale)
 {
 	// 좌우이미지 변경용

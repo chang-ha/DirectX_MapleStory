@@ -18,6 +18,8 @@ void DoubleJump::Init()
 
 void DoubleJump::UseSkill()
 {
+	ContentSkill::UseSkill();
+
 	SkillRenderer1->On();
 	SkillRenderer2->On();
 	SkillAfterImageRenderer->On();

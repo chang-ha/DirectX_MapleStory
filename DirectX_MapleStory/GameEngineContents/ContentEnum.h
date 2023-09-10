@@ -1,5 +1,12 @@
 #pragma once
 
+enum class ActorDir
+{
+	Null,
+	Right,
+	Left
+};
+
 enum class UpdateOrder
 {
 	BackGround,

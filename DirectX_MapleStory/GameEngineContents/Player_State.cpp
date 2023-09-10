@@ -97,6 +97,7 @@ void Player::JumpEnd()
 	MoveVectorForceReset();
 	GroundJump = false;
 	DoubleJump = false;
+	SkillManager::PlayerSkillManager->EndSkill("DoubleJump");
 }
 
 void Player::DownEnd()
@@ -144,6 +145,17 @@ void Player::IdleUpdate(float _Delta)
 		ChangeState(PlayerState::Jump);
 		return;
 	}
+
+	//TestCode
+	if (GameEngineInput::IsPress('A'))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("SongOfHeaven");
+	}
+	else if (SkillManager::PlayerSkillManager->IsSkillUsing("SongOfHeaven") && GameEngineInput::IsFree('A'))
+	{
+		SkillManager::PlayerSkillManager->EndSkill("SongOfHeaven");
+	}
+
 }
 
 void Player::AlertUpdate(float _Delta)
