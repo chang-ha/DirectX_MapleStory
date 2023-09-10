@@ -76,6 +76,11 @@ void Player::LadderStart()
 	GravityOff();
 }
 
+void Player::AttackStart()
+{
+
+}
+
 void Player::IdleEnd()
 {
 
@@ -83,7 +88,7 @@ void Player::IdleEnd()
 
 void Player::AlertEnd()
 {
-
+	Player::IdleEnd();
 }
 
 void Player::WalkEnd()
@@ -118,8 +123,18 @@ void Player::LadderEnd()
 	}
 }
 
+void Player::AttackEnd()
+{
+
+}
+
 void Player::IdleUpdate(float _Delta)
 {
+	if (State == PlayerState::Idle && 0.0f < AlertTime)
+	{
+		ChangeState(PlayerState::Alert);
+	}
+
 	if (GameEngineInput::IsPress(VK_DOWN))
 	{
 		if (false == IsLadder)
@@ -160,7 +175,12 @@ void Player::IdleUpdate(float _Delta)
 
 void Player::AlertUpdate(float _Delta)
 {
-	
+	AlertTime -= _Delta;
+	if (0.0f >= AlertTime)
+	{
+		ChangeState(PlayerState::Idle);
+	}
+	IdleUpdate(_Delta);
 }
 
 void Player::WalkUpdate(float _Delta)
@@ -241,7 +261,7 @@ void Player::WalkUpdate(float _Delta)
 
 	if (GameEngineInput::IsFree(VK_LEFT) && GameEngineInput::IsFree(VK_RIGHT))
 	{
-		ChangeState(PlayerState::Idle);
+		ChangeToIdle();
 		return;
 	}
 
@@ -256,7 +276,7 @@ void Player::JumpUpdate(float _Delta)
 {
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
-		ChangeState(PlayerState::Idle);
+		ChangeToIdle();
 		return;
 	}
 	
@@ -341,7 +361,7 @@ void Player::DownUpdate(float _Delta)
 {
 	if (GameEngineInput::IsFree(VK_DOWN) || GameEngineInput::IsUp(VK_DOWN))
 	{
-		ChangeState(PlayerState::Idle);
+		ChangeToIdle();
 		return;
 	}
 
@@ -389,7 +409,12 @@ void Player::LadderUpdate(float _Delta)
 	if (false == IsLadder)
 	{
 		MoveVectorForceReset();
-		ChangeState(PlayerState::Idle);
+		ChangeToIdle();
 		return;
 	}
+}
+
+void Player::AttackUpdate(float _Delta)
+{
+
 }

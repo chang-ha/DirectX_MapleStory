@@ -17,6 +17,7 @@ enum class PlayerState
 	Jump,
 	Down,
 	Ladder,
+	Attack,
 };
 
 #include "ContentActor.h"
@@ -64,10 +65,12 @@ private:
 	float JumpAirSpeed = 30.0f;
 	float CameraSpeed = 5.0f;
 	float LadderPivot = 0.0f;
+	float AlertTime = 0.0f;
 	float4 CurMapScale = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;
 
+	void ChangeToIdle();
 	//////////// State 
 	/// Start
 	void IdleStart();
@@ -76,6 +79,7 @@ private:
 	void JumpStart();
 	void DownStart();
 	void LadderStart();
+	void AttackStart();
 
 	/// End
 	void IdleEnd();
@@ -84,6 +88,7 @@ private:
 	void JumpEnd();
 	void DownEnd();
 	void LadderEnd();
+	void AttackEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -92,6 +97,7 @@ private:
 	void JumpUpdate(float _Delta);
 	void DownUpdate(float _Delta);
 	void LadderUpdate(float _Delta);
+	void AttackUpdate(float _Delta);
 	////////////
 };
 

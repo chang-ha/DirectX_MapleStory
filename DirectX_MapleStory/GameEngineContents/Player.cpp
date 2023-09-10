@@ -91,6 +91,11 @@ void Player::Update(float _Delta)
 	{
 		ChangeState(PlayerState::Jump);
 	}
+
+	if (true == GameEngineInput::IsDown(VK_SPACE))
+	{
+		AlertTime = 5.0f;
+	}
 	//if (GameEngineInput::IsPress('Q'))
 	//{
 	//	Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
@@ -214,6 +219,18 @@ void Player::LadderCheck()
 	}
 }
 
+void Player::ChangeToIdle()
+{
+	if (0.0f < AlertTime)
+	{
+		ChangeState(PlayerState::Alert);
+	}
+	else
+	{
+		ChangeState(PlayerState::Idle);
+	}
+}
+
 void Player::ChangeState(PlayerState _State)
 {
 	if (_State != State)
@@ -238,6 +255,9 @@ void Player::ChangeState(PlayerState _State)
 			break;
 		case PlayerState::Ladder:
 			LadderEnd();
+			break;
+		case PlayerState::Attack:
+			AttackEnd();
 			break;
 		case PlayerState::Null:
 		default:
@@ -266,6 +286,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Ladder:
 			LadderStart();
 			break;
+		case PlayerState::Attack:
+			AttackStart();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -292,6 +315,8 @@ void Player::StateUpdate(float _Delta)
 		return DownUpdate(_Delta);
 	case PlayerState::Ladder:
 		return LadderUpdate(_Delta);
+	case PlayerState::Attack:
+		return AttackUpdate(_Delta);
 	case PlayerState::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
