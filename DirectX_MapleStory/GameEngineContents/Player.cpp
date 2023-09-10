@@ -94,7 +94,7 @@ void Player::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown(VK_SPACE))
 	{
-		AlertTime = 5.0f;
+		AlertTime = ALERT_TIME;
 	}
 	//if (GameEngineInput::IsPress('Q'))
 	//{

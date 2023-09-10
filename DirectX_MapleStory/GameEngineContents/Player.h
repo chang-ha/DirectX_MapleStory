@@ -1,12 +1,17 @@
 #pragma once
+// Ani Speed
 #define IDLE_ANI_SPEED 0.5f
 #define WALK_ANI_SPEED 0.1f
-#define SHOOT1_ANI_SPEED 0.2f
+#define SHOOT1_ANI_SPEED 0.3f
 #define ROPE_ANI_SPEED 0.2f
 #define ATT_ANI_SPEED 0.3f
 #define DOWN_ATT_ANI_SPEED 0.5f
 
+// Pivot Value
 #define LADDER_Y_PIVOT 3.0f
+
+// Time Value
+#define ALERT_TIME 5.0f
 
 enum class PlayerState
 {

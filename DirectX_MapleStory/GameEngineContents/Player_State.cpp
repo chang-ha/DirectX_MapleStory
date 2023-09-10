@@ -78,7 +78,8 @@ void Player::LadderStart()
 
 void Player::AttackStart()
 {
-
+	MainSpriteRenderer->ChangeAnimation("Shoot");
+	AlertTime = ALERT_TIME;
 }
 
 void Player::IdleEnd()
@@ -171,6 +172,10 @@ void Player::IdleUpdate(float _Delta)
 		SkillManager::PlayerSkillManager->EndSkill("SongOfHeaven");
 	}
 
+	if (true == GameEngineInput::IsPress(VK_CONTROL))
+	{
+		ChangeState(PlayerState::Attack);
+	}
 }
 
 void Player::AlertUpdate(float _Delta)
@@ -416,5 +421,8 @@ void Player::LadderUpdate(float _Delta)
 
 void Player::AttackUpdate(float _Delta)
 {
-
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeToIdle();
+	}
 }
