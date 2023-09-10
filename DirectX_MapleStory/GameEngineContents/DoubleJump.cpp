@@ -21,22 +21,19 @@ void DoubleJump::UseSkill()
 	SkillRenderer1->On();
 	SkillRenderer2->On();
 	SkillAfterImageRenderer->On();
-	ActorDir Dir = Player::MainPlayer->GetDir();
 
+	std::string AniDir = "";
 	if (GameEngineInput::IsPress(VK_UP))
 	{
-		SkillRenderer1->ChangeAnimation("Up_Effect1");
-		SkillRenderer2->ChangeAnimation("Up_Effect2");
-		SkillAfterImageRenderer->ChangeAnimation("Up_AfterImage");
-		SkillAfterImageRenderer->Transform.SetLocalPosition(PlayerPos);
+		AniDir = "Up_";
 		SkillRenderer1->SetPivotType(PivotType::Top);
 		SkillRenderer2->SetPivotType(PivotType::Top);
 		SkillAfterImageRenderer->SetPivotType(PivotType::Top);
 		Pivot = float4(0, PlayerScale.hY());
-		return;
 	}
 	else
 	{
+		ActorDir Dir = Player::MainPlayer->GetDir();
 		switch (Dir)
 		{
 		case ActorDir::Right:
@@ -58,9 +55,9 @@ void DoubleJump::UseSkill()
 			break;
 		}
 	}
-	SkillRenderer1->ChangeAnimation("Effect1");
-	SkillRenderer2->ChangeAnimation("Effect2");
-	SkillAfterImageRenderer->ChangeAnimation("AfterImage");
+	SkillRenderer1->ChangeAnimation(AniDir + "Effect1");
+	SkillRenderer2->ChangeAnimation(AniDir + "Effect2");
+	SkillAfterImageRenderer->ChangeAnimation(AniDir + "AfterImage");
 	SkillAfterImageRenderer->Transform.SetLocalPosition(PlayerPos);
 }
 
@@ -85,12 +82,11 @@ void DoubleJump::Start()
 	SkillRenderer2->CreateAnimation("Up_Effect2", "Up_Effect2");
 	SkillAfterImageRenderer->CreateAnimation("AfterImage", "AfterImage");
 	SkillAfterImageRenderer->CreateAnimation("Up_AfterImage", "Up_AfterImage");
-
-
 }
 
 void DoubleJump::Update(float _Delta)
 {
+	ContentSkill::Update(_Delta);
 	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
 	SkillRenderer2->Transform.SetLocalPosition(PlayerPos + Pivot);
