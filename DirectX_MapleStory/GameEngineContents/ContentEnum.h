@@ -13,6 +13,7 @@ enum class UpdateOrder
 	Map,
 	Play,
 	Skill,
+	Arrow,
 };
 
 enum class RenderOrder
@@ -21,6 +22,7 @@ enum class RenderOrder
 	Map,
 	Skill,
 	Play,
+	Arrow,
 };
 
 enum class CollisionOrder

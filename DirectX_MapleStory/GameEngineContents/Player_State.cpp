@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "ContentMap.h"
 #include "SkillManager.h"
+#include "Arrow.h"
 
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 200.0f
@@ -423,6 +424,7 @@ void Player::AttackUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
+		GetLevel()->CreateActor<Arrow>(UpdateOrder::Arrow);
 		ChangeToIdle();
 	}
 }

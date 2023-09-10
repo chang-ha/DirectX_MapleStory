@@ -25,11 +25,11 @@ void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _Ba
 {
 	if (nullptr == GameEngineTexture::Find(_BackGroundName))
 	{
-		GameEnginePath Path;
-		Path.SetCurrentPath();
-		Path.MoveParentToExistsChild("ContentResources");
-		Path.MoveChild("ContentResources\\Textures\\BackGround\\");
-		GameEngineTexture::Load(Path.GetStringPath() + std::string(_BackGroundName.data()));
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Textures\\BackGround\\");
+		GameEngineTexture::Load(FilePath.GetStringPath() + std::string(_BackGroundName.data()));
 		GameEngineSprite::CreateSingle(_BackGroundName);
 	}
 	std::shared_ptr<GameEngineTexture> BackGroundTexture = GameEngineTexture::Find(std::string(_BackGroundName.data()));
