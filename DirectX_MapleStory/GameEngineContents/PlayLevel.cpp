@@ -4,6 +4,9 @@
 #include "ContentMap.h"
 #include "SkillManager.h"
 
+//TestCode
+#include "ContentMonster.h"
+
 PlayLevel::PlayLevel()
 {
 }
@@ -22,6 +25,9 @@ void PlayLevel::Start()
 	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 	CurMap->Init("Lacheln.png");
 	CreateActor<SkillManager>();
+
+	std::shared_ptr<ContentMonster> TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
+	TestMonster->Transform.SetLocalPosition({400, -780});
 }
 
 void PlayLevel::Update(float _Delta)

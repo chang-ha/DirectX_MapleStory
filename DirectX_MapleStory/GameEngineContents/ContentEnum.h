@@ -14,6 +14,7 @@ enum class UpdateOrder
 	Play,
 	Skill,
 	Arrow,
+	Monster,
 };
 
 enum class RenderOrder
@@ -23,10 +24,13 @@ enum class RenderOrder
 	Skill,
 	Play,
 	Arrow,
+	Monster,
 };
 
 enum class CollisionOrder
 {
 	Player,
 	Monster,
+	PlayerAttack,
+	MonsterAttack,
 };

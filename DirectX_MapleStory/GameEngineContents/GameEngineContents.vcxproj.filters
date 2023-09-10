@@ -49,6 +49,9 @@
     <ClCompile Include="Arrow.cpp">
       <Filter>Actor\Global\Player</Filter>
     </ClCompile>
+    <ClCompile Include="ContentMonster.cpp">
+      <Filter>Actor\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -99,6 +102,7 @@
     <ClInclude Include="Arrow.h">
       <Filter>Actor\Global\Player</Filter>
     </ClInclude>
+    <ClInclude Include="ContentMonster.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -133,6 +137,9 @@
     </Filter>
     <Filter Include="Map">
       <UniqueIdentifier>{f11cdf64-126b-4b12-b4fb-b924dfe7abbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Monster">
+      <UniqueIdentifier>{433ecfa3-66f1-4dd7-905d-0a6b936273d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
