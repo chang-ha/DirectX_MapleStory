@@ -45,6 +45,11 @@ void Arrow::Start()
 	ArrowRenderer->ChangeAnimation("TestArrow");
 	float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 
+	ArrowRenderer->SetEndEvent("TestArrow_Hit", [&](GameEngineRenderer* _Renderer)
+		{
+			Death();
+		}
+	);
 	Dir = Player::MainPlayer->GetDir();
 	switch (Dir)
 	{
@@ -73,11 +78,6 @@ void Arrow::Start()
 
 void Arrow::Update(float _Delta)
 {
-	if (true == ArrowRenderer->IsCurAnimation("TestArrow_Hit") && true == ArrowRenderer->IsCurAnimationEnd())
-	{
-		Death();
-	}
-
 	if (true == ArrowRenderer->IsCurAnimation("TestArrow_Hit"))
 	{
 		return;
@@ -122,5 +122,5 @@ void Arrow::CollisionEnter(GameEngineCollision* _Other)
 	ArrowRenderer->SetPivotType(PivotType::Center);
 	float4 OtherPos = CurMonster->Transform.GetWorldPosition();
 	Transform.SetLocalPosition(OtherPos);
-	CurMonster->ChangeState(MonsterState::Death);
+	CurMonster->ChangeState(MonsterState::Hit);
 }

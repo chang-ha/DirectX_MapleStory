@@ -31,7 +31,6 @@ void DoubleJump::UseSkill()
 		AniDir = "Up_";
 		SkillRenderer1->SetPivotType(PivotType::Top);
 		SkillRenderer2->SetPivotType(PivotType::Top);
-		SkillAfterImageRenderer->SetPivotType(PivotType::Top);
 		Pivot = float4(0, PlayerScale.hY());
 	}
 	else
@@ -43,18 +42,17 @@ void DoubleJump::UseSkill()
 			SetScaleSkillRenderer({ -1.0f, 1.0f });
 			SkillRenderer1->SetPivotType(PivotType::Left);
 			SkillRenderer2->SetPivotType(PivotType::Left);
-			SkillAfterImageRenderer->SetPivotType(PivotType::Center);
 			Pivot = PlayerScale.Half();
 			break;
 		case ActorDir::Left:
 			SetScaleSkillRenderer({ 1.0f, 1.0f });
 			SkillRenderer1->SetPivotType(PivotType::Left);
 			SkillRenderer2->SetPivotType(PivotType::Left);
-			SkillAfterImageRenderer->SetPivotType(PivotType::Center);
 			Pivot = float4(-PlayerScale.hX(), PlayerScale.hY());
 			break;
 		case ActorDir::Null:
 		default:
+			MsgBoxAssert("존재하지 않는 방향으로 스킬을 사용할 수 없습니다.");
 			break;
 		}
 	}
@@ -90,6 +88,45 @@ void DoubleJump::Start()
 	SkillRenderer2->CreateAnimation("Up_Effect2", "Up_Effect2", ANI_SPEED);
 	SkillAfterImageRenderer->CreateAnimation("AfterImage", "AfterImage", ANI_SPEED);
 	SkillAfterImageRenderer->CreateAnimation("Up_AfterImage", "Up_AfterImage", ANI_SPEED);
+	SkillAfterImageRenderer->SetPivotType(PivotType::Center);
+
+	SkillRenderer1->SetEndEvent("Effect1", [&](GameEngineRenderer* _Renderer)
+		{
+			SkillRenderer1->Off();
+		}
+	);
+
+	SkillRenderer1->SetEndEvent("Up_Effect1", [&](GameEngineRenderer* _Renderer)
+		{
+			SkillRenderer1->Off();
+		}
+	);
+
+	SkillRenderer2->SetEndEvent("Effect2", [&](GameEngineRenderer* _Renderer)
+		{
+			SkillRenderer2->Off();
+		}
+	);
+
+	SkillRenderer2->SetEndEvent("Up_Effect2", [&](GameEngineRenderer* _Renderer)
+		{
+			SkillRenderer2->Off();
+		}
+	);
+
+	SkillAfterImageRenderer->SetEndEvent("AfterImage", [&](GameEngineRenderer* _Renderer)
+		{
+			SkillAfterImageRenderer->Off();
+			this->Off();
+		}
+	);
+
+	SkillAfterImageRenderer->SetEndEvent("Up_AfterImage", [&](GameEngineRenderer* _Renderer)
+		{
+			SkillAfterImageRenderer->Off();
+			this->Off();
+		}
+	);
 }
 
 void DoubleJump::Update(float _Delta)
@@ -102,19 +139,6 @@ void DoubleJump::Update(float _Delta)
 	//}
 
 	ContentSkill::Update(_Delta);
-	if (true == SkillRenderer1->IsUpdate() && true == SkillRenderer1->IsCurAnimationEnd())
-	{
-		SkillRenderer1->Off();
-	}
-	if (true == SkillRenderer2->IsUpdate() && true == SkillRenderer2->IsCurAnimationEnd())
-	{
-		SkillRenderer2->Off();
-	}
-	if (true == SkillAfterImageRenderer->IsUpdate() && true == SkillAfterImageRenderer->IsCurAnimationEnd())
-	{
-		SkillAfterImageRenderer->Off();
-	}
-
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
 	SkillRenderer2->Transform.SetLocalPosition(PlayerPos + Pivot);
 }

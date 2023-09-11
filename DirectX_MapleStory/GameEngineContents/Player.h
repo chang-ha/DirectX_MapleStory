@@ -23,6 +23,7 @@ enum class PlayerState
 	Down,
 	Ladder,
 	Attack,
+	Shooting,
 };
 
 #include "ContentActor.h"
@@ -85,6 +86,7 @@ private:
 	void DownStart();
 	void LadderStart();
 	void AttackStart();
+	void ShootingStart();
 
 	/// End
 	void IdleEnd();
@@ -94,6 +96,7 @@ private:
 	void DownEnd();
 	void LadderEnd();
 	void AttackEnd();
+	void ShootingEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -103,6 +106,7 @@ private:
 	void DownUpdate(float _Delta);
 	void LadderUpdate(float _Delta);
 	void AttackUpdate(float _Delta);
+	void ShootingUpdate(float _Delta);
 	
 	//// FrameEvent
 	void AttackEvent(GameEngineRenderer* _Renderer);

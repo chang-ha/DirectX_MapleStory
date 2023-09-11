@@ -25,6 +25,7 @@ void SkillManager::UseSkill(std::string_view _SkillName)
 	}
 
 	std::shared_ptr<ContentSkill> Skill = AllSkills[_SkillName.data()];
+	Skill->On();
 	Skill->UseSkill();
 }
 
@@ -78,4 +79,5 @@ void SkillManager::SkillInit(std::shared_ptr<ContentSkill> _Skill)
 {
 	_Skill->Start();
 	_Skill->Init();
+	_Skill->Off();
 }

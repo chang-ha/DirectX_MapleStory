@@ -258,6 +258,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Attack:
 			AttackEnd();
 			break;
+		case PlayerState::Shooting:
+			ShootingEnd();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
@@ -288,6 +291,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Attack:
 			AttackStart();
 			break;
+		case PlayerState::Shooting:
+			ShootingStart();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -316,6 +322,8 @@ void Player::StateUpdate(float _Delta)
 		return LadderUpdate(_Delta);
 	case PlayerState::Attack:
 		return AttackUpdate(_Delta);
+	case PlayerState::Shooting:
+		return ShootingUpdate(_Delta);
 	case PlayerState::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");

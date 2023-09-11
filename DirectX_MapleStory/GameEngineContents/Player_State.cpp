@@ -83,6 +83,13 @@ void Player::AttackStart()
 	AlertTime = ALERT_TIME;
 }
 
+void Player::ShootingStart()
+{
+	SkillManager::PlayerSkillManager->UseSkill("SongOfHeaven");
+	MainSpriteRenderer->ChangeAnimation("Shooting");
+	AlertTime = ALERT_TIME;
+}
+
 void Player::IdleEnd()
 {
 
@@ -130,6 +137,11 @@ void Player::AttackEnd()
 
 }
 
+void Player::ShootingEnd()
+{
+
+}
+
 void Player::IdleUpdate(float _Delta)
 {
 	if (State == PlayerState::Idle && 0.0f < AlertTime)
@@ -166,16 +178,14 @@ void Player::IdleUpdate(float _Delta)
 	//TestCode
 	if (GameEngineInput::IsPress('A'))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("SongOfHeaven");
-	}
-	else if (SkillManager::PlayerSkillManager->IsSkillUsing("SongOfHeaven") && GameEngineInput::IsFree('A'))
-	{
-		SkillManager::PlayerSkillManager->EndSkill("SongOfHeaven");
+		ChangeState(PlayerState::Shooting);
+		return;
 	}
 
 	if (true == GameEngineInput::IsPress(VK_CONTROL))
 	{
 		ChangeState(PlayerState::Attack);
+		return;
 	}
 }
 
@@ -191,6 +201,12 @@ void Player::AlertUpdate(float _Delta)
 
 void Player::WalkUpdate(float _Delta)
 {
+	if (GameEngineInput::IsPress('A'))
+	{
+		ChangeState(PlayerState::Shooting);
+		return;
+	}
+
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
 	GameEngineColor CheckColor = GROUND_COLOR;
@@ -431,4 +447,13 @@ void Player::AttackUpdate(float _Delta)
 void Player::AttackEvent(GameEngineRenderer* _Renderer)
 {
 	GetLevel()->CreateActor<Arrow>(UpdateOrder::Arrow);
+}
+
+void Player::ShootingUpdate(float _Delta)
+{
+	if (true == GameEngineInput::IsFree('A'))
+	{
+		SkillManager::PlayerSkillManager->EndSkill("SongOfHeaven");
+		ChangeToIdle();
+	}
 }
