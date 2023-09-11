@@ -102,7 +102,9 @@
     <ClInclude Include="Arrow.h">
       <Filter>Actor\Global\Player</Filter>
     </ClInclude>
-    <ClInclude Include="ContentMonster.h" />
+    <ClInclude Include="ContentMonster.h">
+      <Filter>Actor\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

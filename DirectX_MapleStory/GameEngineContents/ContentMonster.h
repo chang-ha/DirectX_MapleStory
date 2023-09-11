@@ -23,6 +23,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	void CollisionEnter(GameEngineCollision* _Other);
 private:
 	float4 MonsterScale = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;

@@ -53,23 +53,15 @@ void ContentMonster::Start()
 	MainCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
 	MainCollision->Transform.SetLocalScale(MonsterScale);
 
-	MonsterEvent.Enter = [](GameEngineCollision* _OtherCollision)
-	{
-
-	};
-
-	MonsterEvent.Stay = [](GameEngineCollision* _OtherCollision)
-	{
-
-	};
-
-	MonsterEvent.Exit = [](GameEngineCollision* _OtherCollision)
-	{
-
-	};
+	// MonsterEvent.Stay = std::bind(&ContentMonster::CollisionEnter, this, std::placeholders::_1);
 }
 
 void ContentMonster::Update(float _Delta)
 {
+	// MainCollision->CollisionEvent(CollisionOrder::PlayerAttack, MonsterEvent);
+}
 
+void ContentMonster::CollisionEnter(GameEngineCollision* _Other)
+{
+	MainSpriteRenderer->ChangeAnimation("Monster_Hit");
 }

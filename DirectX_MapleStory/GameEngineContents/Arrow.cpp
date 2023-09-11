@@ -67,18 +67,11 @@ void Arrow::Start()
 	ArrowCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	ArrowCollision->Transform.SetLocalScale(ArrowScale);
 
-	ArrowEvent.Enter = [=](GameEngineCollision* _OtherCollision)
-	{
-		ArrowRenderer->ChangeAnimation("TestArrow_Hit");
-		ArrowRenderer->SetPivotType(PivotType::Center);
-		float4 OtherPos = _OtherCollision->GetParentObject()->Transform.GetWorldPosition();
-		Transform.SetLocalPosition(OtherPos);
-	};
+	ArrowEvent.Enter = std::bind(&Arrow::CollisionEnter, this, std::placeholders::_1);
 }
 
 void Arrow::Update(float _Delta)
 {
-	static std::vector<std::shared_ptr<GameEngineCollision>> _CollisionResult;
 	if (true == ArrowRenderer->IsCurAnimation("TestArrow_Hit") && true == ArrowRenderer->IsCurAnimationEnd())
 	{
 		Death();
@@ -107,6 +100,13 @@ void Arrow::Update(float _Delta)
 		Death();
 	}
 
-
 	ArrowCollision->CollisionEvent(CollisionOrder::Monster, ArrowEvent);
+}
+
+void Arrow::CollisionEnter(GameEngineCollision* _Other)
+{
+	ArrowRenderer->ChangeAnimation("TestArrow_Hit");
+	ArrowRenderer->SetPivotType(PivotType::Center);
+	float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+	Transform.SetLocalPosition(OtherPos);
 }

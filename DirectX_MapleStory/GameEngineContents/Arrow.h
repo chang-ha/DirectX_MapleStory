@@ -17,6 +17,8 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	void CollisionEnter(GameEngineCollision* _Other);
+
 private:
 	float ArrowSpeed = 300.0f;
 	float4 ArrowScale = float4::ZERO;
