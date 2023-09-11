@@ -53,7 +53,7 @@ void ContentMonster::Start()
 	MainCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
 	MainCollision->Transform.SetLocalScale(MonsterScale);
 
-	MonsterEvent.Stay = std::bind(&ContentMonster::CollisionEnter, this, std::placeholders::_1);
+	MonsterEvent.Enter = std::bind(&ContentMonster::CollisionEnter, this, std::placeholders::_1);
 }
 
 void ContentMonster::Update(float _Delta)

@@ -21,10 +21,10 @@ void GameEngineCollision::Start()
 
 void GameEngineCollision::Release()
 {
-	for (GameEngineCollision* Collision : Others)
-	{
-		Collision->Others.erase(this);
-	}
+	//for (GameEngineCollision* Collision : Others)
+	//{
+	//	Collision->Others.erase(this);
+	//}
 }
 
 bool GameEngineCollision::Collision(int _Order)
@@ -87,6 +87,23 @@ bool GameEngineCollision::CollisionEvent(int _Order, const EventParameter& _Even
 	if (nullptr == OtherGroup)
 	{
 		return false;
+	}
+
+	std::set<std::shared_ptr<GameEngineCollision>>::iterator Start = Others.begin();
+	std::set<std::shared_ptr<GameEngineCollision>>::iterator End = Others.end();
+
+	for (; Start != End; )
+	{
+		std::shared_ptr<GameEngineCollision> OtherCol = *Start;
+
+		// 여기서 터질것이다.
+		if (false == OtherCol->IsDeath())
+		{
+			++Start;
+			continue;
+		}
+
+		Start = Others.erase(Start);
 	}
 
 	return OtherGroup->CollisionEvent(GetDynamic_Cast_This<GameEngineCollision>(), _Event);

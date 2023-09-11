@@ -131,15 +131,15 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 			continue;
 		}
 
-		GameEngineCollision* _Other = OtherCollision.get();
+		// GameEngineCollision* _Other = OtherCollision.get();
 		// 충돌은 안했는데 set에 포인터를 가지고 있다 == 충돌중이다가 충돌 끝남
-		if (true == _Collision->Others.contains(_Other))
+		if (true == _Collision->Others.contains(OtherCollision))
 		{
 			if (nullptr != _Event.Exit)
 			{
-				_Event.Exit(_Other);
-				_Other->Others.erase(_Collision.get());
-				_Collision->Others.erase(_Other);
+				_Event.Exit(OtherCollision.get());
+				// _Other->Others.erase(_Collision.get());
+				_Collision->Others.erase(OtherCollision);
 			}
 		}
 	}
@@ -150,14 +150,15 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 
 		for (int i = 0; i < ResultCollision.size(); i++)
 		{
-			GameEngineCollision* _Other = ResultCollision[i].get();
+			std::shared_ptr<GameEngineCollision> _Other = ResultCollision[i];
+			// GameEngineCollision* _Other = ResultCollision[i].get();
 			// 충돌을 했는데 set에 포인터를 가지고 있지 않는다 == 처음 충돌한 애
 			if (false == _Collision->Others.contains(_Other))
 			{
 				if (nullptr != _Event.Enter)
 				{
-					_Event.Enter(_Other);
-					_Other->Others.insert(_Collision.get());
+					_Event.Enter(_Other.get());
+					// _Other->Others.insert(_Collision.get());
 					_Collision->Others.insert(_Other);
 				}
 			}
@@ -166,7 +167,7 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 				// 충돌을 했고, set에 포인터도 들고 있는다 == 충돌중인 애
 				if (nullptr != _Event.Stay)
 				{
-					_Event.Stay(_Other);
+					_Event.Stay(_Other.get());
 				}
 			}
 		}
