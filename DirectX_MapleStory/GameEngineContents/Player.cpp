@@ -95,10 +95,6 @@ void Player::Update(float _Delta)
 		ChangeState(PlayerState::Jump);
 	}
 
-	if (true == GameEngineInput::IsDown(VK_SPACE))
-	{
-		AlertTime = ALERT_TIME;
-	}
 	//if (GameEngineInput::IsPress('Q'))
 	//{
 	//	Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
@@ -140,11 +136,11 @@ void Player::DirCheck()
 
 void Player::ChasingCamera(float _Delta)
 {
-	float4 PlayerPos = Transform.GetWorldPosition();
+	float4 StartPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
+	float4 EndPos = Transform.GetWorldPosition();
+	float4 MovePos = float4::LerpClamp(StartPos, EndPos, CameraSpeed * _Delta);
+	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(MovePos);
 	float4 CameraPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
-	float4 MovePos = (PlayerPos - CameraPos) * 0.5f * CameraSpeed * _Delta;
-	GetLevel()->GetMainCamera()->Transform.AddLocalPosition(MovePos);
-	CameraPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
 	// Right Left
 	if (GlobalValue::WinScale.hX() >= CameraPos.X)
 	{
