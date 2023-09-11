@@ -14,7 +14,6 @@ public:
 	SongOfHeaven& operator=(const SongOfHeaven& _Other) = delete;
 	SongOfHeaven& operator=(SongOfHeaven&& _Other) noexcept = delete;
 
-	void Init() override;
 	void UseSkill() override;
 	void EndSkill() override;
 

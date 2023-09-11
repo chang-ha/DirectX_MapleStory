@@ -187,6 +187,13 @@ void Player::IdleUpdate(float _Delta)
 		ChangeState(PlayerState::Attack);
 		return;
 	}
+
+	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
+		return;
+	}
+
 }
 
 void Player::AlertUpdate(float _Delta)
@@ -296,6 +303,12 @@ void Player::WalkUpdate(float _Delta)
 
 void Player::JumpUpdate(float _Delta)
 {
+	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
+		return;
+	}
+
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
 		ChangeToIdle();

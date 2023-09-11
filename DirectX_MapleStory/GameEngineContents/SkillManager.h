@@ -18,12 +18,13 @@ public:
 	template<typename SkillType>
 	void CreateSkill(std::string _SkillName)
 	{
+		std::string UpperName = GameEngineString::ToUpperReturn(_SkillName);
 		std::shared_ptr<class ContentSkill> NewSkill = GetLevel()->CreateActor<SkillType>(UpdateOrder::Skill);
-		if (false == AllSkills.contains(_SkillName))
+		if (false == AllSkills.contains(UpperName))
 		{
-			AllSkills[_SkillName] = std::shared_ptr<class ContentSkill>();
+			AllSkills[UpperName] = std::shared_ptr<class ContentSkill>();
 		}
-		AllSkills[_SkillName] = NewSkill;
+		AllSkills[UpperName] = NewSkill;
 		SkillInit(NewSkill);
 	}
 

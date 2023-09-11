@@ -20,11 +20,6 @@ SongOfHeaven::~SongOfHeaven()
 
 }
 
-void SongOfHeaven::Init()
-{
-
-}
-
 void SongOfHeaven::UseSkill()
 {
 	if (true == IsSkillStart)
@@ -86,13 +81,13 @@ void SongOfHeaven::Start()
 	for (size_t i = 0; i < Directorys.size(); i++)
 	{
 		GameEngineDirectory& Childs = Directorys[i];
-		GameEngineSprite::CreateFolder(Childs.GetStringPath());
+		GameEngineSprite::CreateFolder("SongOfHeaven_" + Childs.GetFileName(), Childs.GetStringPath());
 	}
 
-	SkillRenderer1->CreateAnimation("Ready", "Ready", READY_ANI_SPEED);
-	SkillRenderer1->CreateAnimation("Attack", "Attack", 0.08f);
-	SkillRenderer1->CreateAnimation("Loop_Attack", "Attack", 0.08f, 11, 16, true);
-	SkillRenderer1->CreateAnimation("End", "End", 0.05f);
+	SkillRenderer1->CreateAnimation("Ready", "SongOfHeaven_Ready", READY_ANI_SPEED);
+	SkillRenderer1->CreateAnimation("Attack", "SongOfHeaven_Attack", 0.08f);
+	SkillRenderer1->CreateAnimation("Loop_Attack", "SongOfHeaven_Attack", 0.08f, 11, 16, true);
+	SkillRenderer1->CreateAnimation("End", "SongOfHeaven_End", 0.05f);
 	SkillRenderer1->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer) 
 		{
 			Pivot2 = float4(0, PlayerScale.hY());

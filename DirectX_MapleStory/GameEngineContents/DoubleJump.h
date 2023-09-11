@@ -14,7 +14,6 @@ public:
 	DoubleJump& operator=(const DoubleJump& _Other) = delete;
 	DoubleJump& operator=(DoubleJump&& _Other) noexcept = delete;
 
-	void Init() override;
 	void UseSkill() override;
 	void EndSkill() override;
 

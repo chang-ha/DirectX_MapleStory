@@ -191,6 +191,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DoubleJump.cpp" />
+    <ClCompile Include="FairySpiral.cpp" />
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="MapleStoryCore.cpp">
       <SubType>
@@ -241,6 +242,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="DoubleJump.h" />
+    <ClInclude Include="FairySpiral.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GlobalValue.h">
       <SubType>
       </SubType>

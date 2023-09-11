@@ -12,10 +12,6 @@ DoubleJump::~DoubleJump()
 {
 
 }
-void DoubleJump::Init()
-{
-	int a = 0;
-}
 
 void DoubleJump::UseSkill()
 {
@@ -79,15 +75,15 @@ void DoubleJump::Start()
 	for (size_t i = 0; i < Directorys.size(); i++)
 	{
 		GameEngineDirectory& Childs = Directorys[i];
-		GameEngineSprite::CreateFolder(Childs.GetStringPath());
+		GameEngineSprite::CreateFolder("DoubleJump_" + Childs.GetFileName(), Childs.GetStringPath());
 	}
 
-	SkillRenderer1->CreateAnimation("Effect1", "Effect1", ANI_SPEED);
-	SkillRenderer1->CreateAnimation("Up_Effect1", "Up_Effect1", ANI_SPEED);
-	SkillRenderer2->CreateAnimation("Effect2", "Effect2", ANI_SPEED);
-	SkillRenderer2->CreateAnimation("Up_Effect2", "Up_Effect2", ANI_SPEED);
-	SkillAfterImageRenderer->CreateAnimation("AfterImage", "AfterImage", ANI_SPEED);
-	SkillAfterImageRenderer->CreateAnimation("Up_AfterImage", "Up_AfterImage", ANI_SPEED);
+	SkillRenderer1->CreateAnimation("Effect1", "DoubleJump_Effect1", ANI_SPEED);
+	SkillRenderer1->CreateAnimation("Up_Effect1", "DoubleJump_Up_Effect1", ANI_SPEED);
+	SkillRenderer2->CreateAnimation("Effect2", "DoubleJump_Effect2", ANI_SPEED);
+	SkillRenderer2->CreateAnimation("Up_Effect2", "DoubleJump_Up_Effect2", ANI_SPEED);
+	SkillAfterImageRenderer->CreateAnimation("AfterImage", "DoubleJump_AfterImage", ANI_SPEED);
+	SkillAfterImageRenderer->CreateAnimation("Up_AfterImage", "DoubleJump_Up_AfterImage", ANI_SPEED);
 	SkillAfterImageRenderer->SetPivotType(PivotType::Center);
 
 	SkillRenderer1->SetEndEvent("Effect1", [&](GameEngineRenderer* _Renderer)

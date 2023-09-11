@@ -69,7 +69,7 @@ private:
 	float Speed = 250.0f;
 	float AirSpeed = 200.0f;
 	float JumpAirSpeed = 30.0f;
-	float CameraSpeed = 1.5f;
+	float CameraSpeed = 2.0f;
 	float LadderPivot = 0.0f;
 	float AlertTime = 0.0f;
 	float4 CurMapScale = float4::ZERO;

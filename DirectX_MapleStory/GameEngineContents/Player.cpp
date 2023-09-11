@@ -104,6 +104,7 @@ void Player::Update(float _Delta)
 	//{
 	//	Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
 	//}
+
 }
 
 void Player::DirCheck()

@@ -52,6 +52,9 @@
     <ClCompile Include="ContentMonster.cpp">
       <Filter>Actor\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="FairySpiral.cpp">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -104,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="ContentMonster.h">
       <Filter>Actor\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="FairySpiral.h">
+      <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
