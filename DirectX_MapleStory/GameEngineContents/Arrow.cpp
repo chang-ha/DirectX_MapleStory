@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Arrow.h"
 #include "Player.h"
+#include "ContentMonster.h"
 
 Arrow::Arrow()
 {
@@ -105,8 +106,21 @@ void Arrow::Update(float _Delta)
 
 void Arrow::CollisionEnter(GameEngineCollision* _Other)
 {
+	ContentMonster* CurMonster = dynamic_cast<ContentMonster*>(_Other->GetParentObject());
+	if (nullptr == CurMonster)
+	{
+		MsgBoxAssert("충돌대상이 잘못되었습니다.");
+		return;
+	}
+
+	if (MonsterState::Death == CurMonster->GetState())
+	{
+		return;
+	}
+
 	ArrowRenderer->ChangeAnimation("TestArrow_Hit");
 	ArrowRenderer->SetPivotType(PivotType::Center);
-	float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+	float4 OtherPos = CurMonster->Transform.GetWorldPosition();
 	Transform.SetLocalPosition(OtherPos);
+	CurMonster->ChangeState(MonsterState::Death);
 }
