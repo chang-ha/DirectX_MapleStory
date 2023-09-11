@@ -116,19 +116,20 @@ void ContentMonster::Start()
 	MainCollision->Transform.SetLocalScale(MonsterScale);
 
 	// MonsterEvent.Enter = std::bind(&ContentMonster::CollisionEnter, this, std::placeholders::_1);
+	MainSpriteRenderer->SetEndEvent("Monster_Die", [=](GameEngineRenderer* _Renderer)
+		{Death(); });
 }
 
 void ContentMonster::Update(float _Delta)
 {
 	StateUpdate(_Delta);
-	// MainCollision->CollisionEvent(CollisionOrder::PlayerAttack, MonsterEvent);
+	// MainCollision->CollisionEvent(CollisionOrder::MonsterAttack, MonsterEvent);
 }
 
 void ContentMonster::CollisionEnter(GameEngineCollision* _Other)
 {
 
 }
-
 
 void ContentMonster::IdleStart()
 {
@@ -161,8 +162,8 @@ void ContentMonster::HitUpdate(float _Delta)
 	}
 void ContentMonster::DeathUpdate(float _Delta)
 {
-	if (true == MainSpriteRenderer->IsCurAnimationEnd())
-	{
-		Death();
-	}
+	//if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	//{
+	//	Death();
+	//}
 }
