@@ -77,6 +77,11 @@ bool GameEngineCollision::Collision(int _Order, const float4& _NextPos, std::fun
 
 bool GameEngineCollision::CollisionEvent(int _Order, const EventParameter& _Event)
 {
+	if (false == GetLevel()->CollisionGroups.contains(_Order))
+	{
+		return false;
+	}
+
 	std::shared_ptr<GameEngineCollisionGroup> OtherGroup = GetLevel()->CollisionGroups[_Order];
 
 	if (nullptr == OtherGroup)
