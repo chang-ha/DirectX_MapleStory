@@ -62,7 +62,7 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Rope", "Rope", ROPE_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Ladder", "Ladder", ROPE_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Attack1", "Attack1", ATT_ANI_SPEED);
-		MainSpriteRenderer->CreateAnimation("Attack2", "Attack2", ATT_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("Attack2", "Attack2", 0.1f);
 		MainSpriteRenderer->CreateAnimation("Attack3", "Attack3", ATT_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Down_Attack", "Down_Attack", DOWN_ATT_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Down", "Down");
@@ -262,6 +262,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Shooting:
 			ShootingEnd();
 			break;
+		case PlayerState::Attack2:
+			Attack2End();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
@@ -295,6 +298,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Shooting:
 			ShootingStart();
 			break;
+		case PlayerState::Attack2:
+			Attack2Start();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -325,6 +331,8 @@ void Player::StateUpdate(float _Delta)
 		return AttackUpdate(_Delta);
 	case PlayerState::Shooting:
 		return ShootingUpdate(_Delta);
+	case PlayerState::Attack2:
+		return Attack2Update(_Delta);
 	case PlayerState::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");

@@ -61,10 +61,11 @@ void FairySpiral::Start()
 		GameEngineSprite::CreateFolder("FairySprial_" + Childs.GetFileName(), Childs.GetStringPath());
 	}
 
-	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.08f);
+	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
 	SkillRenderer1->SetEndEvent("Attack", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
+			EndSkill();
 		}
 	);
 }

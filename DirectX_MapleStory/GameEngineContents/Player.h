@@ -23,7 +23,8 @@ enum class PlayerState
 	Down,
 	Ladder,
 	Attack,
-	Shooting,
+	Shooting, // SongOfHeaven
+	Attack2, // FairySpiral
 };
 
 #include "ContentActor.h"
@@ -87,6 +88,7 @@ private:
 	void LadderStart();
 	void AttackStart();
 	void ShootingStart();
+	void Attack2Start();
 
 	/// End
 	void IdleEnd();
@@ -97,6 +99,7 @@ private:
 	void LadderEnd();
 	void AttackEnd();
 	void ShootingEnd();
+	void Attack2End();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -107,7 +110,8 @@ private:
 	void LadderUpdate(float _Delta);
 	void AttackUpdate(float _Delta);
 	void ShootingUpdate(float _Delta);
-	
+	void Attack2Update(float _Delta);
+
 	//// FrameEvent
 	void AttackEvent(GameEngineRenderer* _Renderer);
 	////////////

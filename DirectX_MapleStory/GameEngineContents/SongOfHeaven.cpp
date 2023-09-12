@@ -4,6 +4,7 @@
 #include "Arrow.h"
 
 #define READY_ANI_SPEED 0.03f
+#define ATTACK_ANI_SPEED 0.05f
 
 #define PIVOT_PLUSX 20.0f
 #define PIVOT_PLUSY 5.0f
@@ -85,9 +86,9 @@ void SongOfHeaven::Start()
 	}
 
 	SkillRenderer1->CreateAnimation("Ready", "SongOfHeaven_Ready", READY_ANI_SPEED);
-	SkillRenderer1->CreateAnimation("Attack", "SongOfHeaven_Attack", 0.08f);
-	SkillRenderer1->CreateAnimation("Loop_Attack", "SongOfHeaven_Attack", 0.08f, 11, 16, true);
-	SkillRenderer1->CreateAnimation("End", "SongOfHeaven_End", 0.05f);
+	SkillRenderer1->CreateAnimation("Attack", "SongOfHeaven_Attack", ATTACK_ANI_SPEED);
+	SkillRenderer1->CreateAnimation("Loop_Attack", "SongOfHeaven_Attack", ATTACK_ANI_SPEED, 11, 16, true);
+	SkillRenderer1->CreateAnimation("End", "SongOfHeaven_End", 0.08f);
 	SkillRenderer1->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer) 
 		{
 			Pivot2 = float4(0, PlayerScale.hY());

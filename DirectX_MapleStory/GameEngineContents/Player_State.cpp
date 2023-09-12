@@ -36,11 +36,11 @@ void Player::JumpStart()
 
 	if (true == IsGround)
 	{
-		if (GameEngineInput::IsPress(VK_LEFT))
+		if (ActorDir::Left == Dir && GameEngineInput::IsPress(VK_LEFT))
 		{
 			PlusMoveVectorForce(float4(-JUMP_DIS, JUMP_HEIGHT));
 		}
-		else if (GameEngineInput::IsPress(VK_RIGHT))
+		else if (ActorDir::Right == Dir && GameEngineInput::IsPress(VK_RIGHT))
 		{
 			PlusMoveVectorForce(float4(JUMP_DIS, JUMP_HEIGHT));
 		}
@@ -52,11 +52,11 @@ void Player::JumpStart()
 	}
 	else if (PlayerState::Ladder == State)
 	{
-		if (GameEngineInput::IsPress(VK_LEFT))
+		if (/*ActorDir::Left == Dir &&*/ GameEngineInput::IsPress(VK_LEFT))
 		{
 			PlusMoveVectorForce(float4(-JUMP_DIS, LADDER_JUMP_HEIGHT));
 		}
-		else if (GameEngineInput::IsPress(VK_RIGHT))
+		else if (/*ActorDir::Right == Dir &&*/ GameEngineInput::IsPress(VK_RIGHT))
 		{
 			PlusMoveVectorForce(float4(JUMP_DIS, LADDER_JUMP_HEIGHT));
 		}
@@ -66,7 +66,6 @@ void Player::JumpStart()
 void Player::DownStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Down");
-	// MainSpriteRenderer->Transform.SetLocalPosition({ -PlayerScale.hX() * 0.45f, PlayerScale.hY() * 0.6f });
 }
 
 void Player::LadderStart()
@@ -90,6 +89,13 @@ void Player::ShootingStart()
 	AlertTime = ALERT_TIME;
 }
 
+void Player::Attack2Start()
+{
+	MainSpriteRenderer->ChangeAnimation("Attack2");
+	SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
+	AlertTime = ALERT_TIME;
+}
+
 void Player::IdleEnd()
 {
 
@@ -107,16 +113,11 @@ void Player::WalkEnd()
 
 void Player::JumpEnd()
 {
-	GravityReset();
-	MoveVectorForceReset();
-	GroundJump = false;
-	DoubleJump = false;
 	SkillManager::PlayerSkillManager->EndSkill("DoubleJump");
 }
 
 void Player::DownEnd()
 {
-	// MainSpriteRenderer->Transform.SetLocalPosition({ 0, PlayerScale.hY() });
 }
 
 void Player::LadderEnd()
@@ -138,6 +139,11 @@ void Player::AttackEnd()
 }
 
 void Player::ShootingEnd()
+{
+
+}
+
+void Player::Attack2End()
 {
 
 }
@@ -190,7 +196,7 @@ void Player::IdleUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
+		ChangeState(PlayerState::Attack2);
 		return;
 	}
 
@@ -305,13 +311,17 @@ void Player::JumpUpdate(float _Delta)
 {
 	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
+		ChangeState(PlayerState::Attack2);
 		return;
 	}
 
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
 		ChangeToIdle();
+		GravityReset();
+		MoveVectorForceReset();
+		GroundJump = false;
+		DoubleJump = false;
 		return;
 	}
 	
@@ -319,6 +329,10 @@ void Player::JumpUpdate(float _Delta)
 	if (true == IsLadder && GameEngineInput::IsPress(VK_UP))
 	{
 		ChangeState(PlayerState::Ladder);
+		GravityReset();
+		MoveVectorForceReset();
+		GroundJump = false;
+		DoubleJump = false;
 		return;
 	}
 
@@ -467,6 +481,14 @@ void Player::ShootingUpdate(float _Delta)
 	if (true == GameEngineInput::IsFree('A'))
 	{
 		SkillManager::PlayerSkillManager->EndSkill("SongOfHeaven");
+		ChangeToIdle();
+	}
+}
+
+void Player::Attack2Update(float _Delta)
+{
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
 		ChangeToIdle();
 	}
 }
