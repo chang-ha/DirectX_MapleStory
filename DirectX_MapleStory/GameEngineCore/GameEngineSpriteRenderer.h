@@ -64,7 +64,33 @@ public:
 
 	inline void SetAutoScaleRatio(float _Ratio)
 	{
+		AutoScaleRatio.X = _Ratio;
+		AutoScaleRatio.Y = _Ratio;
+	}
+
+	inline void SetAutoScaleRatio(const float4& _Ratio)
+	{
 		AutoScaleRatio = _Ratio;
+	}
+
+	bool IsRight()
+	{
+		return 0 < AutoScaleRatio.X;
+	}
+
+	void RightFlip()
+	{
+		AutoScaleRatio.X = abs(AutoScaleRatio.X);
+	}
+
+	void LeftFlip()
+	{
+		AutoScaleRatio.X = -abs(AutoScaleRatio.X);
+	}
+
+	void Flip()
+	{
+		AutoScaleRatio.X = -AutoScaleRatio.X;
 	}
 
 	void SetSprite(std::string_view _Name, unsigned int Index = 0);
@@ -119,7 +145,7 @@ private:
 	/////////// Animation Member
 	bool IsPause = false;
 	bool IsImageSize = false; // Rendering ImageSize
-	float AutoScaleRatio = 1.0f; // Rendering ScaleRation
+	float4 AutoScaleRatio = { 1.0f, 1.0f, 1.0f };// Rendering ScaleRation
 	std::shared_ptr<GameEngineFrameAnimation> CurFrameAnimations;
 	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>> FrameAnimations;
 
