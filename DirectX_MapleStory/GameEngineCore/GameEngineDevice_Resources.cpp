@@ -10,6 +10,7 @@
 #include "GameEngineTexture.h"
 #include "GameEngineSampler.h"
 #include "GameEngineSprite.h"
+#include "GameEngineBlend.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -98,6 +99,25 @@ void GameEngineDevice::ResourcesInit()
 		Desc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		// Desc.DepthClipEnable = TRUE;
 		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Create("EngineRasterizer", Desc);
+	}
+
+	{
+		D3D11_BLEND_DESC Desc = {};
+		// 깊이버퍼라는 것과 관련이 있습니다. << 좀 느림
+		// 추후 깊이버퍼 추가되면 사용
+		// Desc.AlphaToCoverageEnable
+		
+		Desc.IndependentBlendEnable = false;
+		Desc.RenderTarget[0].BlendEnable = true;
+		Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+		Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+		Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA; // src팩터
+		Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+
+		std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Create("EngineBlend", Desc);
 	}
 
 	{
