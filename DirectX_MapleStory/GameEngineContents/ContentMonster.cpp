@@ -115,8 +115,8 @@ void ContentMonster::Start()
 	MainCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
 	MainCollision->Transform.SetLocalScale(MonsterScale);
 
-	// MonsterEvent.Enter = std::bind(&ContentMonster::CollisionEnter, this, std::placeholders::_1);
-	MainSpriteRenderer->SetEndEvent("Monster_Die", [=](GameEngineRenderer* _Renderer)
+	// MonsterEvent.Enter = std::bind(&ContentMonster::CollisionEnter, this, std::placeholders::_1, std::placeholders::_2);
+	MainSpriteRenderer->SetEndEvent("Monster_Die", [&](GameEngineRenderer* _Renderer)
 		{Death(); });
 }
 
@@ -126,7 +126,7 @@ void ContentMonster::Update(float _Delta)
 	// MainCollision->CollisionEvent(CollisionOrder::MonsterAttack, MonsterEvent);
 }
 
-void ContentMonster::CollisionEnter(GameEngineCollision* _Other)
+void ContentMonster::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
 
 }

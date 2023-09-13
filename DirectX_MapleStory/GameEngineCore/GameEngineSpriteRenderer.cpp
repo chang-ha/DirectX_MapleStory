@@ -4,8 +4,6 @@
 #include "GameEngineSampler.h"
 #include "GameEngineConstantBuffer.h"
 
-std::shared_ptr<GameEngineSampler> GameEngineSpriteRenderer::DefaultSampler;
-
 void GameEngineFrameAnimation::Reset()
 {
 	CurTime = 0.0f;
@@ -41,11 +39,12 @@ SpriteData GameEngineFrameAnimation::Update(float _Delta)
 	}
 
 	CurTime += _Delta;
-	if (Inter <= CurTime)
+	if (Inter[CurIndex] <= CurTime)
 	{
+		CurTime -= Inter[CurIndex];
 		++CurIndex;
 		EventCheck = true;
-		CurTime -= Inter;
+
 		if (CurIndex > End - Start)
 		{
 			if (nullptr != EndEvent && false == IsEnd)
@@ -71,12 +70,6 @@ SpriteData GameEngineFrameAnimation::Update(float _Delta)
 
 GameEngineSpriteRenderer::GameEngineSpriteRenderer()
 {
-	if (nullptr == DefaultSampler)
-	{
-		MsgBoxAssert("SpriteRenderer에 설정할 기본 샘플러가 없습니다.");
-	}
-
-	Sampler = DefaultSampler;
 }
 
 GameEngineSpriteRenderer::~GameEngineSpriteRenderer()
@@ -117,11 +110,6 @@ void GameEngineSpriteRenderer::AddImageScale(const float4& _Scale)
 	ImageTransform.AddLocalScale(_Scale);
 }
 
-void GameEngineSpriteRenderer::SetDefaultSampler(std::string_view _SamplerName)
-{
-	DefaultSampler = GameEngineSampler::Find(_SamplerName);
-}
-
 void GameEngineSpriteRenderer::Start()
 {
 	GameEngineRenderer::Start();
@@ -129,6 +117,7 @@ void GameEngineSpriteRenderer::Start()
 	DataTransform = &ImageTransform;
 	// 부모로는 나(액터)의 Transform을 넣어줌으로서 액터의 Transform과 Renderer의 Transform을 분리함
 	ImageTransform.SetParent(Transform);
+	Sampler = GameEngineSampler::Find("POINT");
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)
@@ -184,7 +173,6 @@ void GameEngineSpriteRenderer::CreateAnimation(std::string_view _AnimationName, 
 	NewAnimation->SpriteName = _SpriteName;
 	NewAnimation->Sprite = Sprite;
 	NewAnimation->Loop = _Loop;
-	NewAnimation->Inter = _Inter;
 	NewAnimation->CurIndex = 0;
 	NewAnimation->Parent = this;
 
@@ -212,6 +200,12 @@ void GameEngineSpriteRenderer::CreateAnimation(std::string_view _AnimationName, 
 	for (unsigned int i = NewAnimation->Start; i <= NewAnimation->End; i++)
 	{
 		NewAnimation->Index.push_back(i);
+	}
+
+	NewAnimation->Inter.resize(NewAnimation->Index.size());
+	for (size_t i = 0; i < NewAnimation->Index.size(); i++)
+	{
+		NewAnimation->Inter[i] = _Inter;
 	}
 }
 
@@ -276,7 +270,7 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 
 	if (nullptr == Sampler)
 	{
-		MsgBoxAssert("존재하지 않는 텍스처를 사용하려고 했습니다.");
+		MsgBoxAssert("존재하지 않는 샘플러를 사용하려고 했습니다.");
 	}
 	Sampler->PSSetting(0);
 	GameEngineRenderer::Draw();

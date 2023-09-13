@@ -137,7 +137,7 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 		{
 			if (nullptr != _Event.Exit)
 			{
-				_Event.Exit(OtherCollision.get());
+				_Event.Exit(_Collision.get(), OtherCollision.get());
 				// _Other->Others.erase(_Collision.get());
 				_Collision->Others.erase(OtherCollision);
 			}
@@ -157,7 +157,7 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 			{
 				if (nullptr != _Event.Enter)
 				{
-					_Event.Enter(_Other.get());
+					_Event.Enter(_Collision.get(), _Other.get());
 					// _Other->Others.insert(_Collision.get());
 					_Collision->Others.insert(_Other);
 				}
@@ -167,7 +167,7 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 				// 충돌을 했고, set에 포인터도 들고 있는다 == 충돌중인 애
 				if (nullptr != _Event.Stay)
 				{
-					_Event.Stay(_Other.get());
+					_Event.Stay(_Collision.get(), _Other.get());
 				}
 			}
 		}

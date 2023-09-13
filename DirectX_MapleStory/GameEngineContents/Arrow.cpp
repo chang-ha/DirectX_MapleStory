@@ -73,7 +73,7 @@ void Arrow::Start()
 	ArrowCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	ArrowCollision->Transform.SetLocalScale(ArrowScale);
 
-	ArrowEvent.Enter = std::bind(&Arrow::CollisionEnter, this, std::placeholders::_1);
+	ArrowEvent.Enter = std::bind(&Arrow::CollisionEnter, this, std::placeholders::_1, std::placeholders::_2);
 }
 
 void Arrow::Update(float _Delta)
@@ -104,7 +104,7 @@ void Arrow::Update(float _Delta)
 	ArrowCollision->CollisionEvent(CollisionOrder::Monster, ArrowEvent);
 }
 
-void Arrow::CollisionEnter(GameEngineCollision* _Other)
+void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
 	ContentMonster* CurMonster = dynamic_cast<ContentMonster*>(_Other->GetParentObject());
 	if (nullptr == CurMonster)

@@ -121,6 +121,21 @@ public:
 	{
 		WorldViewProjectionMatrix = WorldMatrix * ViewMatrix * ProjectionMatrix;
 	}
+
+	void operator=(const TransformData& _Other)
+	{
+		memcpy_s(this, sizeof(TransformData), &_Other, sizeof(TransformData));
+	}
+
+	TransformData()
+	{
+
+	}
+
+	TransformData(const TransformData& _Other)
+	{
+		memcpy_s(this, sizeof(TransformData), &_Other, sizeof(TransformData));
+	}
 };
 
 // Ό³Έν :
