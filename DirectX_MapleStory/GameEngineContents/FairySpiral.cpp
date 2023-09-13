@@ -75,7 +75,7 @@ void FairySpiral::Start()
 	SkillScale = Sprite->GetSpriteData(0).GetScale();
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
 	SkillRenderer1->CreateAnimation("Hit", "FairySprial_Hit", 0.06f);
-	SkillRenderer1->SetFrameEvent("Attack", 2, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
+	// SkillRenderer1->SetFrameEvent("Attack", 2, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
 	SkillRenderer1->SetEndEvent("Attack", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
@@ -84,8 +84,8 @@ void FairySpiral::Start()
 	);
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
-	SkillCollision->Transform.SetLocalScale(SkillScale);
-	SkillEvent.Enter = [&](GameEngineCollision* _Other)
+	SkillCollision->Transform.SetLocalScale(SkillScale.Half());
+	SkillEvent.Stay = [&](GameEngineCollision* _Other)
 		{
 			float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 			SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
@@ -105,5 +105,7 @@ void FairySpiral::Update(float _Delta)
 
 void FairySpiral::Event(GameEngineRenderer* _Renderer)
 {
+	SkillRenderer1->Death();
 	SkillCollision->Death();
+	// SkillCollision = nullptr;
 }

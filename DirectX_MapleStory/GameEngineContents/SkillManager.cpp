@@ -140,7 +140,6 @@ void SkillManager::Update(float _Delta)
 
 void SkillManager::SkillInit(std::shared_ptr<ContentSkill> _Skill)
 {
-	_Skill->Start();
 	_Skill->Init();
 	_Skill->Off();
 }
