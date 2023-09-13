@@ -45,9 +45,9 @@ void GameEngineObject::AllReleaseCheck()
 
 		for (; Start != End;)
 		{
+			(*Start)->AllReleaseCheck();
 			if (false == (*Start)->IsDeath())
 			{
-				(*Start)->AllReleaseCheck();
 				++Start;
 				continue;
 			}

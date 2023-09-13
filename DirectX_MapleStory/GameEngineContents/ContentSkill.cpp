@@ -55,4 +55,3 @@ void ContentSkill::SetScaleSkillRenderer(const float4& _Scale)
 	SkillRenderer2->Transform.SetLocalScale(_Scale);
 	SkillAfterImageRenderer->Transform.SetLocalScale(_Scale);
 }
-

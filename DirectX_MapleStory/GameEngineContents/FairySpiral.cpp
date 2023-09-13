@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "FairySpiral.h"
 #include "Player.h"
+#include "SkillManager.h"
 
 FairySpiral::FairySpiral()
 {
@@ -20,6 +21,7 @@ void FairySpiral::Init()
 void FairySpiral::UseSkill()
 {
 	ContentSkill::UseSkill();
+	On();
 	SkillRenderer1->On();
 
 	ActorDir Dir = Player::MainPlayer->GetDir();
@@ -40,11 +42,19 @@ void FairySpiral::UseSkill()
 	}
 
 	SkillRenderer1->ChangeAnimation("Attack", true, 0);
+
+	//if (nullptr != SkillCollision)
+	//{
+	//	SkillCollision->Death();
+	//	SkillCollision = nullptr;
+	//}
+	// Collisions
 }
 
 void FairySpiral::EndSkill()
 {
 	ContentSkill::EndSkill();
+	Off();
 }
 
 void FairySpiral::Start()
@@ -61,17 +71,39 @@ void FairySpiral::Start()
 		GameEngineSprite::CreateFolder("FairySprial_" + Childs.GetFileName(), Childs.GetStringPath());
 	}
 
+	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("FairySprial_Attack");
+	SkillScale = Sprite->GetSpriteData(0).GetScale();
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
+	SkillRenderer1->CreateAnimation("Hit", "FairySprial_Hit", 0.06f);
+	SkillRenderer1->SetFrameEvent("Attack", 2, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
 	SkillRenderer1->SetEndEvent("Attack", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
 			EndSkill();
 		}
 	);
+
+	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	SkillCollision->Transform.SetLocalScale(SkillScale);
+	SkillEvent.Enter = [&](GameEngineCollision* _Other)
+		{
+			float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+			SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
+		};
 }
 
 void FairySpiral::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
-	SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
+	Transform.SetLocalPosition(PlayerPos);
+	int a = 0;
+	if (nullptr != SkillCollision)
+	{
+		SkillCollision->CollisionEvent(CollisionOrder::Monster, SkillEvent);
+	}
+}
+
+void FairySpiral::Event(GameEngineRenderer* _Renderer)
+{
+	SkillCollision->Death();
 }

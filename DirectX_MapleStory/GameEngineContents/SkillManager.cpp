@@ -16,6 +16,65 @@ SkillManager::~SkillManager()
 
 }
 
+void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object)
+{
+	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
+	_Data->Object = _Object;
+	_Data->HitAnimations.resize(_HitCount);
+	// _Data.DamageAnimations.resize(_HitCount);
+
+	for (size_t i = 0; i < _HitCount; i++)
+	{
+		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(UpdateOrder::Skill);
+		_HitAnimation->CreateAnimation("Hit", _HitSpriteName);
+		_HitAnimation->ChangeAnimation("Hit");
+		_HitAnimation->Transform.SetLocalPosition(_Object->Transform.GetWorldPosition());
+		_HitAnimation->AutoSpriteSizeOn();
+		_HitAnimation->SetEndEvent("Hit", [&](GameEngineSpriteRenderer* _Renderer)
+			{
+				_Renderer->Off();
+				_Renderer->Death();
+			}
+		);
+		_HitAnimation->Off();
+		_Data->HitAnimations[i] = _HitAnimation;
+	}
+
+	AllHitRenderers.push_back(_Data);
+}
+
+void SkillManager::HitPrintUpdate(float _Delta)
+{
+	std::list<std::shared_ptr<HitRenderData>>::iterator StartIter = AllHitRenderers.begin();
+	std::list<std::shared_ptr<HitRenderData>>::iterator EndIter = AllHitRenderers.end();
+
+	for (; StartIter != EndIter ;)
+	{
+		std::shared_ptr<HitRenderData> _CurData = (*StartIter);
+		if (_CurData->HitAnimations.size() == _CurData->CurIndex)
+		{
+			if (true == _CurData->HitAnimations[_CurData->CurIndex - 1]->IsCurAnimationEnd())
+			{
+				_CurData->Object = nullptr;
+				StartIter = AllHitRenderers.erase(StartIter);
+				continue;
+			}
+			++StartIter;
+			continue;
+		}
+
+		_CurData->DelayTime -= _Delta;
+		if (0.0f >= _CurData->DelayTime)
+		{
+			_CurData->HitAnimations[_CurData->CurIndex]->On();
+			_CurData->CurIndex += 1;
+			_CurData->DelayTime = 0.1f;
+		}
+
+		++StartIter;
+	}
+}
+
 void SkillManager::UseSkill(std::string_view _SkillName)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_SkillName);
@@ -76,7 +135,7 @@ void SkillManager::Start()
 
 void SkillManager::Update(float _Delta)
 {
-
+	HitPrintUpdate(_Delta);
 }
 
 void SkillManager::SkillInit(std::shared_ptr<ContentSkill> _Skill)

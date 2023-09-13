@@ -123,7 +123,7 @@ void ContentMonster::Start()
 void ContentMonster::Update(float _Delta)
 {
 	StateUpdate(_Delta);
-	// MainCollision->CollisionEvent(CollisionOrder::MonsterAttack, MonsterEvent);
+	MainCollision->CollisionEvent(CollisionOrder::PlayerAttack, MonsterEvent);
 }
 
 void ContentMonster::CollisionEnter(GameEngineCollision* _Other)

@@ -20,12 +20,13 @@ public:
 		IsSkillEnd = true;
 	}
 
-	virtual void Init() {}
-	virtual void UseSkill();
 	bool IsSkillUsing()
 	{
 		return true == IsSkillStart && false == IsSkillEnd ? true : false;
 	}
+
+	virtual void Init() {}
+	virtual void UseSkill();
 	void SetScaleSkillRenderer(const float4& _Scale);
 
 protected:

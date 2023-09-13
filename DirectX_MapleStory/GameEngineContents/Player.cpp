@@ -221,6 +221,10 @@ void Player::LadderCheck()
 
 void Player::ChangeToIdle()
 {
+	GravityReset();
+	MoveVectorForceReset();
+	GroundJump = false;
+	DoubleJump = false;
 	if (0.0f < AlertTime)
 	{
 		ChangeState(PlayerState::Alert);

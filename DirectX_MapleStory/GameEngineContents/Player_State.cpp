@@ -318,10 +318,10 @@ void Player::JumpUpdate(float _Delta)
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
 		ChangeToIdle();
-		GravityReset();
-		MoveVectorForceReset();
-		GroundJump = false;
-		DoubleJump = false;
+		//GravityReset();
+		//MoveVectorForceReset();
+		//GroundJump = false;
+		//DoubleJump = false;
 		return;
 	}
 	
@@ -489,6 +489,13 @@ void Player::Attack2Update(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
-		ChangeToIdle();
+		if (true == IsGround)
+		{
+			ChangeToIdle();
+		}
+		else
+		{
+			ChangeState(PlayerState::Jump);
+		}
 	}
 }

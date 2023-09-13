@@ -18,11 +18,16 @@ public:
 	void Init() override;
 	void UseSkill() override;
 	void EndSkill() override;
-protected:
+	void Event(GameEngineRenderer* _Renderer);
 
+protected:
 	void Start() override;
 	void Update(float _Delta) override;
-private:
 
+
+private:
+	float4 SkillScale = float4::ZERO;
+	EventParameter SkillEvent;
+	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
 };
 
