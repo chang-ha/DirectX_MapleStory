@@ -135,11 +135,11 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 		// 충돌은 안했는데 set에 포인터를 가지고 있다 == 충돌중이다가 충돌 끝남
 		if (true == _Collision->Others.contains(OtherCollision))
 		{
+			_Collision->Others.erase(OtherCollision);
 			if (nullptr != _Event.Exit)
 			{
 				_Event.Exit(OtherCollision.get());
 				// _Other->Others.erase(_Collision.get());
-				_Collision->Others.erase(OtherCollision);
 			}
 		}
 	}
@@ -155,11 +155,11 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 			// 충돌을 했는데 set에 포인터를 가지고 있지 않는다 == 처음 충돌한 애
 			if (false == _Collision->Others.contains(_Other))
 			{
+				_Collision->Others.insert(_Other);
 				if (nullptr != _Event.Enter)
 				{
 					_Event.Enter(_Other.get());
 					// _Other->Others.insert(_Collision.get());
-					_Collision->Others.insert(_Other);
 				}
 			}
 			else

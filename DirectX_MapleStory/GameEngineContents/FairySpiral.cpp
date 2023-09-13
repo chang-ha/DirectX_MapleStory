@@ -75,7 +75,7 @@ void FairySpiral::Start()
 	SkillScale = Sprite->GetSpriteData(0).GetScale();
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
 	SkillRenderer1->CreateAnimation("Hit", "FairySprial_Hit", 0.06f);
-	// SkillRenderer1->SetFrameEvent("Attack", 2, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
+	SkillRenderer1->SetFrameEvent("Attack", 2, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
 	SkillRenderer1->SetEndEvent("Attack", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
