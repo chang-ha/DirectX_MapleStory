@@ -44,7 +44,6 @@ enum class PivotType
 	Bottom,
 	Left,
 	Top,
-	Right,
 };
 
 // Ό³Έν :
@@ -137,6 +136,10 @@ public:
 	void AnimationPauseOn();
 	void AnimationPauseOff();
 
+	void SetPivotValue(const float4& _Value)
+	{
+		Pivot = _Value;
+	}
 	void SetPivotType(PivotType _Type);
 	void SetImageScale(const float4& _Scale);
 	void AddImageScale(const float4& _Scale);

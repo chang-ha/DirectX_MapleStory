@@ -62,7 +62,7 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Rope", "Rope", ROPE_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Ladder", "Ladder", ROPE_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Attack1", "Attack1", ATT_ANI_SPEED);
-		MainSpriteRenderer->CreateAnimation("Attack2", "Attack2", 0.1f);
+		MainSpriteRenderer->CreateAnimation("Attack2", "Attack2", 0.05f);
 		MainSpriteRenderer->CreateAnimation("Attack3", "Attack3", ATT_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Down_Attack", "Down_Attack", DOWN_ATT_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Down", "Down");
@@ -76,6 +76,10 @@ void Player::Start()
 	State = PlayerState::Idle;
 	Dir = ActorDir::Left; 
 	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
+
+	// Animation Speed Setting
+	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Attack2");
+	_Animation->Inter[2] = 0.3f;
 
 	// Event Setting
 	MainSpriteRenderer->SetFrameEvent("Shoot", 1, std::bind(&Player::AttackEvent, this, std::placeholders::_1));

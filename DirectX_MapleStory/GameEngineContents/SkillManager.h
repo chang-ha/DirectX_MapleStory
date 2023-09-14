@@ -40,7 +40,6 @@ public:
 	}
 
 	void HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object);
-	void HitPrintUpdate(float _Delta);
 
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);
@@ -57,5 +56,6 @@ private:
 	std::list<std::shared_ptr<HitRenderData>> AllHitRenderers;
  
 	void SkillInit(std::shared_ptr<class ContentSkill> _Skill);
+	void HitPrintUpdate(float _Delta);
 };
 

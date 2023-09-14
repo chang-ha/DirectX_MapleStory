@@ -29,11 +29,9 @@ void FairySpiral::UseSkill()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		SkillRenderer1->SetPivotType(PivotType::Right);
 		SetScaleSkillRenderer({ -1.0f, 1.0f });
 		break;
 	case ActorDir::Left:
-		SkillRenderer1->SetPivotType(PivotType::Right);
 		SetScaleSkillRenderer({ 1.0f, 1.0f });
 		break;
 	case ActorDir::Null:
@@ -84,9 +82,11 @@ void FairySpiral::Start()
 			EndSkill();
 		}
 	);
+	SkillRenderer1->SetPivotValue(float4(0.2f, 0.5f));
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	SkillCollision->Transform.SetLocalScale(SkillScale);
+	SkillCollision->SetParent(SkillRenderer1);
 	//SkillEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 	//	{
 	//		float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
