@@ -87,7 +87,7 @@ void FairySpiral::Start()
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	SkillCollision->Transform.SetLocalScale(SkillScale);
-	SkillEvent.Stay = [&](GameEngineCollision* _Other)
+	SkillEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
 			float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 			SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
