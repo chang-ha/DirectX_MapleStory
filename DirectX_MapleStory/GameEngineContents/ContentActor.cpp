@@ -25,8 +25,9 @@ void ContentActor::Start()
 
 void ContentActor::Update(float _Delta)
 {
-	Gravity(_Delta);
 	IsGround = CheckGround();
+	Gravity(_Delta); // AddLocalPosition for MoveVector.Y
+	AirResistance(_Delta);
 }
 
 void ContentActor::Gravity(float _Delta)
@@ -42,18 +43,22 @@ void ContentActor::Gravity(float _Delta)
 	}
 
 	GravityForce += GravitySpeed * _Delta;
-	if (MAX_GRAVITY <= GravityForce)
+	if (MAX_GRAVITY_FORCE <= GravityForce)
 	{
-		GravityForce = MAX_GRAVITY;
+		GravityForce = MAX_GRAVITY_FORCE;
 	}
 
 	MoveVectorForce.Y -= GravityForce * _Delta;
+	float MoveVectorForceDelta = MoveVectorForce.Y * _Delta;
+	if (MAX_GRAVITY <= MoveVectorForceDelta)
+	{
+		MoveVectorForceDelta = MAX_GRAVITY;
+	}
 	if (0.0f > MoveVectorForce.Y)
 	{
-		float4 MoveVectorForceDelta = MoveVectorForce * _Delta;
 		GameEngineColor GroundColor = CheckGroundColor();
 		float Count = 0.0f;
-		for (; Count <= static_cast<int>(-MoveVectorForceDelta.Y); Count += 1.0f)
+		for (; Count <= static_cast<int>(-MoveVectorForceDelta); Count += 1.0f)
 		{
 			if (GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor)
 			{
@@ -63,16 +68,44 @@ void ContentActor::Gravity(float _Delta)
 		}
 		if (0 != Count)
 		{
-			MoveVectorForceDelta.Y = -1.0f * Count;
+			MoveVectorForceDelta = -1.0f * Count;
 		}
-		Transform.AddLocalPosition(MoveVectorForceDelta);
+		Transform.AddLocalPosition(float4(0, MoveVectorForceDelta));
 	}
 	else
 	{
-		Transform.AddLocalPosition(MoveVectorForce * _Delta);
+		Transform.AddLocalPosition(float4(0, MoveVectorForceDelta));
+	}
+}
+
+void ContentActor::AirResistance(float _Delta)
+{
+	if (true == IsAirResis)
+	{
+		switch (AirResisDir)
+		{
+		case ActorDir::Right:
+			MoveVectorForce.X += -ResistanceForce * _Delta;
+			if (0.0f >= MoveVectorForce.X)
+			{
+				MoveVectorForce.X = 0.0f;
+			}
+			break;
+		case ActorDir::Left:
+			MoveVectorForce.X += ResistanceForce * _Delta;
+			if (0.0f <= MoveVectorForce.X)
+			{
+				MoveVectorForce.X = 0.0f;
+			}
+			break;
+		case ActorDir::Null:
+		default:
+			break;
+		}
+
 	}
 
-
+	Transform.AddLocalPosition(float4(MoveVectorForce.X * _Delta, 0));
 }
 
 bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)

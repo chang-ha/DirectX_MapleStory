@@ -80,8 +80,8 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 
 	int StartX = static_cast<size_t>(ScreenLeftTop.X / TileData.TileScale.X) - 1;
 	int StartY = static_cast<size_t>(ScreenLeftTop.Y / TileData.TileScale.Y) - 1;
-	int EndX = StartX + (WindowScale.X / TileData.TileScale.X) + 1;
-	int EndY = StartY + (WindowScale.Y / TileData.TileScale.Y) + 1;
+	int EndX = static_cast<size_t>(StartX + (WindowScale.X / TileData.TileScale.X) + 1);
+	int EndY = static_cast<size_t>(StartY + (WindowScale.Y / TileData.TileScale.Y) + 1);
 
 	if (0 >= StartX)
 	{
@@ -95,12 +95,12 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 
 	if (TileData.TileCountX < StartX)
 	{
-		StartX = TileData.TileCountX - 1;
+		StartX = static_cast<int>(TileData.TileCountX - 1);
 	}
 
 	if (TileData.TileCountX < EndX)
 	{
-		EndX = TileData.TileCountX - 1;
+		EndX = static_cast<int>(TileData.TileCountX - 1);
 	}
 
 	if (0 >= StartY)
@@ -115,12 +115,12 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 
 	if (TileData.TileCountX < StartY)
 	{
-		StartX = TileData.TileCountX - 1;
+		StartX = static_cast<int>(TileData.TileCountX - 1);
 	}
 
 	if (TileData.TileCountY < EndY)
 	{
-		EndX = TileData.TileCountX - 1;
+		EndX = static_cast<int>(TileData.TileCountX - 1);
 	}
 
 

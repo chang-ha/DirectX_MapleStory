@@ -12,7 +12,7 @@
 
 #define LADDER_JUMP_HEIGHT 300.0f
 
-#define WINDWALK_XVECTOR 200.0f
+#define WINDWALK_XVECTOR 800.0f
 
 #define UP_PIXEL_LIMIT 4
 #define DOWN_PIXEL_LIMIT 4
@@ -104,7 +104,20 @@ void Player::WindWalkStart()
 	MainSpriteRenderer->ChangeAnimation("Jump");
 	MoveVectorForceReset();
 	GravityOff();
-	WindWalkTime = 1.0f;
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		PlusMoveVectorForce(float4(WINDWALK_XVECTOR));
+		break;
+	case ActorDir::Left:
+		PlusMoveVectorForce(float4(-WINDWALK_XVECTOR));
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+	AirResisOn(Dir, WINDWALK_XVECTOR * 1.5f);
 }
 
 void Player::IdleEnd()
@@ -162,7 +175,9 @@ void Player::Attack2End()
 
 void Player::WindWalkEnd()
 {
+	MoveVectorForceReset();
 	GravityOn();
+	AirResisOff();
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -525,26 +540,8 @@ void Player::Attack2Update(float _Delta)
 
 void Player::WindWalkUpdate(float _Delta)
 {
-	WindWalkTime -= _Delta;
-	if (0.0f >= WindWalkTime)
+	if (0.0f == GetMoveVectorForce().X)
 	{
 		ChangeToIdle();
 	}
-
-	float4 MovePos = float4::ZERO;
-	switch (Dir)
-	{
-	case ActorDir::Right:
-		MovePos = float4::RIGHT;
-		break;
-	case ActorDir::Left:
-		MovePos = float4::LEFT;
-		break;
-	case ActorDir::Null:
-	default:
-		MsgBoxAssert("존재하지 않는 방향입니다.");
-		break;
-	}
-	MovePos *= Speed * _Delta;	
-	Transform.AddLocalPosition(MovePos);
 }

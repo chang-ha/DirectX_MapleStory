@@ -1,7 +1,8 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-#define MAX_GRAVITY 1500.0f
+#define MAX_GRAVITY_FORCE 1500.0f
+#define MAX_GRAVITY 10.0f
 
 class GameEngineSpriteRenderer;
 class ContentLevel;
@@ -28,7 +29,21 @@ public:
 		IsGravity = false;
 	}
 
-	inline void PlusMoveVectorForce(float4 _Force)
+	inline void AirResisOn(ActorDir _Dir = ActorDir::Null, const float _ResistanceForce = 0.0f)
+	{
+		IsAirResis = true;
+		AirResisDir = _Dir;
+		ResistanceForce = _ResistanceForce;
+	}
+
+	inline void AirResisOff()
+	{
+		IsAirResis = false;
+		AirResisDir = ActorDir::Null;
+		ResistanceForce = 0.0f;
+	}
+
+	void PlusMoveVectorForce(const float4& _Force)
 	{
 		MoveVectorForce += _Force;
 	}
@@ -48,12 +63,13 @@ public:
 		MoveVectorForce = float4::ZERO;
 	}
 
-	inline ActorDir GetDir()
+	inline const ActorDir GetDir()
 	{
 		return Dir;
 	}
 
 	void Gravity(float _Delta);
+	void AirResistance(float _Delta);
 
 protected:
 	bool IsGround = true;
@@ -68,8 +84,11 @@ protected:
 
 private:
 	bool IsGravity = true;
+	bool IsAirResis = false;
 	float GravitySpeed = 15000.0f;
 	float GravityForce = 0.0f;
 	float4 MoveVectorForce = float4::ZERO;
+	ActorDir AirResisDir = ActorDir::Null;
+	float ResistanceForce = 0.0f;
 };
 

@@ -99,6 +99,12 @@ void Player::Update(float _Delta)
 		ChangeState(PlayerState::Jump);
 	}
 
+	if (true == IsGround && 0.0f >= GetMoveVectorForce().Y && PlayerState::WindWalk != State)
+	{
+		MoveVectorForceReset();
+		GravityReset();
+	}
+
 	//if (GameEngineInput::IsPress('Q'))
 	//{
 	//	Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
@@ -171,7 +177,7 @@ void Player::ChasingCamera(float _Delta)
 void Player::BlockOutMap()
 {
 	float4 CurPos = Transform.GetWorldPosition();
-	if (0 >= CurPos.X - PlayerScale.hX())
+	if (0 > CurPos.X - PlayerScale.hX())
 	{
 		Transform.SetLocalPosition(float4{ PlayerScale.hX(), CurPos.Y });
 	}
@@ -182,10 +188,9 @@ void Player::BlockOutMap()
 
 	// Need Test More
 	CurPos.Y *= -1.0f;
-	if (0 >= CurPos.Y - PlayerScale.hY())
+	if (0 > CurPos.Y - PlayerScale.hY())
 	{
 		Transform.SetLocalPosition(float4{ CurPos.X, -PlayerScale.hY() });
-		MoveVectorForceReset();
 	}
 	else if (CurMapScale.Y <= CurPos.Y + PlayerScale.hY())
 	{
@@ -225,10 +230,14 @@ void Player::LadderCheck()
 
 void Player::ChangeToIdle()
 {
-	GravityReset();
-	MoveVectorForceReset();
-	GroundJump = false;
-	DoubleJump = false;
+	//GravityReset();
+	//MoveVectorForceReset();
+	if (true == IsGround)
+	{
+		GroundJump = false;
+		DoubleJump = false;
+	}
+
 	if (0.0f < AlertTime)
 	{
 		ChangeState(PlayerState::Alert);
