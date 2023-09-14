@@ -28,6 +28,11 @@ public:
 	void Clear();
 	void Setting();
 
+	void SetClearColor(const float4& _Color, int _Index = 0)
+	{
+		ClearColor[_Index] = _Color;
+	}
+
 protected:
 
 private:

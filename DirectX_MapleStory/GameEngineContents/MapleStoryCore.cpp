@@ -15,8 +15,6 @@ MapleStoryCore::~MapleStoryCore()
 
 void MapleStoryCore::Start()
 {
-	GameEngineSpriteRenderer::SetDefaultSampler("POINT");
-
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
 	GameEngineCore::ChangeLevel("TitleLevel");

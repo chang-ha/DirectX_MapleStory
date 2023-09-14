@@ -9,7 +9,7 @@ class GameEngineFrameAnimation
 	void Reset();
 	SpriteData Update(float _Delta);
 
-	float Inter = 0.0f; // AnimationSpeed
+	// float Inter = 0.0f; // AnimationSpeed
 	bool Loop = true;
 	bool IsEnd = false;
 	unsigned int Start = -1;
@@ -28,6 +28,8 @@ class GameEngineFrameAnimation
 	std::map<int, std::function<void(GameEngineSpriteRenderer*)>> FrameEventFunction;
 	std::function<void(GameEngineSpriteRenderer*)> EndEvent;
 	void EventCall(int _Frame);
+public:
+	std::vector<float> Inter; // AnimationSpeed
 };
 
 enum class SamplerOption
@@ -50,8 +52,6 @@ class GameEngineSpriteRenderer : public GameEngineRenderer
 {
 	friend class GameEngineFrameAnimation;
 public:
-	static std::shared_ptr<class GameEngineSampler> DefaultSampler;
-
 	// constrcuter destructer
 	GameEngineSpriteRenderer();
 	~GameEngineSpriteRenderer();
@@ -112,6 +112,18 @@ public:
 		return _AnimationName == CurFrameAnimations->AnimationName ;
 	}
 
+	std::shared_ptr<GameEngineFrameAnimation> FindAnimation(std::string_view _AnimationName)
+	{
+		std::string UpperName = GameEngineString::ToUpperReturn(_AnimationName);
+
+		if (false == FrameAnimations.contains(UpperName))
+		{
+			return nullptr;
+		}
+
+		return FrameAnimations[UpperName];
+	}
+
 	inline unsigned int GetCurIndex() const
 	{
 		return CurFrameAnimations->CurIndex;
@@ -128,8 +140,6 @@ public:
 	void SetPivotType(PivotType _Type);
 	void SetImageScale(const float4& _Scale);
 	void AddImageScale(const float4& _Scale);
-
-	static void SetDefaultSampler(std::string_view _SamplerName);
 
 protected:
 	void Start() override;
