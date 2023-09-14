@@ -20,6 +20,7 @@ protected:
 	void CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other);
 
 private:
+	int CollisionCount = 0;
 	float ArrowSpeed = 400.0f;
 	float4 ArrowScale = float4::ZERO;
 	ActorDir Dir = ActorDir::Null;

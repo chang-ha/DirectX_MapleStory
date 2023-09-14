@@ -2,6 +2,7 @@
 #include "Arrow.h"
 #include "Player.h"
 #include "ContentMonster.h"
+#include "SkillManager.h"
 
 Arrow::Arrow()
 {
@@ -78,6 +79,12 @@ void Arrow::Start()
 
 void Arrow::Update(float _Delta)
 {
+	if (4 <= CollisionCount)
+	{
+		Death();
+		return;
+	}
+
 	if (true == ArrowRenderer->IsCurAnimation("TestArrow_Hit"))
 	{
 		return;
@@ -106,6 +113,7 @@ void Arrow::Update(float _Delta)
 
 void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
+	++CollisionCount;
 	ContentMonster* CurMonster = dynamic_cast<ContentMonster*>(_Other->GetParentObject());
 	if (nullptr == CurMonster)
 	{
@@ -118,9 +126,10 @@ void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Oth
 		return;
 	}
 
-	ArrowRenderer->ChangeAnimation("TestArrow_Hit");
-	ArrowRenderer->SetPivotType(PivotType::Center);
-	float4 OtherPos = CurMonster->Transform.GetWorldPosition();
-	Transform.SetLocalPosition(OtherPos);
-	CurMonster->ChangeState(MonsterState::Hit);
+	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject());
+	// ArrowRenderer->ChangeAnimation("TestArrow_Hit");
+	// ArrowRenderer->SetPivotType(PivotType::Center);
+	// float4 OtherPos = CurMonster->Transform.GetWorldPosition();
+	// Transform.SetLocalPosition(OtherPos);
+	// CurMonster->ChangeState(MonsterState::Hit);
 }

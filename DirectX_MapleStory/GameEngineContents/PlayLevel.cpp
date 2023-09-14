@@ -34,6 +34,8 @@ void PlayLevel::Start()
 	TestMonster->Transform.SetLocalPosition({ 500, -780 });
 	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
 	TestMonster->Transform.SetLocalPosition({ 550, -780 });
+	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
+	TestMonster->Transform.SetLocalPosition({ 600, -780 });
 }
 
 void PlayLevel::Update(float _Delta)
