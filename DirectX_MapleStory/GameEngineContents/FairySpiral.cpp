@@ -21,6 +21,7 @@ void FairySpiral::Init()
 void FairySpiral::UseSkill()
 {
 	ContentSkill::UseSkill();
+	FirstUse = true;
 	On();
 	SkillRenderer1->On();
 
@@ -55,6 +56,7 @@ void FairySpiral::EndSkill()
 {
 	ContentSkill::EndSkill();
 	Off();
+	SkillRenderer1->Off();
 }
 
 void FairySpiral::Start()
@@ -75,7 +77,7 @@ void FairySpiral::Start()
 	SkillScale = Sprite->GetSpriteData(0).GetScale();
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
 	SkillRenderer1->CreateAnimation("Hit", "FairySprial_Hit", 0.06f);
-	SkillRenderer1->SetFrameEvent("Attack", 2, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
+	SkillRenderer1->SetFrameEvent("Attack", 1, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
 	SkillRenderer1->SetEndEvent("Attack", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
@@ -84,7 +86,7 @@ void FairySpiral::Start()
 	);
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
-	SkillCollision->Transform.SetLocalScale(SkillScale.Half());
+	SkillCollision->Transform.SetLocalScale(SkillScale);
 	SkillEvent.Stay = [&](GameEngineCollision* _Other)
 		{
 			float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
@@ -96,8 +98,7 @@ void FairySpiral::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
-	int a = 0;
-	if (nullptr != SkillCollision)
+	if (true == FirstUse)
 	{
 		SkillCollision->CollisionEvent(CollisionOrder::Monster, SkillEvent);
 	}
@@ -105,7 +106,5 @@ void FairySpiral::Update(float _Delta)
 
 void FairySpiral::Event(GameEngineRenderer* _Renderer)
 {
-	SkillRenderer1->Death();
-	SkillCollision->Death();
-	// SkillCollision = nullptr;
+	FirstUse = false;
 }

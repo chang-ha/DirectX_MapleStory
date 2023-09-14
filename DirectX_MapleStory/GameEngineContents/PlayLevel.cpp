@@ -27,7 +27,13 @@ void PlayLevel::Start()
 	CreateActor<SkillManager>();
 
 	std::shared_ptr<ContentMonster> TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
-	TestMonster->Transform.SetLocalPosition({400, -780});
+	TestMonster->Transform.SetLocalPosition({ 400, -780 });
+	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
+	TestMonster->Transform.SetLocalPosition({ 450, -780 });
+	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
+	TestMonster->Transform.SetLocalPosition({ 500, -780 });
+	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
+	TestMonster->Transform.SetLocalPosition({ 550, -780 });
 }
 
 void PlayLevel::Update(float _Delta)

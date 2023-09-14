@@ -26,6 +26,7 @@ protected:
 
 
 private:
+	bool FirstUse = false;
 	float4 SkillScale = float4::ZERO;
 	EventParameter SkillEvent;
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
