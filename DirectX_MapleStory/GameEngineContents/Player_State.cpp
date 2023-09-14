@@ -12,8 +12,11 @@
 
 #define LADDER_JUMP_HEIGHT 300.0f
 
+#define WINDWALK_XVECTOR 200.0f
+
 #define UP_PIXEL_LIMIT 4
 #define DOWN_PIXEL_LIMIT 4
+
 // State함수들 구현
 void Player::IdleStart()
 {
@@ -96,6 +99,14 @@ void Player::Attack2Start()
 	AlertTime = ALERT_TIME;
 }
 
+void Player::WindWalkStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Jump");
+	MoveVectorForceReset();
+	GravityOff();
+	WindWalkTime = 1.0f;
+}
+
 void Player::IdleEnd()
 {
 
@@ -118,6 +129,7 @@ void Player::JumpEnd()
 
 void Player::DownEnd()
 {
+
 }
 
 void Player::LadderEnd()
@@ -146,6 +158,11 @@ void Player::ShootingEnd()
 void Player::Attack2End()
 {
 
+}
+
+void Player::WindWalkEnd()
+{
+	GravityOn();
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -312,6 +329,12 @@ void Player::JumpUpdate(float _Delta)
 	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
 	{
 		ChangeState(PlayerState::Attack2);
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_SPACE))
+	{
+		ChangeState(PlayerState::WindWalk);
 		return;
 	}
 
@@ -498,4 +521,30 @@ void Player::Attack2Update(float _Delta)
 			ChangeState(PlayerState::Jump);
 		}
 	}
+}
+
+void Player::WindWalkUpdate(float _Delta)
+{
+	WindWalkTime -= _Delta;
+	if (0.0f >= WindWalkTime)
+	{
+		ChangeToIdle();
+	}
+
+	float4 MovePos = float4::ZERO;
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MovePos = float4::RIGHT;
+		break;
+	case ActorDir::Left:
+		MovePos = float4::LEFT;
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+	MovePos *= Speed * _Delta;	
+	Transform.AddLocalPosition(MovePos);
 }

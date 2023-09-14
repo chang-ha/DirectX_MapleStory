@@ -269,6 +269,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Attack2:
 			Attack2End();
 			break;
+		case PlayerState::WindWalk:
+			WindWalkEnd();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
@@ -305,6 +308,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Attack2:
 			Attack2Start();
 			break;
+		case PlayerState::WindWalk:
+			WindWalkStart();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -337,6 +343,8 @@ void Player::StateUpdate(float _Delta)
 		return ShootingUpdate(_Delta);
 	case PlayerState::Attack2:
 		return Attack2Update(_Delta);
+	case PlayerState::WindWalk:
+		return WindWalkUpdate(_Delta);
 	case PlayerState::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");

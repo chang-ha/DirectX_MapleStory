@@ -25,6 +25,7 @@ enum class PlayerState
 	Attack,
 	Shooting, // SongOfHeaven
 	Attack2, // FairySpiral
+	WindWalk,
 };
 
 #include "ContentActor.h"
@@ -73,6 +74,8 @@ private:
 	float CameraSpeed = 2.0f;
 	float LadderPivot = 0.0f;
 	float AlertTime = 0.0f;
+	float WindWalkSpeed = 400.0f;
+	float WindWalkTime = 1.0f;
 	float4 CurMapScale = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;
@@ -89,6 +92,7 @@ private:
 	void AttackStart();
 	void ShootingStart();
 	void Attack2Start();
+	void WindWalkStart();
 
 	/// End
 	void IdleEnd();
@@ -100,6 +104,7 @@ private:
 	void AttackEnd();
 	void ShootingEnd();
 	void Attack2End();
+	void WindWalkEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -111,6 +116,7 @@ private:
 	void AttackUpdate(float _Delta);
 	void ShootingUpdate(float _Delta);
 	void Attack2Update(float _Delta);
+	void WindWalkUpdate(float _Delta);
 
 	//// FrameEvent
 	void AttackEvent(GameEngineRenderer* _Renderer);

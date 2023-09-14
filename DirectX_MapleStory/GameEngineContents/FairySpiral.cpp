@@ -77,7 +77,7 @@ void FairySpiral::Start()
 	SkillScale = Sprite->GetSpriteData(0).GetScale();
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
 	SkillRenderer1->CreateAnimation("Hit", "FairySprial_Hit", 0.06f);
-	SkillRenderer1->SetFrameEvent("Attack", 1, std::bind(&FairySpiral::Event, this, std::placeholders::_1));
+	SkillRenderer1->SetFrameEvent("Attack", 1, std::bind(&FairySpiral::RenderEvent, this, std::placeholders::_1));
 	SkillRenderer1->SetEndEvent("Attack", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
@@ -87,24 +87,36 @@ void FairySpiral::Start()
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	SkillCollision->Transform.SetLocalScale(SkillScale);
-	SkillEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
-		{
-			float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
-			SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
-		};
+	//SkillEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
+	//	{
+	//		float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+	//		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
+	//	};
 }
 
 void FairySpiral::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
+	// std::function<void (std::vector<std::shared_ptr<GameEngineCollision>>& Collisions)> _Function = std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1);
 	if (true == FirstUse)
 	{
-		SkillCollision->CollisionEvent(CollisionOrder::Monster, SkillEvent);
+		SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
 	}
 }
 
-void FairySpiral::Event(GameEngineRenderer* _Renderer)
+void FairySpiral::RenderEvent(GameEngineRenderer* _Renderer)
 {
 	FirstUse = false;
 }
+
+void FairySpiral::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+{
+	for (size_t i = 0; i < _CollisionGroup.size(); i++)
+	{
+		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+		float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
+	}
+}
+
