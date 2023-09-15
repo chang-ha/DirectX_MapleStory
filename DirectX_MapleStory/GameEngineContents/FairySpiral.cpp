@@ -85,20 +85,13 @@ void FairySpiral::Start()
 	SkillRenderer1->SetPivotValue(float4(0.2f, 0.5f));
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
-	SkillCollision->Transform.SetLocalScale(SkillScale);
-	SkillCollision->SetParent(SkillRenderer1);
-	//SkillEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
-	//	{
-	//		float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
-	//		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
-	//	};
+	SkillCollision->Transform.SetLocalScale(SkillScale.Half());
 }
 
 void FairySpiral::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
-	// std::function<void (std::vector<std::shared_ptr<GameEngineCollision>>& Collisions)> _Function = std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1);
 	if (true == FirstUse)
 	{
 		SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));

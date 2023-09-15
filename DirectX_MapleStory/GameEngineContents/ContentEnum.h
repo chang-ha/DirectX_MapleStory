@@ -22,8 +22,8 @@ enum class RenderOrder
 	BackGround,
 	Map,
 	Monster,
-	Skill,
 	Play,
+	Skill,
 	Arrow,
 };
 
