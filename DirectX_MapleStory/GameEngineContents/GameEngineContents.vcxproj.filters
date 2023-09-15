@@ -43,12 +43,6 @@
     <ClCompile Include="SkillManager.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="SongOfHeaven.cpp">
-      <Filter>Actor\Global\Player\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="Arrow.cpp">
-      <Filter>Actor\Global\Player</Filter>
-    </ClCompile>
     <ClCompile Include="ContentMonster.cpp">
       <Filter>Actor\Monster</Filter>
     </ClCompile>
@@ -57,6 +51,18 @@
     </ClCompile>
     <ClCompile Include="WindWalk.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="SongOfHeaven.cpp">
+      <Filter>Actor\Global\Player\Skill\SongOfHeaven</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>Actor\Global\Player\Skill\SongOfHeaven</Filter>
+    </ClCompile>
+    <ClCompile Include="HowlingGale.cpp">
+      <Filter>Actor\Global\Player\Skill\HowlingGale</Filter>
+    </ClCompile>
+    <ClCompile Include="HowlingGale_Actor.cpp">
+      <Filter>Actor\Global\Player\Skill\HowlingGale</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,12 +108,6 @@
     <ClInclude Include="SkillManager.h">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="SongOfHeaven.h">
-      <Filter>Actor\Global\Player\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="Arrow.h">
-      <Filter>Actor\Global\Player</Filter>
-    </ClInclude>
     <ClInclude Include="ContentMonster.h">
       <Filter>Actor\Monster</Filter>
     </ClInclude>
@@ -116,6 +116,18 @@
     </ClInclude>
     <ClInclude Include="WindWalk.h">
       <Filter>Actor\Global\Player\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="SongOfHeaven.h">
+      <Filter>Actor\Global\Player\Skill\SongOfHeaven</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>Actor\Global\Player\Skill\SongOfHeaven</Filter>
+    </ClInclude>
+    <ClInclude Include="HowlingGale_Actor.h">
+      <Filter>Actor\Global\Player\Skill\HowlingGale</Filter>
+    </ClInclude>
+    <ClInclude Include="HowlingGale.h">
+      <Filter>Actor\Global\Player\Skill\HowlingGale</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +166,12 @@
     </Filter>
     <Filter Include="Actor\Monster">
       <UniqueIdentifier>{433ecfa3-66f1-4dd7-905d-0a6b936273d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player\Skill\SongOfHeaven">
+      <UniqueIdentifier>{e3ddcb3f-fc8e-4fb7-a4ca-87e76b1f285c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player\Skill\HowlingGale">
+      <UniqueIdentifier>{d77d0c35-e470-4a68-8d11-b7bcac9f97ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

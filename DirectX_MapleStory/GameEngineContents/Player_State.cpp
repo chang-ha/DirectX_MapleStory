@@ -87,8 +87,8 @@ void Player::AttackStart()
 
 void Player::ShootingStart()
 {
-	SkillManager::PlayerSkillManager->UseSkill("SongOfHeaven");
 	MainSpriteRenderer->ChangeAnimation("Shooting");
+	SkillManager::PlayerSkillManager->UseSkill("SongOfHeaven");
 	AlertTime = ALERT_TIME;
 }
 
@@ -126,6 +126,13 @@ void Player::WindWalkStart()
 		break;
 	}
 	AirResisOn(Dir, WINDWALK_XVECTOR * 1.8f);
+}
+
+void Player::ShootStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Shoot");
+	SkillManager::PlayerSkillManager->UseSkill("HowlingGale");
+	AlertTime = ALERT_TIME;
 }
 
 void Player::IdleEnd()
@@ -188,6 +195,11 @@ void Player::WindWalkEnd()
 	AirResisOff();
 }
 
+void Player::ShootEnd()
+{
+	MainSpriteRenderer->ChangeAnimation("Shoot");
+}
+
 void Player::IdleUpdate(float _Delta)
 {
 	if (State == PlayerState::Idle && 0.0f < AlertTime)
@@ -206,6 +218,12 @@ void Player::IdleUpdate(float _Delta)
 	if (GameEngineInput::IsPress('A'))
 	{
 		ChangeState(PlayerState::Shooting);
+		return;
+	}
+
+	if (GameEngineInput::IsDown('F'))
+	{
+		ChangeState(PlayerState::Shoot);
 		return;
 	}
 
@@ -533,13 +551,9 @@ void Player::AttackUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
+		GetLevel()->CreateActor<Arrow>(UpdateOrder::Arrow);
 		ChangeToIdle();
 	}
-}
-
-void Player::AttackEvent(GameEngineRenderer* _Renderer)
-{
-	GetLevel()->CreateActor<Arrow>(UpdateOrder::Arrow);
 }
 
 void Player::ShootingUpdate(float _Delta)
@@ -614,4 +628,12 @@ void Player::WindWalkUpdate(float _Delta)
 		}
 	}
 	Transform.AddLocalPosition(MovePos);
+}
+
+void Player::ShootUpdate(float _Delta)
+{
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeToIdle();
+	}
 }

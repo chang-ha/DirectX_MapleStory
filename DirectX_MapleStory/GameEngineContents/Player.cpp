@@ -83,9 +83,6 @@ void Player::Start()
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("FairySpiral");
 	_Animation->Inter[0] = 0.05f;
 	_Animation->Inter[1] = 0.05f;
-
-	// Event Setting
-	MainSpriteRenderer->SetFrameEvent("Shoot", 1, std::bind(&Player::AttackEvent, this, std::placeholders::_1));
 }
 
 void Player::Update(float _Delta)
@@ -292,6 +289,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::WindWalk:
 			WindWalkEnd();
 			break;
+		case PlayerState::Shoot:
+			ShootEnd();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
@@ -331,6 +331,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::WindWalk:
 			WindWalkStart();
 			break;
+		case PlayerState::Shoot:
+			ShootStart();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -365,6 +368,8 @@ void Player::StateUpdate(float _Delta)
 		return Attack2Update(_Delta);
 	case PlayerState::WindWalk:
 		return WindWalkUpdate(_Delta);
+	case PlayerState::Shoot:
+		return ShootUpdate(_Delta);
 	case PlayerState::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");

@@ -2,7 +2,7 @@
 // Ani Speed
 #define IDLE_ANI_SPEED 0.5f
 #define WALK_ANI_SPEED 0.1f
-#define SHOOT1_ANI_SPEED 0.3f
+#define SHOOT1_ANI_SPEED 0.7f
 #define ROPE_ANI_SPEED 0.2f
 #define ATT_ANI_SPEED 0.3f
 #define DOWN_ATT_ANI_SPEED 0.5f
@@ -25,7 +25,8 @@ enum class PlayerState
 	Attack,
 	Shooting, // SongOfHeaven
 	Attack2, // FairySpiral
-	WindWalk,
+	WindWalk, // WindWalk
+	Shoot, //HowlingGale
 };
 
 #include "ContentActor.h"
@@ -93,6 +94,7 @@ private:
 	void ShootingStart();
 	void Attack2Start();
 	void WindWalkStart();
+	void ShootStart();
 
 	/// End
 	void IdleEnd();
@@ -105,6 +107,7 @@ private:
 	void ShootingEnd();
 	void Attack2End();
 	void WindWalkEnd();
+	void ShootEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -117,6 +120,7 @@ private:
 	void ShootingUpdate(float _Delta);
 	void Attack2Update(float _Delta);
 	void WindWalkUpdate(float _Delta);
+	void ShootUpdate(float _Delta);
 
 	//// FrameEvent
 	void AttackEvent(GameEngineRenderer* _Renderer);
