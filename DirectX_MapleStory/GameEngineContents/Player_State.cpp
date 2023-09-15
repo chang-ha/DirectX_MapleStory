@@ -94,7 +94,7 @@ void Player::ShootingStart()
 
 void Player::Attack2Start()
 {
-	MainSpriteRenderer->ChangeAnimation("Attack2");
+	MainSpriteRenderer->ChangeAnimation("FairySpiral");
 	SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
 	AlertTime = ALERT_TIME;
 }
@@ -102,7 +102,14 @@ void Player::Attack2Start()
 void Player::WindWalkStart()
 {
 	SkillManager::PlayerSkillManager->UseSkill("WindWalk");
-	MainSpriteRenderer->ChangeAnimation("Jump");
+	if (true == IsGround)
+	{
+		MainSpriteRenderer->ChangeAnimation("WindWalk");
+	}
+	else
+	{
+		MainSpriteRenderer->ChangeAnimation("Jump");
+	}
 	MoveVectorForceReset();
 	GravityOff();
 	switch (Dir)
@@ -118,7 +125,7 @@ void Player::WindWalkStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
-	AirResisOn(Dir, WINDWALK_XVECTOR * 1.5f);
+	AirResisOn(Dir, WINDWALK_XVECTOR * 1.6f);
 }
 
 void Player::IdleEnd()

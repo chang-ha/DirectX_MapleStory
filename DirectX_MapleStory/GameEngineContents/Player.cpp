@@ -67,6 +67,8 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Down_Attack", "Down_Attack", DOWN_ATT_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Down", "Down");
 		MainSpriteRenderer->CreateAnimation("Jump", "Jump");
+		MainSpriteRenderer->CreateAnimation("WindWalk", "WindWalk");
+		MainSpriteRenderer->CreateAnimation("FairySpiral", "FairySpiral");
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Idle");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
 		Sprite = nullptr;
@@ -78,8 +80,9 @@ void Player::Start()
 	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
 
 	// Animation Speed Setting
-	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Attack2");
-	_Animation->Inter[2] = 0.3f;
+	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("FairySpiral");
+	_Animation->Inter[0] = 0.05f;
+	_Animation->Inter[1] = 0.05f;
 
 	// Event Setting
 	MainSpriteRenderer->SetFrameEvent("Shoot", 1, std::bind(&Player::AttackEvent, this, std::placeholders::_1));
