@@ -63,6 +63,16 @@ public:
 		MoveVectorForce = float4::ZERO;
 	}
 
+	inline void MoveVectorForceXReset()
+	{
+		MoveVectorForce.X = 0.0f;
+	}
+
+	inline void MoveVectorForceYReset()
+	{
+		MoveVectorForce.Y = 0.0f;
+	}
+
 	inline const ActorDir GetDir()
 	{
 		return Dir;

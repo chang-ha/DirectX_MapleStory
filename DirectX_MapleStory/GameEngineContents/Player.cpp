@@ -180,10 +180,12 @@ void Player::BlockOutMap()
 	if (0 > CurPos.X - PlayerScale.hX())
 	{
 		Transform.SetLocalPosition(float4{ PlayerScale.hX(), CurPos.Y });
+		MoveVectorForceXReset();
 	}
 	else if (CurMapScale.X <= CurPos.X + PlayerScale.hX())
 	{
 		Transform.SetLocalPosition(float4{ CurMapScale.X - PlayerScale.hX(), CurPos.Y });
+		MoveVectorForceXReset();
 	}
 
 	// Need Test More
@@ -191,10 +193,12 @@ void Player::BlockOutMap()
 	if (0 > CurPos.Y - PlayerScale.hY())
 	{
 		Transform.SetLocalPosition(float4{ CurPos.X, -PlayerScale.hY() });
+		MoveVectorForceYReset();
 	}
 	else if (CurMapScale.Y <= CurPos.Y + PlayerScale.hY())
 	{
 		Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y - PlayerScale.hY() });
+		MoveVectorForceYReset();
 	}
 }
 
