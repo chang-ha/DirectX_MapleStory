@@ -55,6 +55,7 @@
     <ClCompile Include="FairySpiral.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="WindWalk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -111,6 +112,7 @@
     <ClInclude Include="FairySpiral.h">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="WindWalk.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

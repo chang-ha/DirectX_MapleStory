@@ -4,6 +4,8 @@
 #include "DoubleJump.h"
 #include "SongOfHeaven.h"
 #include "FairySpiral.h"
+#include "WindWalk.h"
+
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
 SkillManager::SkillManager()
@@ -131,6 +133,7 @@ void SkillManager::Start()
 	CreateSkill<DoubleJump>("DoubleJump");
 	CreateSkill<SongOfHeaven>("SongOfHeaven");
 	CreateSkill<FairySpiral>("FairySpiral");
+	CreateSkill<WindWalk>("WindWalk");
 }
 
 void SkillManager::Update(float _Delta)

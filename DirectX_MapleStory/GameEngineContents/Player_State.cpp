@@ -101,6 +101,7 @@ void Player::Attack2Start()
 
 void Player::WindWalkStart()
 {
+	SkillManager::PlayerSkillManager->UseSkill("WindWalk");
 	MainSpriteRenderer->ChangeAnimation("Jump");
 	MoveVectorForceReset();
 	GravityOff();
@@ -185,7 +186,35 @@ void Player::IdleUpdate(float _Delta)
 	if (State == PlayerState::Idle && 0.0f < AlertTime)
 	{
 		ChangeState(PlayerState::Alert);
+		return;
 	}
+
+	///////////// Skill Code
+	if (GameEngineInput::IsDown(VK_SPACE))
+	{
+		ChangeState(PlayerState::WindWalk);
+		return;
+	}
+
+	if (GameEngineInput::IsPress('A'))
+	{
+		ChangeState(PlayerState::Shooting);
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress(VK_CONTROL))
+	{
+		ChangeState(PlayerState::Attack);
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
+	{
+		ChangeState(PlayerState::Attack2);
+		return;
+	}
+
+	///////////// Skill Code
 
 	if (GameEngineInput::IsPress(VK_DOWN))
 	{
@@ -212,26 +241,6 @@ void Player::IdleUpdate(float _Delta)
 		ChangeState(PlayerState::Jump);
 		return;
 	}
-
-	//TestCode
-	if (GameEngineInput::IsPress('A'))
-	{
-		ChangeState(PlayerState::Shooting);
-		return;
-	}
-
-	if (true == GameEngineInput::IsPress(VK_CONTROL))
-	{
-		ChangeState(PlayerState::Attack);
-		return;
-	}
-
-	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
-	{
-		ChangeState(PlayerState::Attack2);
-		return;
-	}
-
 }
 
 void Player::AlertUpdate(float _Delta)
@@ -249,6 +258,18 @@ void Player::WalkUpdate(float _Delta)
 	if (GameEngineInput::IsPress('A'))
 	{
 		ChangeState(PlayerState::Shooting);
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_SPACE))
+	{
+		ChangeState(PlayerState::WindWalk);
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
+	{
+		ChangeState(PlayerState::Attack2);
 		return;
 	}
 

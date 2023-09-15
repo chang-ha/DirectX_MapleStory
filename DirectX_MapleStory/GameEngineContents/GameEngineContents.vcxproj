@@ -219,6 +219,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="WindWalk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
@@ -266,6 +267,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WindWalk.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
