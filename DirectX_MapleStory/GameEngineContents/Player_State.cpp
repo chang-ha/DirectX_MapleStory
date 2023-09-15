@@ -125,7 +125,7 @@ void Player::WindWalkStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
-	AirResisOn(Dir, WINDWALK_XVECTOR * 1.6f);
+	AirResisOn(Dir, WINDWALK_XVECTOR * 1.8f);
 }
 
 void Player::IdleEnd()
@@ -568,8 +568,50 @@ void Player::Attack2Update(float _Delta)
 
 void Player::WindWalkUpdate(float _Delta)
 {
+	float4 MovePos = GetMoveVectorForce().X * _Delta;
+	GameEngineColor CheckColor = GROUND_COLOR;
+
 	if (0.0f == GetMoveVectorForce().X)
 	{
 		ChangeToIdle();
 	}
+
+	// 올라가는 경사면
+	CheckColor = CheckGroundColor(MovePos + float4::UP);
+	if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+	{
+		float UpYPivot = 1.0f;
+		GameEngineColor PivotColor = GROUND_COLOR;
+		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
+		{
+			++UpYPivot;
+			PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
+		}
+
+		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		{
+			MovePos += float4::UP;
+			CheckColor = CheckGroundColor(MovePos + float4::UP);
+		}
+	}
+
+	// 내려가는 경사면
+	CheckColor = CheckGroundColor(MovePos);
+	if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+	{
+		float DownYPivot = 0.0f;
+		GameEngineColor PivotColor = LADDER_COLOR;
+		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
+		{
+			--DownYPivot;
+			PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
+		}
+
+		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+		{
+			MovePos += float4::DOWN;
+			CheckColor = CheckGroundColor(MovePos);
+		}
+	}
+	Transform.AddLocalPosition(MovePos);
 }

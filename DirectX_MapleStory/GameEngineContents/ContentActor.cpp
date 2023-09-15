@@ -104,8 +104,10 @@ void ContentActor::AirResistance(float _Delta)
 		}
 
 	}
-
-	Transform.AddLocalPosition(float4(MoveVectorForce.X * _Delta, 0));
+	else
+	{
+		Transform.AddLocalPosition(float4(MoveVectorForce.X * _Delta, 0));
+	}
 }
 
 bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
