@@ -21,9 +21,7 @@ void WindWalk::UseSkill()
 	SkillRenderer1->On();
 	SkillAfterImageRenderer->On();
 	
-	ActorDir Dir = Player::MainPlayer->GetDir();
-
-	switch (Dir)
+	switch (PlayerDir)
 	{
 	case ActorDir::Right:
 		SkillRenderer1->LeftFlip();

@@ -199,6 +199,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Monsoon.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -259,6 +260,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Monsoon.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>

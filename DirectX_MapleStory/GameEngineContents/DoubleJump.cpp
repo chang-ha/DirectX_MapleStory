@@ -17,6 +17,7 @@ void DoubleJump::UseSkill()
 {
 	ContentSkill::UseSkill();
 
+	On();
 	SkillRenderer1->On();
 	SkillRenderer2->On();
 	SkillAfterImageRenderer->On();
@@ -61,21 +62,28 @@ void DoubleJump::UseSkill()
 void DoubleJump::EndSkill()
 {
 	ContentSkill::EndSkill();
+	Off();
+	SkillRenderer1->Off();
+	SkillRenderer2->Off();
+	SkillAfterImageRenderer->Off();
 }
 
 void DoubleJump::Start() 
 {
 	ContentSkill::Start();
 
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExistsChild("ContentResources");
-	Dir.MoveChild("ContentResources\\Textures\\Skill\\DoubleJump");
-	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	for (size_t i = 0; i < Directorys.size(); i++)
+	if (nullptr == GameEngineSprite::Find("DoubleJump_Effect1"))
 	{
-		GameEngineDirectory& Childs = Directorys[i];
-		GameEngineSprite::CreateFolder("DoubleJump_" + Childs.GetFileName(), Childs.GetStringPath());
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\DoubleJump");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("DoubleJump_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
 	}
 
 	SkillRenderer1->CreateAnimation("Effect1", "DoubleJump_Effect1", ANI_SPEED);

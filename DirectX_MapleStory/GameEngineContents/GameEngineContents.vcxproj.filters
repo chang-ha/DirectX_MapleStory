@@ -64,6 +64,7 @@
     <ClCompile Include="HowlingGale_Actor.cpp">
       <Filter>Actor\Global\Player\Skill\HowlingGale</Filter>
     </ClCompile>
+    <ClCompile Include="Monsoon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -129,6 +130,7 @@
     <ClInclude Include="HowlingGale.h">
       <Filter>Actor\Global\Player\Skill\HowlingGale</Filter>
     </ClInclude>
+    <ClInclude Include="Monsoon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

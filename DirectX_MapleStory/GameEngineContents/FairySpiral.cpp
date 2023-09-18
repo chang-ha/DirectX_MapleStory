@@ -41,13 +41,6 @@ void FairySpiral::UseSkill()
 	}
 
 	SkillRenderer1->ChangeAnimation("Attack", true, 0);
-
-	//if (nullptr != SkillCollision)
-	//{
-	//	SkillCollision->Death();
-	//	SkillCollision = nullptr;
-	//}
-	// Collisions
 }
 
 void FairySpiral::EndSkill()
