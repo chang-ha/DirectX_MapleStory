@@ -7,6 +7,7 @@
 #include "WindWalk.h"
 #include "HowlingGale.h"
 #include "Monsoon.h"
+#include "VortexSphere.h"
 
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
@@ -138,6 +139,7 @@ void SkillManager::Start()
 	CreateSkill<WindWalk>("WindWalk");
 	CreateSkill<HowlingGale>("HowlingGale");
 	CreateSkill<Monsoon>("Monsoon");
+	CreateSkill<VortexSphere>("VortexSphere");
 }
 
 void SkillManager::Update(float _Delta)

@@ -16,7 +16,23 @@ void VortexSphere::UseSkill()
 	ContentSkill::UseSkill();
 	On();
 	SkillRenderer1->On();
-	SkillRenderer1->ChangeAnimation("Effect1");
+	SkillRenderer1->ChangeAnimation("Effect1", true);
+
+	switch (PlayerDir)
+	{
+	case ActorDir::Right:
+		SkillRenderer1->LeftFlip();
+		SkillRenderer2->LeftFlip();
+		break;
+	case ActorDir::Left:
+		SkillRenderer1->RightFlip();
+		SkillRenderer2->RightFlip();
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 }
 
 void VortexSphere::EndSkill()
@@ -45,13 +61,15 @@ void VortexSphere::Start()
 		}
 	}
 
-	SkillRenderer1->CreateAnimation("Effect1", "VortexSphere_Effect1");
-	SkillRenderer2->CreateAnimation("Effect2", "VortexSphere_Effect2");
+	SkillRenderer1->CreateAnimation("Effect1", "VortexSphere_Effect1", 0.08f);
+	SkillRenderer1->SetPivotValue({0.37f, 0.55f});
+	SkillRenderer2->CreateAnimation("Effect2", "VortexSphere_Effect2", 0.08f);
+	SkillRenderer2->SetPivotValue({0.9f, 0.51f});
 
 	SkillRenderer1->SetFrameEvent("Effect1", 5, [&](GameEngineSpriteRenderer* _Renderer)
 		{
 			SkillRenderer2->On();
-			SkillRenderer2->ChangeAnimation("Effect2");
+			SkillRenderer2->ChangeAnimation("Effect2", true);
 		}
 	);
 
@@ -65,4 +83,5 @@ void VortexSphere::Start()
 void VortexSphere::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
+	Transform.SetLocalPosition(PlayerPos);
 }

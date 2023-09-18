@@ -27,6 +27,7 @@ enum class PlayerState
 	Attack2, // FairySpiral
 	WindWalk, // WindWalk
 	Shoot, //HowlingGale
+	VortexSphere,
 };
 
 #include "ContentActor.h"
@@ -95,6 +96,7 @@ private:
 	void Attack2Start();
 	void WindWalkStart();
 	void ShootStart();
+	void VortexSphereStart();
 
 	/// End
 	void IdleEnd();
@@ -108,6 +110,7 @@ private:
 	void Attack2End();
 	void WindWalkEnd();
 	void ShootEnd();
+	void VortexSphereEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -121,6 +124,7 @@ private:
 	void Attack2Update(float _Delta);
 	void WindWalkUpdate(float _Delta);
 	void ShootUpdate(float _Delta);
+	void VortexSphereUpdate(float _Delta);
 	////////////
 };
 

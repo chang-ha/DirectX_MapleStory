@@ -132,6 +132,13 @@ void Player::ShootStart()
 	AlertTime = ALERT_TIME;
 }
 
+void Player::VortexSphereStart()
+{
+	MainSpriteRenderer->ChangeAnimation("VortexSphere");
+	SkillManager::PlayerSkillManager->UseSkill("VortexSphere");
+	AlertTime = ALERT_TIME;
+}
+
 void Player::IdleEnd()
 {
 
@@ -194,7 +201,12 @@ void Player::WindWalkEnd()
 
 void Player::ShootEnd()
 {
-	MainSpriteRenderer->ChangeAnimation("Shoot");
+	// MainSpriteRenderer->ChangeAnimation("Shoot");
+}
+
+void Player::VortexSphereEnd()
+{
+
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -238,7 +250,8 @@ void Player::IdleUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsPress('S'))
 	{
-
+		ChangeState(PlayerState::VortexSphere);
+		return;
 	}
 	/////////////
 
@@ -458,6 +471,7 @@ void Player::JumpUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown('D'))
 	{
+		GravityReset();
 		SkillManager::PlayerSkillManager->UseSkill("DoubleJump");
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP))
@@ -487,7 +501,6 @@ void Player::JumpUpdate(float _Delta)
 				break;
 			}
 		}
-		GravityReset();
 	}
 }
 
@@ -632,6 +645,14 @@ void Player::WindWalkUpdate(float _Delta)
 }
 
 void Player::ShootUpdate(float _Delta)
+{
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeToIdle();
+	}
+}
+
+void Player::VortexSphereUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
