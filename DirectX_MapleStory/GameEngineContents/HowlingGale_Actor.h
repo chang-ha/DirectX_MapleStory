@@ -12,6 +12,7 @@ class HowlingGale_Actor : public ContentActor
 {
 public:
 	static HowlingGale_Actor* MainHowlingGale;
+
 public:
 	// constructer destructer
 	HowlingGale_Actor();
@@ -24,10 +25,6 @@ public:
 	HowlingGale_Actor& operator=(HowlingGale_Actor&& _Other) noexcept = delete;
 
 	void ChangeState(HowlingGaleState _State);
-	void SetScale(const float4& _Value)
-	{
-		Scale = _Value;
-	}
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;

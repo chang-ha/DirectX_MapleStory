@@ -4,6 +4,9 @@
 #define MAX_GRAVITY_FORCE 1500.0f
 #define MAX_GRAVITY 10.0f
 
+#define UP_PIXEL_LIMIT 4
+#define DOWN_PIXEL_LIMIT 4
+
 class GameEngineSpriteRenderer;
 class ContentLevel;
 class ContentActor : public GameEngineActor

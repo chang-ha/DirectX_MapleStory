@@ -4,9 +4,6 @@
 #include "ContentLevel.h"
 #include "ContentMap.h"
 
-#define UP_PIXEL_LIMIT 4
-#define DOWN_PIXEL_LIMIT 4
-
 HowlingGale_Actor* HowlingGale_Actor::MainHowlingGale = nullptr;
 
 HowlingGale_Actor::HowlingGale_Actor()
@@ -63,7 +60,6 @@ void HowlingGale_Actor::ChangeState(HowlingGaleState _State)
 
 void HowlingGale_Actor::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 }
 
 void HowlingGale_Actor::LevelEnd(GameEngineLevel* _NextLevel)
@@ -101,6 +97,12 @@ void HowlingGale_Actor::Start()
 			MainHowlingGale = nullptr;
 		}
 	);
+
+	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
+
+	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Ready_Stack1");
+	Scale = Sprite->GetSpriteData(0).GetScale();
+	int a = 0;
 }
 
 void HowlingGale_Actor::Update(float _Delta)
@@ -190,7 +192,6 @@ void HowlingGale_Actor::AttackUpdate(float _Delta)
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
 	GameEngineColor CheckColor = GROUND_COLOR;
-
 
 	switch (Dir)
 	{

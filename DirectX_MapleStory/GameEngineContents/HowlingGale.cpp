@@ -79,8 +79,6 @@ void HowlingGale::Start()
 		}
 	}
 
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Ready_Stack1");
-	float4 HowlingGaleScale = Sprite->GetSpriteData(0).GetScale();
 
 	SkillRenderer1->CreateAnimation("Effect", "HowlingGale_Effect", ANI_SPEED);
 	SkillRenderer1->AutoSpriteSizeOn();
@@ -99,7 +97,6 @@ void HowlingGale::Start()
 		{
 			GetLevel()->CreateActor<HowlingGale_Actor>(UpdateOrder::Skill);
 			HowlingGale_Actor::MainHowlingGale->Transform.SetLocalPosition(PlayerPos);
-			HowlingGale_Actor::MainHowlingGale->SetScale(HowlingGaleScale);
 		});
 
 	SkillRenderer1->SetEndEvent("Effect", [&](GameEngineRenderer* _Renderer)

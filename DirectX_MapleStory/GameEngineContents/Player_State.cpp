@@ -14,9 +14,6 @@
 
 #define WINDWALK_XVECTOR 800.0f
 
-#define UP_PIXEL_LIMIT 4
-#define DOWN_PIXEL_LIMIT 4
-
 // State함수들 구현
 void Player::IdleStart()
 {
