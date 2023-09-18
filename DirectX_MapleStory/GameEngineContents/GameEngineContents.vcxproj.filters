@@ -67,6 +67,9 @@
     <ClCompile Include="Monsoon.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="VortexSphere.cpp">
+      <Filter>Actor\Global\Player\Skill\VortexSphere</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -135,6 +138,9 @@
     <ClInclude Include="Monsoon.h">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="VortexSphere.h">
+      <Filter>Actor\Global\Player\Skill\VortexSphere</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -178,6 +184,9 @@
     </Filter>
     <Filter Include="Actor\Global\Player\Skill\HowlingGale">
       <UniqueIdentifier>{d77d0c35-e470-4a68-8d11-b7bcac9f97ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player\Skill\VortexSphere">
+      <UniqueIdentifier>{9625fade-caa8-46c3-a516-8326e7a9a99a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

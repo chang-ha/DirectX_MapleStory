@@ -236,7 +236,11 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 
-	///////////// Skill Code
+	if (true == GameEngineInput::IsPress('S'))
+	{
+
+	}
+	/////////////
 
 	if (GameEngineInput::IsPress(VK_DOWN))
 	{

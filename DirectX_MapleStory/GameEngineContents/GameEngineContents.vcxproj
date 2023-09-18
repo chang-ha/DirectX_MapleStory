@@ -222,6 +222,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="VortexSphere.cpp" />
     <ClCompile Include="WindWalk.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +274,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="VortexSphere.h" />
     <ClInclude Include="WindWalk.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
