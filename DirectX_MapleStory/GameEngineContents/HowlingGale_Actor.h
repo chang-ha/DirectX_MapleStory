@@ -37,11 +37,11 @@ private:
 	bool IsUpdate = true;
 	float Speed = 200.0f;
 	float LiveTime = 10.0f;
-	float HitTime = 1.0f;
 	float4 Scale = float4::ZERO;
 	float4 CurMapScale = float4::ZERO;
 	HowlingGaleState State = HowlingGaleState::Ready;
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
+	std::map<std::shared_ptr<GameEngineCollision>, float> CollisionTime;
 
 	void SetDir(ActorDir _Dir)
 	{

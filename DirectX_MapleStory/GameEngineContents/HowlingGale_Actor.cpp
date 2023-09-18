@@ -5,6 +5,8 @@
 #include "ContentMap.h"
 #include "SkillManager.h"
 
+#define HIT_TIME 0.5f
+
 HowlingGale_Actor* HowlingGale_Actor::MainHowlingGale = nullptr;
 
 HowlingGale_Actor::HowlingGale_Actor()
@@ -96,21 +98,26 @@ void HowlingGale_Actor::Update(float _Delta)
 		Speed = 200.0f;
 	}
 
-	HitTime -= _Delta;
-	if (0.0f >= HitTime)
-	{
-		HitTime = 1.0f;
-		SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+		{
+			for (size_t i = 0; i < _CollisionGroup.size(); i++)
 			{
-				for (size_t i = 0; i < _CollisionGroup.size(); i++)
+				std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+				if (false == CollisionTime.contains(_Other))
 				{
-					std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+					CollisionTime[_Other] = 0.0f;
+				}
+
+				CollisionTime[_Other] -= _Delta;
+				if (0.0f >= CollisionTime[_Other])
+				{
 					float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 					SkillManager::PlayerSkillManager->HitPrint("HowlingGale_Hit", 3, _Other->GetParentObject());
+					CollisionTime[_Other] = HIT_TIME;
 				}
 			}
-		);
-	}
+		}
+	);
 }
 
 void HowlingGale_Actor::BlockOutMap()
