@@ -10,6 +10,7 @@ enum class HowlingGaleState
 
 class HowlingGale_Actor : public ContentActor
 {
+	friend class HowlingGale;
 public:
 	static HowlingGale_Actor* MainHowlingGale;
 
@@ -24,33 +25,27 @@ public:
 	HowlingGale_Actor& operator=(const HowlingGale_Actor& _Other) = delete;
 	HowlingGale_Actor& operator=(HowlingGale_Actor&& _Other) noexcept = delete;
 
-	void ChangeState(HowlingGaleState _State);
-
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
-	void StateUpdate(float _Delta);
 	void BlockOutMap();
+	void MoveUpdate(float _Delta);
 
 private:
+	bool IsUpdate = true;
 	float Speed = 200.0f;
+	float LiveTime = 10.0f;
+	float HitTime = 1.0f;
 	float4 Scale = float4::ZERO;
 	float4 CurMapScale = float4::ZERO;
 	HowlingGaleState State = HowlingGaleState::Ready;
-	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
+	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
 
-	void ReadyStart();
-	void AttackStart();
-	void DeathStart();
-
-	void ReadyEnd();
-	void AttackEnd();
-	void DeathEnd();
-
-	void ReadyUpdate(float _Delta);
-	void AttackUpdate(float _Delta);
-	void DeathUpdate(float _Delta);
+	void SetDir(ActorDir _Dir)
+	{
+		Dir = _Dir;
+	}
 };
 

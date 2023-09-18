@@ -29,7 +29,7 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 	for (size_t i = 0; i < _HitCount; i++)
 	{
 		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(UpdateOrder::Skill);
-		_HitAnimation->CreateAnimation("Hit", _HitSpriteName);
+		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, 0.03f);
 		_HitAnimation->ChangeAnimation("Hit");
 		_HitAnimation->Transform.SetLocalPosition(_Object->Transform.GetWorldPosition());
 		_HitAnimation->AutoSpriteSizeOn();
@@ -71,7 +71,7 @@ void SkillManager::HitPrintUpdate(float _Delta)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
 			_CurData->CurIndex += 1;
-			_CurData->DelayTime = 0.1f;
+			_CurData->DelayTime = 0.2f;
 		}
 
 		++StartIter;

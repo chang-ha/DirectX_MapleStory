@@ -37,7 +37,7 @@ void ContentActor::Gravity(float _Delta)
 		return;
 	}
 
-	if (true == IsGround && 0 >= MoveVectorForce.Y)
+	if (true == IsGround && 0.0f >= MoveVectorForce.Y)
 	{
 		return;
 	}

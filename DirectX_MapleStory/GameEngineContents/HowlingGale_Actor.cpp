@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ContentLevel.h"
 #include "ContentMap.h"
+#include "SkillManager.h"
 
 HowlingGale_Actor* HowlingGale_Actor::MainHowlingGale = nullptr;
 
@@ -14,48 +15,6 @@ HowlingGale_Actor::HowlingGale_Actor()
 HowlingGale_Actor::~HowlingGale_Actor()
 {
 
-}
-
-void HowlingGale_Actor::ChangeState(HowlingGaleState _State)
-{
-	if (_State != State)
-	{
-		// State End
-		switch (State)
-		{
-		case HowlingGaleState::Ready:
-			ReadyEnd();
-			break;
-		case HowlingGaleState::Attack:
-			AttackEnd();
-			break;
-		case HowlingGaleState::Death:
-			DeathEnd();
-			break;
-		default:
-			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
-			break;
-		}
-
-		// State Start
-		switch (_State)
-		{
-		case HowlingGaleState::Ready:
-			ReadyStart();
-			break;
-		case HowlingGaleState::Attack:
-			AttackStart();
-			break;
-		case HowlingGaleState::Death:
-			DeathStart();
-			break;
-		default:
-			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
-			break;
-		}
-	}
-
-	State = _State;
 }
 
 void HowlingGale_Actor::LevelStart(GameEngineLevel* _PrevLevel)
@@ -82,17 +41,17 @@ void HowlingGale_Actor::Start()
 	MainSpriteRenderer->CreateAnimation("Death", "Death_Stack1");
 	MainSpriteRenderer->ChangeAnimation("Ready");
 	MainSpriteRenderer->SetPivotValue(float4(0.5f, 0.965f));
-	ReadyStart();
 
 	// Renderer Event 1stack
 	MainSpriteRenderer->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer)
 		{
-			ChangeState(HowlingGaleState::Attack);
+			MainSpriteRenderer->ChangeAnimation("Attack");
 		}
 	);
 
 	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
+			IsUpdate = false;
 			Death();
 			MainHowlingGale = nullptr;
 		}
@@ -102,28 +61,55 @@ void HowlingGale_Actor::Start()
 
 	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Ready_Stack1");
 	Scale = Sprite->GetSpriteData(0).GetScale();
-	int a = 0;
+
+	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	SkillCollision->Transform.SetLocalScale(Scale);
 }
 
 void HowlingGale_Actor::Update(float _Delta)
 {
-	BlockOutMap();
-	StateUpdate(_Delta);
-}
-
-void HowlingGale_Actor::StateUpdate(float _Delta)
-{
-	switch (State)
+	if (false == IsUpdate)
 	{
-	case HowlingGaleState::Ready:
-		return ReadyUpdate(_Delta);
-	case HowlingGaleState::Attack:
-		return AttackUpdate(_Delta);
-	case HowlingGaleState::Death:
-		return DeathUpdate(_Delta);
-	default:
-		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
-		break;
+		return;
+	}
+
+	LiveTime -= _Delta;
+	if (0.0f >= LiveTime && false == MainSpriteRenderer->IsCurAnimation("Death"))
+	{
+		MainSpriteRenderer->ChangeAnimation("Death");
+	}
+
+	if (true == IsGround && 0.0f < GravityForce)
+	{
+		GravityReset();
+	}
+
+	ContentActor::Update(_Delta);
+	BlockOutMap();
+	MoveUpdate(_Delta);
+	if (true == SkillCollision->Collision(CollisionOrder::Monster))
+	{
+		Speed = 100.0f;
+	}
+	else
+	{
+		Speed = 200.0f;
+	}
+
+	HitTime -= _Delta;
+	if (0.0f >= HitTime)
+	{
+		HitTime = 1.0f;
+		SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+			{
+				for (size_t i = 0; i < _CollisionGroup.size(); i++)
+				{
+					std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+					float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+					SkillManager::PlayerSkillManager->HitPrint("HowlingGale_Hit", 3, _Other->GetParentObject());
+				}
+			}
+		);
 	}
 }
 
@@ -133,61 +119,27 @@ void HowlingGale_Actor::BlockOutMap()
 	if (0 > CurPos.X - Scale.hX())
 	{
 		Transform.SetLocalPosition(float4{ Scale.hX(), CurPos.Y });
+		Dir = ActorDir::Right;
 	}
 	else if (CurMapScale.X <= CurPos.X + Scale.hX())
 	{
 		Transform.SetLocalPosition(float4{ CurMapScale.X - Scale.hX(), CurPos.Y });
+		Dir = ActorDir::Left;
 	}
 
-	// Need Test More
-	CurPos.Y *= -1.0f;
-	if (0 > CurPos.Y - Scale.hY())
-	{
-		Transform.SetLocalPosition(float4{ CurPos.X, -Scale.hY() });
-	}
-	else if (CurMapScale.Y <= CurPos.Y + Scale.hY())
-	{
-		Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y - Scale.hY() }); 
-	}
+	//// Need Test More
+	//CurPos.Y *= -1.0f;
+	//if (0 > CurPos.Y - Scale.hY())
+	//{
+	//	Transform.SetLocalPosition(float4{ CurPos.X, -Scale.hY() });
+	//}
+	//else if (CurMapScale.Y <= CurPos.Y + Scale.hY())
+	//{
+	//	Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y - Scale.hY() }); 
+	//}
 }
 
-void HowlingGale_Actor::ReadyStart()
-{
-
-}
-
-void HowlingGale_Actor::AttackStart()
-{
-	MainSpriteRenderer->ChangeAnimation("Attack");
-	Dir = Player::MainPlayer->GetDir();
-}
-
-void HowlingGale_Actor::DeathStart()
-{
-	MainSpriteRenderer->ChangeAnimation("Death");
-}
-
-void HowlingGale_Actor::ReadyEnd()
-{
-
-}
-
-void HowlingGale_Actor::AttackEnd()
-{
-
-}
-
-void HowlingGale_Actor::DeathEnd()
-{
-
-}
-
-void HowlingGale_Actor::ReadyUpdate(float _Delta)
-{
-
-}
-
-void HowlingGale_Actor::AttackUpdate(float _Delta)
+void HowlingGale_Actor::MoveUpdate(float _Delta)
 {
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
@@ -246,9 +198,4 @@ void HowlingGale_Actor::AttackUpdate(float _Delta)
 		}
 	}
 	Transform.AddLocalPosition(MovePos);
-}
-
-void HowlingGale_Actor::DeathUpdate(float _Delta)
-{
-
 }

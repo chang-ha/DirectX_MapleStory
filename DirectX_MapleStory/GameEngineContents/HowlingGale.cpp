@@ -88,7 +88,7 @@ void HowlingGale::Start()
 		{
 			if (nullptr != HowlingGale_Actor::MainHowlingGale)
 			{
-				HowlingGale_Actor::MainHowlingGale->ChangeState(HowlingGaleState::Death);
+				HowlingGale_Actor::MainHowlingGale->MainSpriteRenderer->ChangeAnimation("Death");
 			}
 		}
 	);
@@ -97,6 +97,7 @@ void HowlingGale::Start()
 		{
 			GetLevel()->CreateActor<HowlingGale_Actor>(UpdateOrder::Skill);
 			HowlingGale_Actor::MainHowlingGale->Transform.SetLocalPosition(PlayerPos);
+			HowlingGale_Actor::MainHowlingGale->SetDir(PlayerDir);
 		});
 
 	SkillRenderer1->SetEndEvent("Effect", [&](GameEngineRenderer* _Renderer)

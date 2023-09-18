@@ -87,6 +87,8 @@ public:
 protected:
 	bool IsGround = true;
 	ActorDir Dir = ActorDir::Null;
+	float GravityForce = 0.0f;
+	float4 MoveVectorForce = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 
 	void Start() override;
@@ -99,8 +101,6 @@ private:
 	bool IsGravity = true;
 	bool IsAirResis = false;
 	float GravitySpeed = 15000.0f;
-	float GravityForce = 0.0f;
-	float4 MoveVectorForce = float4::ZERO;
 	ActorDir AirResisDir = ActorDir::Null;
 	float ResistanceForce = 0.0f;
 };
