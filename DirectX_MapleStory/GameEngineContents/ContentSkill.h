@@ -37,6 +37,7 @@ protected:
 
 	bool IsSkillStart = false;
 	bool IsSkillEnd = true;
+	ActorDir PlayerDir = ActorDir::Null;
 	float4 PlayerPos = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;
 	float4 Pivot = float4::ZERO;

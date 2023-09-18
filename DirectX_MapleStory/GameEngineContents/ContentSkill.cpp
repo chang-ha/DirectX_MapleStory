@@ -44,6 +44,7 @@ void ContentSkill::UseSkill()
 {
 	IsSkillStart = true;
 	IsSkillEnd = false;
+	PlayerDir = Player::MainPlayer->GetDir();
 	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 	PlayerScale = Player::MainPlayer->GetPlayerScale();
 }

@@ -21,6 +21,20 @@ void HowlingGale::UseSkill()
 	SkillRenderer1->On();
 
 	SkillRenderer1->ChangeAnimation("Effect", true);
+
+	switch (PlayerDir)
+	{
+	case ActorDir::Right:
+		SkillRenderer1->LeftFlip();
+		break;
+	case ActorDir::Left:
+		SkillRenderer1->RightFlip();
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 }
 
 void HowlingGale::EndSkill()
@@ -33,15 +47,19 @@ void HowlingGale::Start()
 {
 	ContentSkill::Start();
 
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExistsChild("ContentResources");
-	Dir.MoveChild("ContentResources\\Textures\\Skill\\HowlingGale");
-	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	for (size_t i = 0; i < Directorys.size(); i++)
+	if (nullptr == GameEngineSprite::Find("HowlingGale_Effect"))
 	{
-		GameEngineDirectory& Childs = Directorys[i];
-		GameEngineSprite::CreateFolder("HowlingGale_" + Childs.GetFileName(), Childs.GetStringPath());
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\HowlingGale");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("HowlingGale_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+
 	}
 
 	if (nullptr == GameEngineSprite::Find("Ready_Stack1"))
@@ -61,6 +79,9 @@ void HowlingGale::Start()
 		}
 	}
 
+	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Ready_Stack1");
+	float4 HowlingGaleScale = Sprite->GetSpriteData(0).GetScale();
+
 	SkillRenderer1->CreateAnimation("Effect", "HowlingGale_Effect", ANI_SPEED);
 	SkillRenderer1->AutoSpriteSizeOn();
 	SkillRenderer1->SetPivotValue(float4(0.38f, 0.58f));
@@ -73,13 +94,19 @@ void HowlingGale::Start()
 			}
 		}
 	);
+
+	SkillRenderer1->SetFrameEvent("Effect", 10, [&](GameEngineRenderer* _Renderer)
+		{
+			GetLevel()->CreateActor<HowlingGale_Actor>(UpdateOrder::Skill);
+			HowlingGale_Actor::MainHowlingGale->Transform.SetLocalPosition(PlayerPos);
+			HowlingGale_Actor::MainHowlingGale->SetScale(HowlingGaleScale);
+		});
+
 	SkillRenderer1->SetEndEvent("Effect", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
-			GetLevel()->CreateActor<HowlingGale_Actor>(UpdateOrder::Skill);
-			HowlingGale_Actor::MainHowlingGale->Transform.SetLocalPosition(PlayerPos);
-		}
-	);
+			EndSkill();
+		});
 }
 
 void HowlingGale::Update(float _Delta)

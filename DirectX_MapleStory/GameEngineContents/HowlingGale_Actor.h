@@ -24,6 +24,10 @@ public:
 	HowlingGale_Actor& operator=(HowlingGale_Actor&& _Other) noexcept = delete;
 
 	void ChangeState(HowlingGaleState _State);
+	void SetScale(const float4& _Value)
+	{
+		Scale = _Value;
+	}
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -31,8 +35,12 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void StateUpdate(float _Delta);
+	void BlockOutMap();
 
 private:
+	float Speed = 200.0f;
+	float4 Scale = float4::ZERO;
+	float4 CurMapScale = float4::ZERO;
 	HowlingGaleState State = HowlingGaleState::Ready;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 

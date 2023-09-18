@@ -71,7 +71,6 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("FairySpiral", "FairySpiral");
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Idle");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
-		Sprite = nullptr;
 	}
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();

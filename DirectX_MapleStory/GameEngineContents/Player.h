@@ -121,9 +121,6 @@ private:
 	void Attack2Update(float _Delta);
 	void WindWalkUpdate(float _Delta);
 	void ShootUpdate(float _Delta);
-
-	//// FrameEvent
-	void AttackEvent(GameEngineRenderer* _Renderer);
 	////////////
 };
 
