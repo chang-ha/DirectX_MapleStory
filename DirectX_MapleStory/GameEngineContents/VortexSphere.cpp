@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "VortexSphere.h"
+#include "VortexSphere_Actor.h"
 
 VortexSphere::VortexSphere()
 {
@@ -70,6 +71,9 @@ void VortexSphere::Start()
 		{
 			SkillRenderer2->On();
 			SkillRenderer2->ChangeAnimation("Effect2", true);
+			std::shared_ptr<VortexSphere_Actor> _Actor = GetLevel()->CreateActor<VortexSphere_Actor>(UpdateOrder::Skill);
+			_Actor->SetDir(PlayerDir);
+			_Actor->Transform.SetLocalPosition(PlayerPos);
 		}
 	);
 

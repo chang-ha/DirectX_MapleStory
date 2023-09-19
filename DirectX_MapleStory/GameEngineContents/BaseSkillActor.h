@@ -34,7 +34,7 @@ protected:
 	void BlockOutMap();
 	void CollisionTimeUpdate(float _Delta);
 
-	inline void SetDir(ActorDir _Dir)
+	virtual void SetDir(ActorDir _Dir)
 	{
 		Dir = _Dir;
 	}

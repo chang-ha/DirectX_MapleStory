@@ -3,6 +3,7 @@
 
 class VortexSphere_Actor : public BaseSkillActor
 {
+	friend class VortexSphere;
 public:
 	// constructer destructer
 	VortexSphere_Actor();
@@ -20,8 +21,9 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void MoveUpdate(float _Delta) override;
-
 private:
+	float4 MoveDir = float4::ZERO;
 
+	void SetDir(ActorDir _Dir) override;
 };
 
