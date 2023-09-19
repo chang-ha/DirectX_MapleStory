@@ -9,9 +9,10 @@
 #include "Monsoon.h"
 #include "VortexSphere.h"
 #include "PhalanxCharge.h"
-
+#include <GameEngineBase\GameEngineRandom.h>
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
+#define RANDOMRANGE 30
 SkillManager::SkillManager()
 {
 
@@ -22,19 +23,30 @@ SkillManager::~SkillManager()
 
 }
 
-void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object)
+void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot /*= true*/)
 {
+	GameEngineRandom RandomActor;
 	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
 	_Data->Object = _Object;
 	_Data->HitAnimations.resize(_HitCount);
+	_Data->RandomPivot.resize(_HitCount);
 	// _Data.DamageAnimations.resize(_HitCount);
 
 	for (size_t i = 0; i < _HitCount; i++)
 	{
 		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(UpdateOrder::Skill);
-		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, 0.09f);
+
+		if (true == _RandomPivot)
+		{
+			RandomActor.SetSeed(reinterpret_cast<long long>(_Object) + time(nullptr) + i);
+			_Data->RandomPivot[i].X = RandomActor.RandomFloat(-RANDOMRANGE, RANDOMRANGE);
+			RandomActor.SetSeed(reinterpret_cast<long long>(_Object) + time(nullptr) + i);
+			_Data->RandomPivot[i].Y = RandomActor.RandomFloat(-RANDOMRANGE, RANDOMRANGE);
+		}
+
+		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, 0.03f);
 		_HitAnimation->ChangeAnimation("Hit");
-		_HitAnimation->Transform.SetLocalPosition(_Object->Transform.GetWorldPosition());
+		_HitAnimation->Transform.SetLocalPosition(_Object->Transform.GetWorldPosition() + _Data->RandomPivot[i]);
 		_HitAnimation->AutoSpriteSizeOn();
 		_HitAnimation->SetEndEvent("Hit", [&](GameEngineSpriteRenderer* _Renderer)
 			{
@@ -43,6 +55,7 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 			}
 		);
 		_HitAnimation->Off();
+
 		_Data->HitAnimations[i] = _HitAnimation;
 	}
 

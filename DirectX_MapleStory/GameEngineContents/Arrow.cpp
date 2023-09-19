@@ -126,7 +126,7 @@ void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Oth
 		return;
 	}
 
-	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject());
+	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject(), false);
 	// ArrowRenderer->ChangeAnimation("TestArrow_Hit");
 	// ArrowRenderer->SetPivotType(PivotType::Center);
 	// float4 OtherPos = CurMonster->Transform.GetWorldPosition();

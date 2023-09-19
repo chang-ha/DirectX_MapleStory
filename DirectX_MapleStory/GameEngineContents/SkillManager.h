@@ -2,10 +2,13 @@
 
 struct HitRenderData
 {
+	friend class SkillManager;
+private:
 	bool AniEnd = false;
 	int CurIndex = 0;
 	float DelayTime = 0.0f;
 	GameEngineObject* Object = nullptr;
+	std::vector<float4> RandomPivot;
 	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> HitAnimations;
 	// std::vector<std::shared_ptr<GameEngineSpriteRenderer>> DamageAnimations;
 	// Sound 추후 추가
@@ -39,7 +42,7 @@ public:
 		SkillInit(NewSkill);
 	}
 
-	void HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object);
+	void HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot = true);
 
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);
