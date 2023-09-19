@@ -1,5 +1,5 @@
 #pragma once
-#include "ContentActor.h"
+#include "BaseSkillActor.h"
 
 enum class HowlingGaleState
 {
@@ -8,7 +8,7 @@ enum class HowlingGaleState
 	Death
 };
 
-class HowlingGale_Actor : public ContentActor
+class HowlingGale_Actor : public BaseSkillActor
 {
 	friend class HowlingGale;
 public:
@@ -30,22 +30,8 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
-	void BlockOutMap();
-	void MoveUpdate(float _Delta);
 
 private:
-	bool IsUpdate = true;
-	float Speed = 200.0f;
-	float LiveTime = 10.0f;
-	float4 Scale = float4::ZERO;
-	float4 CurMapScale = float4::ZERO;
 	HowlingGaleState State = HowlingGaleState::Ready;
-	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
-	std::map<std::shared_ptr<GameEngineCollision>, float> CollisionTime;
-
-	void SetDir(ActorDir _Dir)
-	{
-		Dir = _Dir;
-	}
 };
 

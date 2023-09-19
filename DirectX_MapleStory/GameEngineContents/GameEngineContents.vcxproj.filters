@@ -70,6 +70,12 @@
     <ClCompile Include="VortexSphere.cpp">
       <Filter>Actor\Global\Player\Skill\VortexSphere</Filter>
     </ClCompile>
+    <ClCompile Include="VortexSphere_Actor.cpp">
+      <Filter>Actor\Global\Player\Skill\VortexSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseSkillActor.cpp">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -140,6 +146,12 @@
     </ClInclude>
     <ClInclude Include="VortexSphere.h">
       <Filter>Actor\Global\Player\Skill\VortexSphere</Filter>
+    </ClInclude>
+    <ClInclude Include="VortexSphere_Actor.h">
+      <Filter>Actor\Global\Player\Skill\VortexSphere</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseSkillActor.h">
+      <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

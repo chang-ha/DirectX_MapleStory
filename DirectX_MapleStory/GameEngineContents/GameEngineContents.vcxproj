@@ -172,6 +172,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="BaseSkillActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentActor.cpp">
       <SubType>
       </SubType>
@@ -223,10 +227,18 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="VortexSphere.cpp" />
+    <ClCompile Include="VortexSphere_Actor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="WindWalk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
+    <ClInclude Include="BaseSkillActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentActor.h">
       <SubType>
       </SubType>
@@ -275,6 +287,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="VortexSphere.h" />
+    <ClInclude Include="VortexSphere_Actor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WindWalk.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
