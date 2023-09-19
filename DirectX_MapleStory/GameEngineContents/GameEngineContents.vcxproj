@@ -204,6 +204,8 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Monsoon.cpp" />
+    <ClCompile Include="PhalanxCharge.cpp" />
+    <ClCompile Include="PhalanxCharge_Actor.cpp" />
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
@@ -274,6 +276,8 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Monsoon.h" />
+    <ClInclude Include="PhalanxCharge.h" />
+    <ClInclude Include="PhalanxCharge_Actor.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>

@@ -76,6 +76,12 @@
     <ClCompile Include="BaseSkillActor.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="PhalanxCharge.cpp">
+      <Filter>Actor\Global\Player\Skill\PhalanxCharge</Filter>
+    </ClCompile>
+    <ClCompile Include="PhalanxCharge_Actor.cpp">
+      <Filter>Actor\Global\Player\Skill\PhalanxCharge</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -153,6 +159,12 @@
     <ClInclude Include="BaseSkillActor.h">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="PhalanxCharge.h">
+      <Filter>Actor\Global\Player\Skill\PhalanxCharge</Filter>
+    </ClInclude>
+    <ClInclude Include="PhalanxCharge_Actor.h">
+      <Filter>Actor\Global\Player\Skill\PhalanxCharge</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -199,6 +211,9 @@
     </Filter>
     <Filter Include="Actor\Global\Player\Skill\VortexSphere">
       <UniqueIdentifier>{9625fade-caa8-46c3-a516-8326e7a9a99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player\Skill\PhalanxCharge">
+      <UniqueIdentifier>{ae6bd983-cf86-4570-8cc2-9030a0a44e85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

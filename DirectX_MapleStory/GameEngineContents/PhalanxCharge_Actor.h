@@ -1,0 +1,27 @@
+#pragma once
+#include "BaseSkillActor.h"
+
+class PhalanxCharge_Actor : public BaseSkillActor
+{
+	friend class PhalanxCharge;
+public:
+	// constructer destructer
+	PhalanxCharge_Actor();
+	~PhalanxCharge_Actor();
+
+	// delete function
+	PhalanxCharge_Actor(const PhalanxCharge_Actor& _Ohter) = delete;
+	PhalanxCharge_Actor(PhalanxCharge_Actor&& _Ohter) noexcept = delete;
+	PhalanxCharge_Actor& operator=(const PhalanxCharge_Actor& _Other) = delete;
+	PhalanxCharge_Actor& operator=(PhalanxCharge_Actor&& _Other) noexcept = delete;
+
+protected:
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
+	void Start() override;
+	void Update(float _Delta) override;
+
+private:
+	float4 MoveDir = float4::ZERO;
+};
+

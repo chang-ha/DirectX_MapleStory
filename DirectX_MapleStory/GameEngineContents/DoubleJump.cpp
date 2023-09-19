@@ -63,9 +63,6 @@ void DoubleJump::EndSkill()
 {
 	ContentSkill::EndSkill();
 	Off();
-	SkillRenderer1->Off();
-	SkillRenderer2->Off();
-	SkillAfterImageRenderer->Off();
 }
 
 void DoubleJump::Start() 
@@ -129,6 +126,7 @@ void DoubleJump::Start()
 		{
 			SkillAfterImageRenderer->Off();
 			this->Off();
+			EndSkill();
 		}
 	);
 }

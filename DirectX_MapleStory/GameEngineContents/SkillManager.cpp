@@ -8,6 +8,7 @@
 #include "HowlingGale.h"
 #include "Monsoon.h"
 #include "VortexSphere.h"
+#include "PhalanxCharge.h"
 
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
@@ -140,6 +141,7 @@ void SkillManager::Start()
 	CreateSkill<HowlingGale>("HowlingGale");
 	CreateSkill<Monsoon>("Monsoon");
 	CreateSkill<VortexSphere>("VortexSphere");
+	CreateSkill<PhalanxCharge>("PhalanxCharge");
 }
 
 void SkillManager::Update(float _Delta)

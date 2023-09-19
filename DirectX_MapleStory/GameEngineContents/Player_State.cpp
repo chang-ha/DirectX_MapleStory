@@ -156,7 +156,6 @@ void Player::WalkEnd()
 
 void Player::JumpEnd()
 {
-	SkillManager::PlayerSkillManager->EndSkill("DoubleJump");
 }
 
 void Player::DownEnd()
@@ -251,6 +250,13 @@ void Player::IdleUpdate(float _Delta)
 	if (true == GameEngineInput::IsPress('S'))
 	{
 		ChangeState(PlayerState::VortexSphere);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('E'))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
+		AlertTime = ALERT_TIME;
 		return;
 	}
 	/////////////

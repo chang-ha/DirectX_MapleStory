@@ -41,6 +41,7 @@ void HowlingGale::EndSkill()
 {
 	ContentSkill::EndSkill();
 	Off();
+	SkillRenderer1->Off();
 }
 
 void HowlingGale::Start()
@@ -81,7 +82,6 @@ void HowlingGale::Start()
 
 
 	SkillRenderer1->CreateAnimation("Effect", "HowlingGale_Effect", ANI_SPEED);
-	SkillRenderer1->AutoSpriteSizeOn();
 	SkillRenderer1->SetPivotValue(float4(0.38f, 0.58f));
 	
 	SkillRenderer1->SetStartEvent("Effect", [&](GameEngineRenderer* _Renderer)
@@ -95,14 +95,13 @@ void HowlingGale::Start()
 
 	SkillRenderer1->SetFrameEvent("Effect", 10, [&](GameEngineRenderer* _Renderer)
 		{
-			GetLevel()->CreateActor<HowlingGale_Actor>(UpdateOrder::Skill);
-			HowlingGale_Actor::MainHowlingGale->Transform.SetLocalPosition(PlayerPos);
-			HowlingGale_Actor::MainHowlingGale->SetDir(PlayerDir);
+			std::shared_ptr<HowlingGale_Actor> _Actor = GetLevel()->CreateActor<HowlingGale_Actor>(UpdateOrder::Skill);
+			_Actor->Transform.SetLocalPosition(PlayerPos);
+			_Actor->SetDir(PlayerDir);
 		});
 
 	SkillRenderer1->SetEndEvent("Effect", [&](GameEngineRenderer* _Renderer)
 		{
-			SkillRenderer1->Off();
 			EndSkill();
 		});
 }
