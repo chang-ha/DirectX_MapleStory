@@ -3,12 +3,13 @@
 #include "GameEngineTransform.h"
 #include "GameEngineConstantBuffer.h"
 #include "GameEngineCamera.h"
+#include "GameEngineSampler.h"
 
-GameEngineTileMap::GameEngineTileMap() 
+GameEngineTileMap::GameEngineTileMap()
 {
 }
 
-GameEngineTileMap::~GameEngineTileMap() 
+GameEngineTileMap::~GameEngineTileMap()
 {
 }
 
@@ -57,7 +58,7 @@ void GameEngineTileMap::SetTileIndex(const SetTileParameterIndex& _Parameter)
 	{
 		CurTile.Data = DefaultSprite->GetSpriteData(_Parameter.Index);
 	}
-	else 
+	else
 	{
 		std::shared_ptr<GameEngineSprite> FindSprite = GameEngineSprite::Find(_Parameter.SpriteName);
 		CurTile.Data = FindSprite->GetSpriteData(_Parameter.Index);
@@ -78,64 +79,70 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 	ScreenLeftTop.X = CameraPos.X - WindowScale.hX();
 	ScreenLeftTop.Y = CameraPos.Y + WindowScale.hY();
 
-	int StartX = static_cast<size_t>(ScreenLeftTop.X / TileData.TileScale.X) - 1;
-	int StartY = static_cast<size_t>(ScreenLeftTop.Y / TileData.TileScale.Y) - 1;
-	int EndX = static_cast<size_t>(StartX + (WindowScale.X / TileData.TileScale.X) + 1);
-	int EndY = static_cast<size_t>(StartY + (WindowScale.Y / TileData.TileScale.Y) + 1);
+	int StartX = static_cast<int>(ScreenLeftTop.X / TileData.TileScale.X);
+	int StartY = static_cast<int>(-ScreenLeftTop.Y / TileData.TileScale.Y);
+	int EndX = StartX + static_cast<int>(WindowScale.X / TileData.TileScale.X) + TileMapExpansionSize;
+	int EndY = StartY + static_cast<int>(WindowScale.Y / TileData.TileScale.Y) + TileMapExpansionSize;
+	StartX -= TileMapExpansionSize;
+	StartY -= TileMapExpansionSize;
 
-	if (0 >= StartX)
+	if (0 > StartX)
 	{
 		StartX = 0;
 	}
 
-	if (0 >= EndX)
-	{
-		EndX = 0;
-	}
-
-	if (TileData.TileCountX < StartX)
-	{
-		StartX = static_cast<int>(TileData.TileCountX - 1);
-	}
-
-	if (TileData.TileCountX < EndX)
-	{
-		EndX = static_cast<int>(TileData.TileCountX - 1);
-	}
-
-	if (0 >= StartY)
+	if (0 > StartY)
 	{
 		StartY = 0;
 	}
 
-	if (0 >= EndY)
+	if (TileData.TileCountX < StartX)
+	{
+		StartX = static_cast<int>(TileData.TileCountX);
+	}
+
+	if (TileData.TileCountY < StartY)
+	{
+		StartY = static_cast<int>(TileData.TileCountY);
+	}
+
+	if (0 > EndX)
+	{
+		EndX = 0;
+	}
+
+	if (0 > EndY)
 	{
 		EndY = 0;
 	}
 
-	if (TileData.TileCountX < StartY)
+	if (TileData.TileCountX < EndX)
 	{
-		StartX = static_cast<int>(TileData.TileCountX - 1);
+		EndX = static_cast<int>(TileData.TileCountX);
 	}
 
 	if (TileData.TileCountY < EndY)
 	{
-		EndX = static_cast<int>(TileData.TileCountX - 1);
+		EndY = static_cast<int>(TileData.TileCountY);
 	}
-
 
 	TransformData Data;
 	for (size_t y = StartY; y < EndY; y++)
 	{
 		for (size_t x = StartX; x < EndX; x++)
 		{
+			if (0 > Tiles[y][x].Index)
+			{
+				continue;
+			}
+
+			// 이게 100 x 100번 만큼
 			//if (카메라에 나오지 않는다면)
 			//{
 			//	continue;
 			//}
 
-
-			std::shared_ptr<GameEngineConstantBuffer> TransBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex);
+			std::shared_ptr<GameEngineConstantBuffer> TransBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 
 			if (nullptr != TransBuffer)
 			{
@@ -158,9 +165,9 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 				TransBuffer->Setting(0);
 			}
 
-			SpriteData& TileSprite = Tiles[y][x].Data; 
+			SpriteData& TileSprite = Tiles[y][x].Data;
 
-			std::shared_ptr<GameEngineConstantBuffer> SpriteBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData", ShaderType::Vertex);
+			std::shared_ptr<GameEngineConstantBuffer> SpriteBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData");
 			if (nullptr != SpriteBuffer)
 			{
 				SpriteBuffer->ChangeData(TileSprite.SpritePivot);
@@ -169,7 +176,29 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 
 			Tiles[y][x].Data.Texture->PSSetting(0);
 
+			if (nullptr == Sampler)
+			{
+				MsgBoxAssert("존재하지 않는 샘플러를 사용하려고 했습니다.");
+			}
+			Sampler->PSSetting(0);
+
 			Draw();
 		}
+	}
+}
+
+
+void GameEngineTileMap::SetSamplerState(SAMPLER_OBJECT _Option)
+{
+	switch (_Option)
+	{
+	case SAMPLER_OBJECT::LINEAR:
+		Sampler = GameEngineSampler::Find("LINEAR");
+		break;
+	case SAMPLER_OBJECT::POINT:
+		Sampler = GameEngineSampler::Find("POINT");
+		break;
+	default:
+		break;
 	}
 }

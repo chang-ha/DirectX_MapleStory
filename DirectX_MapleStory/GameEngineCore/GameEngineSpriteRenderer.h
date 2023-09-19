@@ -44,6 +44,7 @@ enum class PivotType
 	Bottom,
 	Left,
 	Top,
+	LeftTop,
 };
 
 // Ό³Έν :
