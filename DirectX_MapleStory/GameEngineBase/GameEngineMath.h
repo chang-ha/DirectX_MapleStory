@@ -150,6 +150,15 @@ public:
 		return ReturnValue;
 	}
 
+	float4 EulerDegToQuaternion()
+	{
+		// 디그리 각도를 쿼터니온으로 변경
+		float4 Return = DirectXVector;
+		Return *= GameEngineMath::D2R;
+		Return = DirectX::XMQuaternionRotationRollPitchYawFromVector(Return.DirectXVector);
+		return Return;
+	}
+
 	float4 QuaternionToEulerDeg()
 	{
 		// 디그리 각도로 바꿔줍니다.
@@ -338,7 +347,11 @@ public:
 		return POINT{ iX(), iY() };
 	}
 
-
+	// Debug Code
+	std::string ToString(std::string_view _Next = "")
+	{
+		return "X : " + std::to_string(X) + " Y : " + std::to_string(Y) + " Z : " + std::to_string(Z) + _Next.data();
+	}
 
 public:
 	inline float Angle2DDeg()
@@ -636,6 +649,23 @@ public:
 		DirectXMatrix = (X * Y * Z).DirectXMatrix;
 	}
 
+	void Compose(float4& _Scale, float4& _RotQuaternion, float4& _Pos)
+	{
+		// 우리가 알고 있는 크자이공부가
+		// 적용된 행렬을 worldMatrix => 정식용어로 아핀행렬이라고 합니다.
+
+		//float4x4 Scale;
+		//float4x4 Rot;
+		//float4x4 Pos;
+		//Scale.Scale(_Scale);
+		//Rot.RotationDeg(_RotQuaternion.QuaternionToEulerDeg());
+		//Pos.Position(_Pos);
+		//*this = Scale * Rot * Pos;
+
+		// 내부에서 위처럼 Scale * Rot * Pos를 합쳐주는 함수
+		DirectXMatrix = DirectX::XMMatrixAffineTransformation(_Scale.DirectXVector, _RotQuaternion.DirectXVector, _RotQuaternion.DirectXVector, _Pos.DirectXVector);
+	}
+
 	void Decompose(float4& _Scale, float4& _RotQuaternion, float4& _Pos) const
 	{
 		// 이함수에 대해서 오해하면 안되는점이 한가지 있다.
@@ -643,6 +673,14 @@ public:
 		// _RotQuaternion <= 사원수는 뭐냐?
 		// 쿼터니온이 나온다.
 		DirectX::XMMatrixDecompose(&_Scale.DirectXVector, &_RotQuaternion.DirectXVector, &_Pos.DirectXVector, DirectXMatrix);
+	}
+
+	float4x4 InverseReturn() const
+	{
+		// 해당 Matrix의 역행렬을 구해주는 함수
+		float4x4 Result;
+		Result.DirectXMatrix = DirectX::XMMatrixInverse(nullptr, DirectXMatrix);
+		return Result;
 	}
 
 	void RotationXDeg(const float _Value)

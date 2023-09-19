@@ -125,7 +125,34 @@ void GameEngineTransform::TransformUpdate()
 	if (nullptr != Parent)
 	{
 		TransData.ParentMatrix = Parent->TransData.WorldMatrix;
-		TransData.WorldMatrix = TransData.LocalWorldMatrix * TransData.ParentMatrix;
+		TransData.WorldMatrix = TransData.WorldMatrix * TransData.ParentMatrix;
+
+		if (true == AbsoluteScale || true == AbsoluteRotation || true == AbsolutePosition)
+		{
+			float4 WScale, WRotation, WPosition;
+			float4 LScale, LRotation, LPosition;
+
+			TransData.WorldMatrix.Decompose(WScale, WRotation, WPosition); // TransData의 WorldMatrix를 Scale, Rotation, Position으로 각각 분리
+
+			// SetWorldScale || Rotation || Position을 했다면 받아온 값을 넣어줌
+			if (true == AbsoluteScale)
+			{
+				WScale = TransData.Scale;
+			}
+
+			if (true == AbsoluteRotation)
+			{
+				WRotation = TransData.Rotation.EulerDegToQuaternion();
+			}
+
+			if (true == AbsolutePosition)
+			{
+				WPosition = TransData.Position;
+			}
+
+			TransData.WorldMatrix.Compose(WScale, WRotation, WPosition); // 다시 해당 값들로 WorldMatrix를 만듦
+			TransData.LocalWorldMatrix = TransData.WorldMatrix * TransData.ParentMatrix.InverseReturn(); // 나의 월드값에 맞게 Local값을 수정해줌 (부모의 역행렬을 곱해주면 됨)
+		}
 	}
 
 	/////// Collision
@@ -140,6 +167,10 @@ void GameEngineTransform::TransformUpdate()
 	ColData.OBB.Orientation = TransData.WorldQuaternion.Float4;
 	///////
 	CalChilds();
+
+	AbsoluteScale = false;
+	AbsoluteRotation = false;
+	AbsolutePosition = false;
 }
 
 void GameEngineTransform::CalculationViewAndProjection(const TransformData& _Transform)

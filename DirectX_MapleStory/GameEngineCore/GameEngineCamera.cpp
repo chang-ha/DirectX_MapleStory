@@ -132,3 +132,27 @@ void GameEngineCamera::AllReleaseCheck()
 		}
 	}
 }
+
+float4 GameEngineCamera::GetWorldMousePos2D()
+{
+	// 월드라고 하는 세상은 화면과 관련이 없었다.
+	// 그런데 관련있게 됐다.
+	// 로컬 => 월드(크자이공부) => 뷰 => 프로젝션 => 뷰포트(스크린좌표)
+	// 역행렬을 곱하면 이전 차원으로 돌아갈 수 있다
+	float4 MousePos = GameEngineCore::MainWindow.GetMousePos();
+	float4 WinScale = GameEngineCore::MainWindow.GetScale();
+
+	float4x4 ViewPort;
+	ViewPort.ViewPort(WinScale.X, WinScale.Y, 0, 0);
+
+	// 스크린 => 프로젝션으로 이동
+	MousePos *= ViewPort.InverseReturn();
+
+	// 프로젝션 => 뷰로 이동
+	MousePos *= Transform.GetConstTransformDataRef().ProjectionMatrix.InverseReturn();
+
+	// 뷰 => 월드로
+	MousePos *= Transform.GetConstTransformDataRef().ViewMatrix.InverseReturn();
+
+	return MousePos;
+}

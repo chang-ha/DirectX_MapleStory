@@ -36,6 +36,8 @@ public:
 		ProjectionType = _ProjectionType;
 	}
 
+	float4 GetWorldMousePos2D();
+
 protected:
 	void Start() override;
 
