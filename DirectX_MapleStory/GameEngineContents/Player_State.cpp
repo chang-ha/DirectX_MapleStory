@@ -4,6 +4,8 @@
 #include "SkillManager.h"
 #include "Arrow.h"
 
+//TestCode
+#include "BaseWindActor.h"
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 200.0f
 
@@ -257,6 +259,14 @@ void Player::IdleUpdate(float _Delta)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
 		AlertTime = ALERT_TIME;
+		return;
+	}
+	
+	// Test Code
+	if (true == GameEngineInput::IsDown('5'))
+	{
+		std::shared_ptr<BaseWindActor> Test = GetLevel()->CreateActor<BaseWindActor>(UpdateOrder::Skill);
+		Test->Init("Wind1");
 		return;
 	}
 	/////////////

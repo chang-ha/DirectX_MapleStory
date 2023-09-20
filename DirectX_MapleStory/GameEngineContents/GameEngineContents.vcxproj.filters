@@ -82,6 +82,9 @@
     <ClCompile Include="PhalanxCharge_Actor.cpp">
       <Filter>Actor\Global\Player\Skill\PhalanxCharge</Filter>
     </ClCompile>
+    <ClCompile Include="BaseWindActor.cpp">
+      <Filter>Actor\Global\Player\Skill\Wind</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -165,6 +168,9 @@
     <ClInclude Include="PhalanxCharge_Actor.h">
       <Filter>Actor\Global\Player\Skill\PhalanxCharge</Filter>
     </ClInclude>
+    <ClInclude Include="BaseWindActor.h">
+      <Filter>Actor\Global\Player\Skill\Wind</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -214,6 +220,9 @@
     </Filter>
     <Filter Include="Actor\Global\Player\Skill\PhalanxCharge">
       <UniqueIdentifier>{ae6bd983-cf86-4570-8cc2-9030a0a44e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player\Skill\Wind">
+      <UniqueIdentifier>{023d86bb-5574-4445-8dd3-55b2db2d4e56}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
