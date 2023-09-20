@@ -60,7 +60,7 @@ void PhalanxCharge::Start()
 		}
 	}
 
-	SkillRenderer1->CreateAnimation("Effect1", "PhalanxCharge_Effect1", 0.09f);
+	SkillRenderer1->CreateAnimation("Effect1", "PhalanxCharge_Effect1", 0.06f);
 	
 	SkillRenderer1->SetStartEvent("Effect1", [&](GameEngineRenderer* _Renderer)
 		{

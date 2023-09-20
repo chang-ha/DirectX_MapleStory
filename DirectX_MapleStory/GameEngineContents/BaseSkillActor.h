@@ -1,7 +1,7 @@
 #pragma once
 #include "ContentActor.h"
 
-#define HIT_TIME 0.5f
+#define HIT_TIME 0.3f
 
 class BaseSkillActor : public ContentActor
 {

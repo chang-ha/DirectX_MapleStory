@@ -22,6 +22,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	int HitCount = 0;
 	float4 MoveDir = float4::ZERO;
 };
 
