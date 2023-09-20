@@ -12,7 +12,10 @@
 #include <GameEngineBase\GameEngineRandom.h>
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
+#define HIT_ANI_TIME 0.04f
+#define HIT_DELAY 0.1f
 #define RANDOMRANGE 30
+
 SkillManager::SkillManager()
 {
 
@@ -44,7 +47,7 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 			_Data->RandomPivot[i].Y = RandomActor.RandomFloat(-RANDOMRANGE, RANDOMRANGE);
 		}
 
-		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, 0.03f);
+		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, HIT_ANI_TIME);
 		_HitAnimation->ChangeAnimation("Hit");
 		_HitAnimation->Transform.SetLocalPosition(_Object->Transform.GetWorldPosition() + _Data->RandomPivot[i]);
 		_HitAnimation->AutoSpriteSizeOn();
@@ -87,7 +90,7 @@ void SkillManager::HitPrintUpdate(float _Delta)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
 			_CurData->CurIndex += 1;
-			_CurData->DelayTime = 0.2f;
+			_CurData->DelayTime = HIT_DELAY;
 		}
 
 		++StartIter;
