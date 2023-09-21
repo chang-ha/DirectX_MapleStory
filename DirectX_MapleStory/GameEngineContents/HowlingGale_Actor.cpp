@@ -105,7 +105,6 @@ void HowlingGale_Actor::Update(float _Delta)
 
 				if (0.0f >= CollisionTime[_Other])
 				{
-					float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 					SkillManager::PlayerSkillManager->HitPrint("HowlingGale_Hit", 3, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
 				}

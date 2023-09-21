@@ -100,7 +100,6 @@ void PhalanxCharge_Actor::Update(float _Delta)
 				if (0.0f >= CollisionTime[_Other])
 				{
 					HitCount += 1;
-					float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 					SkillManager::PlayerSkillManager->HitPrint("PhalanxCharge_Hit", 1, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
 				}
