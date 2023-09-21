@@ -2,6 +2,7 @@
 #include "FairySpiral.h"
 #include "Player.h"
 #include "SkillManager.h"
+#include "BaseWindActor.h"
 
 FairySpiral::FairySpiral()
 {
@@ -104,5 +105,8 @@ void FairySpiral::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision
 		float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
 	}
+
+	std::shared_ptr<BaseWindActor> Test = GetLevel()->CreateActor<BaseWindActor>(UpdateOrder::Skill);
+	Test->Init("Wind1");
 }
 
