@@ -107,21 +107,15 @@ void Player::Update(float _Delta)
 		MoveVectorForceReset();
 		GravityReset();
 	}
-
-	//if (GameEngineInput::IsPress('Q'))
-	//{
-	//	Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
-	//}
-
-	//if (GameEngineInput::IsPress('E'))
-	//{
-	//	Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
-	//}
-
 }
 
 void Player::DirCheck()
 {
+	if (false == IsDirCheck)
+	{
+		return;
+	}
+
 	ActorDir CheckDir = ActorDir::Null;
 	// bool ChangeDir = false;
 

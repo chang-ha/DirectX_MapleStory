@@ -1,8 +1,10 @@
 ﻿#include "PreCompile.h"
 #include "BaseWindActor.h"
 #include "Player.h"
+#include <GameEngineBase\GameEngineRandom.h>
 
-#define LERPRATIO 0.5f
+#define DETECT_RANGE 500
+
 BaseWindActor::BaseWindActor()
 {
 
@@ -27,15 +29,39 @@ void BaseWindActor::Start()
 {
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
 	MainSpriteRenderer->AutoSpriteSizeOn();
+	HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	// DetectCollision의 CollisionOrder 추후 변경 필요?
 	DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 }
 
 void BaseWindActor::Update(float _Delta)
 {
-	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
+	if (true == MainSpriteRenderer->IsCurAnimation("Hit") || true == MainSpriteRenderer->IsCurAnimation("Death"))
+	{
+		return;
+	}
+
+	LiveTime -= _Delta;
+	if (0.0f >= LiveTime)
+	{
+		MainSpriteRenderer->ChangeAnimation("Death");
+	}
+
+	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, -DirAngle });
+
+	HitCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+		{
+			// 가장 먼저 충돌하는 녀석에게
+			std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[0];
+			MainSpriteRenderer->ChangeAnimation("Hit");
+			// OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+			// SkillManager::PlayerSkillManager->HitPrint("VortexSphere_Hit", 6, _Other->GetParentObject());
+		}
+	);
 
 	DetectCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
 		{
+			// Targeting
 			float4 MostCloseTargetPos = float4::ZERO;
 			float4 CurPos = Transform.GetWorldPosition();
 
@@ -50,15 +76,29 @@ void BaseWindActor::Update(float _Delta)
 				}
 			}
 
-			// 나와 목표 사이의 Angle을 구함
-			float4 VectorAngle = DirectX::XMVector2AngleBetweenVectors((CurPos - MostCloseTargetPos).DirectXVector, float4::RIGHT.DirectXVector);
-			VectorAngle.X *= GameEngineMath::R2D;
-			// 현재 Angle에서 
-			DirAngle = DirAngle * (1 - LERPRATIO * _Delta) + VectorAngle.X * LERPRATIO * _Delta;
+			float4 DirVector = (MostCloseTargetPos - CurPos ).NormalizeReturn();
+			// 현재 이동벡터와 목적지까지의 벡터 사이의 각도를 구함
+			float4 Angle = DirectX::XMVector2AngleBetweenNormals(DirVector.DirectXVector, MoveVector.DirectXVector);
+			// Radina to Degree
+			float PlusAngle = Angle.X * GameEngineMath::R2D;
 
-			// MoveVector.VectorRotationToDegZReturn(VectorAngle.X);
-			float4 MovePos = float4::GetUnitVectorFromDeg(DirAngle);
-			Transform.AddLocalPosition( -MovePos * 10.0f * _Delta);
+			// 회전방향 결정용 외적
+			float4 RotationDir = DirectX::XMVector2Cross(DirVector.DirectXVector, MoveVector.DirectXVector);
+			if (0.0f <= RotationDir.X)
+			{
+				DirAngle -= PlusAngle * RotationSpeed * _Delta;
+			}
+			else
+			{
+				DirAngle += PlusAngle * RotationSpeed * _Delta;
+			}
+			RotationSpeed += 50.0f * _Delta;
+
+
+			MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
+
+
+			Transform.AddLocalPosition( MoveVector * Speed * _Delta);
 		}
 	);
 }
@@ -93,8 +133,33 @@ void BaseWindActor::Init(std::string_view _WindName)
 		}
 	);
 
-	DetectCollision->Transform.SetLocalScale({300, 300});
+	MainSpriteRenderer->SetEndEvent("Hit", [&](GameEngineRenderer* _Renderer)
+		{
+			Death();
+		}
+	);
 
-	DirAngle = 90.0f;
-	MoveVector = {0, 10};
+	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
+		{
+			Death();
+		}
+	);
+
+	DetectCollision->Transform.SetLocalScale({ DETECT_RANGE, DETECT_RANGE });
+	HitCollision->Transform.SetLocalScale({90, 40});
+	Transform.SetLocalScale({ -1.0f, 1.0f, 1.0f });
+
+	// Random DirAngle
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(this));
+	int RandomValue = Random.RandomInt(0, 1);
+	if (0 == RandomValue)
+	{
+		DirAngle = 90.0f;
+	}
+	else
+	{
+		DirAngle = -90.0f;
+	}
+	MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
 }

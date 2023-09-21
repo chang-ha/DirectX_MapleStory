@@ -16,11 +16,14 @@ public:
 	void Init(std::string_view _WindName);
 
 protected:
+	float LiveTime = 5.0f;
 	float DirAngle = 0.0f;
-	float Speed = 100.0f;
+	float Speed = 500.0f;
+	float RotationSpeed = 0.0f;
 	float4 MoveVector = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer;
 	std::shared_ptr<GameEngineCollision> DetectCollision;
+	std::shared_ptr<GameEngineCollision> HitCollision;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;

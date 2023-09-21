@@ -68,6 +68,7 @@ protected:
 
 private:
 	bool IsLadder = false;
+	bool IsDirCheck = true;
 	bool DoubleJump = false;
 	bool GroundJump = false;
 	float Speed = 250.0f;

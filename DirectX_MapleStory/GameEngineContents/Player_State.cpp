@@ -4,8 +4,6 @@
 #include "SkillManager.h"
 #include "Arrow.h"
 
-//TestCode
-#include "BaseWindActor.h"
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 200.0f
 
@@ -80,12 +78,14 @@ void Player::LadderStart()
 
 void Player::AttackStart()
 {
+	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Shoot");
 	AlertTime = ALERT_TIME;
 }
 
 void Player::ShootingStart()
 {
+	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Shooting");
 	SkillManager::PlayerSkillManager->UseSkill("SongOfHeaven");
 	AlertTime = ALERT_TIME;
@@ -93,6 +93,7 @@ void Player::ShootingStart()
 
 void Player::Attack2Start()
 {
+	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("FairySpiral");
 	SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
 	AlertTime = ALERT_TIME;
@@ -100,6 +101,7 @@ void Player::Attack2Start()
 
 void Player::WindWalkStart()
 {
+	IsDirCheck = false;
 	SkillManager::PlayerSkillManager->UseSkill("WindWalk");
 	if (true == IsGround)
 	{
@@ -129,6 +131,7 @@ void Player::WindWalkStart()
 
 void Player::ShootStart()
 {
+	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Shoot");
 	SkillManager::PlayerSkillManager->UseSkill("HowlingGale");
 	AlertTime = ALERT_TIME;
@@ -136,6 +139,7 @@ void Player::ShootStart()
 
 void Player::VortexSphereStart()
 {
+	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("VortexSphere");
 	SkillManager::PlayerSkillManager->UseSkill("VortexSphere");
 	AlertTime = ALERT_TIME;
@@ -180,21 +184,22 @@ void Player::LadderEnd()
 
 void Player::AttackEnd()
 {
-
+	IsDirCheck = true;
 }
 
 void Player::ShootingEnd()
 {
-
+	IsDirCheck = true;
 }
 
 void Player::Attack2End()
 {
-
+	IsDirCheck = true;
 }
 
 void Player::WindWalkEnd()
 {
+	IsDirCheck = true;
 	MoveVectorForceReset();
 	GravityOn();
 	AirResisOff();
@@ -202,12 +207,13 @@ void Player::WindWalkEnd()
 
 void Player::ShootEnd()
 {
+	IsDirCheck = true;
 	// MainSpriteRenderer->ChangeAnimation("Shoot");
 }
 
 void Player::VortexSphereEnd()
 {
-
+	IsDirCheck = true;
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -237,11 +243,6 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress(VK_CONTROL))
-	{
-		ChangeState(PlayerState::Attack);
-		return;
-	}
 
 	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
 	{
@@ -261,12 +262,10 @@ void Player::IdleUpdate(float _Delta)
 		AlertTime = ALERT_TIME;
 		return;
 	}
-	
-	// Test Code
-	if (true == GameEngineInput::IsDown('5'))
+
+	if (true == GameEngineInput::IsPress(VK_CONTROL))
 	{
-		std::shared_ptr<BaseWindActor> Test = GetLevel()->CreateActor<BaseWindActor>(UpdateOrder::Skill);
-		Test->Init("Wind1");
+		ChangeState(PlayerState::Attack);
 		return;
 	}
 	/////////////
@@ -310,23 +309,51 @@ void Player::AlertUpdate(float _Delta)
 
 void Player::WalkUpdate(float _Delta)
 {
-	if (GameEngineInput::IsPress('A'))
-	{
-		ChangeState(PlayerState::Shooting);
-		return;
-	}
-
+	///////////// Skill Code
 	if (GameEngineInput::IsDown(VK_SPACE))
 	{
 		ChangeState(PlayerState::WindWalk);
 		return;
 	}
 
+	if (GameEngineInput::IsPress('A'))
+	{
+		ChangeState(PlayerState::Shooting);
+		return;
+	}
+
+	if (GameEngineInput::IsDown('F'))
+	{
+		ChangeState(PlayerState::Shoot);
+		return;
+	}
+
+
 	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
 	{
 		ChangeState(PlayerState::Attack2);
 		return;
 	}
+
+	if (true == GameEngineInput::IsPress('S'))
+	{
+		ChangeState(PlayerState::VortexSphere);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('E'))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
+		AlertTime = ALERT_TIME;
+		return;
+	}
+
+	if (true == GameEngineInput::IsPress(VK_CONTROL))
+	{
+		ChangeState(PlayerState::Attack);
+		return;
+	}
+	/////////////
 
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
@@ -417,17 +444,25 @@ void Player::WalkUpdate(float _Delta)
 
 void Player::JumpUpdate(float _Delta)
 {
+	///////////// Skill Code
+	if (GameEngineInput::IsDown(VK_SPACE))
+	{
+		ChangeState(PlayerState::WindWalk);
+		return;
+	}
+
 	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
 	{
 		ChangeState(PlayerState::Attack2);
 		return;
 	}
 
-	if (GameEngineInput::IsDown(VK_SPACE))
+	if (true == GameEngineInput::IsPress('S'))
 	{
-		ChangeState(PlayerState::WindWalk);
+		ChangeState(PlayerState::VortexSphere);
 		return;
 	}
+	/////////////
 
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
