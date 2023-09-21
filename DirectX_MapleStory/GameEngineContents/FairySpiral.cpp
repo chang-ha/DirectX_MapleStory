@@ -106,7 +106,6 @@ void FairySpiral::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision
 		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
 	}
 
-	std::shared_ptr<BaseWindActor> Test = GetLevel()->CreateActor<BaseWindActor>(UpdateOrder::Skill);
-	Test->Init("Wind1");
+	BaseWindActor::CreateTriflingWind();
 }
 

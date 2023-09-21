@@ -13,7 +13,9 @@ public:
 	BaseWindActor& operator=(const BaseWindActor& _Other) = delete;
 	BaseWindActor& operator=(BaseWindActor&& _Other) noexcept = delete;
 
-	void Init(std::string_view _WindName);
+	static std::shared_ptr<BaseWindActor> CreateMercilessWind();
+	static void CreateTriflingWind();
+
 
 protected:
 	float LiveTime = 5.0f;
@@ -29,6 +31,7 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
+	void Init(std::string_view _WindName);
 
 private:
 };

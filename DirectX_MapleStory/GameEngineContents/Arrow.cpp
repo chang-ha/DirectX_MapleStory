@@ -129,8 +129,7 @@ void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Oth
 	}
 
 	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject(), false);
-	std::shared_ptr<BaseWindActor> Test = GetLevel()->CreateActor<BaseWindActor>(UpdateOrder::Skill);
-	Test->Init("Wind1");
+	BaseWindActor::CreateTriflingWind();
 	// ArrowRenderer->ChangeAnimation("TestArrow_Hit");
 	// ArrowRenderer->SetPivotType(PivotType::Center);
 	// float4 OtherPos = CurMonster->Transform.GetWorldPosition();

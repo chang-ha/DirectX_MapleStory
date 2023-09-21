@@ -1,7 +1,10 @@
 ﻿#include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
+#include "ContentLevel.h"
 #include "BaseWindActor.h"
 #include "Player.h"
-#include <GameEngineBase\GameEngineRandom.h>
 
 #define DETECT_RANGE 700
 
@@ -13,6 +16,35 @@ BaseWindActor::BaseWindActor()
 BaseWindActor::~BaseWindActor()
 {
 
+}
+
+std::shared_ptr<BaseWindActor> BaseWindActor::CreateMercilessWind()
+{
+	std::shared_ptr<BaseWindActor> _Wind = ContentLevel::CurContentLevel->CreateActor<BaseWindActor>(UpdateOrder::Skill);
+	_Wind->Init("Wind3");
+	_Wind->Off();
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(_Wind.get()));
+	float4 PivotValue = Random.RandomVectorBox2D(-150, 150, 100, 200);
+	_Wind->Transform.AddLocalPosition(PivotValue);
+	return _Wind;
+}
+
+void BaseWindActor::CreateTriflingWind()
+{
+	std::shared_ptr<BaseWindActor> _Wind = ContentLevel::CurContentLevel->CreateActor<BaseWindActor>(UpdateOrder::Skill);
+
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(_Wind.get()));
+	float RandomValue = Random.RandomFloat(0, 1);
+	if (0.10 >= RandomValue)
+	{
+		_Wind->Init("Wind2");
+	}
+	else
+	{
+		_Wind->Init("Wind1");
+	}
 }
 
 void BaseWindActor::LevelStart(GameEngineLevel* _PrevLevel)
@@ -54,8 +86,6 @@ void BaseWindActor::Update(float _Delta)
 			// 가장 먼저 충돌하는 녀석에게
 			std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[0];
 			MainSpriteRenderer->ChangeAnimation("Hit");
-			// OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
-			// SkillManager::PlayerSkillManager->HitPrint("VortexSphere_Hit", 6, _Other->GetParentObject());
 		}
 	);
 
@@ -105,7 +135,7 @@ void BaseWindActor::Update(float _Delta)
 
 void BaseWindActor::Init(std::string_view _WindName)
 {
-	if (nullptr == GameEngineSprite::Find(""))
+	if (nullptr == GameEngineSprite::Find(std::string(_WindName) + "_Ready"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
@@ -126,16 +156,24 @@ void BaseWindActor::Init(std::string_view _WindName)
 	MainSpriteRenderer->CreateAnimation("Hit", std::string(_WindName) + "_Hit", 0.06f);
 	MainSpriteRenderer->CreateAnimation("Death", std::string(_WindName) + "_Death");
 	MainSpriteRenderer->ChangeAnimation("Ready");
+	MainSpriteRenderer->SetPivotValue({0.625f, 0.44f});
 
 	MainSpriteRenderer->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer)
 		{
 			MainSpriteRenderer->ChangeAnimation("Attack");
+			MainSpriteRenderer->SetPivotType(PivotType::Center);
 		}
 	);
 
 	MainSpriteRenderer->SetEndEvent("Hit", [&](GameEngineRenderer* _Renderer)
 		{
 			Death();
+		}
+	);
+
+	MainSpriteRenderer->SetStartEvent("Death", [&](GameEngineRenderer* _Renderer)
+		{
+			MainSpriteRenderer->SetPivotValue({0.6f, 0.51f});
 		}
 	);
 
@@ -152,8 +190,8 @@ void BaseWindActor::Init(std::string_view _WindName)
 	// Random DirAngle
 	GameEngineRandom Random;
 	Random.SetSeed(reinterpret_cast<long long>(this));
-	int RandomValue = Random.RandomInt(0, 1);
-	if (0 == RandomValue)
+	float RandomValue = Random.RandomFloat(0, 1);
+	if (0.5 >= RandomValue)
 	{
 		DirAngle = 90.0f;
 	}
