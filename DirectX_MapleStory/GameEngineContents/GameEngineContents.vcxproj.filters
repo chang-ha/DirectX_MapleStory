@@ -85,6 +85,9 @@
     <ClCompile Include="BaseWindActor.cpp">
       <Filter>Actor\Global\Player\Skill\Wind</Filter>
     </ClCompile>
+    <ClCompile Include="MercilessWinds.cpp">
+      <Filter>Actor\Global\Player\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -170,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="BaseWindActor.h">
       <Filter>Actor\Global\Player\Skill\Wind</Filter>
+    </ClInclude>
+    <ClInclude Include="MercilessWinds.h">
+      <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

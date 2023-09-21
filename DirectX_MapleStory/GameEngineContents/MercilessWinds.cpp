@@ -1,0 +1,107 @@
+﻿#include "PreCompile.h"
+#include "MercilessWinds.h"
+#include "BaseWindActor.h"
+
+MercilessWinds::MercilessWinds()
+{
+
+}
+
+MercilessWinds::~MercilessWinds()
+{
+
+}
+
+void MercilessWinds::UseSkill()
+{
+	ContentSkill::UseSkill();
+	On();
+	SkillRenderer1->On();
+
+	switch (PlayerDir)
+	{
+	case ActorDir::Right:
+		SkillRenderer1->Transform.SetLocalScale({ -1.0f, 1.0f, 1.0 });
+		break;
+	case ActorDir::Left:
+		SkillRenderer1->Transform.SetLocalScale({ 1.0f, 1.0f, 1.0 });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
+	SkillRenderer1->ChangeAnimation("Effect1", true);
+}
+
+void MercilessWinds::EndSkill()
+{
+	ContentSkill::EndSkill();
+	Off();
+	SkillRenderer1->Off();
+}
+
+void MercilessWinds::Start()
+{
+	AllWindActor.reserve(8);
+	ContentSkill::Start();
+	SkillRenderer1->SetRenderOrder(RenderOrder::PlayBelow);
+
+	if (nullptr == GameEngineSprite::Find("MercilessWinds_Effect1"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\MercilessWinds");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("MercilessWinds_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+	}
+
+	SkillRenderer1->CreateAnimation("Effect1", "MercilessWinds_Effect1", 0.06f);
+	SkillRenderer1->SetPivotValue({0.5f, 0.6f});
+	SkillRenderer1->AutoSpriteSizeOn();
+	SkillRenderer1->Off();
+
+	for (int i = 0; i < 7; i++)
+	{
+		SkillRenderer1->SetFrameEvent("Effect1", i, [&](GameEngineRenderer* _Renderer)
+			{
+				CreateWind();
+			}
+		);
+	}
+
+	SkillRenderer1->SetFrameEvent("Effect1", 8 ,[&](GameEngineRenderer* _Renderer)
+		{
+			for (size_t i = 0; i < AllWindActor.size(); i++)
+			{
+				AllWindActor[i]->On();
+			}
+		}
+	);
+
+	SkillRenderer1->SetEndEvent("Effect1", [&](GameEngineRenderer* _Renderer)
+		{
+			EndSkill();
+		}
+	);
+}
+
+void MercilessWinds::Update(float _Delta)
+{
+	ContentSkill::Update(_Delta);
+	SkillRenderer1->Transform.SetLocalPosition(PlayerPos);
+}
+
+void MercilessWinds::CreateWind()
+{
+	std::shared_ptr<BaseWindActor> _Actor = GetLevel()->CreateActor<BaseWindActor>(UpdateOrder::Skill);
+	_Actor->Init("Wind2");
+	_Actor->Off();
+	AllWindActor.push_back(_Actor);
+}

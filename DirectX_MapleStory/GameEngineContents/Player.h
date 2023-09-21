@@ -28,6 +28,7 @@ enum class PlayerState
 	WindWalk, // WindWalk
 	Shoot, //HowlingGale
 	VortexSphere,
+	MercilessWinds,
 };
 
 #include "ContentActor.h"
@@ -98,6 +99,7 @@ private:
 	void WindWalkStart();
 	void ShootStart();
 	void VortexSphereStart();
+	void MercilessWindsStart();
 
 	/// End
 	void IdleEnd();
@@ -112,6 +114,7 @@ private:
 	void WindWalkEnd();
 	void ShootEnd();
 	void VortexSphereEnd();
+	void MercilessWindsEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -126,6 +129,7 @@ private:
 	void WindWalkUpdate(float _Delta);
 	void ShootUpdate(float _Delta);
 	void VortexSphereUpdate(float _Delta);
+	void MercilessWindsUpdate(float _Delta);
 	////////////
 };
 

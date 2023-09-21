@@ -1,4 +1,7 @@
 #include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
 #include "SkillManager.h"
 #include "ContentSkill.h"
 #include "DoubleJump.h"
@@ -9,7 +12,8 @@
 #include "Monsoon.h"
 #include "VortexSphere.h"
 #include "PhalanxCharge.h"
-#include <GameEngineBase\GameEngineRandom.h>
+#include "MercilessWinds.h"
+
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
 #define HIT_ANI_TIME 0.04f
@@ -158,6 +162,7 @@ void SkillManager::Start()
 	CreateSkill<Monsoon>("Monsoon");
 	CreateSkill<VortexSphere>("VortexSphere");
 	CreateSkill<PhalanxCharge>("PhalanxCharge");
+	CreateSkill<MercilessWinds>("MercilessWinds");	
 }
 
 void SkillManager::Update(float _Delta)

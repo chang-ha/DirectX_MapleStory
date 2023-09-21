@@ -3,7 +3,7 @@
 #include "Player.h"
 #include <GameEngineBase\GameEngineRandom.h>
 
-#define DETECT_RANGE 500
+#define DETECT_RANGE 700
 
 BaseWindActor::BaseWindActor()
 {

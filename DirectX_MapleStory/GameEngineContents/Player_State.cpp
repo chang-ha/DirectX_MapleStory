@@ -145,6 +145,14 @@ void Player::VortexSphereStart()
 	AlertTime = ALERT_TIME;
 }
 
+void Player::MercilessWindsStart()
+{
+	IsDirCheck = false;
+	MainSpriteRenderer->ChangeAnimation("MercilessWinds");
+	SkillManager::PlayerSkillManager->UseSkill("MercilessWinds");
+	AlertTime = ALERT_TIME;
+}
+
 void Player::IdleEnd()
 {
 
@@ -216,6 +224,11 @@ void Player::VortexSphereEnd()
 	IsDirCheck = true;
 }
 
+void Player::MercilessWindsEnd()
+{
+	IsDirCheck = true;
+}
+
 void Player::IdleUpdate(float _Delta)
 {
 	if (State == PlayerState::Idle && 0.0f < AlertTime)
@@ -260,6 +273,12 @@ void Player::IdleUpdate(float _Delta)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
 		AlertTime = ALERT_TIME;
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('R'))
+	{
+		ChangeState(PlayerState::MercilessWinds);
 		return;
 	}
 
@@ -345,6 +364,12 @@ void Player::WalkUpdate(float _Delta)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
 		AlertTime = ALERT_TIME;
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('R'))
+	{
+		ChangeState(PlayerState::MercilessWinds);
 		return;
 	}
 
@@ -460,6 +485,12 @@ void Player::JumpUpdate(float _Delta)
 	if (true == GameEngineInput::IsPress('S'))
 	{
 		ChangeState(PlayerState::VortexSphere);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('R'))
+	{
+		ChangeState(PlayerState::MercilessWinds);
 		return;
 	}
 	/////////////
@@ -704,6 +735,14 @@ void Player::ShootUpdate(float _Delta)
 }
 
 void Player::VortexSphereUpdate(float _Delta)
+{
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeToIdle();
+	}
+}
+
+void Player::MercilessWindsUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{

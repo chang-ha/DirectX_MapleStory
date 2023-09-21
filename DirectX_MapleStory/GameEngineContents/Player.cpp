@@ -70,6 +70,8 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("WindWalk", "WindWalk");
 		MainSpriteRenderer->CreateAnimation("FairySpiral", "FairySpiral");
 		MainSpriteRenderer->CreateAnimation("VortexSphere", "VortexSphere", 0.2f);
+		MainSpriteRenderer->CreateAnimation("MercilessWinds", "MercilessWinds", 0.4f);
+		
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Idle");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
 	}
@@ -84,8 +86,15 @@ void Player::Start()
 	_Animation->Inter[0] = 0.05f;
 	_Animation->Inter[1] = 0.05f;
 
+	_Animation = MainSpriteRenderer->FindAnimation("Shoot");
+	_Animation->Inter[1] = 0.4f;
+
 	_Animation = MainSpriteRenderer->FindAnimation("VortexSphere");
 	_Animation->Inter[2] = 0.4f;
+
+	_Animation = MainSpriteRenderer->FindAnimation("MercilessWinds");
+	_Animation->Inter[0] = 0.05f;
+	_Animation->Inter[2] = 0.2f;
 }
 
 void Player::Update(float _Delta)
@@ -292,6 +301,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::VortexSphere:
 			VortexSphereEnd();
 			break;
+		case PlayerState::MercilessWinds:
+			MercilessWindsEnd();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
@@ -337,6 +349,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::VortexSphere:
 			VortexSphereStart();
 			break;
+		case PlayerState::MercilessWinds:
+			MercilessWindsStart();
+			break;
 		case PlayerState::Null:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -375,6 +390,8 @@ void Player::StateUpdate(float _Delta)
 		return ShootUpdate(_Delta);
 	case PlayerState::VortexSphere:
 		return VortexSphereUpdate(_Delta);
+	case PlayerState::MercilessWinds:
+		return MercilessWindsUpdate(_Delta);
 	case PlayerState::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
