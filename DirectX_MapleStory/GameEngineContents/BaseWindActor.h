@@ -20,7 +20,7 @@ public:
 protected:
 	float LiveTime = 5.0f;
 	float DirAngle = 0.0f;
-	float Speed = 500.0f;
+	float Speed = 700.0f;
 	float RotationSpeed = 0.0f;
 	float4 MoveVector = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer;

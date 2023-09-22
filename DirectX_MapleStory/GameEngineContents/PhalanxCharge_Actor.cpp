@@ -78,11 +78,11 @@ void PhalanxCharge_Actor::Update(float _Delta)
 
 	BaseSkillActor::Update(_Delta);
 
-	if (true == SkillCollision->Collision(CollisionOrder::Monster))
+	if (200.0f == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{
 		Speed = 100.0f;
 	}
-	else
+	else if (100.0f == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
 	{
 		Speed = 200.0f;
 	}

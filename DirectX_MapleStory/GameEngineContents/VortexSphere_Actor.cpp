@@ -28,6 +28,7 @@ void VortexSphere_Actor::Start()
 	GravityOff();
 	IsBlockOut = false;
 	Speed = 150.0f;
+	LiveTime = 20.0f;
 
 	MainSpriteRenderer->CreateAnimation("Attack", "VortexSphere_Actor", 0.07f);
 	MainSpriteRenderer->ChangeAnimation("Attack");
@@ -41,6 +42,16 @@ void VortexSphere_Actor::Start()
 void VortexSphere_Actor::Update(float _Delta)
 {
 	BaseSkillActor::Update(_Delta);
+
+	if (150.0f == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
+	{
+		Speed = 75.0f;
+	}
+	else if (75.0f == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
+	{
+		Speed = 150.0f;
+	}
+
 	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
 		{
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)

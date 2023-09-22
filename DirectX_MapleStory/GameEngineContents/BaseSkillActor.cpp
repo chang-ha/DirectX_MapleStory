@@ -118,14 +118,12 @@ void BaseSkillActor::BlockOutMap()
 	if (0 > CurPos.X - Scale.hX())
 	{
 		Transform.SetLocalPosition(float4{ Scale.hX(), CurPos.Y });
-		Transform.SetLocalScale({ -1.0f, 1.0f, 1.0 });
-		Dir = ActorDir::Right;
+		SetDir(ActorDir::Right);
 	}
 	else if (CurMapScale.X <= CurPos.X + Scale.hX())
 	{
 		Transform.SetLocalPosition(float4{ CurMapScale.X - Scale.hX(), CurPos.Y });
-		Transform.SetLocalScale({ 1.0f, 1.0f, 1.0 });
-		Dir = ActorDir::Left;
+		SetDir(ActorDir::Left);
 	}
 
 	//// Need Test More

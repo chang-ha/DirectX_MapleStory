@@ -71,9 +71,26 @@ void VortexSphere::Start()
 		{
 			SkillRenderer2->On();
 			SkillRenderer2->ChangeAnimation("Effect2", true);
+
+			float4 PivotValue = float4::ZERO;
+			switch (PlayerDir)
+			{
+			case ActorDir::Right:
+				PivotValue.X = 180.0f;
+				break;
+			case ActorDir::Left:
+				PivotValue.X = -180.0f;
+				break;
+			case ActorDir::Null:
+			default:
+				MsgBoxAssert("존재하지 않는 방향입니다.");
+				break;
+			}
+			PivotValue.Y = 20.0f;
+
 			std::shared_ptr<VortexSphere_Actor> _Actor = GetLevel()->CreateActor<VortexSphere_Actor>(UpdateOrder::Skill);
+			_Actor->Transform.SetLocalPosition(PlayerPos + PivotValue);
 			_Actor->SetDir(PlayerDir);
-			_Actor->Transform.SetLocalPosition(PlayerPos);
 		}
 	);
 

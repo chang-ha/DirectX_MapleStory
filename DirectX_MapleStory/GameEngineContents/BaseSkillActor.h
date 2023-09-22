@@ -37,6 +37,19 @@ protected:
 	virtual void SetDir(ActorDir _Dir)
 	{
 		Dir = _Dir;
+		switch (Dir)
+		{
+		case ActorDir::Right:
+			Transform.SetLocalScale({ -1.0f, 1.0f, 1.0f });
+			break;
+		case ActorDir::Left:
+			Transform.SetLocalScale({ 1.0f, 1.0f, 1.0f });
+			break;
+		case ActorDir::Null:
+		default:
+			MsgBoxAssert("존재하지 않는 방향입니다.");
+			break;
+		}
 	}
 private:
 

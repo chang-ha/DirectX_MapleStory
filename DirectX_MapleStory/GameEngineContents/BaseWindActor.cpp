@@ -27,6 +27,17 @@ std::shared_ptr<BaseWindActor> BaseWindActor::CreateMercilessWind()
 	Random.SetSeed(reinterpret_cast<long long>(_Wind.get()));
 	float4 PivotValue = Random.RandomVectorBox2D(-150, 150, 100, 200);
 	_Wind->Transform.AddLocalPosition(PivotValue);
+
+	float RandomValue = Random.RandomFloat(0, 1);
+	if (0.5 >= RandomValue)
+	{
+		_Wind->DirAngle = 90.0f;
+	}
+	else
+	{
+		_Wind->DirAngle = -90.0f;
+	}
+
 	return _Wind;
 }
 
@@ -131,7 +142,7 @@ void BaseWindActor::Update(float _Delta)
 			{
 				DirAngle += PlusAngle * RotationSpeed * _Delta;
 			}
-			RotationSpeed += 50.0f * _Delta;
+			RotationSpeed += 20.0f * _Delta;
 
 
 			MoveVector = float4::GetUnitVectorFromDeg(DirAngle);

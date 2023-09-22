@@ -35,6 +35,7 @@ void HowlingGale_Actor::Start()
 {
 	BaseSkillActor::Start();
 	MainHowlingGale = this;
+	LiveTime = 20.0f;
 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	MainSpriteRenderer->CreateAnimation("Ready", "Ready_Stack1");
@@ -84,11 +85,11 @@ void HowlingGale_Actor::Update(float _Delta)
 
 	BaseSkillActor::Update(_Delta);
 
-	if (true == SkillCollision->Collision(CollisionOrder::Monster))
+	if (200.0f == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{
 		Speed = 100.0f;
 	}
-	else
+	else if (100.0f == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
 	{
 		Speed = 200.0f;
 	}

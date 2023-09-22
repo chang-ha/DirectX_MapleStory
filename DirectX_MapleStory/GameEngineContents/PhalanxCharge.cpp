@@ -64,8 +64,22 @@ void PhalanxCharge::Start()
 	
 	SkillRenderer1->SetStartEvent("Effect1", [&](GameEngineRenderer* _Renderer)
 		{
+			float4 PivotValue = float4::ZERO;
+			switch (PlayerDir)
+			{
+			case ActorDir::Right:
+				PivotValue.X = 180.0f;
+				break;
+			case ActorDir::Left:
+				PivotValue.X = -180.0f;
+				break;
+			case ActorDir::Null:
+			default:
+				MsgBoxAssert("존재하지 않는 방향입니다.");
+				break;
+			}
 			std::shared_ptr<PhalanxCharge_Actor> _Actor = GetLevel()->CreateActor<PhalanxCharge_Actor>(UpdateOrder::Skill);
-			_Actor->Transform.SetLocalPosition(PlayerPos);
+			_Actor->Transform.SetLocalPosition(PlayerPos + PivotValue);
 			_Actor->SetDir(PlayerDir);
 		}
 	);
