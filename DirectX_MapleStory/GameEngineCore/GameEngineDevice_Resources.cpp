@@ -90,7 +90,7 @@ void GameEngineDevice::ResourcesInit()
 
 	{
 		// BytePadding방식이 CPU와 GPU간의 차이가 있을 수 있으니 이상하면 여기 체크
-		GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
+		GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 	}
 
 	{

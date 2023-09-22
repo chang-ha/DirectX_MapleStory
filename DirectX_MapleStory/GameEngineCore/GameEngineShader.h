@@ -1,4 +1,5 @@
 #pragma once
+#include "GameEngineShaderResHelper.h"
 
 enum class ShaderType
 {
@@ -26,6 +27,8 @@ public:
 	GameEngineShader& operator=(GameEngineShader&& _Other) noexcept = delete;
 
 	static bool AutoCompile(GameEngineFile& _File);
+
+	GameEngineShaderResHelper ResHelper;
 
 protected:
 	void CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _VersionLow);

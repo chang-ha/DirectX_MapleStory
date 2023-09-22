@@ -111,7 +111,7 @@ void GameEngineRenderer::ResSetting()
 	////////////////
 
 	//////////////// ConstantBuffer
-	std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
+	std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 
 	const TransformData& Data = Transform.GetConstTransformDataRef();
 
