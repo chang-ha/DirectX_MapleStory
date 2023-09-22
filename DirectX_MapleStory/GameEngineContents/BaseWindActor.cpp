@@ -36,14 +36,23 @@ void BaseWindActor::CreateTriflingWind()
 
 	GameEngineRandom Random;
 	Random.SetSeed(reinterpret_cast<long long>(_Wind.get()));
-	float RandomValue = Random.RandomFloat(0, 1);
-	if (0.10 >= RandomValue)
+	float4 RandomValue = Random.RandomVectorBox2D(0, 1, 0, 1);
+	if (0.10 >= RandomValue.X)
 	{
 		_Wind->Init("Wind2");
 	}
 	else
 	{
 		_Wind->Init("Wind1");
+	}
+
+	if (0.5 >= RandomValue.Y)
+	{
+		_Wind->DirAngle = 90.0f;
+	}
+	else
+	{
+		_Wind->DirAngle = -90.0f;
 	}
 }
 
@@ -187,17 +196,5 @@ void BaseWindActor::Init(std::string_view _WindName)
 	HitCollision->Transform.SetLocalScale({90, 40});
 	Transform.SetLocalScale({ -1.0f, 1.0f, 1.0f });
 
-	// Random DirAngle
-	GameEngineRandom Random;
-	Random.SetSeed(reinterpret_cast<long long>(this));
-	float RandomValue = Random.RandomFloat(0, 1);
-	if (0.5 >= RandomValue)
-	{
-		DirAngle = 90.0f;
-	}
-	else
-	{
-		DirAngle = -90.0f;
-	}
 	MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
 }
