@@ -142,11 +142,9 @@ void BaseWindActor::Update(float _Delta)
 			{
 				DirAngle += PlusAngle * RotationSpeed * _Delta;
 			}
-			RotationSpeed += 20.0f * _Delta;
-
+			RotationSpeed += 30.0f * _Delta;
 
 			MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
-
 
 			Transform.AddLocalPosition( MoveVector * Speed * _Delta);
 		}
@@ -174,7 +172,7 @@ void BaseWindActor::Init(std::string_view _WindName)
 	MainSpriteRenderer->CreateAnimation("Ready", std::string(_WindName) + "_Ready", 0.03f);
 	MainSpriteRenderer->CreateAnimation("Attack", std::string(_WindName) + "_Attack", 0.06f);
 	MainSpriteRenderer->CreateAnimation("Hit", std::string(_WindName) + "_Hit", 0.06f);
-	MainSpriteRenderer->CreateAnimation("Death", std::string(_WindName) + "_Death");
+	MainSpriteRenderer->CreateAnimation("Death", std::string(_WindName) + "_Death", 0.08f);
 	MainSpriteRenderer->ChangeAnimation("Ready");
 	MainSpriteRenderer->SetPivotValue({0.625f, 0.44f});
 
