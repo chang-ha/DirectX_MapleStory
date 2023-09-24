@@ -76,6 +76,20 @@ public:
 		return ConstantBufferSetters.contains(UpperString);
 	}
 
+	bool IsTexture(std::string_view _Name)
+	{
+		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+		return TextureSetters.contains(UpperString);
+	}
+
+	bool IsSampler(std::string_view _Name)
+	{
+		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+		return SamplerSetters.contains(UpperString);
+	}
+
 	void ShaderResCopy(GameEngineShader* _Shader);
 
 	void AllShaderResourcesSetting();
@@ -88,6 +102,12 @@ public:
 	}
 
 	void ConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
+
+	void SetTexture(std::string_view _Name, std::string_view _TextureName);
+
+	void SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture);
+
+	void SetSampler(std::string_view _Name, std::shared_ptr<GameEngineSampler> _TextureSampler);
 
 protected:
 

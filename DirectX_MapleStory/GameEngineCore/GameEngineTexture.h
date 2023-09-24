@@ -87,6 +87,11 @@ public:
 	}
 
 	GameEngineColor GetColor(unsigned int _X, unsigned int _Y, GameEngineColor _DefaultColor);
+
+	std::shared_ptr<GameEngineSampler> GetBaseSampler()
+	{
+		return Sampler;
+	}
 protected:
 
 private:

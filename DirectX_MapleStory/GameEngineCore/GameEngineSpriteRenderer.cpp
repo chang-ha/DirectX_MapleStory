@@ -124,6 +124,7 @@ void GameEngineSpriteRenderer::Start()
 	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
 	ShaderResHelper.ConstantBufferLink("TransformData", Data);
 	ShaderResHelper.ConstantBufferLink("SpriteData", CurSprite.SpritePivot);
+	ShaderResHelper.SetTexture("DiffuseTex", "NSet.Png");
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)
@@ -263,7 +264,8 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	ImageTransform.TransformUpdate();
 	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
 
-	GameEngineRenderer::Draw();
+	ShaderResHelper.SetTexture("DiffuseTex", CurSprite.Texture);
+	GameEngineRenderer::Render(_Camera, _Delta);
 }
 
 void GameEngineSpriteRenderer::SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function)

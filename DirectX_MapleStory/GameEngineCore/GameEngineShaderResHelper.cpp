@@ -274,3 +274,69 @@ void GameEngineShaderResHelper::ConstantBufferLink(std::string_view _Name, const
 		Setter.CPUDataPtr = _Data;
 	}
 }
+
+
+void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::string_view _TextureName)
+{
+	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find(_TextureName);
+	if (nullptr == Tex)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처 입니다.");
+	}
+
+	SetTexture(_Name, Tex);
+}
+
+void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture)
+{
+	if (false == IsTexture(_Name))
+	{
+		MsgBoxAssert("존재하지 않는 텍스처를 세팅하려고 했습니다.");
+		return;
+	}
+
+	std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+	std::multimap<std::string, GameEngineTextureSetter>::iterator NameStariter
+		= TextureSetters.lower_bound(UpperString);
+	std::multimap<std::string, GameEngineTextureSetter>::iterator NameEnditer
+		= TextureSetters.upper_bound(UpperString);
+
+	// Shader코드 규칙준수 바람
+	std::string SamplerName = NameStariter->first + "SAMPLER";
+
+	for (; NameStariter != NameEnditer; ++NameStariter)
+	{
+		GameEngineTextureSetter& Setter = NameStariter->second;
+		Setter.Res = _Texture;
+
+		if (true == IsSampler(SamplerName))
+		{
+			// Texture가 세팅될 때 Sampler도 같이 세팅됨
+			std::shared_ptr<GameEngineSampler> Sampler = Setter.Res->GetBaseSampler();
+			SetSampler(SamplerName, Sampler);
+		}
+	}
+}
+
+void GameEngineShaderResHelper::SetSampler(std::string_view _Name, std::shared_ptr<GameEngineSampler> _TextureSampler)
+{
+	if (false == IsSampler(_Name))
+	{
+		MsgBoxAssert("존재하지 않는 샘플러를 세팅하려고 했습니다.");
+		return;
+	}
+
+	std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+	std::multimap<std::string, GameEngineSamplerSetter>::iterator NameStariter
+		= SamplerSetters.lower_bound(UpperString);
+	std::multimap<std::string, GameEngineSamplerSetter>::iterator NameEnditer
+		= SamplerSetters.upper_bound(UpperString);
+
+	for (; NameStariter != NameEnditer; ++NameStariter)
+	{
+		GameEngineSamplerSetter& Setter = NameStariter->second;
+		Setter.Res = _TextureSampler;
+	}
+}
