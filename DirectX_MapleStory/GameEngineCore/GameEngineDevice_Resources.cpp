@@ -11,11 +11,11 @@
 #include "GameEngineSampler.h"
 #include "GameEngineSprite.h"
 #include "GameEngineBlend.h"
+#include "GameEngineMesh.h"
+#include "GameEngineMaterial.h"
 
 void GameEngineDevice::ResourcesInit()
 {
-
-
 	{
 		// 엔진용 쉐이더를 전부다 전부다 로드하는 코드를 친다.
 		GameEngineDirectory Dir;
@@ -51,6 +51,9 @@ void GameEngineDevice::ResourcesInit()
 		};
 
 		GameEngineIndexBuffer::Create("Rect", Index);
+
+		// 기본 매쉬를 만듦
+		GameEngineMesh::Create("Rect");
 	}
 
 	{
@@ -97,7 +100,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 
-		std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Create("EngineBlend", Desc);
+		std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Create("AlphaBlend", Desc);
 	}
 
 	{
@@ -152,5 +155,12 @@ void GameEngineDevice::ResourcesInit()
 			GameEngineFile& File = Files[i];
 			GameEngineShader::AutoCompile(File);
 		}
+	}
+
+	// 기본 매터리얼을 만듦
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTexture");
+		Mat->SetVertexShader("TextureShader_VS");
+		Mat->SetPixelShader("TextureShader_PS");
 	}
 }

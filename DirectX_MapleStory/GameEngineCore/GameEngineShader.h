@@ -28,7 +28,13 @@ public:
 
 	static bool AutoCompile(GameEngineFile& _File);
 
+	// 각 쉐이더가 ResHelper를 들고있음
 	GameEngineShaderResHelper ResHelper;
+
+	ShaderType GetShaderType()
+	{
+		return ShaderTypeValue;
+	}
 
 protected:
 	void CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _VersionLow);

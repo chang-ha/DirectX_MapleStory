@@ -49,6 +49,12 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{9b7a27df-9c3b-4156-b306-bfc9f97ea3a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Mesh">
+      <UniqueIdentifier>{3b4abecc-90ef-45af-a8d4-e6c64f62e5a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Material">
+      <UniqueIdentifier>{2a2b13d2-fb10-4877-8c5e-891e6bd4b01e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineActor.h">
@@ -146,6 +152,12 @@
     <ClInclude Include="GameEngineShaderResHelper.h">
       <Filter>Resources\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineMesh.h">
+      <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineMaterial.h">
+      <Filter>Resources\Material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -242,6 +254,12 @@
     <ClCompile Include="GameEngineTileMap.cpp" />
     <ClCompile Include="GameEngineShaderResHelper.cpp">
       <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineMesh.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineMaterial.cpp">
+      <Filter>Resources\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

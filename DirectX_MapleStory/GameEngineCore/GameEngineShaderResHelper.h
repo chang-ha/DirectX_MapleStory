@@ -20,6 +20,14 @@ class GameEngineConstantBufferSetter : public GameEngineShaderResources
 public:
 	// AutoCompile하면서 만든 ConstantBuffer을 들고있음
 	std::shared_ptr<GameEngineConstantBuffer> Res;
+
+	// GPU에서는 데이터를 순차적으로 더해주거나 하지 못하기 때문에 (+= 같은거??)
+	// 따로 CPU로 가져와서 +=같은 연산을 해줘야함
+	// 그래서 데이터에 대한 포인터를 들고있게 만듦
+	const void* CPUDataPtr = nullptr;
+	// 상수버퍼의 사이즈
+	UINT DataSize = -1;
+
 	void Setting() override;
 	void Reset() override;
 };
@@ -59,7 +67,27 @@ public:
 	GameEngineShaderResHelper& operator=(const GameEngineShaderResHelper& _Other) = delete;
 	GameEngineShaderResHelper& operator=(GameEngineShaderResHelper&& _Other) noexcept = delete;
 
-	void ShaderResCheck(std::string _FunctionName, GameEngineShader* _Shader, ID3DBlob* _CompileCode);
+	void ShaderResCheck(std::string _FunctionName, class GameEngineShader* _Shader, ID3DBlob* _CompileCode);
+
+	bool IsConstantBuffer(std::string_view _Name)
+	{
+		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+		return ConstantBufferSetters.contains(UpperString);
+	}
+
+	void ShaderResCopy(GameEngineShader* _Shader);
+
+	void AllShaderResourcesSetting();
+
+	// 여기에 값형만 들어갑니다.
+	template<typename DataType>
+	void ConstantBufferLink(std::string_view _Name, const DataType& _Data)
+	{
+		ConstantBufferLink(_Name, &_Data, sizeof(_Data));
+	}
+
+	void ConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
 
 protected:
 

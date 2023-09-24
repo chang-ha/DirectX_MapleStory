@@ -1,10 +1,26 @@
 ﻿#include "PreCompile.h"
 #include "GameEngineShaderResHelper.h"
-#include "GameEngineConstantBuffer.h"
+#include "GameEngineShader.h"
 
 void GameEngineConstantBufferSetter::Setting()
 {
+	// CPU에 있는 Data의 포인터와 사이즈로 세팅해줌
+	Res->ChangeData(CPUDataPtr, DataSize);
 
+	// 쉐이더 타입에 따라 VertexShader에 세팅할지 PixelShader에 세팅할지 결정 
+	ShaderType Type = ParentShader->GetShaderType();
+	switch (Type)
+	{
+	case ShaderType::Vertex:
+		Res->VSSetting(BindPoint);
+		break;
+	case ShaderType::Pixel:
+		Res->PSSetting(BindPoint);
+		break;
+	default:
+		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
+		break;
+	}
 }
 
 void GameEngineConstantBufferSetter::Reset()
@@ -14,7 +30,20 @@ void GameEngineConstantBufferSetter::Reset()
 
 void GameEngineTextureSetter::Setting()
 {
+	ShaderType Type = ParentShader->GetShaderType();
 
+	switch (Type)
+	{
+	case ShaderType::Vertex:
+		Res->VSSetting(BindPoint);
+		break;
+	case ShaderType::Pixel:
+		Res->PSSetting(BindPoint);
+		break;
+	default:
+		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
+		break;
+	}
 }
 
 void GameEngineTextureSetter::Reset()
@@ -24,7 +53,20 @@ void GameEngineTextureSetter::Reset()
 
 void GameEngineSamplerSetter::Setting()
 {
+	ShaderType Type = ParentShader->GetShaderType();
 
+	switch (Type)
+	{
+	case ShaderType::Vertex:
+		Res->VSSetting(BindPoint);
+		break;
+	case ShaderType::Pixel:
+		Res->PSSetting(BindPoint);
+		break;
+	default:
+		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
+		break;
+	}
 }
 
 void GameEngineSamplerSetter::Reset()
@@ -105,6 +147,7 @@ void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, GameEn
 			NewSetter.Res = CBuffer;
 			NewSetter.Name = UpperName;
 			NewSetter.BindPoint = ResDesc.BindPoint;
+			NewSetter.DataSize = BufferDesc.Size;
 			ConstantBufferSetters.insert(std::make_pair(UpperName, NewSetter));
 			break;
 		}
@@ -126,11 +169,12 @@ void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, GameEn
 		{
 			// 샘플러는 최초에 기본 Sampler로 세팅됨 (Texture를 세팅하면 자동으로 Sampler가 바뀜) 
 			// == 각 Texture내부에 Sampler를 들고있음
-			std::shared_ptr<GameEngineSampler> Res = GameEngineSampler::Find("EngineBaseSampler");
+			// std::shared_ptr<GameEngineSampler> Res = GameEngineSampler::Find("EngineBaseSampler");
 
 			GameEngineSamplerSetter NewSetter;
 			NewSetter.ParentShader = _Shader;
-			NewSetter.Res = Res;
+			// Sampler는 Texture가 Load될 떄 자동으로 세팅되지만 만약 세팅되지 않으면 터지도록 만듦
+			NewSetter.Res = nullptr;
 			NewSetter.Name = UpperName;
 			NewSetter.BindPoint = ResDesc.BindPoint;
 			SamplerSetters.insert(std::make_pair(UpperName, NewSetter));
@@ -139,5 +183,94 @@ void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, GameEn
 		default:
 			break;
 		}
+	}
+}
+
+void GameEngineShaderResHelper::ShaderResCopy(GameEngineShader* _Shader)
+{
+	// 해당 Shader를 조사한 ResHelper에 있는 정보들을 Renderer가 SetMaterial을 할 떄 값들을 복사해옴
+	std::multimap<std::string, GameEngineConstantBufferSetter>& OtherConstantBufferSetters = _Shader->ResHelper.ConstantBufferSetters;
+	std::multimap<std::string, GameEngineTextureSetter>& OtherTextureSetters = _Shader->ResHelper.TextureSetters;
+	std::multimap<std::string, GameEngineSamplerSetter>& OtherSamplerSetters = _Shader->ResHelper.SamplerSetters;
+
+	for (std::pair<const std::string, GameEngineConstantBufferSetter>& Pair : OtherConstantBufferSetters)
+	{
+		ConstantBufferSetters.insert(std::make_pair(Pair.first, Pair.second));
+	}
+
+	for (std::pair<const std::string, GameEngineTextureSetter>& Pair : OtherTextureSetters)
+	{
+		TextureSetters.insert(std::make_pair(Pair.first, Pair.second));
+	}
+
+	for (std::pair<const std::string, GameEngineSamplerSetter>& Pair : OtherSamplerSetters)
+	{
+		SamplerSetters.insert(std::make_pair(Pair.first, Pair.second));
+	}
+}
+
+void GameEngineShaderResHelper::AllShaderResourcesSetting()
+{
+	// 모든 ConstantBuffer, Texture, Sampler를 돌면서 Setting()함수 호출
+	for (std::pair<const std::string, GameEngineConstantBufferSetter>& Pair : ConstantBufferSetters)
+	{
+		if (nullptr == Pair.second.Res)
+		{
+			MsgBoxAssert(std::string(Pair.first) + "라는 샘플러가 세팅이 되지 않았습니다.");
+			return;
+		}
+
+		Pair.second.Setting();
+	}
+
+	for (std::pair<const std::string, GameEngineTextureSetter>& Pair : TextureSetters)
+	{
+		if (nullptr == Pair.second.Res)
+		{
+			MsgBoxAssert(std::string(Pair.first) + "라는 샘플러가 세팅이 되지 않았습니다.");
+			return;
+		}
+
+		Pair.second.Setting();
+	}
+
+	for (std::pair<const std::string, GameEngineSamplerSetter>& Pair : SamplerSetters)
+	{
+		if (nullptr == Pair.second.Res)
+		{
+			MsgBoxAssert(std::string(Pair.first) + "라는 샘플러가 세팅이 되지 않았습니다.");
+			return;
+		}
+
+		Pair.second.Setting();
+	}
+}
+
+void GameEngineShaderResHelper::ConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size)
+{
+	if (false == IsConstantBuffer(_Name))
+	{
+		MsgBoxAssert("존재하지 않는 상수버퍼에 링크를 걸려고 했습니다.");
+		return;
+	}
+
+	std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+	// 중복되는 이름의 시작 이터레이터와 끝 이터레이터를 찾는법
+	std::multimap<std::string, GameEngineConstantBufferSetter>::iterator NameStariter
+		= ConstantBufferSetters.lower_bound(UpperString);
+	std::multimap<std::string, GameEngineConstantBufferSetter>::iterator NameEnditer
+		= ConstantBufferSetters.upper_bound(UpperString);
+
+	for (; NameStariter != NameEnditer; ++NameStariter)
+	{
+		GameEngineConstantBufferSetter& Setter = NameStariter->second;
+		// 세팅하려는 상수버퍼의 크기와 찾은 상수버퍼의 크기가 같아야함
+		if (Setter.DataSize != _Size)
+		{
+			MsgBoxAssert(NameStariter->first + "상수버퍼에 크기가 다른 데이터를 세팅하려고 했습니다.");
+		}
+		// ShaderResHelper의 상수버퍼에 Data 포인터를 세팅
+		Setter.CPUDataPtr = _Data;
 	}
 }

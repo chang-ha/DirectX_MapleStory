@@ -1,6 +1,9 @@
 #pragma once
 #include "GameEngineObject.h"
 #include "GameEngineComponent.h"
+#include "GameEngineMesh.h"
+#include "GameEngineMaterial.h"
+#include "GameEngineShaderResHelper.h"
 
 // 설명 : GameEngineRenderer에게 Order는 랜더링 되는 순서를 의미합니다.
 class GameEngineRenderer : public GameEngineComponent
@@ -43,8 +46,15 @@ public:
 
 	void SetCameraOrder(int _Order);
 
+	// Renderer에 매쉬와 머티리얼을 세팅해 줘야함
+	void SetMesh(std::string_view _Name);
+	void SetMaterial(std::string_view _Name);
+
 protected:
-	GameEngineTransform* DataTransform;
+	std::shared_ptr<class GameEngineInputLayOut> LayOut = nullptr;
+	std::shared_ptr<class GameEngineMesh> Mesh = nullptr;
+	std::shared_ptr<class GameEngineMaterial> Material = nullptr;
+	GameEngineShaderResHelper ShaderResHelper;
 
 	void Start();
 	virtual void Render(class GameEngineCamera* _Camera, float _Delta);
@@ -54,8 +64,5 @@ protected:
 
 private:
 	class GameEngineCamera* Camera = nullptr;
-	std::shared_ptr<class GameEngineInputLayOut> LayOut = nullptr;
-
-	// int CameraOrder = 0;
 };
 

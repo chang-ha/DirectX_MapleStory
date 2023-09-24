@@ -162,7 +162,7 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 				// 내 행렬을 전부다 계산하고 넘긴다.
 
 				TransBuffer->ChangeData(Data);
-				TransBuffer->Setting(0);
+				TransBuffer->VSSetting(0);
 			}
 
 			SpriteData& TileSprite = Tiles[y][x].Data;

@@ -114,10 +114,16 @@ void GameEngineSpriteRenderer::Start()
 {
 	GameEngineRenderer::Start();
 	// DataTransform에 ImageTransform을 넣어줌
-	DataTransform = &ImageTransform;
+	// DataTransform = &ImageTransform;
 	// 부모로는 나(액터)의 Transform을 넣어줌으로서 액터의 Transform과 Renderer의 Transform을 분리함
 	ImageTransform.SetParent(Transform);
-	Sampler = GameEngineSampler::Find("POINT");
+	SetMesh("Rect");
+	SetMaterial("2DTexture");
+
+	// 현재 ImageTransform을 ConstantBuufer에 세팅해줌
+	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
+	ShaderResHelper.ConstantBufferLink("TransformData", Data);
+	ShaderResHelper.ConstantBufferLink("SpriteData", CurSprite.SpritePivot);
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)
@@ -257,13 +263,6 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	ImageTransform.TransformUpdate();
 	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
 
-	GameEngineRenderer::ResSetting();
-
-	if (nullptr == Sampler)
-	{
-		MsgBoxAssert("존재하지 않는 샘플러를 사용하려고 했습니다.");
-	}
-	Sampler->PSSetting(0);
 	GameEngineRenderer::Draw();
 }
 

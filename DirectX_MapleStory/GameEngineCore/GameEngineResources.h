@@ -55,6 +55,12 @@ public:
 	{
 		Name = _Name;
 	}
+
+	std::string_view GetName()
+	{
+		return Name;
+	}
+
 protected:
 
 	static std::shared_ptr<ResourcesType> CreateRes()
