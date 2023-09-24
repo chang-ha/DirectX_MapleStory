@@ -7,3 +7,4 @@
 #include <GameEnginePlatform/GameEngineSound.h>
 
 #include "GameEngineCore.h"
+#include "GameEngineDebugCore.h"

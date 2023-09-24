@@ -55,6 +55,9 @@
     <Filter Include="Resources\Material">
       <UniqueIdentifier>{2a2b13d2-fb10-4877-8c5e-891e6bd4b01e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{cebecfe9-a989-4b6b-ad38-ba1e068399e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineActor.h">
@@ -158,6 +161,9 @@
     <ClInclude Include="GameEngineMaterial.h">
       <Filter>Resources\Material</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineDebugCore.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -260,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineMaterial.cpp">
       <Filter>Resources\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineDebugCore.cpp">
+      <Filter>Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

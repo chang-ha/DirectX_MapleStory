@@ -254,32 +254,32 @@ public:
 
 
 	// Get
-	float4 GetWorldScale()
+	float4 GetWorldScale() const
 	{
 		return TransData.WorldScale;
 	}
 
-	float4 GetWorldRotationEuler()
+	float4 GetWorldRotationEuler() const
 	{
 		return TransData.WorldRotation;
 	}
 
-	float4 GetWorldPosition()
+	float4 GetWorldPosition() const
 	{
 		return TransData.WorldPosition;
 	}
-
-	float4 GetLocalScale()
+	 
+	float4 GetLocalScale() const
 	{
 		return TransData.LocalScale;
 	}
 
-	float4 GetLocalRotationEuler()
+	float4 GetLocalRotationEuler() const
 	{
 		return TransData.LocalRotation;
 	}
 
-	float4 GetLocalPosition()
+	float4 GetLocalPosition() const
 	{
 		return TransData.LocalPosition;
 	}
@@ -290,33 +290,33 @@ public:
 	// [0][0][1][0] ¾Õ
 	// [0][0][0][1]
 
-	float4 GetWorldForwardVector() 
+	float4 GetWorldForwardVector() const
 	{
 		return TransData.WorldMatrix.ArrVector[2].NormalizeReturn();
 	}
 
-	float4 GetWorldBackVector()
+	float4 GetWorldBackVector() const
 	{
 		return -(TransData.WorldMatrix.ArrVector[2].NormalizeReturn());
 	}
 
 
-	float4 GetWorldRightVector()
+	float4 GetWorldRightVector() const
 	{
 		return TransData.WorldMatrix.ArrVector[0].NormalizeReturn();
 	}
 
-	float4 GetWorldLeftVector()
+	float4 GetWorldLeftVector() const
 	{
 		return -(TransData.WorldMatrix.ArrVector[0].NormalizeReturn());
 	}
 
-	float4 GetWorldUpVector()
+	float4 GetWorldUpVector() const
 	{
 		return TransData.WorldMatrix.ArrVector[1].NormalizeReturn();
 	}
 
-	float4 GetWorldDownVector()
+	float4 GetWorldDownVector() const
 	{
 		return TransData.WorldMatrix.ArrVector[1].NormalizeReturn();
 	}
