@@ -33,7 +33,6 @@ public:
 protected:
 
 private:
-	std::string EntryName = "";
 	ID3D11VertexShader* ShaderPtr = nullptr;
 
 	void ShaderLoad(std::string_view _Path, std::string_view _EntryPoint, UINT _VersionHight = 5, UINT _VersionLow = 0);

@@ -32,12 +32,6 @@ public:
 	std::vector<float> Inter; // AnimationSpeed
 };
 
-enum class SamplerOption
-{
-	LINEAR,
-	POINT,
-};
-
 enum class PivotType
 {
 	Center,
@@ -99,8 +93,6 @@ public:
 
 	void AutoSpriteSizeOn();
 	void AutoSpriteSizeOff();
-
-	void SetSamplerState(SamplerOption _Option);
 
 	bool IsCurAnimationEnd()
 	{

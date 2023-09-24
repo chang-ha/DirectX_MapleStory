@@ -34,12 +34,14 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
     return Result;
 }
 
+// 규칙
+// Texture이름이 A이면 Sampler이름은 ASampler << 규칙을 지켜야 내가 만든 자동 쉐이더 컴파일이 작동함
 Texture2D DiffuseTex : register(t0);
-SamplerState Sampler : register(s0);
+SamplerState DiffuseTexSampler : register(s0);
 
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
-    float4 Color = DiffuseTex.Sample(Sampler, _Input.TEXCOORD.xy);
+    float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCOORD.xy);
     
     if (0.0f >= Color.a)
     {

@@ -73,3 +73,8 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 	}
 	return true;
 }
+
+void GameEngineShader::ShaderResCheck()
+{
+	ResHelper.ShaderResCheck(EntryName, this, BinaryCode);
+}

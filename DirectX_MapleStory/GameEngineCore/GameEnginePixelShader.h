@@ -32,7 +32,6 @@ public:
 protected:
 
 private:
-	std::string EntryName = "";
 	ID3D11PixelShader* ShaderPtr = nullptr;
 
 	void ShaderLoad(std::string_view _Path, std::string_view _EntryPoint, UINT _VersionHigh = 5, UINT _VersionLow = 0);

@@ -14,22 +14,7 @@
 
 void GameEngineDevice::ResourcesInit()
 {
-	// 엔진수준에서 지원해주는 가장 기초적인 리소스들은 여기에서 만들어질 겁니다.
-	// 기본 매쉬
-	// 기본 텍스처
 
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("GameEngineCoreShader");
-		Dir.MoveChild("GameEngineCoreShader");
-		std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			// GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
-			GameEngineFile& File = Files[i];
-			GameEngineShader::AutoCompile(File);
-		}
-	}
 
 	{
 		// 엔진용 쉐이더를 전부다 전부다 로드하는 코드를 친다.
@@ -86,11 +71,6 @@ void GameEngineDevice::ResourcesInit()
 		};
 
 		GameEngineIndexBuffer::Create("FullRect", Index);
-	}
-
-	{
-		// BytePadding방식이 CPU와 GPU간의 차이가 있을 수 있으니 이상하면 여기 체크
-		GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 	}
 
 	{
@@ -154,6 +134,23 @@ void GameEngineDevice::ResourcesInit()
 		Desc.MinLOD = -FLT_MAX;
 		Desc.MaxLOD = FLT_MAX;
 
-		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("POINT", Desc);
+		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("EngineBaseSampler", Desc);
+	}
+
+	// 엔진수준에서 지원해주는 가장 기초적인 리소스들은 여기에서 만들어질 겁니다.
+	// 기본 매쉬
+	// 기본 텍스처
+
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("GameEngineCoreShader");
+		Dir.MoveChild("GameEngineCoreShader");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			// GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
+			GameEngineFile& File = Files[i];
+			GameEngineShader::AutoCompile(File);
+		}
 	}
 }

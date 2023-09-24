@@ -35,7 +35,6 @@ void Player::Start()
 {
 	ContentActor::Start();
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Play);
-	MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
 	// Create Sprite 
 	if (nullptr == GameEngineSprite::Find("Idle"))

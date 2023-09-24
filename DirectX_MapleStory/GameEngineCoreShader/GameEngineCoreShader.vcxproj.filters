@@ -3,9 +3,19 @@
   <ItemGroup>
     <FxCompile Include="ColorShader.fx" />
     <FxCompile Include="TextureShader.fx" />
-    <FxCompile Include="Transform.fx" />
+    <FxCompile Include="RenderBase.fx">
+      <Filter>Header</Filter>
+    </FxCompile>
+    <FxCompile Include="Transform.fx">
+      <Filter>Header</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="쉐이더 규칙.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{6433ef69-eff3-47c6-bd3a-d17709839a0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

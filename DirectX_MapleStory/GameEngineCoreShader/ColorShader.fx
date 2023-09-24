@@ -1,4 +1,5 @@
 #include "Transform.fx"
+#include "RenderBase.fx"
 
 // 코딩 스탠다드 (꼭 지켜야함)
 // 파일명과 함수명은 일치시켜야함
@@ -13,5 +14,6 @@ float4 ColorShader_VS(float4 pos : POSITION) : SV_Position
 
 float4 ColorShader_PS(float4 pos : SV_Position) : SV_Target0
 {
-    return float4(1.0f, 0.0f, 0.0f, 1.0f);
+    return BaseColor;
+
 }

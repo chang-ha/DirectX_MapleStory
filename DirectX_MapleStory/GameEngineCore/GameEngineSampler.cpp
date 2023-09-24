@@ -1,6 +1,8 @@
 ﻿#include "PreCompile.h"
 #include "GameEngineSampler.h"
 
+std::map<D3D11_FILTER, std::map<D3D11_TEXTURE_ADDRESS_MODE, std::shared_ptr<GameEngineSampler>>> GameEngineSampler::OptionSamplers;
+
 GameEngineSampler::GameEngineSampler()
 {
 

@@ -259,36 +259,12 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 
 	GameEngineRenderer::ResSetting();
 
-	std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData");
-	if (nullptr != ConstantBuffer)
-	{
-		ConstantBuffer->ChangeData(CurSprite.SpritePivot);
-		ConstantBuffer->Setting(1);
-	}
-
-	CurSprite.Texture->PSSetting(0);
-
 	if (nullptr == Sampler)
 	{
 		MsgBoxAssert("존재하지 않는 샘플러를 사용하려고 했습니다.");
 	}
 	Sampler->PSSetting(0);
 	GameEngineRenderer::Draw();
-}
-
-void GameEngineSpriteRenderer::SetSamplerState(SamplerOption _Option)
-{
-	switch (_Option)
-	{
-	case SamplerOption::LINEAR:
-		Sampler = GameEngineSampler::Find("LINEAR");
-		break;
-	case SamplerOption::POINT:
-		Sampler = GameEngineSampler::Find("POINT");
-		break;
-	default:
-		break;
-	}
 }
 
 void GameEngineSpriteRenderer::SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function)

@@ -110,19 +110,19 @@ void GameEngineRenderer::ResSetting()
 	}
 	////////////////
 
-	//////////////// ConstantBuffer
-	std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
+	////////////////// ConstantBuffer
+	//std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 
-	const TransformData& Data = Transform.GetConstTransformDataRef();
+	//const TransformData& Data = Transform.GetConstTransformDataRef();
 
-	if (nullptr != ConstantBuffer)
-	{
-		const TransformData& Data = DataTransform->GetConstTransformDataRef();
-		ConstantBuffer->ChangeData(Data);
-		ConstantBuffer->Setting(0);
-	}
+	//if (nullptr != ConstantBuffer)
+	//{
+	//	const TransformData& Data = DataTransform->GetConstTransformDataRef();
+	//	ConstantBuffer->ChangeData(Data);
+	//	ConstantBuffer->Setting(0);
+	//}
 
-	////////////////
+	//////////////////
 
 	//////////////// IndexBuffer
 	std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");

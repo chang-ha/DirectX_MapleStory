@@ -57,6 +57,8 @@ void GameEnginePixelShader::ShaderLoad(std::string_view _Path, std::string_view 
 	{
 		MsgBoxAssert("픽셀 쉐이더 생성에 실패했습니다.");
 	}
+
+	ShaderResCheck();
 }
 
 void GameEnginePixelShader::Setting()

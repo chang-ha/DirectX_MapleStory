@@ -1,4 +1,7 @@
 #pragma once
+#include "GameEngineConstantBuffer.h"
+#include "GameEngineTexture.h"
+#include "GameEngineSampler.h"
 
 class GameEngineShaderResources
 {
@@ -15,6 +18,8 @@ public:
 class GameEngineConstantBufferSetter : public GameEngineShaderResources
 {
 public:
+	// AutoCompile하면서 만든 ConstantBuffer을 들고있음
+	std::shared_ptr<GameEngineConstantBuffer> Res;
 	void Setting() override;
 	void Reset() override;
 };
@@ -22,6 +27,8 @@ public:
 class GameEngineTextureSetter : public GameEngineShaderResources
 {
 public:
+	// AutoCompile하면서 만든 Texture을 들고있음
+	std::shared_ptr<GameEngineTexture> Res;
 	void Setting() override;
 	void Reset() override;
 };
@@ -29,6 +36,8 @@ public:
 class GameEngineSamplerSetter : public GameEngineShaderResources
 {
 public:
+	// AutoCompile하면서 만든 Sampler을 들고있음
+	std::shared_ptr<GameEngineSampler> Res;
 	void Setting() override;
 	void Reset() override;
 };
@@ -50,7 +59,7 @@ public:
 	GameEngineShaderResHelper& operator=(const GameEngineShaderResHelper& _Other) = delete;
 	GameEngineShaderResHelper& operator=(GameEngineShaderResHelper&& _Other) noexcept = delete;
 
-	void ShaderResCheck(std::string _FunctionName, ID3DBlob* _CompileCode);
+	void ShaderResCheck(std::string _FunctionName, GameEngineShader* _Shader, ID3DBlob* _CompileCode);
 
 protected:
 
