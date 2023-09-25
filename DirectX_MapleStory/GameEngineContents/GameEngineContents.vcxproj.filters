@@ -88,6 +88,15 @@
     <ClCompile Include="MercilessWinds.cpp">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="Lucid_Phase1.cpp">
+      <Filter>Level\Boss_Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_Lucid_Phase1.cpp">
+      <Filter>Actor\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseBossActor.cpp">
+      <Filter>Actor\Monster\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -177,6 +186,15 @@
     <ClInclude Include="MercilessWinds.h">
       <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="Lucid_Phase1.h">
+      <Filter>Level\Boss_Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_Lucid_Phase1.h">
+      <Filter>Actor\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseBossActor.h">
+      <Filter>Actor\Monster\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -229,6 +247,12 @@
     </Filter>
     <Filter Include="Actor\Global\Player\Skill\Wind">
       <UniqueIdentifier>{023d86bb-5574-4445-8dd3-55b2db2d4e56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Boss_Stage">
+      <UniqueIdentifier>{11ecaecb-e770-4fb5-bf1a-80380412cdaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Monster\Boss">
+      <UniqueIdentifier>{a421ec7f-2295-4e5d-81c6-cfe3f1a81bee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -25,7 +25,7 @@ void WindWalk::UseSkill()
 	{
 	case ActorDir::Right:
 		SkillLeftFlip();
-		SkillRenderer1->SetPivotValue(float4(0.75f, 0.6f));
+		SkillRenderer1->SetPivotValue(float4(0.25f, 0.6f));
 		break;
 	case ActorDir::Left:
 		SkillRightFlip();
