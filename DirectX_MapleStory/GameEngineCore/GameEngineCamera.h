@@ -4,13 +4,6 @@
 #include <list>
 #include <memory>
 
-enum EPROJECTIONTYPE
-{
-	Perspective,
-	Orthographic,
-};
-
-
 // Ό³Έν :
 class GameEngineCamera : public GameEngineActor
 {
@@ -38,6 +31,16 @@ public:
 
 	float4 GetWorldMousePos2D();
 
+	void SetZoomValue(float _Value)
+	{
+		ZoomValue = _Value;
+	}
+
+	void AddZoomValue(float _Value)
+	{
+		ZoomValue += _Value;
+	}
+
 protected:
 	void Start() override;
 
@@ -52,6 +55,7 @@ private:
 	float Far = 1000.0f;
 	float Near = 0.1f;
 	float FOV = 60.0f;
+	float ZoomValue = 0.0f;
 
 	int CameraOrder = 0;
 	std::map<int, std::list<std::shared_ptr<class GameEngineRenderer>>> Renderers;

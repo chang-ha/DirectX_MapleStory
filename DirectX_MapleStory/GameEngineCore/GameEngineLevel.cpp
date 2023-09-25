@@ -10,11 +10,11 @@ GameEngineLevel::GameEngineLevel()
 {
 	// Main
 	{
-		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, 0);
+		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, ECAMERAORDER::Main);
 	}
 
 	{
-		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, 100);
+		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, ECAMERAORDER::UI);
 	}
 
 	// UI카메라
@@ -57,6 +57,11 @@ void GameEngineLevel::Render(float _Delta)
 {
 	for (std::pair<const int, std::shared_ptr<class GameEngineCamera>>& CameraPair : Cameras)
 	{
+		if (nullptr == CameraPair.second)
+		{
+			continue;
+		}
+
 		// 레퍼런스로 받는다.
 		std::shared_ptr<GameEngineCamera>& Camera = CameraPair.second;
 		Camera->Render(_Delta);
@@ -76,6 +81,11 @@ void GameEngineLevel::AllReleaseCheck()
 	//		<< 아니면 카메라가 관리하는 std::shared_ptr이 메모리에서 절대 안사라짐 (ex : Renderer)
 	for (std::pair<const int, std::shared_ptr<class GameEngineCamera>>& Pair : Cameras)
 	{
+		if (nullptr == Pair.second)
+		{
+			continue;
+		}
+
 		Pair.second->AllReleaseCheck();
 	}
 

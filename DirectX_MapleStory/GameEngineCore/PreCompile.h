@@ -8,3 +8,4 @@
 
 #include "GameEngineCore.h"
 #include "GameEngineDebugCore.h"
+#include "EngineEnum.h"

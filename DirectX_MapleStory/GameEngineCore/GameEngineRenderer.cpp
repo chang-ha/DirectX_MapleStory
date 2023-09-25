@@ -31,7 +31,7 @@ void GameEngineRenderer::Start()
 	// DataTransform = &Transform;
 
 	// 메인카메라에 들어갔다.
-	SetViewCameraSelect(0);
+	SetCameraOrder(ECAMERAORDER::Main);
 
 	// 카메라를 찾아서 들어가야 합니다.
 	// 카메를 찾으려면? GameEngineLevel
@@ -227,6 +227,8 @@ void GameEngineRenderer::SetMesh(std::string_view _Name)
 void GameEngineRenderer::SetMaterial(std::string_view _Name)
 {
 	Material = GameEngineMaterial::Find(_Name);
+
+	ShaderResHelper.ResClear();
 
 	if (nullptr == Material)
 	{

@@ -207,6 +207,20 @@ void GameEngineShaderResHelper::ShaderResCopy(GameEngineShader* _Shader)
 	{
 		SamplerSetters.insert(std::make_pair(Pair.first, Pair.second));
 	}
+
+	// 방어코드
+	// 기본 샘플러로 세팅해줘야할 녀석들이 있는지 확인한다.
+	for (std::pair<const std::string, GameEngineTextureSetter>& Pair : OtherTextureSetters)
+	{
+		std::string SamplerName = Pair.first + "SAMPLER";
+
+		if (true == IsSampler(SamplerName))
+		{
+			std::shared_ptr<GameEngineSampler> Sampler = Pair.second.Res->GetBaseSampler();
+
+			SetSampler(SamplerName, Sampler);
+		}
+	}
 }
 
 void GameEngineShaderResHelper::AllShaderResourcesSetting()
@@ -339,4 +353,11 @@ void GameEngineShaderResHelper::SetSampler(std::string_view _Name, std::shared_p
 		GameEngineSamplerSetter& Setter = NameStariter->second;
 		Setter.Res = _TextureSampler;
 	}
+}
+
+void GameEngineShaderResHelper::ResClear()
+{
+	ConstantBufferSetters.clear();
+	TextureSetters.clear();
+	SamplerSetters.clear();
 }

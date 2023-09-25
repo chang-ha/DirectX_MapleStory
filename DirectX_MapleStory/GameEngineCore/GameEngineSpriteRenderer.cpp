@@ -128,7 +128,7 @@ void GameEngineSpriteRenderer::Start()
 	ShaderResHelper.SetConstantBufferLink("TransformData", Data);
 	ShaderResHelper.SetConstantBufferLink("SpriteData", CurSprite.SpritePivot);
 	ShaderResHelper.SetConstantBufferLink("SpriteRendererInfo", SpriteRendererInfoValue);
-	ShaderResHelper.SetTexture("DiffuseTex", "NSet.Png");
+	SetSprite("NSet.Png");
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)

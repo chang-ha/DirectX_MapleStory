@@ -44,6 +44,10 @@ public:
 
 	void SetRenderOrder(int _Order);
 
+	void SetCameraOrder(ECAMERAORDER _Order)
+	{
+		SetCameraOrder(static_cast<int>(_Order));
+	}
 	void SetCameraOrder(int _Order);
 
 	// Renderer에 매쉬와 머티리얼을 세팅해 줘야함

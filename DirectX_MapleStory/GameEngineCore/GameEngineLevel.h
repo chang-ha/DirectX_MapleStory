@@ -19,6 +19,10 @@ public:
 	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
+	std::shared_ptr<class GameEngineCamera> CreateCamera(int _Order, ECAMERAORDER _CameraOrder)
+	{
+		return CreateCamera(_Order, static_cast<int>(_CameraOrder));
+	}
 	std::shared_ptr<class GameEngineCamera> CreateCamera(int _Order, int _CameraOrder);
 
 	template<typename ObjectType, typename EnumType>
@@ -46,7 +50,7 @@ public:
 
 	std::shared_ptr<GameEngineCamera> GetMainCamera()
 	{
-		return Cameras[0];
+		return Cameras[static_cast<int>(ECAMERAORDER::Main)];
 	}
 
 	std::shared_ptr<GameEngineCamera> GetCamera(int _Select)

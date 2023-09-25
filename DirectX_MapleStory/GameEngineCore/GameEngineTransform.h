@@ -1,4 +1,5 @@
 #pragma once
+#include "EngineEnum.h"
 
 // 기하구조를 표현하고
 // 부모자식관계를 처리한다.

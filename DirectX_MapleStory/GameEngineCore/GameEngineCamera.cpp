@@ -17,6 +17,7 @@ void GameEngineCamera::Start()
 	GameEngineActor::Start();
 
 	GameEngineLevel* Level = GetLevel();
+	ZoomValue = 1.0f;
 
 	if (nullptr == Level)
 	{
@@ -38,13 +39,14 @@ void GameEngineCamera::Update(float _Delta)
 	Transform.LookToLH(Position, Forward, Up);
 
 	float4 WindowScale = GameEngineCore::MainWindow.GetScale();
+	WindowScale *= ZoomValue;
 
 	switch (ProjectionType)
 	{
-	case Perspective:
+	case EPROJECTIONTYPE::Perspective:
 		Transform.PerspectiveFovLHDeg(FOV, WindowScale.X, WindowScale.Y, Near, Far);
 		break;
-	case Orthographic:
+	case EPROJECTIONTYPE::Orthographic:
 		Transform.OrthographicLH(WindowScale.X, WindowScale.Y, Near, Far);
 		break;
 	default:
