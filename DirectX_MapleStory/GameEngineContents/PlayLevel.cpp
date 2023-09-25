@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "ContentMap.h"
 #include "SkillManager.h"
+#include "ContentBackGround.h"
 
 //TestCode
 #include "ContentMonster.h"
@@ -37,6 +38,9 @@ void PlayLevel::Start()
 	TestMonster->Transform.SetLocalPosition({ 550, -780 });
 	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
 	TestMonster->Transform.SetLocalPosition({ 600, -780 });
+
+	std::shared_ptr<ContentBackGround> Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
+	Back->Init("BG_Lacheln.png");
 }
 
 void PlayLevel::Update(float _Delta)

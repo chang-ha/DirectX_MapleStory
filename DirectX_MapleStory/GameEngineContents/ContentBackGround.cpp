@@ -38,14 +38,14 @@ void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _Ba
 	if (float4::ZERO != _BackGroundScale)
 	{
 		BackScale = _BackGroundScale;
-		BackGroundRenderer->SetImageScale(_BackGroundScale);
 	}
 	else
 	{
 		BackScale = BackGroundTexture->GetScale();
 	}
+	BackGroundRenderer->SetImageScale(BackScale);
 
 	float4 HalfBackScale = BackScale.Half();
 	HalfBackScale.Y *= -1.0f;
-	this->Transform.SetLocalPosition(HalfBackScale);
+	Transform.SetLocalPosition(HalfBackScale);
 }
