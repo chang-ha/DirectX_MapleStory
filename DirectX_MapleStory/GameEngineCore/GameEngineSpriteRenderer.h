@@ -37,8 +37,6 @@ enum class PivotType
 	Center,
 	Bottom,
 	Left,
-	Right,
-	Top,
 	LeftTop,
 };
 

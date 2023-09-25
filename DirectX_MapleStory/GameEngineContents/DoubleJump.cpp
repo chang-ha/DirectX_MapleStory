@@ -26,8 +26,8 @@ void DoubleJump::UseSkill()
 	if (GameEngineInput::IsPress(VK_UP))
 	{
 		AniDir = "Up_";
-		SkillRenderer1->SetPivotType(PivotType::Top);
-		SkillRenderer2->SetPivotType(PivotType::Top);
+		SkillRenderer1->SetPivotValue({ 0.5f, 0.0f });
+		SkillRenderer2->SetPivotValue({ 0.5f, 0.0f });
 		Pivot = float4(0, PlayerScale.hY());
 	}
 	else
@@ -37,8 +37,8 @@ void DoubleJump::UseSkill()
 		{
 		case ActorDir::Right:
 			SkillLeftFlip();
-			SkillRenderer1->SetPivotType(PivotType::Right);
-			SkillRenderer2->SetPivotType(PivotType::Right);
+			SkillRenderer1->SetPivotValue({ 0.0f, 0.5f });
+			SkillRenderer2->SetPivotValue({ 0.0f, 0.5f });
 			Pivot = PlayerScale.Half();
 			break;
 		case ActorDir::Left:
