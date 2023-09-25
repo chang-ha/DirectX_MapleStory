@@ -4,6 +4,7 @@
 #include "ContentMap.h"
 #include "SkillManager.h"
 #include "ContentBackGround.h"
+#include "Boss_Lucid_Phase1.h"
 
 Lucid_Phase1::Lucid_Phase1()
 {
@@ -39,6 +40,9 @@ void Lucid_Phase1::Start()
 
 	std::shared_ptr<ContentBackGround> Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
 	Back->Init("BG_Lucid_Phase1.png");
+
+	std::shared_ptr<Boss_Lucid_Phase1> Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
+	Boss->Transform.SetLocalPosition(float4(1000, -700));
 }
 
 void Lucid_Phase1::Update(float _Delta)

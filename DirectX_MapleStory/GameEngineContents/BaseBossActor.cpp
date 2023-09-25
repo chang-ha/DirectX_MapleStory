@@ -24,6 +24,7 @@ void BaseBossActor::LevelEnd(GameEngineLevel* _NextLevel)
 void BaseBossActor::Start()
 {
 	BossRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+	BossRenderer->AutoSpriteSizeOn();
 	BossCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
 }
 
