@@ -71,7 +71,6 @@ void Arrow::Start()
 
 	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("TestArrow");
 	ArrowScale = Sprite->GetSpriteData(0).GetScale();
-	Sprite = nullptr;
 
 	ArrowCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	ArrowCollision->Transform.SetLocalScale(ArrowScale);
@@ -130,9 +129,4 @@ void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Oth
 
 	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject(), false);
 	BaseWindActor::CreateTriflingWind();
-	// ArrowRenderer->ChangeAnimation("TestArrow_Hit");
-	// ArrowRenderer->SetPivotType(PivotType::Center);
-	// float4 OtherPos = CurMonster->Transform.GetWorldPosition();
-	// Transform.SetLocalPosition(OtherPos);
-	// CurMonster->ChangeState(MonsterState::Hit);
 }
