@@ -115,18 +115,6 @@ void Arrow::Update(float _Delta)
 void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
 	++CollisionCount;
-	ContentMonster* CurMonster = dynamic_cast<ContentMonster*>(_Other->GetParentObject());
-	if (nullptr == CurMonster)
-	{
-		MsgBoxAssert("충돌대상이 잘못되었습니다.");
-		return;
-	}
-
-	if (MonsterState::Death == CurMonster->GetState())
-	{
-		return;
-	}
-
 	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject(), false);
 	BaseWindActor::CreateTriflingWind();
 }

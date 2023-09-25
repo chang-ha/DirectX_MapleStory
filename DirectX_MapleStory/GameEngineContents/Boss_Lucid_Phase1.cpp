@@ -1,5 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "Boss_Lucid_Phase1.h"
+#include "PhantasmalWind.h"
+#include "ContentLevel.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -58,6 +60,19 @@ void Boss_Lucid_Phase1::Start()
 	FlowerRenderer->SetPivotType(PivotType::Bottom);
 	FlowerRenderer->ChangeAnimation("Flower");
 	FlowerRenderer->Transform.SetLocalPosition({ -5, 3 });
+	
+	BossCollision->Transform.SetLocalScale({300, 1000});
+
+	// Render Event
+	BossRenderer->SetFrameEvent("Skill1", 22, [&](GameEngineRenderer* _Renderer)
+		{
+			for (size_t i = 0; i < 4; i++)
+			{
+				std::shared_ptr<PhantasmalWind> Wind = ContentLevel::CurContentLevel->CreateActor<PhantasmalWind>(UpdateOrder::Monster);
+				Wind->Transform.SetLocalPosition(Transform.GetWorldPosition() + float4{ 37, 321 });
+			}
+		}
+	);
 }
 
 void Boss_Lucid_Phase1::Update(float _Delta)
@@ -231,22 +246,34 @@ void Boss_Lucid_Phase1::DeathUpdate(float _Delta)
 
 void Boss_Lucid_Phase1::Skill1Update(float _Delta)
 {
-
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
 }
 
 void Boss_Lucid_Phase1::Skill2Update(float _Delta)
 {
-
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
 }
 
 void Boss_Lucid_Phase1::Skill3Update(float _Delta)
 {
-
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
 }
 
 void Boss_Lucid_Phase1::Skill4Update(float _Delta)
 {
-
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
 }
 
 void Boss_Lucid_Phase1::IdleEnd()

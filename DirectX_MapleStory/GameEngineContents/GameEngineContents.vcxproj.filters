@@ -97,6 +97,9 @@
     <ClCompile Include="BaseBossActor.cpp">
       <Filter>Actor\Monster\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="PhantasmalWind.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -195,6 +198,9 @@
     <ClInclude Include="BaseBossActor.h">
       <Filter>Actor\Monster\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="PhantasmalWind.h">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -253,6 +259,9 @@
     </Filter>
     <Filter Include="Actor\Monster\Boss">
       <UniqueIdentifier>{a421ec7f-2295-4e5d-81c6-cfe3f1a81bee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Monster\Boss\SummonActor">
+      <UniqueIdentifier>{d55e9272-96d5-4838-85df-8981fa05f30b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

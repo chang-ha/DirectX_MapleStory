@@ -8,7 +8,7 @@ enum class LucidState
 	Skill1, // Shoot
 	Skill2, // Summon Dragon
 	Skill3, // Teleport
-	Skill4, // Summon Butterfly
+	Skill4, // Summon Butterfly, Golem, Mushroom
 };
 
 class Boss_Lucid_Phase1 : public BaseBossActor

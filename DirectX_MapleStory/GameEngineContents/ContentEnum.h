@@ -24,6 +24,7 @@ enum class RenderOrder
 	Monster,
 	PlayBelow,
 	Play,
+	MonsterAttack,
 	Skill,
 	Arrow,
 };
