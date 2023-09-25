@@ -77,7 +77,8 @@ void Player::Start()
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
-	Dir = ActorDir::Left; 
+	Dir = ActorDir::Right; 
+	MainSpriteRenderer->LeftFlip();
 	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
 
 	// Animation Speed Setting
