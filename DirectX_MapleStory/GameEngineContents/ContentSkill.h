@@ -27,7 +27,8 @@ public:
 
 	virtual void Init() {}
 	virtual void UseSkill();
-	void SetScaleSkillRenderer(const float4& _Scale);
+	void SkillLeftFlip();
+	void SkillRightFlip();
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;

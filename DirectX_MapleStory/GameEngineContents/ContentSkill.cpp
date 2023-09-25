@@ -49,10 +49,16 @@ void ContentSkill::UseSkill()
 	PlayerScale = Player::MainPlayer->GetPlayerScale();
 }
 
-void ContentSkill::SetScaleSkillRenderer(const float4& _Scale)
+void ContentSkill::SkillLeftFlip()
 {
-	// 좌우이미지 변경용
-	SkillRenderer1->Transform.SetLocalScale(_Scale);
-	SkillRenderer2->Transform.SetLocalScale(_Scale);
-	SkillAfterImageRenderer->Transform.SetLocalScale(_Scale);
+	SkillRenderer1->LeftFlip();
+	SkillRenderer2->LeftFlip();
+	SkillAfterImageRenderer->LeftFlip();
+}
+
+void ContentSkill::SkillRightFlip()
+{
+	SkillRenderer1->RightFlip();
+	SkillRenderer2->RightFlip();
+	SkillAfterImageRenderer->RightFlip();
 }

@@ -251,7 +251,7 @@ void GameEngineRenderer::SetMaterial(std::string_view _Name)
 	if (ShaderResHelper.IsConstantBuffer("TransformData"))
 	{
 		const TransformData& Data = Transform.GetConstTransformDataRef();
-		ShaderResHelper.ConstantBufferLink("TransformData", Data);
+		ShaderResHelper.SetConstantBufferLink("TransformData", Data);
 	}
 }
 

@@ -89,6 +89,9 @@ void GameEngineSpriteRenderer::SetPivotType(PivotType _Type)
 	case PivotType::Left:
 		Pivot = { 1.0f, 0.5f };
 		break;
+	case PivotType::Right:
+		Pivot = { 0.0f, 0.5f };
+		break;
 	case PivotType::Top:
 		Pivot = { 0.5f, 0.0f };
 		break;
@@ -122,8 +125,9 @@ void GameEngineSpriteRenderer::Start()
 
 	// 현재 ImageTransform을 ConstantBuufer에 세팅해줌
 	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
-	ShaderResHelper.ConstantBufferLink("TransformData", Data);
-	ShaderResHelper.ConstantBufferLink("SpriteData", CurSprite.SpritePivot);
+	ShaderResHelper.SetConstantBufferLink("TransformData", Data);
+	ShaderResHelper.SetConstantBufferLink("SpriteData", CurSprite.SpritePivot);
+	ShaderResHelper.SetConstantBufferLink("SpriteRendererInfo", SpriteRendererInfoValue);
 	ShaderResHelper.SetTexture("DiffuseTex", "NSet.Png");
 }
 

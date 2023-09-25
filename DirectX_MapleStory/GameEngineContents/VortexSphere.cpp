@@ -22,10 +22,14 @@ void VortexSphere::UseSkill()
 	switch (PlayerDir)
 	{
 	case ActorDir::Right:
+		SkillRenderer1->SetPivotValue({ 0.63f, 0.55f });
+		SkillRenderer2->SetPivotValue({ 0.1f, 0.51f });
 		SkillRenderer1->LeftFlip();
 		SkillRenderer2->LeftFlip();
 		break;
 	case ActorDir::Left:
+		SkillRenderer1->SetPivotValue({ 0.37f, 0.55f });
+		SkillRenderer2->SetPivotValue({ 0.9f, 0.51f });
 		SkillRenderer1->RightFlip();
 		SkillRenderer2->RightFlip();
 		break;
@@ -63,9 +67,7 @@ void VortexSphere::Start()
 	}
 
 	SkillRenderer1->CreateAnimation("Effect1", "VortexSphere_Effect1", 0.08f);
-	SkillRenderer1->SetPivotValue({0.37f, 0.55f});
 	SkillRenderer2->CreateAnimation("Effect2", "VortexSphere_Effect2", 0.08f);
-	SkillRenderer2->SetPivotValue({0.9f, 0.51f});
 
 	SkillRenderer1->SetFrameEvent("Effect1", 5, [&](GameEngineSpriteRenderer* _Renderer)
 		{

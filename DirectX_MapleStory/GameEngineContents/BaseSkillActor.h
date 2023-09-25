@@ -40,10 +40,10 @@ protected:
 		switch (Dir)
 		{
 		case ActorDir::Right:
-			Transform.SetLocalScale({ -1.0f, 1.0f, 1.0f });
+			MainSpriteRenderer->LeftFlip();
 			break;
 		case ActorDir::Left:
-			Transform.SetLocalScale({ 1.0f, 1.0f, 1.0f });
+			MainSpriteRenderer->RightFlip();
 			break;
 		case ActorDir::Null:
 		default:

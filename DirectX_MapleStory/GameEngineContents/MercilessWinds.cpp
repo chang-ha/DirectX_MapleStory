@@ -22,10 +22,10 @@ void MercilessWinds::UseSkill()
 	switch (PlayerDir)
 	{
 	case ActorDir::Right:
-		SkillRenderer1->Transform.SetLocalScale({ -1.0f, 1.0f, 1.0 });
+		SkillRenderer1->LeftFlip();
 		break;
 	case ActorDir::Left:
-		SkillRenderer1->Transform.SetLocalScale({ 1.0f, 1.0f, 1.0 });
+		SkillRenderer1->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:

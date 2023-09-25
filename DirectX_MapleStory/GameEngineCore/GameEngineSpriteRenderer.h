@@ -37,8 +37,17 @@ enum class PivotType
 	Center,
 	Bottom,
 	Left,
+	Right,
 	Top,
 	LeftTop,
+};
+
+struct SpriteRendererInfo
+{
+	int FlipLeft = 0;
+	int FlipUp = 0;
+	float Temp1;
+	float Temp2;
 };
 
 // Ό³Έν :
@@ -74,17 +83,22 @@ public:
 
 	void RightFlip()
 	{
-		AutoScaleRatio.X = abs(AutoScaleRatio.X);
+		SpriteRendererInfoValue.FlipLeft = 0;
 	}
 
 	void LeftFlip()
 	{
-		AutoScaleRatio.X = -abs(AutoScaleRatio.X);
+		SpriteRendererInfoValue.FlipLeft = 1;
 	}
 
-	void Flip()
+	void UpFlip()
 	{
-		AutoScaleRatio.X = -AutoScaleRatio.X;
+		SpriteRendererInfoValue.FlipUp = 1;
+	}
+
+	void DownFlip()
+	{
+		SpriteRendererInfoValue.FlipUp = 0;
 	}
 
 	void SetSprite(std::string_view _Name, unsigned int Index = 0);
@@ -157,5 +171,6 @@ private:
 
 	float4 Pivot = { 0.5f, 0.5f };
 	GameEngineTransform ImageTransform;
+	SpriteRendererInfo SpriteRendererInfoValue;
 };
 

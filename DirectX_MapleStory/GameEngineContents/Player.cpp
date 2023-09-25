@@ -130,12 +130,12 @@ void Player::DirCheck()
 	if (true == GameEngineInput::IsPress(VK_LEFT))
 	{
 		CheckDir = ActorDir::Left;
-		Transform.SetLocalScale(float4(1.0f, 1.0f));
+		MainSpriteRenderer->RightFlip();
 	} 
 	else if (true == GameEngineInput::IsPress(VK_RIGHT))
 	{
 		CheckDir = ActorDir::Right;
-		Transform.SetLocalScale(float4(-1.0f, 1.0f));
+		MainSpriteRenderer->LeftFlip();
 	}
 
 	if (ActorDir::Null != CheckDir)

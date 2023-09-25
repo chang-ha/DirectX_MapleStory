@@ -24,13 +24,11 @@ void WindWalk::UseSkill()
 	switch (PlayerDir)
 	{
 	case ActorDir::Right:
-		SkillRenderer1->LeftFlip();
-		SkillAfterImageRenderer->LeftFlip();
+		SkillLeftFlip();
 		SkillRenderer1->SetPivotValue(float4(0.75f, 0.6f));
 		break;
 	case ActorDir::Left:
-		SkillRenderer1->RightFlip();
-		SkillAfterImageRenderer->RightFlip();
+		SkillRightFlip();
 		SkillRenderer1->SetPivotValue(float4(0.75f, 0.6f));
 		break;
 	case ActorDir::Null:

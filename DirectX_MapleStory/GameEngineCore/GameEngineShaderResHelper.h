@@ -96,12 +96,12 @@ public:
 
 	// 여기에 값형만 들어갑니다.
 	template<typename DataType>
-	void ConstantBufferLink(std::string_view _Name, const DataType& _Data)
+	void SetConstantBufferLink(std::string_view _Name, const DataType& _Data)
 	{
-		ConstantBufferLink(_Name, &_Data, sizeof(_Data));
+		SetConstantBufferLink(_Name, &_Data, sizeof(_Data));
 	}
 
-	void ConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
+	void SetConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
 
 	void SetTexture(std::string_view _Name, std::string_view _TextureName);
 

@@ -57,11 +57,11 @@ void Arrow::Start()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		Transform.SetLocalScale(float4(-1.0f, 1.0f));
+		ArrowRenderer->LeftFlip();
 		Transform.SetLocalPosition(float4(PlayerPos.X + Player::MainPlayer->GetPlayerScale().X, PlayerPos.Y));
 		break;
 	case ActorDir::Left:
-		Transform.SetLocalScale(float4(1.0f, 1.0f));
+		ArrowRenderer->RightFlip();
 		Transform.SetLocalPosition(float4(PlayerPos.X - Player::MainPlayer->GetPlayerScale().X, PlayerPos.Y));
 		break;
 	case ActorDir::Null:

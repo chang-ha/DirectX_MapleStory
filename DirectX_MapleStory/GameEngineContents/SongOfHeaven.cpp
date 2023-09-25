@@ -35,11 +35,11 @@ void SongOfHeaven::UseSkill()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		SetScaleSkillRenderer({ -1.0f, 1.0f });
+		SkillLeftFlip();
 		Pivot = float4(PlayerScale.hX() + PIVOT_PLUSX, PlayerScale.hY() - PIVOT_PLUSY);
 		break;
 	case ActorDir::Left:
-		SetScaleSkillRenderer({ 1.0f, 1.0f });
+		SkillRightFlip();
 		Pivot = float4(-PlayerScale.hX() - PIVOT_PLUSX, PlayerScale.hY() - PIVOT_PLUSY);
 		break;
 	case ActorDir::Null:

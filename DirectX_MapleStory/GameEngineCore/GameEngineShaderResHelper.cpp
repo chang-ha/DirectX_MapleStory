@@ -246,11 +246,11 @@ void GameEngineShaderResHelper::AllShaderResourcesSetting()
 	}
 }
 
-void GameEngineShaderResHelper::ConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size)
+void GameEngineShaderResHelper::SetConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size)
 {
 	if (false == IsConstantBuffer(_Name))
 	{
-		MsgBoxAssert("존재하지 않는 상수버퍼에 링크를 걸려고 했습니다.");
+		MsgBoxAssert(std::string(_Name) + "존재하지 않는 상수버퍼에 링크를 걸려고 했습니다.");
 		return;
 	}
 

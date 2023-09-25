@@ -36,13 +36,13 @@ void DoubleJump::UseSkill()
 		switch (Dir)
 		{
 		case ActorDir::Right:
-			SetScaleSkillRenderer({ -1.0f, 1.0f });
-			SkillRenderer1->SetPivotType(PivotType::Left);
-			SkillRenderer2->SetPivotType(PivotType::Left);
+			SkillLeftFlip();
+			SkillRenderer1->SetPivotType(PivotType::Right);
+			SkillRenderer2->SetPivotType(PivotType::Right);
 			Pivot = PlayerScale.Half();
 			break;
 		case ActorDir::Left:
-			SkillLeftFlip();
+			SkillRightFlip();
 			SkillRenderer1->SetPivotType(PivotType::Left);
 			SkillRenderer2->SetPivotType(PivotType::Left);
 			Pivot = float4(-PlayerScale.hX(), PlayerScale.hY());

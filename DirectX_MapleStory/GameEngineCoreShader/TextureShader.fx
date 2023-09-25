@@ -21,6 +21,14 @@ cbuffer SpriteData : register(b1)
     float Scale2DY;
 };
 
+cbuffer SpriteRendererInfo : register(b3)
+{
+    int FlipLeft = 0;
+    int FlipUp = 0;
+    float Temp1;
+    float Temp2;
+};
+
 PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 {
     // Init PixelOutput
@@ -28,8 +36,21 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 
     Result.POSITION = mul(_Input.POSITION, WorldViewProjectionMatrix);
 
-    Result.TEXCOORD.x = (_Input.TEXCOORD.x * Scale2DX) + Pos2DX;
-    Result.TEXCOORD.y = (_Input.TEXCOORD.y * Scale2DY) + Pos2DY;
+    float4 CalUV = _Input.TEXCOORD;
+    if (0 != FlipLeft)
+    {
+        CalUV.x *= -1;
+        CalUV.x += 1;
+    }
+
+    if (0 != FlipUp)
+    {
+        CalUV.y *= -1;
+        CalUV.y += 1;
+    }
+    
+    Result.TEXCOORD.x = (CalUV.x * Scale2DX) + Pos2DX;
+    Result.TEXCOORD.y = (CalUV.y * Scale2DY) + Pos2DY;
     
     return Result;
 }
