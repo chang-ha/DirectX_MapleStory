@@ -1,7 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "Dragon.h"
 
-
 Dragon::Dragon()
 {
 
@@ -27,7 +26,6 @@ void Dragon::Start()
 	DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
 	DragonRenderer->AutoSpriteSizeOn();
 	DragonRenderer->SetPivotType(PivotType::Bottom);
-	DragonRenderer->LeftFlip();
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Dragon_Move"))
 	{
@@ -46,7 +44,7 @@ void Dragon::Start()
 	DragonRenderer->CreateAnimation("Idle", "Lucid_Phase1_Dragon_Move", 0, 0, 0, false);
 	DragonRenderer->CreateAnimation("Move", "Lucid_Phase1_Dragon_Move", 0.15f);
 	DragonRenderer->CreateAnimation("Breath", "Lucid_Phase1_Dragon_Breath");
-	DragonRenderer->ChangeAnimation("Idle");
+	IdleStart();
 }
 
 void Dragon::Update(float _Delta)
@@ -62,6 +60,25 @@ void Dragon::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('L'))
 	{
 		ChangeState(DragonState::Breath);
+	}
+}
+
+void Dragon::SetDir(ActorDir _Dir)
+{
+	Dir = _Dir;
+	switch (Dir)
+	{
+		break;
+	case ActorDir::Right:
+		DragonRenderer->LeftFlip();
+		break;
+	case ActorDir::Left:
+		DragonRenderer->RightFlip();
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
 	}
 }
 

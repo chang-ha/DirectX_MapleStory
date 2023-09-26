@@ -1,4 +1,7 @@
 ﻿#include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
 #include "Lucid_Phase1.h"
 #include "Player.h"
 #include "ContentMap.h"
@@ -45,8 +48,13 @@ void Lucid_Phase1::Start()
 	std::shared_ptr<Boss_Lucid_Phase1> Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
 	Boss->Transform.SetLocalPosition(float4(1000, -700));
 
-	std::shared_ptr<Dragon> dragon = CreateActor<Dragon>(UpdateOrder::Monster);
-	dragon->Transform.SetLocalPosition(float4(100, -700));
+	LeftDragon = CreateActor<Dragon>(UpdateOrder::Monster);
+	LeftDragon->Transform.SetLocalPosition(float4(100, -700));
+	LeftDragon->SetDir(ActorDir::Right);
+
+	RightDragon = CreateActor<Dragon>(UpdateOrder::Monster);
+	RightDragon->Transform.SetLocalPosition(float4(1900, -700));
+	RightDragon->SetDir(ActorDir::Left);
 }
 
 void Lucid_Phase1::Update(float _Delta)
@@ -55,3 +63,18 @@ void Lucid_Phase1::Update(float _Delta)
 
 }
 
+void Lucid_Phase1::CallDragon()
+{
+	GameEngineRandom Random;
+	Random.SetSeed(time(nullptr));
+	int RandomValue = Random.RandomInt(0, 1);
+
+	if (0 == RandomValue)
+	{
+		LeftDragon->ChangeState(DragonState::Down);
+	}
+	else
+	{
+		RightDragon->ChangeState(DragonState::Down);
+	}
+}

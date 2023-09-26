@@ -23,6 +23,7 @@ public:
 
 	void ChangeState(DragonState _State);
 	void StateUpdate(float _Delta);
+	void SetDir(ActorDir _Dir);
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -31,6 +32,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	ActorDir Dir = ActorDir::Right;
 	DragonState State = DragonState::Idle;
 	std::shared_ptr<GameEngineSpriteRenderer> DragonRenderer = nullptr;
 

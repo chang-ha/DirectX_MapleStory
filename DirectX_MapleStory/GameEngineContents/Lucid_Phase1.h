@@ -14,13 +14,17 @@ public:
 	Lucid_Phase1& operator=(const Lucid_Phase1& _Other) = delete;
 	Lucid_Phase1& operator=(Lucid_Phase1&& _Other) noexcept = delete;
 
+	void CallDragon();
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 	void Start() override;
 	void Update(float _Delta) override;
-private:
 
+private:
+	std::shared_ptr<class Dragon> LeftDragon = nullptr;
+	std::shared_ptr<class Dragon> RightDragon = nullptr;
 };
 
