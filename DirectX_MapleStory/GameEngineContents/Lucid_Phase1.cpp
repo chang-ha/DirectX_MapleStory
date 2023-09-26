@@ -48,12 +48,13 @@ void Lucid_Phase1::Start()
 	std::shared_ptr<Boss_Lucid_Phase1> Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
 	Boss->Transform.SetLocalPosition(float4(1000, -700));
 
+	// while -750
 	LeftDragon = CreateActor<Dragon>(UpdateOrder::Monster);
-	LeftDragon->Transform.SetLocalPosition(float4(30, -750));
+	LeftDragon->Transform.SetLocalPosition(float4(30, 200));
 	LeftDragon->SetDir(ActorDir::Right);
 
 	RightDragon = CreateActor<Dragon>(UpdateOrder::Monster);
-	RightDragon->Transform.SetLocalPosition(float4(1970, -750));
+	RightDragon->Transform.SetLocalPosition(float4(1970, 200));
 	RightDragon->SetDir(ActorDir::Left);
 }
 

@@ -44,7 +44,6 @@ void Dragon::Start()
 	DragonRenderer->CreateAnimation("Idle", "Lucid_Phase1_Dragon_Move", 0, 0, 0, false);
 	DragonRenderer->CreateAnimation("Move", "Lucid_Phase1_Dragon_Move", 0.15f);
 	DragonRenderer->CreateAnimation("Breath", "Lucid_Phase1_Dragon_Breath", 0.15f, 0, 35, false);
-	DragonRenderer->CreateAnimation("Breath_End", "Lucid_Phase1_Dragon_Breath", 0.15f, 35, 35, false);
 	IdleStart();
 
 	DragonRenderer->SetFrameEvent("Breath", 10, [&](GameEngineSpriteRenderer*)
@@ -70,17 +69,6 @@ void Dragon::Start()
 void Dragon::Update(float _Delta)
 {
 	StateUpdate(_Delta);
-
-	// TestCode
-	if (true == GameEngineInput::IsDown('K'))
-	{
-		ChangeState(DragonState::Down);
-	}
-
-	if (true == GameEngineInput::IsDown('L'))
-	{
-		ChangeState(DragonState::Breath);
-	}
 }
 
 void Dragon::SetDir(ActorDir _Dir)
@@ -207,11 +195,36 @@ void Dragon::IdleUpdate(float _Delta)
 
 void Dragon::DownUpdate(float _Delta)
 {
+	if (0.0f >= Delay)
+	{
+		ChangeState(DragonState::Breath);
+		Delay = 2.0f;
+	}
 
+	if (-750.0f > Transform.GetWorldPosition().Y)
+	{
+		Transform.SetLocalPosition({ Transform.GetWorldPosition().X, -750.0f });
+		Delay -= _Delta;
+	}
+
+	Transform.AddLocalPosition({0, -Speed * _Delta});
 }
 
 void Dragon::UpUpdate(float _Delta)
 {
+	Delay -= _Delta;
+	if (0.0f >= Delay)
+	{
+		Transform.AddLocalPosition({ 0, Speed * _Delta });
+	}
+
+	if (200.0f <= Transform.GetWorldPosition().Y)
+	{
+		Transform.SetLocalPosition({ Transform.GetWorldPosition().X, 200.0f });
+		ChangeState(DragonState::Idle);
+	}
+
+
 
 }
 
@@ -219,7 +232,7 @@ void Dragon::BreathUpdate(float _Delta)
 {
 	if (true == DragonRenderer->IsCurAnimationEnd())
 	{
-		ChangeState(DragonState::Down);
+		ChangeState(DragonState::Up);
 	}
 }
 
@@ -235,7 +248,7 @@ void Dragon::DownEnd()
 
 void Dragon::UpEnd()
 {
-	
+	Delay = 2.0f;
 }
 
 void Dragon::BreathEnd()
