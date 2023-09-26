@@ -2,6 +2,7 @@
 #include "Boss_Lucid_Phase1.h"
 #include "PhantasmalWind.h"
 #include "ContentLevel.h"
+#include "Dragon.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {

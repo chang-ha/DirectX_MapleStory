@@ -5,6 +5,7 @@
 #include "SkillManager.h"
 #include "ContentBackGround.h"
 #include "Boss_Lucid_Phase1.h"
+#include "Dragon.h"
 
 Lucid_Phase1::Lucid_Phase1()
 {
@@ -43,6 +44,9 @@ void Lucid_Phase1::Start()
 
 	std::shared_ptr<Boss_Lucid_Phase1> Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
 	Boss->Transform.SetLocalPosition(float4(1000, -700));
+
+	std::shared_ptr<Dragon> dragon = CreateActor<Dragon>(UpdateOrder::Monster);
+	dragon->Transform.SetLocalPosition(float4(100, -700));
 }
 
 void Lucid_Phase1::Update(float _Delta)

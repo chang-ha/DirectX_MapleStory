@@ -100,6 +100,9 @@
     <ClCompile Include="PhantasmalWind.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
+    <ClCompile Include="Dragon.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -199,6 +202,9 @@
       <Filter>Actor\Monster\Boss</Filter>
     </ClInclude>
     <ClInclude Include="PhantasmalWind.h">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
   </ItemGroup>
