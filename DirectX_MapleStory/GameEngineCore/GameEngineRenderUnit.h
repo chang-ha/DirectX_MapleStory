@@ -1,6 +1,6 @@
 #pragma once
 
-class GameEngineRenderUnit
+class GameEngineRenderUnit : public GameEngineObjectBase, std::enable_shared_from_this<GameEngineRenderUnit>
 {
 public:
 	// constructer destructer
