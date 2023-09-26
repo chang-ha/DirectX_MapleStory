@@ -49,11 +49,11 @@ void Lucid_Phase1::Start()
 	Boss->Transform.SetLocalPosition(float4(1000, -700));
 
 	LeftDragon = CreateActor<Dragon>(UpdateOrder::Monster);
-	LeftDragon->Transform.SetLocalPosition(float4(100, -700));
+	LeftDragon->Transform.SetLocalPosition(float4(30, -750));
 	LeftDragon->SetDir(ActorDir::Right);
 
 	RightDragon = CreateActor<Dragon>(UpdateOrder::Monster);
-	RightDragon->Transform.SetLocalPosition(float4(1900, -700));
+	RightDragon->Transform.SetLocalPosition(float4(1970, -750));
 	RightDragon->SetDir(ActorDir::Left);
 }
 

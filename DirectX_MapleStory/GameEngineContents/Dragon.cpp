@@ -43,8 +43,28 @@ void Dragon::Start()
 
 	DragonRenderer->CreateAnimation("Idle", "Lucid_Phase1_Dragon_Move", 0, 0, 0, false);
 	DragonRenderer->CreateAnimation("Move", "Lucid_Phase1_Dragon_Move", 0.15f);
-	DragonRenderer->CreateAnimation("Breath", "Lucid_Phase1_Dragon_Breath");
+	DragonRenderer->CreateAnimation("Breath", "Lucid_Phase1_Dragon_Breath", 0.15f, 0, 35, false);
+	DragonRenderer->CreateAnimation("Breath_End", "Lucid_Phase1_Dragon_Breath", 0.15f, 35, 35, false);
 	IdleStart();
+
+	DragonRenderer->SetFrameEvent("Breath", 10, [&](GameEngineSpriteRenderer*)
+		{
+			switch (Dir)
+			{
+			case ActorDir::Right:
+				DragonRenderer->SetPivotValue({ 0.65f, 0.8f });
+				break;
+			case ActorDir::Left:
+				DragonRenderer->SetPivotValue({ 0.35f, 0.8f });
+				break;
+			case ActorDir::Null:
+			default:
+				MsgBoxAssert("존재하지 않는 방향입니다.");
+				break;
+			}
+		}
+	);
+
 }
 
 void Dragon::Update(float _Delta)
@@ -165,6 +185,19 @@ void Dragon::UpStart()
 void Dragon::BreathStart()
 {
 	DragonRenderer->ChangeAnimation("Breath");
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		DragonRenderer->SetPivotValue({ 0.63f, 0.88f });
+		break;
+	case ActorDir::Left:
+		DragonRenderer->SetPivotValue({ 0.37f, 0.88f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 }
 
 void Dragon::IdleUpdate(float _Delta)
@@ -184,7 +217,10 @@ void Dragon::UpUpdate(float _Delta)
 
 void Dragon::BreathUpdate(float _Delta)
 {
-
+	if (true == DragonRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(DragonState::Down);
+	}
 }
 
 void Dragon::IdleEnd()
@@ -199,10 +235,11 @@ void Dragon::DownEnd()
 
 void Dragon::UpEnd()
 {
-
+	
 }
 
 void Dragon::BreathEnd()
 {
+	DragonRenderer->SetPivotType(PivotType::Bottom);
 
 }
