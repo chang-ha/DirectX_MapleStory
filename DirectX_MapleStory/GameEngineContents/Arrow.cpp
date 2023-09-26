@@ -23,7 +23,7 @@ void Arrow::LevelStart(GameEngineLevel* _PrevLevel)
 
 void Arrow::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void Arrow::Start()

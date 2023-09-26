@@ -22,7 +22,7 @@ void BaseSkillActor::LevelStart(GameEngineLevel* _PrevLevel)
 void BaseSkillActor::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentActor::LevelEnd(_NextLevel);
-	// Death();
+	Death();
 }
 
 void BaseSkillActor::Start()

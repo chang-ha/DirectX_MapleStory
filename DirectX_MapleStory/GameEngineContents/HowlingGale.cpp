@@ -26,9 +26,11 @@ void HowlingGale::UseSkill()
 	{
 	case ActorDir::Right:
 		SkillRenderer1->LeftFlip();
+		SkillRenderer1->SetPivotValue(float4(0.62f, 0.58f));
 		break;
 	case ActorDir::Left:
 		SkillRenderer1->RightFlip();
+		SkillRenderer1->SetPivotValue(float4(0.38f, 0.58f));
 		break;
 	case ActorDir::Null:
 	default:
@@ -82,7 +84,6 @@ void HowlingGale::Start()
 
 
 	SkillRenderer1->CreateAnimation("Effect", "HowlingGale_Effect", ANI_SPEED);
-	SkillRenderer1->SetPivotValue(float4(0.38f, 0.58f));
 	
 	SkillRenderer1->SetStartEvent("Effect", [&](GameEngineRenderer* _Renderer)
 		{
