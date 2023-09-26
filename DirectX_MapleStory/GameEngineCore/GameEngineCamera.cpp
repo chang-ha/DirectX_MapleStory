@@ -3,6 +3,7 @@
 #include "GameEngineLevel.h"
 #include "GameEngineRenderer.h"
 #include "GameEngineCore.h"
+#include "GameEngineRenderTarget.h"
 
 GameEngineCamera::GameEngineCamera() 
 {
@@ -79,6 +80,8 @@ void GameEngineCamera::Render(float _DeltaTime)
 	{
 		return;
 	}
+
+	GameEngineCore::GetBackBufferRenderTarget()->Setting();
 
 	//x + 1;
 	//y + 1;

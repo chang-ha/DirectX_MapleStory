@@ -131,7 +131,7 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 	}
 
 	TransformData Data;
-	ShaderResHelper.SetConstantBufferLink("TransformData", Data);
+	GetShaderResHelper().SetConstantBufferLink("TransformData", Data);
 
 	for (size_t y = StartY; y < EndY; y++)
 	{
@@ -157,9 +157,9 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 			Data.WorldMatrix = Data.LocalWorldMatrix * Data.ParentMatrix;
 			Data.WorldViewProjectionCalculation();
 
-			ShaderResHelper.SetConstantBufferLink("SpriteData", Tiles[y][x].Data.SpritePivot);
+			GetShaderResHelper().SetConstantBufferLink("SpriteData", Tiles[y][x].Data.SpritePivot);
 			SpriteData TileSprite = DefaultSprite->GetSpriteData(static_cast<unsigned int>(Tiles[y][x].Index));
-			ShaderResHelper.SetTexture("DiffuseTex", TileSprite.Texture);
+			GetShaderResHelper().SetTexture("DiffuseTex", TileSprite.Texture);
 
 			GameEngineRenderer::Render(_Camera, _Delta);
 		}

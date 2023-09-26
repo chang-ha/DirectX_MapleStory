@@ -75,192 +75,174 @@ void GameEngineRenderer::SetCameraOrder(int _Order)
 
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
-	ResSetting();
-	Draw();
-}
-
-void GameEngineRenderer::ResSetting()
-{
-	Mesh->InputAssembler1();
-	Material->VertexShader();
-	LayOut->Setting();
-	Mesh->InputAssembler2();
-	Material->Rasterizer();
-	Material->PixelShader();
-	Material->Blend();
-	ShaderResHelper.AllShaderResourcesSetting();
-
-	// 애는 솔직히 랜더 타겟이 가져가야 합니다.
-	D3D11_VIEWPORT ViewPort = {};
-	ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
-	ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
-	ViewPort.MinDepth = 0.0f;
-	ViewPort.MaxDepth = 1.0f;
-	ViewPort.TopLeftX = 0.0f;
-	ViewPort.TopLeftY = 0.0f;
-	GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
-
-	//////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
-	std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
-	if (nullptr != BackBufferRenderTarget)
+	for (size_t i = 0; i < Units.size(); i++)
 	{
-		BackBufferRenderTarget->Setting();
-	}
-
-	//float4x4 WorldViewProjection = Transform.GetWorldViewProjectionMatrix();
-
-	////////////////// VertexBuffer
-	//std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
-	//if (nullptr != VertexBuffer)
-	//{
-	//	VertexBuffer->Setting();
-	//}
-	//////////////////
-
-	////////////////// VertexShader
-	//std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("TextureShader_VS");
-	//if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
-	//{
-	//	LayOut = std::make_shared<GameEngineInputLayOut>();
-	//	LayOut->ResCreate(VertexBuffer, VertexShader);
-	//}
-
-	//if (nullptr != LayOut)
-	//{
-	//	LayOut->Setting();
-	//}
-
-	//if (nullptr != VertexShader)
-	//{
-	//	VertexShader->Setting();
-	//}
-	//////////////////
-
-	//////////////////// ConstantBuffer
-	////std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
-
-	////const TransformData& Data = Transform.GetConstTransformDataRef();
-
-	////if (nullptr != ConstantBuffer)
-	////{
-	////	const TransformData& Data = DataTransform->GetConstTransformDataRef();
-	////	ConstantBuffer->ChangeData(Data);
-	////	ConstantBuffer->Setting(0);
-	////}
-
-	////////////////////
-
-	////////////////// IndexBuffer
-	//std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
-	//if (nullptr != IndexBuffer)
-	//{
-	//	IndexBuffer->Setting();
-	//}
-
-	//GameEngineCore::GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//////////////////
-
-	////////////////// VierPort
-	//D3D11_VIEWPORT ViewPort = {};
-
-	//// DirectX에서 자동으로 X, Y값에 /2를 해줌
-	//ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
-	//ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
-	//ViewPort.MinDepth = 0.0f;
-	//ViewPort.MaxDepth = 1.0f;
-	//ViewPort.TopLeftX = 0.0f;
-	//ViewPort.TopLeftY = 0.0f;
-
-	//GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
-	//////////////////
-
-	////////////////// Rasterizer 
-	//std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Find("EngineRasterizer");
-	//if (nullptr != Rasterizer)
-	//{
-	//	Rasterizer->Setting();
-	//}
-	//////////////////
-
-	////////////////// PixelShader
-	//std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("TextureShader_PS");
-	//if (nullptr != PixelShader)
-	//{
-	//	PixelShader->Setting();
-	//}
-	//////////////////
-
-	////////////////// Blending
-	//std::shared_ptr<class GameEngineBlend> Blend = GameEngineBlend::Find("EngineBlend");
-	//if (nullptr != Blend)
-	//{
-	//	Blend->Setting();
-	//}
-	//////////////////
-
-	////////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
-	//std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
-	//if (nullptr != BackBufferRenderTarget)
-	//{
-	//	BackBufferRenderTarget->Setting();
-	//}
-}
-
-void GameEngineRenderer::SetMesh(std::string_view _Name)
-{
-	Mesh = GameEngineMesh::Find(_Name);
-
-	if (nullptr == Mesh)
-	{
-		MsgBoxAssert("존재하지 않는 매쉬를 세팅하려고 했습니다.");
-	}
-
-	// LayOut은 VertexBuffer와 VertexShader가 필요한데 각각 매쉬와 머티리얼이 들고있기 때문에
-	// 아래와 같이 LayOut은 따로 만들어줌
-	if (nullptr == LayOut && nullptr != Material)
-	{
-		LayOut = std::make_shared<GameEngineInputLayOut>();
-		LayOut->ResCreate(Mesh->GetVertexBuffer(), Material->GetVertexShader());
+		Units[i]->ResSetting();
+		Units[i]->Draw();
 	}
 }
 
-void GameEngineRenderer::SetMaterial(std::string_view _Name)
+std::shared_ptr<GameEngineRenderUnit> GameEngineRenderer::CreateAndFindRenderUnit(int _Index)
 {
-	Material = GameEngineMaterial::Find(_Name);
+	Units.resize(_Index + 1);
 
-	ShaderResHelper.ResClear();
-
-	if (nullptr == Material)
+	// 있으면
+	if (nullptr != Units[_Index])
 	{
-		MsgBoxAssert("존재하지 않는 매쉬를 세팅하려고 했습니다.");
+		//리턴
+		return Units[_Index];
 	}
 
-	if (nullptr == LayOut && nullptr != Mesh)
-	{
-		LayOut = std::make_shared<GameEngineInputLayOut>();
-		LayOut->ResCreate(Mesh->GetVertexBuffer(), Material->GetVertexShader());
-	}
-
-	// 버텍스 쉐이더와 픽셀쉐이더가 다 들어있는 상태다.
-
-	// 랜더러의 쉐이더 리소스 헬퍼에
-	// 버텍스와 픽셀쉐이더의 리소스정보들을 복사 받습니다.
-	ShaderResHelper.ShaderResCopy(Material->GetVertexShader().get());
-	ShaderResHelper.ShaderResCopy(Material->GetPixelShader().get());
-
-	// 이걸 회사의 약속.
-
-	if (ShaderResHelper.IsConstantBuffer("TransformData"))
-	{
-		const TransformData& Data = Transform.GetConstTransformDataRef();
-		ShaderResHelper.SetConstantBufferLink("TransformData", Data);
-	}
+	// 없으면 만든다.
+	Units[_Index] = std::make_shared<GameEngineRenderUnit>();
+	Units[_Index]->SetParentRenderer(this);
+	return Units[_Index];
 }
 
+// 이제 RenderUnit에서 ResSetting담당
+//void GameEngineRenderer::ResSetting()
+//{
+//	Mesh->InputAssembler1();
+//	Material->VertexShader();
+//	LayOut->Setting();
+//	Mesh->InputAssembler2();
+//	Material->Rasterizer();
+//	Material->PixelShader();
+//	Material->Blend();
+//	ShaderResHelper.AllShaderResourcesSetting();
+//
+//	// 애는 솔직히 랜더 타겟이 가져가야 합니다.
+//	D3D11_VIEWPORT ViewPort = {};
+//	ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
+//	ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
+//	ViewPort.MinDepth = 0.0f;
+//	ViewPort.MaxDepth = 1.0f;
+//	ViewPort.TopLeftX = 0.0f;
+//	ViewPort.TopLeftY = 0.0f;
+//	GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
+//
+//	//////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
+//	std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
+//	if (nullptr != BackBufferRenderTarget)
+//	{
+//		BackBufferRenderTarget->Setting();
+//	}
+//
+//	//float4x4 WorldViewProjection = Transform.GetWorldViewProjectionMatrix();
+//
+//	////////////////// VertexBuffer
+//	//std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
+//	//if (nullptr != VertexBuffer)
+//	//{
+//	//	VertexBuffer->Setting();
+//	//}
+//	//////////////////
+//
+//	////////////////// VertexShader
+//	//std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("TextureShader_VS");
+//	//if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
+//	//{
+//	//	LayOut = std::make_shared<GameEngineInputLayOut>();
+//	//	LayOut->ResCreate(VertexBuffer, VertexShader);
+//	//}
+//
+//	//if (nullptr != LayOut)
+//	//{
+//	//	LayOut->Setting();
+//	//}
+//
+//	//if (nullptr != VertexShader)
+//	//{
+//	//	VertexShader->Setting();
+//	//}
+//	//////////////////
+//
+//	//////////////////// ConstantBuffer
+//	////std::shared_ptr<GameEngineConstantBuffer> ConstantBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
+//
+//	////const TransformData& Data = Transform.GetConstTransformDataRef();
+//
+//	////if (nullptr != ConstantBuffer)
+//	////{
+//	////	const TransformData& Data = DataTransform->GetConstTransformDataRef();
+//	////	ConstantBuffer->ChangeData(Data);
+//	////	ConstantBuffer->Setting(0);
+//	////}
+//
+//	////////////////////
+//
+//	////////////////// IndexBuffer
+//	//std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
+//	//if (nullptr != IndexBuffer)
+//	//{
+//	//	IndexBuffer->Setting();
+//	//}
+//
+//	//GameEngineCore::GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//	//////////////////
+//
+//	////////////////// VierPort
+//	//D3D11_VIEWPORT ViewPort = {};
+//
+//	//// DirectX에서 자동으로 X, Y값에 /2를 해줌
+//	//ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
+//	//ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
+//	//ViewPort.MinDepth = 0.0f;
+//	//ViewPort.MaxDepth = 1.0f;
+//	//ViewPort.TopLeftX = 0.0f;
+//	//ViewPort.TopLeftY = 0.0f;
+//
+//	//GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
+//	//////////////////
+//
+//	////////////////// Rasterizer 
+//	//std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Find("EngineRasterizer");
+//	//if (nullptr != Rasterizer)
+//	//{
+//	//	Rasterizer->Setting();
+//	//}
+//	//////////////////
+//
+//	////////////////// PixelShader
+//	//std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("TextureShader_PS");
+//	//if (nullptr != PixelShader)
+//	//{
+//	//	PixelShader->Setting();
+//	//}
+//	//////////////////
+//
+//	////////////////// Blending
+//	//std::shared_ptr<class GameEngineBlend> Blend = GameEngineBlend::Find("EngineBlend");
+//	//if (nullptr != Blend)
+//	//{
+//	//	Blend->Setting();
+//	//}
+//	//////////////////
+//
+//	////////////////// BackBufferRenderTarget <- 실제 윈도우창에 보이게 하는 RenderTarget(스왑체인에서 Texture를 통해 얻어낸 RenderTarget)
+//	//std::shared_ptr<GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
+//	//if (nullptr != BackBufferRenderTarget)
+//	//{
+//	//	BackBufferRenderTarget->Setting();
+//	//}
+//}
 
-void GameEngineRenderer::Draw()
+void GameEngineRenderer::SetMesh(std::string_view _Name, int _Index /*= 0*/)
 {
-	Mesh->Draw();
+	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit->SetMesh(_Name);
+}
+
+void GameEngineRenderer::SetMaterial(std::string_view _Name, int _Index /*= 0*/)
+{
+	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit->SetMaterial(_Name);
+}
+
+GameEngineShaderResHelper& GameEngineRenderer::GetShaderResHelper(int _Index /*= 0*/)
+{
+	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	return Unit->ShaderResHelper;
 }
 
 //void GameEngineRenderer::Draw()
