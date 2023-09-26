@@ -25,6 +25,11 @@ public:
 	void StateUpdate(float _Delta);
 	void SetDir(ActorDir _Dir);
 
+	void BreathOn();
+	void BreathOff();
+	void RightBreath();
+	void LeftBreath();
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -37,6 +42,7 @@ private:
 	ActorDir Dir = ActorDir::Right;
 	DragonState State = DragonState::Idle;
 	std::shared_ptr<GameEngineSpriteRenderer> DragonRenderer = nullptr;
+	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> BreathRenderers;
 
 	///// State
 	// Start

@@ -23,6 +23,12 @@ void Dragon::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Dragon::Start()
 {
+	BreathRenderers.resize(7);
+	for (size_t i = 0; i < BreathRenderers.size(); i++)
+	{
+		BreathRenderers[i] = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+	}
+
 	DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
 	DragonRenderer->AutoSpriteSizeOn();
 	DragonRenderer->SetPivotType(PivotType::Bottom);
@@ -44,10 +50,13 @@ void Dragon::Start()
 	DragonRenderer->CreateAnimation("Idle", "Lucid_Phase1_Dragon_Move", 0, 0, 0, false);
 	DragonRenderer->CreateAnimation("Move", "Lucid_Phase1_Dragon_Move", 0.15f);
 	DragonRenderer->CreateAnimation("Breath", "Lucid_Phase1_Dragon_Breath", 0.15f, 0, 35, false);
+
 	IdleStart();
 
+	// Breath
 	DragonRenderer->SetFrameEvent("Breath", 10, [&](GameEngineSpriteRenderer*)
 		{
+			BreathOn();
 			switch (Dir)
 			{
 			case ActorDir::Right:
@@ -64,6 +73,19 @@ void Dragon::Start()
 		}
 	);
 
+	DragonRenderer->SetFrameEvent("Breath", 33, [&](GameEngineSpriteRenderer*)
+		{
+			BreathOff();
+		}
+	);
+
+	for (size_t i = 0; i < BreathRenderers.size(); i++)
+	{
+		BreathRenderers[i]->CreateAnimation("Attack", "Lucid_Phase1_Dragon_Attack", 0.15f);
+		BreathRenderers[i]->ChangeAnimation("Attack");
+		BreathRenderers[i]->AutoSpriteSizeOn();
+		BreathRenderers[i]->Off();
+	}
 }
 
 void Dragon::Update(float _Delta)
@@ -79,9 +101,11 @@ void Dragon::SetDir(ActorDir _Dir)
 		break;
 	case ActorDir::Right:
 		DragonRenderer->LeftFlip();
+		RightBreath();
 		break;
 	case ActorDir::Left:
 		DragonRenderer->RightFlip();
+		LeftBreath();
 		break;
 	case ActorDir::Null:
 	default:
@@ -254,5 +278,40 @@ void Dragon::UpEnd()
 void Dragon::BreathEnd()
 {
 	DragonRenderer->SetPivotType(PivotType::Bottom);
+}
 
+void Dragon::BreathOn()
+{
+	for (size_t i = 0; i < BreathRenderers.size(); i++)
+	{
+		BreathRenderers[i]->On();
+	}
+}
+
+void Dragon::BreathOff()
+{
+	for (size_t i = 0; i < BreathRenderers.size(); i++)
+	{
+		BreathRenderers[i]->Off();
+	}
+}
+
+void Dragon::RightBreath()
+{
+	for (size_t i = 0; i < BreathRenderers.size(); i++)
+	{
+		BreathRenderers[i]->Transform.SetLocalPosition({ 380 + 190 * static_cast<float>(i), -120});
+		BreathRenderers[i]->LeftFlip();
+		BreathRenderers[i]->SetPivotValue({ 1.0f, 1.0f });
+	}
+}
+
+void Dragon::LeftBreath()
+{
+	for (size_t i = 0; i < BreathRenderers.size(); i++)
+	{
+		BreathRenderers[i]->Transform.SetLocalPosition({ -380 - 190 * static_cast<float>(i), -120 });
+		BreathRenderers[i]->RightFlip();
+		BreathRenderers[i]->SetPivotValue({ 0.0f, 1.0f });
+	}
 }
