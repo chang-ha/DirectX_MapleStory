@@ -85,6 +85,13 @@ void GameEngineDevice::ResourcesInit()
 	}
 
 	{
+		D3D11_RASTERIZER_DESC Desc = {};
+		Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
+		Desc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Create("EngineWireRasterizer", Desc);
+	}
+
+	{
 		D3D11_BLEND_DESC Desc = {};
 		// 깊이버퍼라는 것과 관련이 있습니다. << 좀 느림
 		// 추후 깊이버퍼 추가되면 사용
@@ -162,5 +169,13 @@ void GameEngineDevice::ResourcesInit()
 		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTexture");
 		Mat->SetVertexShader("TextureShader_VS");
 		Mat->SetPixelShader("TextureShader_PS");
+	}
+
+	// WireMaterial
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTextureWire");
+		Mat->SetVertexShader("DebugColor_VS");
+		Mat->SetPixelShader("DebugColor_PS");
+		Mat->SetRasterizer("EngineWireRasterizer");
 	}
 }

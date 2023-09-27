@@ -6,7 +6,9 @@
 #include "GameEngineCollisionGroup.h"
 #include "GameEngineCollision.h"
 
-GameEngineLevel::GameEngineLevel() 
+bool GameEngineLevel::IsDebug = false;
+
+GameEngineLevel::GameEngineLevel()
 {
 	// Main
 	{
@@ -34,6 +36,8 @@ GameEngineLevel::~GameEngineLevel()
 
 void GameEngineLevel::AllUpdate(float _Delta)
 {
+	GameEngineDebug::GameEngineDebugCore::CurLevel = this;
+
 	Update(_Delta);
 
 	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Childs)
@@ -65,6 +69,12 @@ void GameEngineLevel::Render(float _Delta)
 		// 레퍼런스로 받는다.
 		std::shared_ptr<GameEngineCamera>& Camera = CameraPair.second;
 		Camera->Render(_Delta);
+	}
+
+	if (true == IsDebug)
+	{
+		// true면 Debug를 그림
+		GameEngineDebug::GameEngineDebugCore::DebugRender();
 	}
 }
 

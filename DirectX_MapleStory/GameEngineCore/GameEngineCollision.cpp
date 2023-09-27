@@ -19,6 +19,14 @@ void GameEngineCollision::Start()
 	GetActor()->GetLevel()->PushCollision(GetDynamic_Cast_This<GameEngineCollision>());
 }
 
+void GameEngineCollision::Update(float _Delta)
+{
+	if (true == GameEngineLevel::IsDebug)
+	{
+		GameEngineDebug::DrawBox2D(Transform);
+	}
+}
+
 void GameEngineCollision::Release()
 {
 	//for (GameEngineCollision* Collision : Others)

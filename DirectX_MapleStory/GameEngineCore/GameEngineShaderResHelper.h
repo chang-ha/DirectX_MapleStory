@@ -61,12 +61,6 @@ public:
 	GameEngineShaderResHelper();
 	~GameEngineShaderResHelper();
 
-	// delete function
-	GameEngineShaderResHelper(const GameEngineShaderResHelper& _Ohter) = delete;
-	GameEngineShaderResHelper(GameEngineShaderResHelper&& _Ohter) noexcept = delete;
-	GameEngineShaderResHelper& operator=(const GameEngineShaderResHelper& _Other) = delete;
-	GameEngineShaderResHelper& operator=(GameEngineShaderResHelper&& _Other) noexcept = delete;
-
 	void ShaderResCheck(std::string _FunctionName, class GameEngineShader* _Shader, ID3DBlob* _CompileCode);
 
 	bool IsConstantBuffer(std::string_view _Name)

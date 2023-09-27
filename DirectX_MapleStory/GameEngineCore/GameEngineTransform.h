@@ -116,6 +116,7 @@ public:
 		PositionMatrix.Position(Position);
 
 		LocalWorldMatrix = ScaleMatrix * RotationMatrix * PositionMatrix * RevolutionMatrix;
+		WorldMatrix = LocalWorldMatrix;
 	}
 
 	void WorldViewProjectionCalculation()

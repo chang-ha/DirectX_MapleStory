@@ -120,7 +120,6 @@ GameEngineTransform::~GameEngineTransform()
 void GameEngineTransform::TransformUpdate()
 {
 	TransData.LocalCalculation();
-	TransData.WorldMatrix = TransData.LocalWorldMatrix;
 
 	if (nullptr != Parent)
 	{

@@ -89,7 +89,7 @@ void GameEngineRenderUnit::SetMaterial(std::string_view _Name)
 	ShaderResHelper.ShaderResCopy(Material->GetVertexShader().get());
 	ShaderResHelper.ShaderResCopy(Material->GetPixelShader().get());
 
-	if (ShaderResHelper.IsConstantBuffer("TransformData"))
+	if (nullptr != ParentRenderer && ShaderResHelper.IsConstantBuffer("TransformData"))
 	{
 		const TransformData& Data = ParentRenderer->Transform.GetConstTransformDataRef();
 		ShaderResHelper.SetConstantBufferLink("TransformData", Data);

@@ -4,6 +4,12 @@
 
 void GameEngineConstantBufferSetter::Setting()
 {
+	// CBuffer 세팅안해주면 터트림
+	if (nullptr == CPUDataPtr)
+	{
+		MsgBoxAssert(Name + "상수버퍼를 세팅해주지 않았습니다.");
+	}
+
 	// CPU에 있는 Data의 포인터와 사이즈로 세팅해줌
 	Res->ChangeData(CPUDataPtr, DataSize);
 

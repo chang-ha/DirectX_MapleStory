@@ -133,6 +133,11 @@ public:
 		return CurFrameAnimations->CurIndex;
 	}
 
+	inline GameEngineTransform& GetImageTransform()
+	{
+		return ImageTransform;
+	}
+
 	void SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function);

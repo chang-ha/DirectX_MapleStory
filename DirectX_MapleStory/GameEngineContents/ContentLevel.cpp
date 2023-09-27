@@ -20,14 +20,24 @@ void ContentLevel::Start()
 
 void ContentLevel::Update(float _Delta)
 {
-	if (GameEngineInput::IsPress('1'))
+	if (true == GameEngineInput::IsPress('1'))
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
-	if (GameEngineInput::IsPress('2'))
+	if (true == GameEngineInput::IsPress('2'))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
+	}
+
+	if (true == GameEngineInput::IsDown(VK_F3))
+	{
+		GameEngineLevel::OnDebug();
+	}
+
+	if (true == GameEngineInput::IsDown(VK_F4))
+	{
+		GameEngineLevel::OffDebug();
 	}
 
 	if (GameEngineInput::IsPress('O'))
