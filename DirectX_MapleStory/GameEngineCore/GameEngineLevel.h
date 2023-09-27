@@ -11,8 +11,8 @@ class GameEngineLevel : public GameEngineObject
 public:
 	static bool IsDebug;
 
-	static bool OnDebug() { return IsDebug = true; }
-	static bool OffDebug() { return IsDebug = false; }
+	static void OnDebug() { IsDebug = true; }
+	static void OffDebug() { IsDebug = false; }
 
 	// constrcuter destructer
 	GameEngineLevel();
