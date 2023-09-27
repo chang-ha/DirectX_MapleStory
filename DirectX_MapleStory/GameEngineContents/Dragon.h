@@ -37,7 +37,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
-	float Delay = 1.0f;
+	float Delay = 0.0f;
 	float Speed = 150.0f;
 	ActorDir Dir = ActorDir::Right;
 	DragonState State = DragonState::Idle;

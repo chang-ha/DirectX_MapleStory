@@ -1,6 +1,8 @@
 ﻿#include "PreCompile.h"
 #include "Dragon.h"
 
+#define DELAY_TIME 1.0f
+
 Dragon::Dragon()
 {
 
@@ -50,7 +52,6 @@ void Dragon::Start()
 	DragonRenderer->CreateAnimation("Idle", "Lucid_Phase1_Dragon_Move", 0, 0, 0, false);
 	DragonRenderer->CreateAnimation("Move", "Lucid_Phase1_Dragon_Move", 0.15f);
 	DragonRenderer->CreateAnimation("Breath", "Lucid_Phase1_Dragon_Breath", 0.15f, 0, 35, false);
-
 	IdleStart();
 
 	// Breath
@@ -79,6 +80,7 @@ void Dragon::Start()
 		}
 	);
 
+	// Create Animation
 	for (size_t i = 0; i < BreathRenderers.size(); i++)
 	{
 		BreathRenderers[i]->CreateAnimation("Attack", "Lucid_Phase1_Dragon_Attack", 0.15f);
@@ -86,6 +88,8 @@ void Dragon::Start()
 		BreathRenderers[i]->AutoSpriteSizeOn();
 		BreathRenderers[i]->Off();
 	}
+
+	Delay = DELAY_TIME;
 }
 
 void Dragon::Update(float _Delta)
@@ -222,7 +226,7 @@ void Dragon::DownUpdate(float _Delta)
 	if (0.0f >= Delay)
 	{
 		ChangeState(DragonState::Breath);
-		Delay = 2.0f;
+		Delay = DELAY_TIME;
 	}
 
 	if (-750.0f > Transform.GetWorldPosition().Y)
@@ -247,9 +251,6 @@ void Dragon::UpUpdate(float _Delta)
 		Transform.SetLocalPosition({ Transform.GetWorldPosition().X, 200.0f });
 		ChangeState(DragonState::Idle);
 	}
-
-
-
 }
 
 void Dragon::BreathUpdate(float _Delta)
@@ -272,7 +273,7 @@ void Dragon::DownEnd()
 
 void Dragon::UpEnd()
 {
-	Delay = 2.0f;
+	Delay = DELAY_TIME;
 }
 
 void Dragon::BreathEnd()
