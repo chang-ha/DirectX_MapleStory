@@ -206,6 +206,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CutsceneActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DoubleJump.cpp" />
     <ClCompile Include="Dragon.cpp">
       <SubType>
@@ -215,6 +219,10 @@
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="HowlingGale.cpp" />
     <ClCompile Include="HowlingGale_Actor.cpp" />
+    <ClCompile Include="Lucid_Enter.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Lucid_Phase1.cpp">
       <SubType>
       </SubType>
@@ -300,6 +308,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CutsceneActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DoubleJump.h" />
     <ClInclude Include="Dragon.h">
       <SubType>
@@ -315,6 +327,10 @@
     </ClInclude>
     <ClInclude Include="HowlingGale.h" />
     <ClInclude Include="HowlingGale_Actor.h" />
+    <ClInclude Include="Lucid_Enter.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Lucid_Phase1.h">
       <SubType>
       </SubType>

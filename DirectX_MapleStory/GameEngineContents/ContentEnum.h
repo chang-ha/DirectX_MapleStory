@@ -15,6 +15,7 @@ enum class UpdateOrder
 	Monster,
 	Arrow,
 	Skill,
+	UI,
 };
 
 enum class RenderOrder
@@ -27,6 +28,7 @@ enum class RenderOrder
 	MonsterAttack,
 	Skill,
 	Arrow,
+	UI,
 };
 
 enum class CollisionOrder
