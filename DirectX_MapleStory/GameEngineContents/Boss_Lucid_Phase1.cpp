@@ -62,7 +62,8 @@ void Boss_Lucid_Phase1::Start()
 	FlowerRenderer->ChangeAnimation("Flower");
 	FlowerRenderer->Transform.SetLocalPosition({ -5, 3 });
 	
-	BossCollision->Transform.SetLocalScale({300, 1000});
+	BossCollision->Transform.SetLocalScale({150, 400});
+	BossCollision->Transform.SetLocalPosition({0, 50});
 
 	// Render Event
 	BossRenderer->SetFrameEvent("Skill1", 22, [&](GameEngineRenderer* _Renderer)

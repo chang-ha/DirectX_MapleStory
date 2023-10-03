@@ -33,9 +33,8 @@ void VortexSphere_Actor::Start()
 	MainSpriteRenderer->CreateAnimation("Attack", "VortexSphere_Actor", 0.07f);
 	MainSpriteRenderer->ChangeAnimation("Attack");
 	MainSpriteRenderer->AutoSpriteSizeOn();
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("VortexSphere_Actor");
-	Scale = Sprite->GetSpriteData(0).GetScale();
 
+	Scale = { 350, 350 };
 	SkillCollision->Transform.SetLocalScale(Scale);
 }
 

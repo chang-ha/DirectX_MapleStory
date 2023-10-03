@@ -2,6 +2,8 @@
 #include "PhalanxCharge_Actor.h"
 #include "SkillManager.h"
 
+#define SPEED 200.0f
+
 PhalanxCharge_Actor::PhalanxCharge_Actor()
 {
 	
@@ -32,9 +34,8 @@ void PhalanxCharge_Actor::Start()
 	MainSpriteRenderer->ChangeAnimation("Ready");
 	MainSpriteRenderer->SetPivotValue({0.5f, 0.82f});
 	MainSpriteRenderer->AutoSpriteSizeOn();
+	Speed = SPEED;
 
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("PhalanxCharge_Attack");
-	Scale = Sprite->GetSpriteData(0).GetScale();
 	IsUpdate = false;
 	LiveTime = 10.0f;
 	SkillCollision->Off();
@@ -65,7 +66,9 @@ void PhalanxCharge_Actor::Start()
 		}
 	);
 
+	Scale = {250, 100};
 	SkillCollision->Transform.SetLocalScale(Scale);
+	SkillCollision->Transform.SetLocalPosition({0, 50});
 }
 
 void PhalanxCharge_Actor::Update(float _Delta)
@@ -78,13 +81,13 @@ void PhalanxCharge_Actor::Update(float _Delta)
 
 	BaseSkillActor::Update(_Delta);
 
-	if (200.0f == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
+	if (SPEED == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{
-		Speed = 100.0f;
+		Speed = SPEED / 2;
 	}
-	else if (100.0f == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
+	else if (SPEED / 2 == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
 	{
-		Speed = 200.0f;
+		Speed = SPEED;
 	}
 
 	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)

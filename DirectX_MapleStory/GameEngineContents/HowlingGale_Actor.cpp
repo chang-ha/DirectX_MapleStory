@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "SkillManager.h"
 
+#define SPEED 150.0f
 
 HowlingGale_Actor* HowlingGale_Actor::MainHowlingGale = nullptr;
 
@@ -36,6 +37,7 @@ void HowlingGale_Actor::Start()
 	BaseSkillActor::Start();
 	MainHowlingGale = this;
 	LiveTime = 20.0f;
+	Speed = SPEED;
 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	MainSpriteRenderer->CreateAnimation("Ready", "Ready_Stack1");
@@ -59,10 +61,9 @@ void HowlingGale_Actor::Start()
 		}
 	);
 
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Ready_Stack1");
-	Scale = Sprite->GetSpriteData(0).GetScale();
-
+	Scale = { 100, 500 };
 	SkillCollision->Transform.SetLocalScale(Scale);
+	SkillCollision->Transform.SetLocalPosition({0, 125});
 }
 
 void HowlingGale_Actor::Update(float _Delta)
@@ -85,13 +86,13 @@ void HowlingGale_Actor::Update(float _Delta)
 
 	BaseSkillActor::Update(_Delta);
 
-	if (200.0f == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
+	if (SPEED == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{
-		Speed = 100.0f;
+		Speed = SPEED / 2;
 	}
-	else if (100.0f == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
+	else if (SPEED / 2 == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
 	{
-		Speed = 200.0f;
+		Speed = SPEED;
 	}
 
 	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)

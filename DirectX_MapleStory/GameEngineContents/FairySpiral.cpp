@@ -4,6 +4,9 @@
 #include "SkillManager.h"
 #include "BaseWindActor.h"
 
+#define XRANGE 380.0f
+#define YRANGE 200.0f
+
 FairySpiral::FairySpiral()
 {
 	
@@ -31,10 +34,12 @@ void FairySpiral::UseSkill()
 	{
 	case ActorDir::Right:
 		SkillRenderer1->SetPivotValue(float4(0.8f, 0.5f));
+		SkillCollision->Transform.SetLocalPosition({ XRANGE / 2, YRANGE / 4 });
 		SkillLeftFlip();
 		break;
 	case ActorDir::Left:
 		SkillRenderer1->SetPivotValue(float4(0.2f, 0.5f));
+		SkillCollision->Transform.SetLocalPosition({ -XRANGE / 2, YRANGE / 4 });
 		SkillRightFlip();
 		break;
 	case ActorDir::Null:
@@ -67,8 +72,6 @@ void FairySpiral::Start()
 		GameEngineSprite::CreateFolder("FairySprial_" + Childs.GetFileName(), Childs.GetStringPath());
 	}
 
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("FairySprial_Attack");
-	SkillScale = Sprite->GetSpriteData(0).GetScale();
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
 	SkillRenderer1->CreateAnimation("Hit", "FairySprial_Hit", 0.06f);
 	SkillRenderer1->SetFrameEvent("Attack", 1, std::bind(&FairySpiral::RenderEvent, this, std::placeholders::_1));
@@ -80,7 +83,7 @@ void FairySpiral::Start()
 	);
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
-	SkillCollision->Transform.SetLocalScale(SkillScale.Half());
+	SkillCollision->Transform.SetLocalScale({ XRANGE, YRANGE });
 }
 
 void FairySpiral::Update(float _Delta)

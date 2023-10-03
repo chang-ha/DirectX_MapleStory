@@ -19,7 +19,7 @@ public:
 protected:
 	bool IsUpdate = true;
 	bool IsBlockOut = true;
-	float Speed = 200.0f;
+	float Speed = 0.0f;
 	float LiveTime = 10.0f;
 	float4 Scale = float4::ZERO;
 	float4 CurMapScale = float4::ZERO;

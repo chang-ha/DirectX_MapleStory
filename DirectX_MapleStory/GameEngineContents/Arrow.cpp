@@ -74,6 +74,7 @@ void Arrow::Start()
 
 	ArrowCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	ArrowCollision->Transform.SetLocalScale(ArrowScale);
+	ArrowCollision->Transform.SetLocalPosition({0, ArrowScale.hY()});
 
 	ArrowEvent.Enter = std::bind(&Arrow::CollisionEnter, this, std::placeholders::_1, std::placeholders::_2);
 }

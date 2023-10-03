@@ -6,7 +6,8 @@
 #include "BaseWindActor.h"
 #include "Player.h"
 
-#define DETECT_RANGE 700
+#define DETECT_XRANGE 1000
+#define DETECT_YRANGE 700
 
 BaseWindActor::BaseWindActor()
 {
@@ -99,7 +100,8 @@ void BaseWindActor::Update(float _Delta)
 		MainSpriteRenderer->ChangeAnimation("Death");
 	}
 
-	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, -DirAngle });
+	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
+	HitCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
 
 	HitCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
 		{
@@ -201,9 +203,9 @@ void BaseWindActor::Init(std::string_view _WindName)
 		}
 	);
 
-	DetectCollision->Transform.SetLocalScale({ DETECT_RANGE, DETECT_RANGE });
+	DetectCollision->Transform.SetLocalScale({ DETECT_XRANGE, DETECT_YRANGE });
 	HitCollision->Transform.SetLocalScale({90, 40});
-	Transform.SetLocalScale({ -1.0f, 1.0f, 1.0f });
+	MainSpriteRenderer->LeftFlip();
 
 	MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
 }

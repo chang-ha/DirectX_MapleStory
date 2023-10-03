@@ -21,7 +21,7 @@ protected:
 
 private:
 	int CollisionCount = 0;
-	float ArrowSpeed = 400.0f;
+	float ArrowSpeed = 450.0f;
 	float4 ArrowScale = float4::ZERO;
 	ActorDir Dir = ActorDir::Null;
 	std::shared_ptr<GameEngineSpriteRenderer> ArrowRenderer = nullptr;
