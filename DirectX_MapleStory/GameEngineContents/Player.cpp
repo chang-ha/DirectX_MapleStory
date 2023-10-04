@@ -87,10 +87,10 @@ void Player::Start()
 	_Animation->Inter[1] = 0.05f;
 
 	_Animation = MainSpriteRenderer->FindAnimation("Shoot");
-	_Animation->Inter[1] = 0.4f;
+	_Animation->Inter[1] = 0.2f;
 
 	_Animation = MainSpriteRenderer->FindAnimation("VortexSphere");
-	_Animation->Inter[2] = 0.4f;
+	_Animation->Inter[2] = 0.2f;
 
 	_Animation = MainSpriteRenderer->FindAnimation("MercilessWinds");
 	_Animation->Inter[0] = 0.05f;

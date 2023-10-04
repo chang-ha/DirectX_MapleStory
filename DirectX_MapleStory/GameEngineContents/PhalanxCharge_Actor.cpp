@@ -116,7 +116,7 @@ void PhalanxCharge_Actor::Update(float _Delta)
 		}
 	);
 
-	if (true == GameEngineInput::IsDown('E'))
+	if (true == GameEngineInput::IsDown('E') && (true == MainSpriteRenderer->IsCurAnimation("Attack") || true == MainSpriteRenderer->IsCurAnimation("Attack_Loop")))
 	{
 		SwitchDir();
 	}

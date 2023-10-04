@@ -12,7 +12,7 @@
 
 #define LADDER_JUMP_HEIGHT 300.0f
 
-#define WINDWALK_XVECTOR 800.0f
+#define WINDWALK_XVECTOR 1000.0f
 
 // State함수들 구현
 void Player::IdleStart()
