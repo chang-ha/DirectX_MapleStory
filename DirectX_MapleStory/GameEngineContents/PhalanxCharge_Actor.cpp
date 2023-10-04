@@ -2,6 +2,8 @@
 #include "PhalanxCharge_Actor.h"
 #include "SkillManager.h"
 
+PhalanxCharge_Actor* PhalanxCharge_Actor::Main_PhalanxCharge = nullptr;
+
 #define SPEED 200.0f
 
 PhalanxCharge_Actor::PhalanxCharge_Actor()
@@ -22,10 +24,13 @@ void PhalanxCharge_Actor::LevelStart(GameEngineLevel* _PrevLevel)
 void PhalanxCharge_Actor::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	BaseSkillActor::LevelEnd(_NextLevel);
+	Main_PhalanxCharge = nullptr;
 }
 
 void PhalanxCharge_Actor::Start()
 {
+	Main_PhalanxCharge = this;
+
 	BaseSkillActor::Start();
 	MainSpriteRenderer->CreateAnimation("Ready", "PhalanxCharge_Ready", 0.06f);
 	MainSpriteRenderer->CreateAnimation("Attack", "PhalanxCharge_Attack", 0.09f);
@@ -62,11 +67,12 @@ void PhalanxCharge_Actor::Start()
 
 	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
+			Main_PhalanxCharge = nullptr;
 			Death();
 		}
 	);
 
-	Scale = {250, 100};
+	Scale = {280, 100};
 	SkillCollision->Transform.SetLocalScale(Scale);
 	SkillCollision->Transform.SetLocalPosition({0, 50});
 }
@@ -109,4 +115,26 @@ void PhalanxCharge_Actor::Update(float _Delta)
 			}
 		}
 	);
+
+	if (true == GameEngineInput::IsDown('E'))
+	{
+		SwitchDir();
+	}
+}
+
+void PhalanxCharge_Actor::SwitchDir()
+{
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		SetDir(ActorDir::Left);
+		break;
+	case ActorDir::Left:
+		SetDir(ActorDir::Right);
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 }

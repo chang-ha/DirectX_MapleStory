@@ -14,6 +14,11 @@ PhalanxCharge::~PhalanxCharge()
 
 void PhalanxCharge::UseSkill()
 {
+	if (nullptr != PhalanxCharge_Actor::Main_PhalanxCharge)
+	{
+		return;
+	}
+
 	ContentSkill::UseSkill();
 	On();
 	SkillRenderer1->On();

@@ -5,6 +5,9 @@ class PhalanxCharge_Actor : public BaseSkillActor
 {
 	friend class PhalanxCharge;
 public:
+	static PhalanxCharge_Actor* Main_PhalanxCharge;
+
+public:
 	// constructer destructer
 	PhalanxCharge_Actor();
 	~PhalanxCharge_Actor();
@@ -24,5 +27,7 @@ protected:
 private:
 	int HitCount = 0;
 	float4 MoveDir = float4::ZERO;
+
+	void SwitchDir();
 };
 
