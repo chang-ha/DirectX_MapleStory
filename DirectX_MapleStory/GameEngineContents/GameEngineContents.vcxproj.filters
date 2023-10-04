@@ -109,6 +109,9 @@
     <ClCompile Include="CutsceneActor.cpp">
       <Filter>Level\Boss_Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Laser.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -218,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="CutsceneActor.h">
       <Filter>Level\Boss_Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Laser.h">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

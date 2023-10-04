@@ -24,6 +24,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	float LaserCoolDown = 0.0f;
 	std::shared_ptr<class Dragon> LeftDragon = nullptr;
 	std::shared_ptr<class Dragon> RightDragon = nullptr;
 };

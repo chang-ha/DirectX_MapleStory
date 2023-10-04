@@ -13,14 +13,9 @@ Dragon::~Dragon()
 
 }
 
-void Dragon::LevelStart(GameEngineLevel* _PrevLevel)
-{
-
-}
-
 void Dragon::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void Dragon::Start()
