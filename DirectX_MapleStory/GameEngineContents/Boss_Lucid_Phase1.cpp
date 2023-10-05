@@ -9,6 +9,7 @@
 #include "Lucid_Phase1.h"
 #include "Player.h"
 #include "MushRoom.h"
+#include "Golem.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -99,7 +100,7 @@ void Boss_Lucid_Phase1::Start()
 		{
 			GameEngineRandom Random;
 			Random.SetSeed(time(nullptr));
-			float RandomValue = Random.RandomFloat(300.0f, 1800.0f);
+			float RandomValue = Random.RandomFloat(400.0f, 1700.0f);
 			Player::MainPlayer->Transform.SetLocalPosition({ RandomValue , -500 });
 			TeleportRenderer->On();
 			TeleportRenderer->Transform.SetWorldPosition(Player::MainPlayer->Transform.GetWorldPosition());
@@ -121,6 +122,15 @@ void Boss_Lucid_Phase1::Start()
 				_Mush = ContentLevel::CurContentLevel->CreateActor<MushRoom>(UpdateOrder::Monster);
 				_Mush->SetDir(ActorDir::Right);
 				_Mush->Transform.SetLocalPosition(float4(1150, -700));
+				break;
+			}
+			case LucidState::Summon_Golem:
+			{
+				GameEngineRandom Random;
+				std::shared_ptr<Golem> _Golem = ContentLevel::CurContentLevel->CreateActor<Golem>(UpdateOrder::Monster);
+				Random.SetSeed(reinterpret_cast<long long>(_Golem.get()));
+				float RandomValue = Random.RandomFloat(400.0f, 1700.0f);
+				_Golem->Transform.SetLocalPosition({ RandomValue , -450 });
 				break;
 			}
 			default:
@@ -199,6 +209,9 @@ void Boss_Lucid_Phase1::ChangeState(LucidState _State)
 		case LucidState::Summon_Mush:
 			Summon_MushEnd();
 			break;
+		case LucidState::Summon_Golem:
+			Summon_GolemEnd();
+			break;
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
 			break;
@@ -225,6 +238,9 @@ void Boss_Lucid_Phase1::ChangeState(LucidState _State)
 		case LucidState::Summon_Mush:
 			Summon_MushStart();
 			break;
+		case LucidState::Summon_Golem:
+			Summon_GolemStart();
+			break;
 		default:
 			break;
 		}
@@ -249,6 +265,8 @@ void Boss_Lucid_Phase1::StateUpdate(float _Delta)
 		return Skill3Update(_Delta);
 	case LucidState::Summon_Mush:
 		return Summon_MushUpdate(_Delta);
+	case LucidState::Summon_Golem:
+		return Summon_GolemUpdate(_Delta);
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
 		break;
@@ -296,12 +314,20 @@ void Boss_Lucid_Phase1::Summon_MushStart()
 	BossRenderer->ChangeAnimation("Skill4");
 }
 
+void Boss_Lucid_Phase1::Summon_GolemStart()
+{
+	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
+	BossRenderer->ChangeAnimation("Skill4");
+}
+
+
 void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 {
 	Skill1Cooldown -= _Delta;
 	Skill2Cooldown -= _Delta;
 	TeleportCooldown -= _Delta;
 	MushCooldown -= _Delta;
+	GolemCooldown -= _Delta;
 
 	if (0.0f >= TeleportCooldown)
 	{
@@ -325,6 +351,12 @@ void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 	{
 		ChangeState(LucidState::Summon_Mush);
 		MushCooldown = Summon_Mush_Cooldown;
+	}
+
+	if (0.0f >= GolemCooldown)
+	{
+		ChangeState(LucidState::Summon_Golem);
+		GolemCooldown = Summon_Golem_Cooldown;
 	}
 }
 
@@ -365,6 +397,14 @@ void Boss_Lucid_Phase1::Summon_MushUpdate(float _Delta)
 	}
 }
 
+void Boss_Lucid_Phase1::Summon_GolemUpdate(float _Delta)
+{
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
+}
+
 void Boss_Lucid_Phase1::IdleEnd()
 {
 
@@ -392,6 +432,11 @@ void Boss_Lucid_Phase1::Skill3End()
 }
 
 void Boss_Lucid_Phase1::Summon_MushEnd()
+{
+
+}
+
+void Boss_Lucid_Phase1::Summon_GolemEnd()
 {
 
 }

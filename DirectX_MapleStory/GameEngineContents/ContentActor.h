@@ -2,7 +2,6 @@
 #include <GameEngineCore/GameEngineActor.h>
 
 #define MAX_GRAVITY_FORCE 1500.0f
-#define MAX_GRAVITY 10.0f
 
 #define UP_PIXEL_LIMIT 4
 #define DOWN_PIXEL_LIMIT 4
@@ -88,6 +87,7 @@ protected:
 	bool IsGround = true;
 	ActorDir Dir = ActorDir::Null;
 	float GravityForce = 0.0f;
+	float MaxGraviry = 10.0f;
 	float4 MoveVectorForce = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 

@@ -4,7 +4,8 @@
 #define Skill1_Colldown 7.0f
 #define Skill2_Cooldown 20.0f
 #define Teleport_Cooldown 15.0f
-#define Summon_Mush_Cooldown 10.0f  
+#define Summon_Mush_Cooldown 10.0f 
+#define Summon_Golem_Cooldown 3.0f 
 
 enum class LucidState
 {
@@ -14,6 +15,7 @@ enum class LucidState
 	Skill2, // Summon Dragon
 	Skill3, // Teleport
 	Summon_Mush, // Summon Butterfly, Golem, Mushroom
+	Summon_Golem, // Summon Butterfly, Golem, Mushroom
 };
 
 class Boss_Lucid_Phase1 : public BaseBossActor
@@ -44,6 +46,7 @@ private:
 	float Skill2Cooldown = Skill2_Cooldown;
 	float TeleportCooldown = Teleport_Cooldown;
 	float MushCooldown = Summon_Mush_Cooldown;
+	float GolemCooldown = Summon_Golem_Cooldown;
 	std::shared_ptr<GameEngineSpriteRenderer> FlowerRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> TeleportRenderer = nullptr;
 	LucidState State = LucidState::Idle;
@@ -56,6 +59,7 @@ private:
 	void Skill2Start(); 
 	void Skill3Start();
 	void Summon_MushStart();
+	void Summon_GolemStart();
 	//
 	// Update
 	void IdleUpdate(float _Delta);
@@ -64,6 +68,7 @@ private:
 	void Skill2Update(float _Delta);
 	void Skill3Update(float _Delta);
 	void Summon_MushUpdate(float _Delta);
+	void Summon_GolemUpdate(float _Delta);
 	// 
 	// End
 	void IdleEnd();
@@ -72,6 +77,7 @@ private:
 	void Skill2End();
 	void Skill3End();
 	void Summon_MushEnd();
+	void Summon_GolemEnd();
 	// 
 	/////
 };

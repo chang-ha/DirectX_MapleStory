@@ -44,9 +44,9 @@ void ContentActor::Gravity(float _Delta)
 
 	MoveVectorForce.Y -= GravityForce * _Delta;
 	float MoveVectorForceDelta = MoveVectorForce.Y * _Delta;
-	if (MAX_GRAVITY <= MoveVectorForceDelta)
+	if (MaxGraviry <= MoveVectorForceDelta)
 	{
-		MoveVectorForceDelta = MAX_GRAVITY;
+		MoveVectorForceDelta = MaxGraviry;
 	}
 	if (0.0f > MoveVectorForce.Y)
 	{

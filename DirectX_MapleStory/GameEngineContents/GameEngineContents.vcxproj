@@ -217,6 +217,10 @@
     </ClCompile>
     <ClCompile Include="FairySpiral.cpp" />
     <ClCompile Include="GlobalValue.cpp" />
+    <ClCompile Include="Golem.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HowlingGale.cpp" />
     <ClCompile Include="HowlingGale_Actor.cpp" />
     <ClCompile Include="Laser.cpp">
@@ -334,6 +338,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GlobalValue.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Golem.h">
       <SubType>
       </SubType>
     </ClInclude>
