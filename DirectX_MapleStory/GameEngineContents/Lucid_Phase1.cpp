@@ -11,6 +11,8 @@
 #include "Dragon.h"
 #include "Laser.h"
 
+#define Lase_Cooldown 8.0f
+
 Lucid_Phase1::Lucid_Phase1()
 {
 
@@ -63,8 +65,8 @@ void Lucid_Phase1::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
 
-	LaserCoolDown -= _Delta;
-	if (0.0f >= LaserCoolDown)
+	LaserCooldown -= _Delta;
+	if (0.0f >= LaserCooldown)
 	{
 		GameEngineRandom Random;
 
@@ -95,7 +97,7 @@ void Lucid_Phase1::Update(float _Delta)
 			float4 RandomFloat4 = Random.RandomVectorBox2D(300 + 200 * static_cast<float>(i), 300 + 200 * static_cast<float>((i + 1)), -500, -600);
 			_Laser->Transform.SetLocalPosition(RandomFloat4);
 		}
-		LaserCoolDown = 5.0f;
+		LaserCooldown = Lase_Cooldown;
 	}
 }
 

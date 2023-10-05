@@ -240,6 +240,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Monsoon.cpp" />
+    <ClCompile Include="MushRoom.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PhalanxCharge.cpp" />
     <ClCompile Include="PhalanxCharge_Actor.cpp" />
     <ClCompile Include="PhantasmalWind.cpp">
@@ -356,6 +360,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Monsoon.h" />
+    <ClInclude Include="MushRoom.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="PhalanxCharge.h" />
     <ClInclude Include="PhalanxCharge_Actor.h" />
     <ClInclude Include="PhantasmalWind.h">

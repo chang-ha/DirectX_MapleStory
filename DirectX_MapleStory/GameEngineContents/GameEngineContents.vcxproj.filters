@@ -115,6 +115,9 @@
     <ClCompile Include="RenderActor.cpp">
       <Filter>Actor\Global</Filter>
     </ClCompile>
+    <ClCompile Include="MushRoom.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="RenderActor.h">
       <Filter>Actor\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="MushRoom.h">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -68,11 +68,12 @@ void MercilessWinds::Start()
 	SkillRenderer1->AutoSpriteSizeOn();
 	SkillRenderer1->Off();
 
-	// 한 프레임에서 여러 객체 만들면 느려져서 프레임마다 1객체씩 만드는 방법을 채택
+	// 한 프레임에서 여러 객체 만들면 느려져서 프레임마다 2객체씩 만드는 방법을 채택
 	for (int i = 0; i < 7; i++)
 	{
 		SkillRenderer1->SetFrameEvent("Effect1", i, [&](GameEngineRenderer* _Renderer)
 			{
+				CreateWind();
 				CreateWind();
 			}
 		);

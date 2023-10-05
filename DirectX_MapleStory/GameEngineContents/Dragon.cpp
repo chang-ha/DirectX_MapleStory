@@ -23,7 +23,7 @@ void Dragon::Start()
 	BreathRenderers.resize(7);
 	for (size_t i = 0; i < BreathRenderers.size(); i++)
 	{
-		BreathRenderers[i] = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		BreathRenderers[i] = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
 	}
 
 	DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);

@@ -8,6 +8,7 @@
 #include "Dragon.h"
 #include "Lucid_Phase1.h"
 #include "Player.h"
+#include "MushRoom.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -102,8 +103,32 @@ void Boss_Lucid_Phase1::Start()
 			Player::MainPlayer->Transform.SetLocalPosition({ RandomValue , -500 });
 			TeleportRenderer->On();
 			TeleportRenderer->Transform.SetWorldPosition(Player::MainPlayer->Transform.GetWorldPosition());
+
 		}
 	);
+
+	///// TestCode
+	BossRenderer->SetFrameEvent("Skill4", 10, [&](GameEngineRenderer* _Renderer)
+		{
+			switch (State)
+			{
+			case LucidState::Summon_Mush:
+			{
+				std::shared_ptr<MushRoom> _Mush = ContentLevel::CurContentLevel->CreateActor<MushRoom>(UpdateOrder::Monster);
+				_Mush->SetDir(ActorDir::Left);
+				_Mush->Transform.SetLocalPosition(float4(850, -700));
+
+				_Mush = ContentLevel::CurContentLevel->CreateActor<MushRoom>(UpdateOrder::Monster);
+				_Mush->SetDir(ActorDir::Right);
+				_Mush->Transform.SetLocalPosition(float4(1150, -700));
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	);
+	/////
 
 	TeleportRenderer->SetEndEvent("Teleport", [&](GameEngineRenderer* _Renderer)
 		{
@@ -135,7 +160,7 @@ void Boss_Lucid_Phase1::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('8'))
 	{
-		ChangeState(LucidState::Skill4);
+		ChangeState(LucidState::Summon_Mush);
 	}
 
 	if (true == GameEngineInput::IsDown('9'))
@@ -171,8 +196,8 @@ void Boss_Lucid_Phase1::ChangeState(LucidState _State)
 		case LucidState::Skill3:
 			Skill3End();
 			break;
-		case LucidState::Skill4:
-			Skill4End();
+		case LucidState::Summon_Mush:
+			Summon_MushEnd();
 			break;
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -197,8 +222,8 @@ void Boss_Lucid_Phase1::ChangeState(LucidState _State)
 		case LucidState::Skill3:
 			Skill3Start();
 			break;
-		case LucidState::Skill4:
-			Skill4Start();
+		case LucidState::Summon_Mush:
+			Summon_MushStart();
 			break;
 		default:
 			break;
@@ -222,8 +247,8 @@ void Boss_Lucid_Phase1::StateUpdate(float _Delta)
 		return Skill2Update(_Delta);
 	case LucidState::Skill3:
 		return Skill3Update(_Delta);
-	case LucidState::Skill4:
-		return Skill4Update(_Delta);
+	case LucidState::Summon_Mush:
+		return Summon_MushUpdate(_Delta);
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
 		break;
@@ -265,7 +290,7 @@ void Boss_Lucid_Phase1::Skill3Start()
 	BossRenderer->ChangeAnimation("Skill3");
 }
 
-void Boss_Lucid_Phase1::Skill4Start()
+void Boss_Lucid_Phase1::Summon_MushStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Skill4");
@@ -273,12 +298,33 @@ void Boss_Lucid_Phase1::Skill4Start()
 
 void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 {
+	Skill1Cooldown -= _Delta;
+	Skill2Cooldown -= _Delta;
 	TeleportCooldown -= _Delta;
+	MushCooldown -= _Delta;
 
 	if (0.0f >= TeleportCooldown)
 	{
 		ChangeState(LucidState::Skill3);
-		TeleportCooldown = 10.0f;
+		TeleportCooldown = Teleport_Cooldown;
+	}
+
+	if (0.0f >= Skill1Cooldown)
+	{
+		ChangeState(LucidState::Skill1);
+		Skill1Cooldown = Skill1_Colldown;
+	}
+
+	if (0.0f >= Skill2Cooldown)
+	{
+		ChangeState(LucidState::Skill2);
+		Skill2Cooldown = Skill2_Cooldown;
+	}
+
+	if (0.0f >= MushCooldown)
+	{
+		ChangeState(LucidState::Summon_Mush);
+		MushCooldown = Summon_Mush_Cooldown;
 	}
 }
 
@@ -311,7 +357,7 @@ void Boss_Lucid_Phase1::Skill3Update(float _Delta)
 	}
 }
 
-void Boss_Lucid_Phase1::Skill4Update(float _Delta)
+void Boss_Lucid_Phase1::Summon_MushUpdate(float _Delta)
 {
 	if (true == BossRenderer->IsCurAnimationEnd())
 	{
@@ -345,7 +391,7 @@ void Boss_Lucid_Phase1::Skill3End()
 
 }
 
-void Boss_Lucid_Phase1::Skill4End()
+void Boss_Lucid_Phase1::Summon_MushEnd()
 {
 
 }
