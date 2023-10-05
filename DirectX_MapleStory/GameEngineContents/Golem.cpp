@@ -45,14 +45,14 @@ void Golem::Start()
 	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Phase1_Golem_Attack");
 	MainSpriteRenderer->CreateAnimation("Death", "Lucid_Phase1_Golem_Death");
 	MainSpriteRenderer->ChangeAnimation("Ready");
-	MainSpriteRenderer->SetPivotValue({0.5f, 0.75f});
+	MainSpriteRenderer->SetPivotValue({0.48f, 0.8f});
 	GravityOff();
 	MaxGraviry = 100.0f;
 
 	MainSpriteRenderer->SetFrameEvent("Ready", 9, [&](GameEngineSpriteRenderer*)
 		{
 			GravityOn();
-			MoveVectorForce.Y -= 700.0f;
+			MoveVectorForce.Y -= 800.0f;
 		}
 	);
 }
@@ -145,23 +145,25 @@ void Golem::ReadyUpdate(float _Delta)
 void Golem::ReviveStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Revive");
-	MainSpriteRenderer->SetPivotValue({0.5f, 0.75f});
+	MainSpriteRenderer->SetPivotValue({0.49f, 0.75f});
 }
 
 void Golem::IdleStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Idle");
-	MainSpriteRenderer->SetPivotValue({0.52f, 1.0f});
+	MainSpriteRenderer->SetPivotValue({0.49f, 1.0f});
 }
 
 void Golem::AttackStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Attack");
+	MainSpriteRenderer->SetPivotValue({ 0.473f, 0.808f });
 }
 
 void Golem::DeathStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Death");
+	MainSpriteRenderer->SetPivotValue({ 0.52f, 0.9f });
 }
 
 void Golem::ReviveUpdate(float _Delta)
