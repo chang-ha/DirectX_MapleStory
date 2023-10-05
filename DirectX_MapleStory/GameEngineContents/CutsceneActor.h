@@ -18,8 +18,6 @@ public:
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
-	void Update(float _Delta) override;
-
 private:
 	std::string BossName = "";
 	std::string NextLevelName = "";

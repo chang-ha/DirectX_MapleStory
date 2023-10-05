@@ -35,7 +35,9 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	float TeleportCooldown = 10.0f;
 	std::shared_ptr<GameEngineSpriteRenderer> FlowerRenderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> TeleportRenderer = nullptr;
 	LucidState State = LucidState::Idle;
 
 	///// State

@@ -40,8 +40,3 @@ void CutsceneActor::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	// Release
 }
-
-void CutsceneActor::Update(float _Delta)
-{
-
-}

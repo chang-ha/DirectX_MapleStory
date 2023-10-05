@@ -262,6 +262,10 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)Bin\$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Bin\$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
+    <ClCompile Include="RenderActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SongOfHeaven.cpp" />
     <ClCompile Include="TitleLevel.cpp">
@@ -364,6 +368,10 @@
     </ClInclude>
     <ClInclude Include="PlayLevel.h" />
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="RenderActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SongOfHeaven.h" />
     <ClInclude Include="TitleLevel.h">

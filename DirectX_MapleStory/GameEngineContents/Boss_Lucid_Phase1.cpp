@@ -1,9 +1,13 @@
 ﻿#include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
 #include "Boss_Lucid_Phase1.h"
 #include "PhantasmalWind.h"
 #include "ContentLevel.h"
 #include "Dragon.h"
 #include "Lucid_Phase1.h"
+#include "Player.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -28,7 +32,9 @@ void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 void Boss_Lucid_Phase1::Start()
 {
 	FlowerRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+	TeleportRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
 	FlowerRenderer->AutoSpriteSizeOn();
+	TeleportRenderer->AutoSpriteSizeOn();
 	BaseBossActor::Start();
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Death"))
@@ -62,6 +68,11 @@ void Boss_Lucid_Phase1::Start()
 	FlowerRenderer->ChangeAnimation("Flower");
 	FlowerRenderer->Transform.SetLocalPosition({ -5, 3 });
 	
+	TeleportRenderer->CreateAnimation("Teleport", "Lucid_Phase1_Teleport", 0.08f);
+	TeleportRenderer->ChangeAnimation("Teleport");
+	TeleportRenderer->SetPivotValue({0.5f, 0.8f});
+	TeleportRenderer->Off();
+
 	BossCollision->Transform.SetLocalScale({150, 400});
 	BossCollision->Transform.SetLocalPosition({0, 50});
 
@@ -80,6 +91,23 @@ void Boss_Lucid_Phase1::Start()
 		{
 			Lucid_Phase1* Map = dynamic_cast<Lucid_Phase1*>(ContentLevel::CurContentLevel);
 			Map->CallDragon();
+		}
+	);
+
+	BossRenderer->SetFrameEvent("Skill3", 11, [&](GameEngineRenderer* _Renderer)
+		{
+			GameEngineRandom Random;
+			Random.SetSeed(time(nullptr));
+			float RandomValue = Random.RandomFloat(300.0f, 1800.0f);
+			Player::MainPlayer->Transform.SetLocalPosition({ RandomValue , -500 });
+			TeleportRenderer->On();
+			TeleportRenderer->Transform.SetWorldPosition(Player::MainPlayer->Transform.GetWorldPosition());
+		}
+	);
+
+	TeleportRenderer->SetEndEvent("Teleport", [&](GameEngineRenderer* _Renderer)
+		{
+			TeleportRenderer->Off();
 		}
 	);
 }
@@ -245,7 +273,13 @@ void Boss_Lucid_Phase1::Skill4Start()
 
 void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 {
+	TeleportCooldown -= _Delta;
 
+	if (0.0f >= TeleportCooldown)
+	{
+		ChangeState(LucidState::Skill3);
+		TeleportCooldown = 10.0f;
+	}
 }
 
 void Boss_Lucid_Phase1::DeathUpdate(float _Delta)

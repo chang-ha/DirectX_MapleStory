@@ -14,13 +14,7 @@ ContentActor::~ContentActor()
 
 void ContentActor::Start()
 {
-	// std::shared_ptr<GameEngineLevel> CurLevel = std::make_shared<GameEngineLevel>(GetLevel());
-	// CurContentLevel = std::dynamic_pointer_cast<ContentLevel>(CurLevel);
-	// ContentLevel* CurLevel = dynamic_cast<ContentLevel*>(GetLevel());
-	// if (nullptr != CurLevel)
-	// {
-	// 	CurContentLevel = std::make_shared<ContentLevel>(CurLevel);
-	// }
+
 }
 
 void ContentActor::Update(float _Delta)
