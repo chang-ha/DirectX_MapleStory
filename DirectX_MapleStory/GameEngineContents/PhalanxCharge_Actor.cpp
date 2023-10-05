@@ -1,10 +1,11 @@
 #include "PreCompile.h"
 #include "PhalanxCharge_Actor.h"
 #include "SkillManager.h"
+#include "BaseWindActor.h"
 
 PhalanxCharge_Actor* PhalanxCharge_Actor::Main_PhalanxCharge = nullptr;
 
-#define SPEED 200.0f
+#define SPEED 150.0f
 
 PhalanxCharge_Actor::PhalanxCharge_Actor()
 {
@@ -42,7 +43,7 @@ void PhalanxCharge_Actor::Start()
 	Speed = SPEED;
 
 	IsUpdate = false;
-	LiveTime = 10.0f;
+	LiveTime = 20.0f;
 	SkillCollision->Off();
 
 	MainSpriteRenderer->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer)
@@ -111,6 +112,7 @@ void PhalanxCharge_Actor::Update(float _Delta)
 					HitCount += 1;
 					SkillManager::PlayerSkillManager->HitPrint("PhalanxCharge_Hit", 1, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
+					BaseWindActor::CreateTriflingWind();
 				}
 			}
 		}

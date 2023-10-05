@@ -1,6 +1,9 @@
 ﻿#include "PreCompile.h"
 #include "VortexSphere_Actor.h"
 #include "SkillManager.h"
+#include "BaseWindActor.h"
+
+#define SPEED 150.0f
 
 VortexSphere_Actor::VortexSphere_Actor()
 {
@@ -27,7 +30,7 @@ void VortexSphere_Actor::Start()
 	BaseSkillActor::Start();
 	GravityOff();
 	IsBlockOut = false;
-	Speed = 150.0f;
+	Speed = SPEED;
 	LiveTime = 20.0f;
 
 	MainSpriteRenderer->CreateAnimation("Attack", "VortexSphere_Actor", 0.07f);
@@ -42,13 +45,13 @@ void VortexSphere_Actor::Update(float _Delta)
 {
 	BaseSkillActor::Update(_Delta);
 
-	if (150.0f == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
+	if (SPEED == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{
-		Speed = 75.0f;
+		Speed = SPEED / 2;
 	}
-	else if (75.0f == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
+	else if (SPEED / 2 == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
 	{
-		Speed = 150.0f;
+		Speed = SPEED;
 	}
 
 	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
@@ -65,6 +68,7 @@ void VortexSphere_Actor::Update(float _Delta)
 				{
 					SkillManager::PlayerSkillManager->HitPrint("VortexSphere_Hit", 6, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
+					BaseWindActor::CreateTriflingWind();
 				}
 			}
 		}
