@@ -13,7 +13,9 @@ public:
 	RenderActor& operator=(const RenderActor& _Other) = delete;
 	RenderActor& operator=(RenderActor&& _Other) noexcept = delete;
 
-	void Init(RenderOrder _RenderOrder, std::string_view _Path);
+	void Init(std::string_view _Path);
+
+	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
 
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -21,7 +23,5 @@ protected:
 	void Update(float _Delta) override;
 
 private:
-	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
-
 };
 

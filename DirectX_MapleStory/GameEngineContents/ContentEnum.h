@@ -28,6 +28,7 @@ enum class RenderOrder
 	MonsterAttack,
 	Skill,
 	Arrow,
+	RenderActor,
 	UI,
 };
 
