@@ -103,8 +103,8 @@ void Boss_Lucid_Phase1::Start()
 			float RandomValue = Random.RandomFloat(400.0f, 1700.0f);
 			Player::MainPlayer->Transform.SetLocalPosition({ RandomValue , -500 });
 			TeleportRenderer->On();
+			Player::MainPlayer->MoveVectorForceReset();
 			TeleportRenderer->Transform.SetWorldPosition(Player::MainPlayer->Transform.GetWorldPosition());
-
 		}
 	);
 
@@ -127,10 +127,13 @@ void Boss_Lucid_Phase1::Start()
 			case LucidState::Summon_Golem:
 			{
 				GameEngineRandom Random;
-				std::shared_ptr<Golem> _Golem = ContentLevel::CurContentLevel->CreateActor<Golem>(UpdateOrder::Monster);
-				Random.SetSeed(reinterpret_cast<long long>(_Golem.get()));
-				float RandomValue = Random.RandomFloat(400.0f, 1700.0f);
-				_Golem->Transform.SetLocalPosition({ RandomValue , -450 });
+				for (size_t i = 0; i < 2; i++)
+				{
+					std::shared_ptr<Golem> _Golem = ContentLevel::CurContentLevel->CreateActor<Golem>(UpdateOrder::Monster);
+					Random.SetSeed(reinterpret_cast<long long>(_Golem.get()));
+					float RandomValue = Random.RandomFloat(400.0f, 1700.0f);
+					_Golem->Transform.SetLocalPosition({ RandomValue , -450 });
+				}
 				break;
 			}
 			default:

@@ -62,9 +62,9 @@ void HowlingGale_Actor::Start()
 		}
 	);
 
-	Scale = { 100, 500 };
+	Scale = { 100, 600 };
 	SkillCollision->Transform.SetLocalScale(Scale);
-	SkillCollision->Transform.SetLocalPosition({0, 125});
+	SkillCollision->Transform.SetLocalPosition({0, 0});
 }
 
 void HowlingGale_Actor::Update(float _Delta)

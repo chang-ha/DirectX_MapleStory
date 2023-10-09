@@ -33,7 +33,7 @@ protected:
 	void StateUpdate(float _Delta);
 
 private:
-	float WaitTime = 1.0f;
+	float WaitTime = 0.5f;
 	float4 MoveDir = float4::ZERO;
 	ActorDir Dir = ActorDir::Null;
 	MushState State = MushState::Ready;

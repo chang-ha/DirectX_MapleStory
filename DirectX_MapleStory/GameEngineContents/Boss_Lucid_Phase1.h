@@ -1,11 +1,11 @@
 #pragma once
 #include "BaseBossActor.h"
 
-#define Skill1_Colldown 7.0f
-#define Skill2_Cooldown 20.0f
-#define Teleport_Cooldown 15.0f
-#define Summon_Mush_Cooldown 10.0f 
-#define Summon_Golem_Cooldown 3.0f 
+#define Skill1_Colldown 3.0f
+#define Skill2_Cooldown 13.0f
+#define Teleport_Cooldown 10.0f
+#define Summon_Mush_Cooldown 7.0f 
+#define Summon_Golem_Cooldown 5.0f 
 
 enum class LucidState
 {
@@ -14,8 +14,8 @@ enum class LucidState
 	Skill1, // Shoot
 	Skill2, // Summon Dragon
 	Skill3, // Teleport
-	Summon_Mush, // Summon Butterfly, Golem, Mushroom
-	Summon_Golem, // Summon Butterfly, Golem, Mushroom
+	Summon_Mush,  
+	Summon_Golem, 
 };
 
 class Boss_Lucid_Phase1 : public BaseBossActor

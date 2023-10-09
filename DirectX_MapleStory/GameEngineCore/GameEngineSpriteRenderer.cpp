@@ -310,7 +310,7 @@ void GameEngineSpriteRenderer::SetStartEvent(std::string_view _AnimationName, st
 		MsgBoxAssert("존재하지 않는 애니메이션에 이벤트를 만들려고 했습니다.");
 	}
 
-	Animation->FrameEventFunction[0] = _Function;
+	Animation->FrameEventFunction[Animation->Index[0]] = _Function;
 }
 
 void GameEngineSpriteRenderer::SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function)
