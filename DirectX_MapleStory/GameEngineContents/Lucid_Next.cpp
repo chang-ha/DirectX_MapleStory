@@ -63,7 +63,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	_Actor = CreateActor<RenderActor>();
-	_Actor->Renderer->CreateAnimation("Lucid_PhaseChange", "Lucid_PhaseChange", 0.09f);
+	_Actor->Renderer->CreateAnimation("Lucid_PhaseChange", "Lucid_PhaseChange", 0.09f, -1, -1, false);
 	_Actor->Renderer->ChangeAnimation("Lucid_PhaseChange");
 	_Actor->Renderer->AutoSpriteSizeOn();
 	_Actor->Transform.SetLocalPosition({ 1099, -488 });
@@ -76,7 +76,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 
 	_Actor->Renderer->SetEndEvent("Lucid_PhaseChange", [&](GameEngineRenderer* _Renderer)
 		{
-			// GameEngineCore::ChangeLevel("");
+			GameEngineCore::ChangeLevel("Lucid_Phase2");
 		}
 	);
 }
