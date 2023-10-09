@@ -13,8 +13,6 @@ public:
 	RenderActor& operator=(const RenderActor& _Other) = delete;
 	RenderActor& operator=(RenderActor&& _Other) noexcept = delete;
 
-	void Load(std::string_view _Path);
-
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
 
 protected:
