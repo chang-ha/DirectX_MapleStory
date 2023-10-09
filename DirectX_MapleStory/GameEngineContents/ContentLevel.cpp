@@ -44,6 +44,11 @@ void ContentLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("Lucid_Phase1");
 	}
+
+	if (GameEngineInput::IsPress('P'))
+	{
+		GameEngineCore::ChangeLevel("Lucid_Next");
+	}
 }
 
 void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)

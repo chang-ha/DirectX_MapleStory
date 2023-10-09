@@ -27,5 +27,8 @@ private:
 	float LaserCooldown = 0.0f;
 	std::shared_ptr<class Dragon> LeftDragon = nullptr;
 	std::shared_ptr<class Dragon> RightDragon = nullptr;
+	std::shared_ptr<class ContentBackGround> Back = nullptr;
+	std::shared_ptr<class Boss_Lucid_Phase1> Boss = nullptr;
+	std::shared_ptr<class Player> CurPlayer = nullptr;
 };
 

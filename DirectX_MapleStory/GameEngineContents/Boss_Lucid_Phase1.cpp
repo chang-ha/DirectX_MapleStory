@@ -143,6 +143,12 @@ void Boss_Lucid_Phase1::Start()
 	);
 	/////
 
+	BossRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
+		{
+			GameEngineCore::ChangeLevel("Lucid_Next");
+		}
+	);
+
 	TeleportRenderer->SetEndEvent("Teleport", [&](GameEngineRenderer* _Renderer)
 		{
 			TeleportRenderer->Off();
@@ -365,7 +371,7 @@ void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 
 void Boss_Lucid_Phase1::DeathUpdate(float _Delta)
 {
-
+	
 }
 
 void Boss_Lucid_Phase1::Skill1Update(float _Delta)

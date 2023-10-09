@@ -121,6 +121,9 @@
     <ClCompile Include="Golem.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
+    <ClCompile Include="Lucid_Next.cpp">
+      <Filter>Level\Boss_Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -242,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="Golem.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Lucid_Next.h">
+      <Filter>Level\Boss_Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
