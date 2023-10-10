@@ -37,7 +37,8 @@ void VortexSphere_Actor::Start()
 	MainSpriteRenderer->ChangeAnimation("Attack");
 	MainSpriteRenderer->AutoSpriteSizeOn();
 
-	Scale = { 350, 350 };
+	Scale = { 300, 300 };
+	SkillCollision->SetCollisionType(ColType::SPHERE2D);
 	SkillCollision->Transform.SetLocalScale(Scale);
 }
 

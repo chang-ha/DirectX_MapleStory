@@ -30,6 +30,9 @@ void Dragon::Start()
 	DragonRenderer->AutoSpriteSizeOn();
 	DragonRenderer->SetPivotType(PivotType::Bottom);
 
+	BreathCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+	BreathCollision->Transform.SetLocalScale({1800, 400});
+
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Dragon_Move"))
 	{
 		GameEngineDirectory Dir;
@@ -304,10 +307,16 @@ void Dragon::RightBreath()
 
 void Dragon::LeftBreath()
 {
+
 	for (size_t i = 0; i < BreathRenderers.size(); i++)
 	{
 		BreathRenderers[i]->Transform.SetLocalPosition({ -380 - 190 * static_cast<float>(i), -120 });
 		BreathRenderers[i]->RightFlip();
 		BreathRenderers[i]->SetPivotValue({ 0.0f, 1.0f });
 	}
+}
+
+void Dragon::SetBreathPos(const float4& _Pos)
+{
+	BreathCollision->Transform.SetLocalPosition(_Pos);
 }

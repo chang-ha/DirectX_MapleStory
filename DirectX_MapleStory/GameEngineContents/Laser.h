@@ -15,6 +15,7 @@ public:
 
 	void Init(std::string_view _LaserName);
 	void SetAngle(float _Angle);
+	void SetColScale(const float4& _Scale);
 
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;

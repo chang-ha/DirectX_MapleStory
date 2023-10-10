@@ -20,6 +20,7 @@ void Laser::Start()
 {
 	LaserRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
 	LaserCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+	LaserCollision->SetCollisionType(ColType::OBBBOX2D);
 }
 
 void Laser::Update(float _Delta)
@@ -73,4 +74,10 @@ void Laser::Init(std::string_view _LaserName)
 void Laser::SetAngle(float _Angle)
 {
 	LaserRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, -_Angle });
+	LaserCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, _Angle });
+}
+
+void Laser::SetColScale(const float4& _Scale)
+{
+	LaserCollision->Transform.SetLocalScale(_Scale);
 }

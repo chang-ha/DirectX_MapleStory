@@ -86,10 +86,12 @@ void Lucid_Phase1::Start()
 	LeftDragon = CreateActor<Dragon>(UpdateOrder::Monster);
 	LeftDragon->Transform.SetLocalPosition(float4(30, 200));
 	LeftDragon->SetDir(ActorDir::Right);
+	LeftDragon->SetBreathPos({1100, 150});
 
 	RightDragon = CreateActor<Dragon>(UpdateOrder::Monster);
 	RightDragon->Transform.SetLocalPosition(float4(1970, 200));
 	RightDragon->SetDir(ActorDir::Left);
+	RightDragon->SetBreathPos({ -1100, 150 });
 }
 
 void Lucid_Phase1::Update(float _Delta)
@@ -110,15 +112,19 @@ void Lucid_Phase1::Update(float _Delta)
 			{
 			case 0:
 				_Laser->Init("Phase1_S");
+				_Laser->SetColScale({ 45, 320 });
 				break;
 			case 1:
 				_Laser->Init("Phase1_M");
+				_Laser->SetColScale({ 65, 420 });
 				break;
 			case 2:
 				_Laser->Init("Phase1_L");
+				_Laser->SetColScale({100, 570});
 				break;
 			case 3:
 				_Laser->Init("Phase1_XL");
+				_Laser->SetColScale({ 110, 670 });
 				break;
 			default:
 				break;

@@ -76,7 +76,7 @@ void Boss_Lucid_Phase1::Start()
 	TeleportRenderer->Off();
 
 	BossCollision->Transform.SetLocalScale({150, 400});
-	BossCollision->Transform.SetLocalPosition({0, 50});
+	BossCollision->Transform.SetLocalPosition({0, 200});
 
 	// Render Event
 	BossRenderer->SetFrameEvent("Skill1", 22, [&](GameEngineRenderer* _Renderer)

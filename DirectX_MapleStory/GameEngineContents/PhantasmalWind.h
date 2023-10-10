@@ -25,5 +25,6 @@ private:
 	float Speed = 50.0f;
 	float4 MoveVector = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
+	std::shared_ptr<GameEngineCollision> PhantasmaCollision = nullptr;
 };
 

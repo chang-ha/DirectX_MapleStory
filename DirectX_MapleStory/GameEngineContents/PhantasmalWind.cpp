@@ -31,6 +31,9 @@ void PhantasmalWind::Start()
 	MainSpriteRenderer->ChangeAnimation("Attack");
 	MainSpriteRenderer->LeftFlip();
 
+	PhantasmaCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+	PhantasmaCollision->SetCollisionType(ColType::OBBBOX2D);
+
 	// Random Angle
 	GameEngineRandom Random;
 	Random.SetSeed(reinterpret_cast<long long>(this));
@@ -38,11 +41,14 @@ void PhantasmalWind::Start()
 	MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
 	MoveVector.Y *= -1.0f;
 	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, -DirAngle });
+	PhantasmaCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
 
 	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Lucid_Attack");
 	float4 Scale = Sprite->GetSpriteData(0).GetScale();
 	float RandomRatio = Random.RandomFloat(0.2f, 1.0f);
 	MainSpriteRenderer->SetImageScale(Scale * RandomRatio);
+	PhantasmaCollision->Transform.SetLocalScale(float4{230, 350} * RandomRatio);
+	PhantasmaCollision->Transform.SetLocalPosition(MoveVector * 50.0f * RandomRatio);
 }
 
 void PhantasmalWind::Update(float _Delta)

@@ -22,8 +22,8 @@ void MushRoom::Start()
 	MushRenderer->AutoSpriteSizeOn();
 
 	MushCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
-	MushCollision->Transform.SetLocalScale({ 125, 250 });
-	MushCollision->Transform.SetLocalPosition({0, 75});
+	MushCollision->Transform.SetLocalScale({ 125, 220 });
+	MushCollision->Transform.SetLocalPosition({0, 100});
 	// MushCollision->Off();
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_MushRoom_Move"))

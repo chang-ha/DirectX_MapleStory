@@ -30,6 +30,8 @@ public:
 	void RightBreath();
 	void LeftBreath();
 
+	void SetBreathPos(const float4& _Pos);
+
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
@@ -42,6 +44,7 @@ private:
 	DragonState State = DragonState::Idle;
 	std::shared_ptr<GameEngineSpriteRenderer> DragonRenderer = nullptr;
 	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> BreathRenderers;
+	std::shared_ptr<GameEngineCollision> BreathCollision = nullptr;
 
 	///// State
 	// Start
