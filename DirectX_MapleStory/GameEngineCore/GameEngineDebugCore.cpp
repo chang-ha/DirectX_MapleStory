@@ -61,7 +61,7 @@ void GameEngineDebug::DrawMesh(const std::string_view& _Mesh, float4 _Scale, flo
 	}
 
 	// Sphere는 타원 충돌이 안되기 때문에 X를 기준으로 충돌함
-	_Scale.Y = _Scale.Z = _Scale.X;
+	// _Scale.Y = _Scale.Z = _Scale.X;
 
 	GameEngineDebugInfo& Value = DebugUnit.emplace_back();
 	Value.Camera = _Camera;
