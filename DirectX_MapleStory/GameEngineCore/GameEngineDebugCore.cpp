@@ -41,15 +41,31 @@ void GameEngineDebug::DrawBox2D(const GameEngineTransform& _Trans, float4 _Color
 
 void GameEngineDebug::DrawBox2D(float4 _Scale, float4 _Rot, float4 _Pos, float4 _Color, GameEngineCamera* _Camera)
 {
+	GameEngineDebug::DrawMesh("Rect", _Scale, _Rot, _Pos, _Color, _Camera);
+}
+
+void GameEngineDebug::DrawSphere2D(const GameEngineTransform& _Trans, float4 _Color /*= float4::RED*/, class GameEngineCamera* _Camera /*= nullptr*/)
+{
+	GameEngineDebug::DrawSphere2D(_Trans.GetWorldScale(), _Trans.GetWorldRotationEuler(), _Trans.GetWorldPosition(), _Color, _Camera);
+}
+void GameEngineDebug::DrawSphere2D(float4 _Scale, float4 _Rot, float4 _Pos, float4 _Color /*= float4::RED*/, class GameEngineCamera* _Camera /*= nullptr*/)
+{
+	GameEngineDebug::DrawMesh("Sphere", _Scale, _Rot, _Pos, _Color, _Camera);
+}
+
+void GameEngineDebug::DrawMesh(const std::string_view& _Mesh, float4 _Scale, float4 _Rot, float4 _Pos, float4 _Color /*= float4::RED*/, class GameEngineCamera* _Camera /*= nullptr*/)
+{
 	if (nullptr == _Camera)
 	{
 		_Camera = GameEngineDebug::GameEngineDebugCore::CurLevel->GetMainCamera().get();
 	}
 
-	// 기본 생성자로 Vector에 넣음
+	// Sphere는 타원 충돌이 안되기 때문에 X를 기준으로 충돌함
+	_Scale.Y = _Scale.Z = _Scale.X;
+
 	GameEngineDebugInfo& Value = DebugUnit.emplace_back();
 	Value.Camera = _Camera;
-	Value.Unit.SetMesh("Rect");
+	Value.Unit.SetMesh(_Mesh);
 	Value.Unit.SetMaterial("2DTextureWire");
 
 	Value.Color = _Color;
@@ -64,4 +80,3 @@ void GameEngineDebug::DrawBox2D(float4 _Scale, float4 _Rot, float4 _Pos, float4 
 	Value.Unit.ShaderResHelper.SetConstantBufferLink("TransformData", Value.Data);
 	Value.Unit.ShaderResHelper.SetConstantBufferLink("DebugColor", Value.Color);
 }
-

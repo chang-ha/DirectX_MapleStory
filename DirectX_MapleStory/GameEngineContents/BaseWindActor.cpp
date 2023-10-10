@@ -83,6 +83,7 @@ void BaseWindActor::Start()
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	// HitCollision->SetCollisionType(ColType::OBBBOX2D);
 	// DetectCollision의 CollisionOrder 추후 변경 필요?
 	DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 }

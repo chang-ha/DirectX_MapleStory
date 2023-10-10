@@ -63,6 +63,11 @@ public:
 
 	bool CollisionEvent(int _Order, const EventParameter& _Event);
 
+	void SetCollisionType(ColType _CollisionType)
+	{
+		CollisionType = _CollisionType;
+	}
+
 	ColType GetCollisionType()
 	{
 		return CollisionType;
@@ -74,7 +79,7 @@ protected:
 	void Release() override;
 
 private:
-	ColType CollisionType = ColType::SPHERE2D;
+	ColType CollisionType = ColType::AABBBOX2D;
 	std::set<std::shared_ptr<GameEngineCollision>> Others;
 };
 
