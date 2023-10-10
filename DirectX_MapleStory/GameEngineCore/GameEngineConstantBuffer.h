@@ -33,7 +33,7 @@ public:
 		// 찾아서 없으면 ConstantBuffers 만든다.
 		std::shared_ptr<GameEngineConstantBuffer> Res = GameEngineResources::CreateRes();
 		// 이름없이 만들어서 SetName하는 이유는 ConstantBuffer는 관리를 따로 ConstantBuffers로 해주기 때문
-		Res->SetName(_Name);
+		Res->SetName(UpperName);
 		Res->BufferDesc = _BufferDesc;
 		ConstantBuffers[_Byte][UpperName] = Res;
 		Res->ResCreate(_Byte);

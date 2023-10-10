@@ -156,7 +156,7 @@ void GameEngineTransform::TransformUpdate()
 
 	/////// Collision
 	TransData.WorldMatrix.Decompose(TransData.WorldScale, TransData.WorldQuaternion, TransData.WorldPosition);
-	TransData.WorldQuaternion = TransData.WorldQuaternion.QuaternionToEulerDeg();
+	TransData.WorldRotation = TransData.WorldQuaternion.QuaternionToEulerDeg();
 
 	TransData.LocalWorldMatrix.Decompose(TransData.LocalScale, TransData.LocalQuaternion, TransData.LocalPosition);
 	TransData.LocalRotation = TransData.LocalQuaternion.QuaternionToEulerDeg();
