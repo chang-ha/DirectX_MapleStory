@@ -1,18 +1,22 @@
 #include "PreCompile.h"
 #include "GameEngineVertex.h"
 
-GameEngineInputLayOutInfo GameEngineVertex2D::VertexInfo;
+GameEngineInputLayOutInfo GameEngineVertex::VertexInfo;
 
-class GameEngineVertex2DStart
+class GameEngineVertexStart
 {
 public:
-	GameEngineVertex2DStart()
+	GameEngineVertexStart()
 	{
-		// 생성자를 활용해서 Init을 자동으로 수행
-		GameEngineVertex2D::VertexInfo.AddInputLayOutDesc("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT);
-		// GameEngineVertex2D::VertexInfo.AddInputLayOutDesc("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
-		GameEngineVertex2D::VertexInfo.AddInputLayOutDesc("TEXCOORD", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("TEXCOORD", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("NORMAL", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("BINORMAL", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("TANGENT", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("BLENDWEIGHT", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		GameEngineVertex::VertexInfo.AddInputLayOutDesc("BLENDINDICES", DXGI_FORMAT_R32G32B32A32_SINT);
 	}
 };
 
-GameEngineVertex2DStart GameEngineVertex2DInit;
+GameEngineVertexStart GameEngineVertex2DInit;

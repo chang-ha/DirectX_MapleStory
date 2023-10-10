@@ -2,19 +2,7 @@
 #include "GameEngineInputLayOut.h"
 
 // Ό³Έν :
-class GameEngineVertex2D
-{
-public:
-	static GameEngineInputLayOutInfo VertexInfo;
-
-public:
-	float4 POSITION;
-	// float4 COLOR;
-	float4 TEXCOORD;
-};
-
-
-class GameEngine3DVertex
+class GameEngineVertex
 {
 public:
 	static GameEngineInputLayOutInfo VertexInfo;
