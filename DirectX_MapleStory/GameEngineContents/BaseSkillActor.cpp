@@ -28,8 +28,16 @@ void BaseSkillActor::LevelEnd(GameEngineLevel* _NextLevel)
 void BaseSkillActor::Start()
 {
 	ContentActor::Start();
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PlayBelow);
-	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	if (nullptr == MainSpriteRenderer)
+	{
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PlayBelow);
+	}
+
+	if (nullptr == SkillCollision)
+	{
+		SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	}
+
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 }
 
@@ -44,6 +52,21 @@ void BaseSkillActor::Update(float _Delta)
 	BlockOutMap();
 	MoveUpdate(_Delta);
 	CollisionTimeUpdate(_Delta);
+}
+
+void BaseSkillActor::Release()
+{
+	if (nullptr != MainSpriteRenderer)
+	{
+		MainSpriteRenderer->Death();
+		MainSpriteRenderer = nullptr;
+	}
+
+	if (nullptr != SkillCollision)
+	{
+		SkillCollision->Death();
+		SkillCollision = nullptr;
+	}
 }
 
 void BaseSkillActor::MoveUpdate(float _Delta)

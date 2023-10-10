@@ -17,8 +17,12 @@ Lucid_Next::~Lucid_Next()
 void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
-	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
-	CurMap->Init("Lucid_Next.png");
+
+	if (nullptr == CurMap)
+	{
+		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
+		CurMap->Init("Lucid_Next.png");
+	}
 
 	if (nullptr == Back)
 	{

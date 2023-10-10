@@ -18,14 +18,36 @@ void Laser::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Laser::Start()
 {
-	LaserRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
-	LaserCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
-	LaserCollision->SetCollisionType(ColType::OBBBOX2D);
+	if (nullptr == LaserRenderer)
+	{
+		LaserRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
+	}
+
+	if (nullptr == LaserCollision)
+	{
+		LaserCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+		LaserCollision->SetCollisionType(ColType::OBBBOX2D);
+	}
 }
 
 void Laser::Update(float _Delta)
 {
 
+}
+
+void Laser::Release()
+{
+	if (nullptr != LaserRenderer)
+	{
+		LaserRenderer->Death();
+		LaserRenderer = nullptr;
+	}
+
+	if (nullptr != LaserCollision)
+	{
+		LaserCollision->Death();
+		LaserCollision = nullptr;
+	}
 }
 
 void Laser::Init(std::string_view _LaserName)

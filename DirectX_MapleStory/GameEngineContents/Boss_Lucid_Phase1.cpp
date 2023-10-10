@@ -33,11 +33,19 @@ void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Boss_Lucid_Phase1::Start()
 {
-	FlowerRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
-	TeleportRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
-	FlowerRenderer->AutoSpriteSizeOn();
-	TeleportRenderer->AutoSpriteSizeOn();
 	BaseBossActor::Start();
+
+	if (nullptr == FlowerRenderer)
+	{
+		FlowerRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Map);
+		FlowerRenderer->AutoSpriteSizeOn();
+	}
+	
+	if (nullptr == TeleportRenderer)
+	{
+		TeleportRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		TeleportRenderer->AutoSpriteSizeOn();
+	}
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Death"))
 	{
@@ -190,6 +198,22 @@ void Boss_Lucid_Phase1::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('0'))
 	{
 		ChangeState(LucidState::Death);
+	}
+}
+
+void Boss_Lucid_Phase1::Release()
+{
+	BaseBossActor::Release();
+	if (nullptr != BossRenderer)
+	{
+		BossRenderer->Death();
+		BossRenderer = nullptr;
+	}
+
+	if (nullptr != TeleportRenderer)
+	{
+		TeleportRenderer->Death();
+		TeleportRenderer = nullptr;
 	}
 }
 

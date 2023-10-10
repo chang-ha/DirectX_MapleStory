@@ -47,6 +47,7 @@ public:
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);
 	bool IsSkillUsing(std::string_view _SkillName);
+	void Release() override;
 
 protected:
 	void LevelStart(class GameEngineLevel* _PrevLevel) override;

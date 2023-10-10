@@ -23,15 +23,24 @@ void Dragon::Start()
 	BreathRenderers.resize(7);
 	for (size_t i = 0; i < BreathRenderers.size(); i++)
 	{
-		BreathRenderers[i] = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
+		if (nullptr == BreathRenderers[i])
+		{
+			BreathRenderers[i] = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
+		}
 	}
 
-	DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
-	DragonRenderer->AutoSpriteSizeOn();
-	DragonRenderer->SetPivotType(PivotType::Bottom);
+	if (nullptr == DragonRenderer)
+	{
+		DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		DragonRenderer->AutoSpriteSizeOn();
+		DragonRenderer->SetPivotType(PivotType::Bottom);
+	}
 
-	BreathCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
-	BreathCollision->Transform.SetLocalScale({1800, 400});
+	if (nullptr == BreathCollision)
+	{
+		BreathCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+		BreathCollision->Transform.SetLocalScale({ 1800, 400 });
+	}
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Dragon_Move"))
 	{
@@ -93,6 +102,31 @@ void Dragon::Start()
 void Dragon::Update(float _Delta)
 {
 	StateUpdate(_Delta);
+}
+
+void Dragon::Release()
+{
+	if (nullptr != DragonRenderer)
+	{
+		DragonRenderer->Death();
+		DragonRenderer = nullptr;
+	}
+
+	for (size_t i = 0; i < BreathRenderers.size(); i++)
+	{
+		if (nullptr != BreathRenderers[i])
+		{
+			BreathRenderers[i]->Death();
+			BreathRenderers[i] = nullptr;
+		}
+	}
+
+
+	if (nullptr != BreathCollision)
+	{
+		BreathCollision->Death();
+		BreathCollision = nullptr;
+	}
 }
 
 void Dragon::SetDir(ActorDir _Dir)

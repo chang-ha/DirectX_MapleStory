@@ -27,7 +27,6 @@ void Lucid_Enter::LevelEnd(GameEngineLevel* _NextLevel)
 	ContentLevel::LevelEnd(_NextLevel);
 	if (nullptr != _CutsceneActor)
 	{
-		_CutsceneActor->Death();
 		_CutsceneActor = nullptr;
 	}
 }

@@ -91,8 +91,11 @@ protected:
 	float4 MoveVectorForce = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
+	void Release() override;
 
 	bool CheckGround(float4 PlusCheckPos = float4::ZERO);
 	GameEngineColor CheckGroundColor(float4 PlusCheckPos = float4::ZERO);

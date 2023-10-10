@@ -15,7 +15,12 @@ void CutsceneActor::Init(std::string_view _BossName, std::string_view _NextLevel
 {
 	BossName = _BossName;
 	NextLevelName = _NextLevelName;
-	CutRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+
+	if (nullptr == CutRenderer)
+	{
+		CutRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
 	if (nullptr == GameEngineSprite::Find(std::string(_BossName) + "Cutscene"))
 	{
 		GameEnginePath Path;
@@ -38,5 +43,14 @@ void CutsceneActor::Init(std::string_view _BossName, std::string_view _NextLevel
 
 void CutsceneActor::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	// Release
+	Death();
+}
+
+void CutsceneActor::Release()
+{
+	if (nullptr != CutRenderer)
+	{
+		CutRenderer->Death();
+		CutRenderer = nullptr;
+	}
 }

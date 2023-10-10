@@ -30,6 +30,8 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
+	void Release() override;
+
 	virtual void MoveUpdate(float _Delta);
 	void BlockOutMap();
 	void CollisionTimeUpdate(float _Delta);

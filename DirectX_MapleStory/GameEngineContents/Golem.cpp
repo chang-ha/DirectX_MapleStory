@@ -20,13 +20,20 @@ void Golem::LevelEnd(GameEngineLevel* _NextLevel)
 void Golem::Start()
 {
 	ContentActor::Start();
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
-	MainSpriteRenderer->AutoSpriteSizeOn();
 
-	GolemCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
-	GolemCollision->Transform.SetLocalScale({150, 200});
-	GolemCollision->Transform.SetLocalPosition({0, 100});
-	// GolemCollision->Off();
+	if (nullptr == MainSpriteRenderer)
+	{
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		MainSpriteRenderer->AutoSpriteSizeOn();
+	}
+
+	if (nullptr == GolemCollision)
+	{
+		GolemCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
+		GolemCollision->Transform.SetLocalScale({ 150, 200 });
+		GolemCollision->Transform.SetLocalPosition({ 0, 100 });
+		// GolemCollision->Off();
+	}
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Golem_Ready"))
 	{
@@ -64,6 +71,17 @@ void Golem::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
 	StateUpdate(_Delta);
+}
+
+void Golem::Release()
+{
+	ContentActor::Release();
+
+	if (nullptr != GolemCollision)
+	{
+		GolemCollision->Death();
+		GolemCollision = nullptr;
+	}
 }
 
 void Golem::ChangeState(GolemState _State)

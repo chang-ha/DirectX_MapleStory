@@ -17,6 +17,7 @@ public:
 
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
+	void Release() override;
 
 private:
 	std::string BossName = "";

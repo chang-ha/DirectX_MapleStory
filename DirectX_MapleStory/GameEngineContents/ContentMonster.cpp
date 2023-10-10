@@ -19,7 +19,8 @@ void ContentMonster::LevelStart(GameEngineLevel* _PrevLevel)
 
 void ContentMonster::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Release();
+	Death();
 }
 
 void ContentMonster::ChangeState(MonsterState _State)
@@ -124,6 +125,21 @@ void ContentMonster::Update(float _Delta)
 {
 	StateUpdate(_Delta);
 	MainCollision->CollisionEvent(CollisionOrder::PlayerAttack, MonsterEvent);
+}
+
+void ContentMonster::Release()
+{
+	if (nullptr != MainSpriteRenderer)
+	{
+		MainSpriteRenderer->Death();
+		MainSpriteRenderer = nullptr;
+	}
+
+	if (nullptr != MainCollision)
+	{
+		MainCollision->Death();
+		MainCollision = nullptr;
+	}
 }
 
 void ContentMonster::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)

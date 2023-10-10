@@ -28,6 +28,16 @@ void Arrow::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Arrow::Start()
 {
+	if (nullptr == ArrowRenderer)
+	{
+		ArrowRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Arrow);
+	}
+
+	if (nullptr == ArrowCollision)
+	{
+		ArrowCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	}
+
 	if (nullptr == GameEngineSprite::Find("TestArrow"))
 	{
 		GameEngineDirectory Dir;
@@ -40,7 +50,7 @@ void Arrow::Start()
 			GameEngineSprite::CreateFolder(ChildDir.GetStringPath());
 		}
 	}
-	ArrowRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Arrow);
+
 	ArrowRenderer->AutoSpriteSizeOn();
 	ArrowRenderer->SetPivotType(PivotType::Bottom);
 	ArrowRenderer->CreateAnimation("TestArrow", "TestArrow", 0.1f, 0, 2, true);
@@ -72,7 +82,6 @@ void Arrow::Start()
 	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("TestArrow");
 	ArrowScale = Sprite->GetSpriteData(0).GetScale();
 
-	ArrowCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	ArrowCollision->Transform.SetLocalScale(ArrowScale);
 	ArrowCollision->Transform.SetLocalPosition({0, ArrowScale.hY()});
 
@@ -111,6 +120,21 @@ void Arrow::Update(float _Delta)
 	}
 
 	ArrowCollision->CollisionEvent(CollisionOrder::Monster, ArrowEvent);
+}
+
+void Arrow::Release()
+{
+	if (nullptr != ArrowRenderer)
+	{
+		ArrowRenderer->Death();
+		ArrowRenderer = nullptr;
+	}
+
+	if (nullptr != ArrowCollision)
+	{
+		ArrowCollision->Death();
+		ArrowCollision = nullptr;
+	}
 }
 
 void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)

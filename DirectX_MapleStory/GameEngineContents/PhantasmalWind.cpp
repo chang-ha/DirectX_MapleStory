@@ -21,7 +21,7 @@ void PhantasmalWind::LevelStart(GameEngineLevel* _PrevLevel)
 
 void PhantasmalWind::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void PhantasmalWind::Start()
@@ -60,4 +60,19 @@ void PhantasmalWind::Update(float _Delta)
 	}
 
 	Transform.AddLocalPosition( MoveVector * Speed * _Delta);
+}
+
+void PhantasmalWind::Release()
+{
+	if (nullptr != MainSpriteRenderer)
+	{
+		MainSpriteRenderer->Death();
+		MainSpriteRenderer = nullptr;
+	}
+
+	if (nullptr != PhantasmaCollision)
+	{
+		PhantasmaCollision->Death();
+		PhantasmaCollision = nullptr;
+	}
 }

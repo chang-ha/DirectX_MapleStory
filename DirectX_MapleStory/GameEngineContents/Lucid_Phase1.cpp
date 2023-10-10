@@ -27,8 +27,17 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
-	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
-	CurMap->Init("Lucid_Phase1.png");
+	if (nullptr == CurMap)
+	{
+		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
+		CurMap->Init("Lucid_Phase1.png");
+	}
+
+	if (nullptr == Back)
+	{
+		Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
+		Back->Init("BG_Lucid_Phase1.png");
+	}
 	
 	if (nullptr == CurPlayer)
 	{
@@ -42,38 +51,67 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		SkillManagerActor = CreateActor<SkillManager>();
 	}
 
-	if (nullptr == Back)
-	{
-		Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
-		Back->Init("BG_Lucid_Phase1.png");
-	}
-
 	if (nullptr == Boss)
 	{
 		Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
 		Boss->Transform.SetLocalPosition(float4(1000, -700));
+	}
+
+	// while -750
+	if (nullptr == LeftDragon)
+	{
+		LeftDragon = CreateActor<Dragon>(UpdateOrder::Monster);
+		LeftDragon->Transform.SetLocalPosition(float4(30, 200));
+		LeftDragon->SetDir(ActorDir::Right);
+		LeftDragon->SetBreathPos({ 1100, 150 });
+	}
+
+	if (nullptr == RightDragon)
+	{
+		RightDragon = CreateActor<Dragon>(UpdateOrder::Monster);
+		RightDragon->Transform.SetLocalPosition(float4(1970, 200));
+		RightDragon->SetDir(ActorDir::Left);
+		RightDragon->SetBreathPos({ -1100, 150 });
 	}
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+
+	if (nullptr != CurMap)
+	{
+		CurMap = nullptr;
+	}
+
+	if (nullptr != Back)
+	{
+		Back = nullptr;
+	}
+
 	if (nullptr != CurPlayer)
 	{
-		CurPlayer->Death();
 		CurPlayer = nullptr;
 	}
 
 	if (nullptr != SkillManagerActor)
 	{
-		SkillManagerActor->Death();
 		SkillManagerActor = nullptr;
 	}
 
 	if (nullptr != Boss)
 	{
-		Boss->Death();
 		Boss = nullptr;
+	}
+
+	if (nullptr != LeftDragon)
+	{
+		LeftDragon = nullptr;
+	}
+
+	if (nullptr != RightDragon)
+	{
+		RightDragon = nullptr;
 	}
 }
 
@@ -81,17 +119,6 @@ void Lucid_Phase1::Start()
 {
 	ContentLevel::Start();
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
-
-	// while -750
-	LeftDragon = CreateActor<Dragon>(UpdateOrder::Monster);
-	LeftDragon->Transform.SetLocalPosition(float4(30, 200));
-	LeftDragon->SetDir(ActorDir::Right);
-	LeftDragon->SetBreathPos({1100, 150});
-
-	RightDragon = CreateActor<Dragon>(UpdateOrder::Monster);
-	RightDragon->Transform.SetLocalPosition(float4(1970, 200));
-	RightDragon->SetDir(ActorDir::Left);
-	RightDragon->SetBreathPos({ -1100, 150 });
 }
 
 void Lucid_Phase1::Update(float _Delta)

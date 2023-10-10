@@ -55,6 +55,7 @@ public:
 
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
+	void Release() override;
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;

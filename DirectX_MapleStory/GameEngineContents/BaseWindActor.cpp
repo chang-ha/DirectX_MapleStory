@@ -80,12 +80,23 @@ void BaseWindActor::LevelEnd(GameEngineLevel* _NextLevel)
 
 void BaseWindActor::Start()
 {
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
-	MainSpriteRenderer->AutoSpriteSizeOn();
-	HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
-	HitCollision->SetCollisionType(ColType::OBBBOX2D);
-	// DetectCollision의 CollisionOrder 추후 변경 필요?
-	DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	if (nullptr == MainSpriteRenderer)
+	{
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
+		MainSpriteRenderer->AutoSpriteSizeOn();
+	}
+
+	if (nullptr == HitCollision)
+	{
+		HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+		HitCollision->SetCollisionType(ColType::OBBBOX2D);
+	}
+
+	if (nullptr == DetectCollision)
+	{
+		// DetectCollision의 CollisionOrder 추후 변경 필요?
+		DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+	}
 }
 
 void BaseWindActor::Update(float _Delta)
@@ -152,6 +163,27 @@ void BaseWindActor::Update(float _Delta)
 			Transform.AddLocalPosition( MoveVector * Speed * _Delta);
 		}
 	);
+}
+
+void BaseWindActor::Release()
+{
+	if (nullptr != MainSpriteRenderer)
+	{
+		MainSpriteRenderer->Death();
+		MainSpriteRenderer = nullptr;
+	}
+
+	if (nullptr != DetectCollision)
+	{
+		DetectCollision->Death();
+		DetectCollision = nullptr;
+	}
+	
+	if (nullptr != HitCollision)
+	{
+		HitCollision->Death();
+		HitCollision = nullptr;
+	}
 }
 
 void BaseWindActor::Init(std::string_view _WindName)

@@ -21,6 +21,15 @@ void ContentBackGround::Update(float _Delta)
 
 }
 
+void ContentBackGround::Release()
+{
+	if (nullptr != BackGroundRenderer)
+	{
+		BackGroundRenderer->Death();
+		BackGroundRenderer = nullptr;
+	}
+}
+
 void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _BackGroundScale)
 {
 	if (nullptr == GameEngineTexture::Find(_BackGroundName))

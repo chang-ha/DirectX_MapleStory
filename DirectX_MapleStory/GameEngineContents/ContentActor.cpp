@@ -12,6 +12,16 @@ ContentActor::~ContentActor()
 {
 }
 
+void ContentActor::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	
+}
+
+void ContentActor::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
+}
+
 void ContentActor::Start()
 {
 
@@ -22,6 +32,15 @@ void ContentActor::Update(float _Delta)
 	IsGround = CheckGround();
 	Gravity(_Delta); // AddLocalPosition for MoveVector.Y
 	AirResistance(_Delta);
+}
+
+void ContentActor::Release()
+{
+	if (nullptr != MainSpriteRenderer)
+	{
+		MainSpriteRenderer->Death();
+		MainSpriteRenderer = nullptr;
+	}
 }
 
 void ContentActor::Gravity(float _Delta)

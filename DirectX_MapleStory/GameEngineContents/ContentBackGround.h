@@ -21,6 +21,8 @@ public:
 		return BackScale;
 	}
 
+	void Release() override;
+
 protected:
 	void Start() override;
 	void Update(float _Delta);

@@ -66,6 +66,21 @@ void MushRoom::Update(float _Delta)
 	StateUpdate(_Delta);
 }
 
+void MushRoom::Release()
+{
+	if (nullptr != MushRenderer)
+	{
+		MushRenderer->Death();
+		MushRenderer = nullptr;
+	}
+
+	if (nullptr != MushCollision)
+	{
+		MushCollision->Death();
+		MushCollision = nullptr;
+	}
+}
+
 void MushRoom::ChangeState(MushState _State)
 {
 	if (_State != State)

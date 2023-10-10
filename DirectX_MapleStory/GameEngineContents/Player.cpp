@@ -22,13 +22,15 @@ Player::~Player()
 
 void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	ContentActor::LevelStart(_PrevLevel);
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	MainPlayer = this;
 }
 
 void Player::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	ContentActor::LevelEnd(_NextLevel);
+	Release();
 }
 
 void Player::Start()
@@ -116,6 +118,11 @@ void Player::Update(float _Delta)
 		MoveVectorForceReset();
 		GravityReset();
 	}
+}
+
+void Player::Release()
+{
+
 }
 
 void Player::DirCheck()

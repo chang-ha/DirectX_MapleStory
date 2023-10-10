@@ -149,7 +149,7 @@ void SkillManager::LevelStart(class GameEngineLevel* _PrevLevel)
 
 void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void SkillManager::Start()
@@ -168,6 +168,21 @@ void SkillManager::Start()
 void SkillManager::Update(float _Delta)
 {
 	HitPrintUpdate(_Delta);
+}
+
+void SkillManager::Release()
+{
+	std::map<std::string, std::shared_ptr<ContentSkill>>::iterator StartIter = AllSkills.begin();
+	std::map<std::string, std::shared_ptr<ContentSkill>>::iterator EndIter = AllSkills.end();
+
+	for (std::pair<const std::string, std::shared_ptr<ContentSkill>>& _Pair : AllSkills)
+	{
+		if (nullptr != _Pair.second)
+		{
+			_Pair.second->Release();
+			_Pair.second = nullptr;
+		}
+	}
 }
 
 void SkillManager::SkillInit(std::shared_ptr<ContentSkill> _Skill)
