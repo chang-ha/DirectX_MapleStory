@@ -30,10 +30,17 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 	CurMap->Init("Lucid_Phase1.png");
 	
-	CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-	CurPlayer->Transform.SetLocalPosition(float4(100, -700));
-	GetMainCamera()->Transform.SetLocalPosition(float4(100, -700));
-	CreateActor<SkillManager>();
+	if (nullptr == CurPlayer)
+	{
+		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
+		CurPlayer->Transform.SetLocalPosition(float4(100, -700));
+		GetMainCamera()->Transform.SetLocalPosition(float4(100, -700));
+	}
+
+	if (nullptr == SkillManagerActor)
+	{
+		SkillManagerActor = CreateActor<SkillManager>();
+	}
 
 	if (nullptr == Back)
 	{
@@ -41,15 +48,33 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		Back->Init("BG_Lucid_Phase1.png");
 	}
 
-	Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
-	Boss->Transform.SetLocalPosition(float4(1000, -700));
+	if (nullptr == Boss)
+	{
+		Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
+		Boss->Transform.SetLocalPosition(float4(1000, -700));
+	}
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
-	CurPlayer->Death();
-	Boss->Death();
+	if (nullptr != CurPlayer)
+	{
+		CurPlayer->Death();
+		CurPlayer = nullptr;
+	}
+
+	if (nullptr != SkillManagerActor)
+	{
+		SkillManagerActor->Death();
+		SkillManagerActor = nullptr;
+	}
+
+	if (nullptr != Boss)
+	{
+		Boss->Death();
+		Boss = nullptr;
+	}
 }
 
 void Lucid_Phase1::Start()

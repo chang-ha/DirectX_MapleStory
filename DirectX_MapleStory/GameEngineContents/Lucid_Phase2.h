@@ -25,5 +25,6 @@ private:
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
 	std::shared_ptr<class Boss_Lucid_Phase1> Boss = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
+	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
 };
 

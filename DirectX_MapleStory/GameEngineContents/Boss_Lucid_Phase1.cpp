@@ -59,7 +59,7 @@ void Boss_Lucid_Phase1::Start()
 
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase1_Idle");
 	BossRenderer->CreateAnimation("Skill1", "Lucid_Phase1_Skill1", 0.12f);
-	BossRenderer->CreateAnimation("Skill2", "Lucid_Phase1_Skill2", 0.09f);
+	BossRenderer->CreateAnimation("Skill2", "Lucid_Phase1_Skill2", 0.09f, -1, -1, false);
 	BossRenderer->CreateAnimation("Skill3", "Lucid_Phase1_Skill3", 0.09f);
 	BossRenderer->CreateAnimation("Skill4", "Lucid_Phase1_Skill4", 0.09f);
 	BossRenderer->CreateAnimation("Death", "Lucid_Phase1_Death", 0.11f, -1, -1, false);

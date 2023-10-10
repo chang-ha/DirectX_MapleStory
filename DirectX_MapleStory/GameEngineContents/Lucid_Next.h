@@ -23,6 +23,8 @@ protected:
 
 private:
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
+	std::shared_ptr<class RenderActor> PlayerRender = nullptr;
 	std::shared_ptr<class RenderActor> Clock = nullptr;
+	std::shared_ptr<class RenderActor> LucidRender = nullptr;
 };
 

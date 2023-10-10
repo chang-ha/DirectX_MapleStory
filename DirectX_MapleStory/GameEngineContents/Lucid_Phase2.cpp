@@ -22,22 +22,39 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 	CurMap->Init("Lucid_Phase1.png");
 
-	CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-	CurPlayer->Transform.SetLocalPosition(float4(100, -700));
-	GetMainCamera()->Transform.SetLocalPosition(float4(100, -700));
-	CreateActor<SkillManager>();
+	if (nullptr == CurPlayer)
+	{
+		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
+		CurPlayer->Transform.SetLocalPosition(float4(100, -700));
+		GetMainCamera()->Transform.SetLocalPosition(float4(100, -700));
+	}
 
 	if (nullptr == Back)
 	{
 		Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
 		Back->Init("BG_Lucid_Phase1.png");
 	}
+
+	if (nullptr == SkillManagerActor)
+	{
+		SkillManagerActor = CreateActor<SkillManager>();
+	}
 }
 
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
-	CurPlayer->Death();
+	if (nullptr != CurPlayer)
+	{
+		CurPlayer->Death();
+		CurPlayer = nullptr;
+	}
+
+	if (nullptr != SkillManagerActor)
+	{
+		SkillManagerActor->Death();
+		SkillManagerActor = nullptr;
+	}
 }
 
 void Lucid_Phase2::Start()

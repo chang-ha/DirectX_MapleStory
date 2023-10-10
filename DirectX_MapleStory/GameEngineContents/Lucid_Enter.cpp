@@ -15,18 +15,26 @@ Lucid_Enter::~Lucid_Enter()
 void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
+	if (nullptr == _CutsceneActor)
+	{
+		_CutsceneActor = CreateActor<CutsceneActor>(UpdateOrder::UI);
+		_CutsceneActor->Init("Lucid", "Lucid_Phase1");
+	}
 }
 
 void Lucid_Enter::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+	if (nullptr != _CutsceneActor)
+	{
+		_CutsceneActor->Death();
+		_CutsceneActor = nullptr;
+	}
 }
 
 void Lucid_Enter::Start()
 {
 	ContentLevel::Start();
-	std::shared_ptr<CutsceneActor> _CutsceneActor = CreateActor<CutsceneActor>(UpdateOrder::UI);
-	_CutsceneActor->Init("Lucid", "Lucid_Phase1");
 }
 
 void Lucid_Enter::Update(float _Delta)
