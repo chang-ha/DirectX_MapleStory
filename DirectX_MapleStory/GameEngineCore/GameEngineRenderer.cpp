@@ -51,6 +51,11 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 		return;
 	}
 
+	if (nullptr != Camera)
+	{
+		Camera->Renderers[GetOrder()].remove(GetDynamic_Cast_This<GameEngineRenderer>());
+	}
+
 	Camera = FindCamera.get();
 	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
 }
@@ -62,6 +67,7 @@ void GameEngineRenderer::SetRenderOrder(int _Order)
 		MsgBoxAssert("카메라가 존재하지 않는 랜더러입니다. 카메라를 먼저 지정해주세요.");
 		return;
 	}
+
 
 	Camera->Renderers[GetOrder()].remove(GetDynamic_Cast_This<GameEngineRenderer>());
 	GameEngineObject::SetOrder(_Order);

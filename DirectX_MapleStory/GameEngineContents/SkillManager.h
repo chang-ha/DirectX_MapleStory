@@ -24,8 +24,8 @@ public:
 	~SkillManager();
 
 	// delete function
-	SkillManager(const SkillManager& _Ohter) = delete;
-	SkillManager(SkillManager&& _Ohter) noexcept = delete;
+	SkillManager(const SkillManager& _Other) = delete;
+	SkillManager(SkillManager&& _Other) noexcept = delete;
 	SkillManager& operator=(const SkillManager& _Other) = delete;
 	SkillManager& operator=(SkillManager&& _Other) noexcept = delete;
 
@@ -42,7 +42,7 @@ public:
 		SkillInit(NewSkill);
 	}
 
-	void HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot = true);
+	void HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot = true, PivotType _PivotType = PivotType::Bottom);
 
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);

@@ -153,6 +153,13 @@ void Player::MercilessWindsStart()
 	AlertTime = ALERT_TIME;
 }
 
+void Player::MonsoonStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Monsoon");
+	SkillManager::PlayerSkillManager->UseSkill("Monsoon");
+	AlertTime = ALERT_TIME;
+}
+
 void Player::IdleEnd()
 {
 
@@ -229,6 +236,11 @@ void Player::MercilessWindsEnd()
 	IsDirCheck = true;
 }
 
+void Player::MonsoonEnd()
+{
+
+}
+
 void Player::IdleUpdate(float _Delta)
 {
 	if (State == PlayerState::Idle && 0.0f < AlertTime)
@@ -279,6 +291,12 @@ void Player::IdleUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('R'))
 	{
 		ChangeState(PlayerState::MercilessWinds);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('W'))
+	{
+		ChangeState(PlayerState::Monsoon);
 		return;
 	}
 
@@ -370,6 +388,12 @@ void Player::WalkUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('R'))
 	{
 		ChangeState(PlayerState::MercilessWinds);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('W'))
+	{
+		ChangeState(PlayerState::Monsoon);
 		return;
 	}
 
@@ -491,6 +515,12 @@ void Player::JumpUpdate(float _Delta)
 	if (true == GameEngineInput::IsDown('R'))
 	{
 		ChangeState(PlayerState::MercilessWinds);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown('W'))
+	{
+		ChangeState(PlayerState::Monsoon);
 		return;
 	}
 	/////////////
@@ -743,6 +773,14 @@ void Player::VortexSphereUpdate(float _Delta)
 }
 
 void Player::MercilessWindsUpdate(float _Delta)
+{
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeToIdle();
+	}
+}
+
+void Player::MonsoonUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{

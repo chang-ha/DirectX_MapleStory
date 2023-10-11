@@ -29,6 +29,7 @@ enum class PlayerState
 	Shoot, //HowlingGale
 	VortexSphere,
 	MercilessWinds,
+	Monsoon
 };
 
 #include "ContentActor.h"
@@ -101,6 +102,7 @@ private:
 	void ShootStart();
 	void VortexSphereStart();
 	void MercilessWindsStart();
+	void MonsoonStart();
 
 	/// End
 	void IdleEnd();
@@ -116,6 +118,7 @@ private:
 	void ShootEnd();
 	void VortexSphereEnd();
 	void MercilessWindsEnd();
+	void MonsoonEnd();
 
 	/// Update
 	void IdleUpdate(float _Delta);
@@ -131,6 +134,7 @@ private:
 	void ShootUpdate(float _Delta);
 	void VortexSphereUpdate(float _Delta);
 	void MercilessWindsUpdate(float _Delta);
+	void MonsoonUpdate(float _Delta);
 	////////////
 };
 

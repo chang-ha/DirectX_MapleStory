@@ -106,7 +106,6 @@ void FairySpiral::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision
 	for (size_t i = 0; i < _CollisionGroup.size(); i++)
 	{
 		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
-		float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
 	}
 

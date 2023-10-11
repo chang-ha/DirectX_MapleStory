@@ -30,7 +30,7 @@ SkillManager::~SkillManager()
 
 }
 
-void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot /*= true*/)
+void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
 {
 	GameEngineRandom RandomActor;
 	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
@@ -62,6 +62,7 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 			}
 		);
 		_HitAnimation->Off();
+		_HitAnimation->SetPivotType(_PivotType);
 
 		_Data->HitAnimations[i] = _HitAnimation;
 	}
