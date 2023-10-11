@@ -32,7 +32,7 @@ void Golem::Start()
 		GolemCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
 		GolemCollision->Transform.SetLocalScale({ 150, 200 });
 		GolemCollision->Transform.SetLocalPosition({ 0, 100 });
-		// GolemCollision->Off();
+		GolemCollision->Off();
 	}
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Golem_Ready"))
@@ -165,13 +165,13 @@ void Golem::ReadyUpdate(float _Delta)
 
 void Golem::ReviveStart()
 {
-	// GolemCollision->On();
 	MainSpriteRenderer->ChangeAnimation("Revive");
 	MainSpriteRenderer->SetPivotValue({0.49f, 0.75f});
 }
 
 void Golem::IdleStart()
 {
+	GolemCollision->On();
 	MainSpriteRenderer->ChangeAnimation("Idle");
 	MainSpriteRenderer->SetPivotValue({0.49f, 1.0f});
 }

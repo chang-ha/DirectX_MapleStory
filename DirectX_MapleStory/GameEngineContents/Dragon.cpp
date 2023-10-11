@@ -40,6 +40,7 @@ void Dragon::Start()
 	{
 		BreathCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
 		BreathCollision->Transform.SetLocalScale({ 1800, 400 });
+		BreathCollision->Off();
 	}
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Dragon_Move"))
@@ -65,6 +66,7 @@ void Dragon::Start()
 	DragonRenderer->SetFrameEvent("Breath", 10, [&](GameEngineSpriteRenderer*)
 		{
 			BreathOn();
+			BreathCollision->On();
 			switch (Dir)
 			{
 			case ActorDir::Right:

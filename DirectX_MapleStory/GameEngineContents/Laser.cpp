@@ -27,6 +27,7 @@ void Laser::Start()
 	{
 		LaserCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
 		LaserCollision->SetCollisionType(ColType::OBBBOX2D);
+		LaserCollision->Off();
 	}
 }
 
@@ -82,7 +83,7 @@ void Laser::Init(std::string_view _LaserName)
 
 	LaserRenderer->SetStartEvent("Attack", [&](GameEngineSpriteRenderer*)
 		{
-
+			LaserCollision->On();
 		}
 	);
 
