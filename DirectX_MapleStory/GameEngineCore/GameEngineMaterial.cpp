@@ -4,12 +4,15 @@
 #include "GameEnginePixelShader.h"
 #include "GameEngineRasterizer.h"
 #include "GameEngineBlend.h"
+#include "GameEngineDepthStencil.h"
+#include "GameEngineRenderTarget.h"
 
 GameEngineMaterial::GameEngineMaterial()
 {
 	// 레스터라이저나 Belnd는 보통 기본 레스터라이저나 Belnd를 많이 쓰기 때문에 일단 만들면 세팅
 	RasterizerPtr = GameEngineRasterizer::Find("EngineRasterizer");
 	BlendStatePtr = GameEngineBlend::Find("AlphaBlend");
+	DepthStencilPtr = GameEngineDepthStencil::Find("EngineDepth");
 }
 
 GameEngineMaterial::~GameEngineMaterial()
@@ -56,6 +59,22 @@ void GameEngineMaterial::Blend()
 	}
 
 	BlendStatePtr->Setting();
+}
+
+void GameEngineMaterial::DepthStencil()
+{
+	if (false == GameEngineRenderTarget::IsDepth)
+	{
+		GameEngineCore::GetContext()->OMSetDepthStencilState(nullptr, 0);
+		return;
+	}
+
+	if (nullptr == DepthStencilPtr)
+	{
+		MsgBoxAssert("존재하지 않는 깊이 체크 세팅을 세팅하려고 했습니다.");
+	}
+
+	DepthStencilPtr->Setting();
 }
 
 void GameEngineMaterial::SetVertexShader(const std::string_view& _Value)

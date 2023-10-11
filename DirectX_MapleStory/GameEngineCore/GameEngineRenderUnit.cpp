@@ -28,6 +28,7 @@ void GameEngineRenderUnit::ResSetting()
 	Material->Rasterizer();
 	Material->PixelShader();
 	Material->Blend();
+	Material->DepthStencil();
 
 	ShaderResHelper.AllShaderResourcesSetting();
 

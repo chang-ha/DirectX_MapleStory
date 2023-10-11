@@ -287,13 +287,14 @@ void GameEngineDevice::CreateSwapChain()
 	BackBufferTexture = GameEngineTexture::Create(DXBackBufferTexture);
 	BackBufferRenderTarget = GameEngineRenderTarget::Create(BackBufferTexture);
 
+	BackBufferRenderTarget->CreateDepthTexture();
+
 	// 랜더타겟을 만들어야 한다.
 
 	// BackBufferTexture->Release();
 
 	// 스왑체인이지 텍스처가 아니다.
 	// 뭔가를 그리려면 텍스처가 존재해야 하는데.
-	// 그 텍스처를 
 }
 
 void GameEngineDevice::RenderStart()

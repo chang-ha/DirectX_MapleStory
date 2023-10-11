@@ -243,6 +243,7 @@ void GameEngineRenderer::SetMaterial(std::string_view _Name, int _Index /*= 0*/)
 {
 	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
 	Unit->SetMaterial(_Name);
+	SetMaterialEvent(_Name, _Index);
 }
 
 GameEngineShaderResHelper& GameEngineRenderer::GetShaderResHelper(int _Index /*= 0*/)
@@ -264,4 +265,7 @@ GameEngineShaderResHelper& GameEngineRenderer::GetShaderResHelper(int _Index /*=
 //	//////////////// ±×¸®±â
 //}
 
+void GameEngineRenderer::SetMaterialEvent(std::string_view _Name, int _Index)
+{
 
+}

@@ -129,15 +129,8 @@ void GameEngineSpriteRenderer::Start()
 	// DataTransform = &ImageTransform;
 	// 부모로는 나(액터)의 Transform을 넣어줌으로서 액터의 Transform과 Renderer의 Transform을 분리함
 	ImageTransform.SetParent(Transform);
-	SetMesh("Rect");
-	SetMaterial("2DTexture");
-
-	// 현재 ImageTransform을 ConstantBuufer에 세팅해줌
-	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
-	GetShaderResHelper().SetConstantBufferLink("TransformData", Data);
-	GetShaderResHelper().SetConstantBufferLink("SpriteData", CurSprite.SpritePivot);
-	GetShaderResHelper().SetConstantBufferLink("SpriteRendererInfo", SpriteRendererInfoValue);
-	SetSprite("NSet.Png");
+	GameEngineRenderer::SetMesh("Rect");
+	GameEngineRenderer::SetMaterial("2DTexture");
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)
@@ -159,6 +152,8 @@ void GameEngineSpriteRenderer::Update(float _Delta)
 
 void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int Index /*= 0*/)
 {
+	CurFrameAnimations = nullptr;
+
 	Sprite = GameEngineSprite::Find(_Name);
 
 	if (nullptr == Sprite)
@@ -342,4 +337,14 @@ void GameEngineSpriteRenderer::AnimationPauseOn()
 void GameEngineSpriteRenderer::AnimationPauseOff()
 {
 	IsPause = false;
+}
+
+void GameEngineSpriteRenderer::SetMaterialEvent(std::string_view _Name, int _Index)
+{
+	// 현재 ImageTransform을 ConstantBuufer에 세팅해줌
+	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
+	GetShaderResHelper().SetConstantBufferLink("TransformData", Data);
+	GetShaderResHelper().SetConstantBufferLink("SpriteData", CurSprite.SpritePivot);
+	GetShaderResHelper().SetConstantBufferLink("SpriteRendererInfo", SpriteRendererInfoValue);
+	SetSprite("NSet.Png");
 }

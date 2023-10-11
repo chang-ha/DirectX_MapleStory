@@ -6,6 +6,7 @@
 #include "Lucid_Phase1.h"
 #include "Lucid_Next.h"
 #include "Lucid_Phase2.h"
+#include <GameEngineCore\GameEngineRenderTarget.h>
 
 MapleStoryCore::MapleStoryCore()
 {
@@ -19,6 +20,7 @@ MapleStoryCore::~MapleStoryCore()
 
 void MapleStoryCore::Start()
 {
+	GameEngineRenderTarget::IsDepth = false;
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
 	GameEngineCore::CreateLevel<Lucid_Enter>("Lucid_Enter");

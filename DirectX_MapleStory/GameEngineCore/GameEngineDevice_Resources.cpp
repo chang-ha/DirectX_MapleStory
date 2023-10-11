@@ -13,6 +13,7 @@
 #include "GameEngineBlend.h"
 #include "GameEngineMesh.h"
 #include "GameEngineMaterial.h"
+#include "GameEngineDepthStencil.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -204,6 +205,39 @@ void GameEngineDevice::ResourcesInit()
 		Desc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		// Desc.DepthClipEnable = TRUE;
 		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Create("EngineRasterizer", Desc);
+	}
+
+	{
+		// 이걸 세팅하는 순간
+		// order가 2d랜더링의 순서가 되는것이 아니라
+		// z의 값이 순서를 결정
+		D3D11_DEPTH_STENCIL_DESC Desc = { 0, };
+		//BOOL DepthEnable;
+		//D3D11_DEPTH_WRITE_MASK DepthWriteMask;
+		//D3D11_COMPARISON_FUNC DepthFunc;
+		//BOOL StencilEnable;
+		//UINT8 StencilReadMask;
+		//UINT8 StencilWriteMask;
+		//D3D11_DEPTH_STENCILOP_DESC FrontFace;
+		//D3D11_DEPTH_STENCILOP_DESC BackFace;
+
+		Desc.DepthEnable = true;
+		// 깊이 테스트만 하고 안쓸수도 있다.
+		// Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
+		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		Desc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		Desc.StencilEnable = false;
+		std::shared_ptr<GameEngineDepthStencil> DepthStencil = GameEngineDepthStencil::Create("EngineDepth", Desc);
+	}
+
+
+	{
+		D3D11_DEPTH_STENCIL_DESC Desc = { 0, };
+		Desc.DepthEnable = true;
+		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		Desc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
+		Desc.StencilEnable = false;
+		std::shared_ptr<GameEngineDepthStencil> DepthStencil = GameEngineDepthStencil::Create("AlwaysDepth", Desc);
 	}
 
 	{
