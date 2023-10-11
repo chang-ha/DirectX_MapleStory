@@ -39,6 +39,23 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("Water.png");
 	}
 
+	if (nullptr == GameEngineSprite::Find("Flower1"))
+	{
+		GameEnginePath Path;
+		Path.SetCurrentPath();
+		Path.MoveParentToExistsChild("ContentResources");
+		Path.MoveChild("ContentResources\\Textures\\MapObject\\");
+		GameEngineTexture::Load(Path.GetStringPath() + "Flower1.png");
+		GameEngineTexture::Load(Path.GetStringPath() + "Flower2.png");
+		GameEngineSprite::CreateSingle("Flower1.png");
+		GameEngineSprite::CreateSingle("Flower2.png");
+		//for (size_t i = 1; i < 5; i++)
+		//{
+		//	GameEngineTexture::Load(Path.GetStringPath() + "Flower" + std::to_string(i) + ".png");
+		//	GameEngineSprite::CreateSingle("Flower" + std::to_string(i) + ".png");
+		//}
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -104,6 +121,44 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 
 		MapObjects.push_back(ObjectInfo);
 	}
+
+	// 3
+	for (size_t i = 0; i < 3; i++)
+	{
+		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
+		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		Flower->Init(RenderOrder::MapObject);
+		Flower->Renderer->SetSprite("Flower1.png");
+		Flower->Renderer->AutoSpriteSizeOn();
+		Flower->Transform.SetLocalPosition({ -200 - 1000 * static_cast<float>(i), -860 });
+
+		ObjectInfo->ObjectDir = 1.0f;
+		ObjectInfo->ObjectSpeed = 20.0f;
+		ObjectInfo->Object = Flower;
+		ObjectInfo->StartPos = float4{ -800, -860 };
+		ObjectInfo->EndPos = float4{ 2200, -860 };
+
+		MapObjects.push_back(ObjectInfo);
+	}
+
+	// 3
+	for (size_t i = 0; i < 3; i++)
+	{
+		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
+		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		Flower->Init(RenderOrder::MapObject);
+		Flower->Renderer->SetSprite("Flower2.png");
+		Flower->Renderer->AutoSpriteSizeOn();
+		Flower->Transform.SetLocalPosition({ -500 - 1200 * static_cast<float>(i), -790 });
+
+		ObjectInfo->ObjectDir = 1.0f;
+		ObjectInfo->ObjectSpeed = 20.0f;
+		ObjectInfo->Object = Flower;
+		ObjectInfo->StartPos = float4{ -1400, -790 };
+		ObjectInfo->EndPos = float4{ 2200, -790 };
+
+		MapObjects.push_back(ObjectInfo);
+	}
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
@@ -144,13 +199,19 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		RightDragon = nullptr;
 	}
+
+	for (size_t i = 0; i < MapObjects.size(); i++)
+	{
+		MapObjects[i]->Object->Death();
+		MapObjects[i]->Object = nullptr;
+	}
 }
 
 void Lucid_Phase1::Start()
 {
 	ContentLevel::Start();
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
-	MapObjects.resize(5);
+	MapObjects.resize(11);
 }
 
 void Lucid_Phase1::Update(float _Delta)
