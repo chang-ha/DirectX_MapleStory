@@ -15,6 +15,7 @@ enum class UpdateOrder
 	Monster,
 	Arrow,
 	Skill,
+	RenderActor,
 	UI,
 };
 
@@ -22,6 +23,7 @@ enum class RenderOrder
 {
 	BackGround,
 	Map,
+	MapObject,
 	Monster,
 	PlayBelow,
 	Play,

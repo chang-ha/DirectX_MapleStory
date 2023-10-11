@@ -10,6 +10,7 @@
 #include "Boss_Lucid_Phase1.h"
 #include "Dragon.h"
 #include "Laser.h"
+#include "RenderActor.h"
 
 #define Lase_Cooldown 8.0f
 
@@ -26,6 +27,17 @@ Lucid_Phase1::~Lucid_Phase1()
 void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
+	MapObjects.clear();
+
+	if (nullptr == GameEngineSprite::Find("Water"))
+	{
+		GameEnginePath Path;
+		Path.SetCurrentPath();
+		Path.MoveParentToExistsChild("ContentResources");
+		Path.MoveChild("ContentResources\\Textures\\MapObject\\Water.png");
+		GameEngineTexture::Load(Path.GetStringPath());
+		GameEngineSprite::CreateSingle("Water.png");
+	}
 
 	if (nullptr == CurMap)
 	{
@@ -73,6 +85,25 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		RightDragon->SetDir(ActorDir::Left);
 		RightDragon->SetBreathPos({ -1100, 150 });
 	}
+
+	// 5
+	for (size_t i = 0; i < 5; i++)
+	{
+		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
+		std::shared_ptr<RenderActor> Water = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		Water->Init(RenderOrder::MapObject);
+		Water->Renderer->SetSprite("Water.png");
+		Water->Renderer->AutoSpriteSizeOn();
+		Water->Transform.SetLocalPosition({ -900 + 700 * static_cast<float>(i), -830 });
+
+		ObjectInfo->ObjectDir = 1.0f;
+		ObjectInfo->ObjectSpeed = 20.0f;
+		ObjectInfo->Object = Water;
+		ObjectInfo->StartPos = float4{ -1000, -830 };
+		ObjectInfo->EndPos = float4{ 2400, -830 };
+
+		MapObjects.push_back(ObjectInfo);
+	}
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
@@ -119,12 +150,15 @@ void Lucid_Phase1::Start()
 {
 	ContentLevel::Start();
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
+	MapObjects.resize(5);
 }
 
 void Lucid_Phase1::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
+	ObjectUpdate(_Delta);
 
+	// Laser Pattern
 	LaserCooldown -= _Delta;
 	if (0.0f >= LaserCooldown)
 	{
@@ -163,6 +197,8 @@ void Lucid_Phase1::Update(float _Delta)
 		}
 		LaserCooldown = Lase_Cooldown;
 	}
+
+
 }
 
 void Lucid_Phase1::CallDragon()
@@ -178,5 +214,19 @@ void Lucid_Phase1::CallDragon()
 	else
 	{
 		RightDragon->ChangeState(DragonState::Down);
+	}
+}
+
+void Lucid_Phase1::ObjectUpdate(float _Delta)
+{
+	for (size_t i = 0; i < MapObjects.size(); i++)
+	{
+		std::shared_ptr<RenderActor> CurObject = MapObjects[i]->Object;
+		CurObject->Transform.AddLocalPosition(MapObjects[i]->ObjectDir * MapObjects[i]->ObjectSpeed * _Delta);
+
+		if (MapObjects[i]->EndPos.X <= CurObject->Transform.GetWorldPosition().X)
+		{
+			CurObject->Transform.SetLocalPosition(MapObjects[i]->StartPos);
+		}
 	}
 }

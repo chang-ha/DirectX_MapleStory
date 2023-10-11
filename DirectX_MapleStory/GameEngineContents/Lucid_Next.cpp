@@ -35,7 +35,8 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	// Player Renderer
 	if (nullptr == PlayerRender)
 	{
-		PlayerRender = CreateActor<RenderActor>();
+		PlayerRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		PlayerRender->Init(RenderOrder::RenderActor);
 		PlayerRender->Renderer->CreateAnimation("Idle", "Idle", 0.5f);
 		PlayerRender->Renderer->ChangeAnimation("Idle");
 		PlayerRender->Renderer->AutoSpriteSizeOn();
@@ -44,21 +45,21 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	// Clock Renderer
-	if (nullptr == GameEngineTexture::Find("Clock"))
+	if (nullptr == GameEngineSprite::Find("Clock"))
 	{
 		GameEnginePath Path;
 		Path.SetCurrentPath();
 		Path.MoveParentToExistsChild("ContentResources");
-		Path.MoveChild("ContentResources\\Textures\\Boss\\");
-		GameEngineTexture::Load(Path.GetStringPath() + "Clock.png");
+		Path.MoveChild("ContentResources\\Textures\\Boss\\Clock.png");
+		GameEngineTexture::Load(Path.GetStringPath());
 		GameEngineSprite::CreateSingle("Clock.png");
 	}
 
 	if (nullptr == Clock)
 	{
-		Clock = CreateActor<RenderActor>();
-		Clock->Renderer->CreateAnimation("Clock", "Clock.png");
-		Clock->Renderer->ChangeAnimation("Clock");
+		Clock = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		Clock->Init(RenderOrder::RenderActor);
+		Clock->Renderer->SetSprite("Clock.Png");
 		Clock->Renderer->AutoSpriteSizeOn();
 		Clock->Transform.SetLocalPosition({ 1099, -488 });
 	}
@@ -74,7 +75,8 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 
 	if (nullptr == LucidRender)
 	{
-		LucidRender = CreateActor<RenderActor>();
+		LucidRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		LucidRender->Init(RenderOrder::RenderActor);
 		LucidRender->Renderer->CreateAnimation("Lucid_PhaseChange", "Lucid_PhaseChange", 0.09f, -1, -1, false);
 		LucidRender->Renderer->ChangeAnimation("Lucid_PhaseChange");
 		LucidRender->Renderer->AutoSpriteSizeOn();

@@ -1,6 +1,17 @@
 #pragma once
 #include "ContentLevel.h"
 
+class MapObject
+{
+	friend class Lucid_Phase1;
+private:
+	float ObjectDir = 0.0f;
+	float ObjectSpeed = 0.0f;
+	float4 StartPos = 0.0f;
+	float4 EndPos = 0.0f;
+	std::shared_ptr<class RenderActor> Object = nullptr;
+};
+
 class Lucid_Phase1 : public ContentLevel
 {
 public:
@@ -31,5 +42,9 @@ private:
 	std::shared_ptr<class Boss_Lucid_Phase1> Boss = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
 	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
+
+	// Map Detail
+	void ObjectUpdate(float _Delta);
+	std::vector<std::shared_ptr<MapObject>> MapObjects;
 };
 

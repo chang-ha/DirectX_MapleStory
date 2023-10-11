@@ -11,18 +11,22 @@ RenderActor::~RenderActor()
 
 }
 
+void RenderActor::Init(int _Order)
+{
+	if (nullptr == Renderer)
+	{
+		Renderer = CreateComponent<GameEngineSpriteRenderer>(_Order);
+	}
+}
+
 void RenderActor::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	Release();
 	Death();
 }
 
 void RenderActor::Start()
 {
-	if (nullptr == Renderer)
-	{
-		Renderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::RenderActor);
-	}
+
 }
 
 void RenderActor::Update(float _Delta)
