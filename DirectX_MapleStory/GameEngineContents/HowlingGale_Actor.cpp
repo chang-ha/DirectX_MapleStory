@@ -41,7 +41,7 @@ void HowlingGale_Actor::Start()
 	Speed = SPEED;
 
 	MainSpriteRenderer->AutoSpriteSizeOn();
-	MainSpriteRenderer->CreateAnimation("Ready", "Ready_Stack1", 0.05f);
+	MainSpriteRenderer->CreateAnimation("Ready", "Ready_Stack1", 0.04f);
 	MainSpriteRenderer->CreateAnimation("Attack", "Attack_Stack1");
 	MainSpriteRenderer->CreateAnimation("Death", "Death_Stack1");
 	MainSpriteRenderer->ChangeAnimation("Ready");

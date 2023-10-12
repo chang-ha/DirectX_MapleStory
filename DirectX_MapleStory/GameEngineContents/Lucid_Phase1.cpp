@@ -103,7 +103,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		RightDragon->SetBreathPos({ -1100, 150 });
 	}
 
-	// 5
 	for (size_t i = 0; i < 5; i++)
 	{
 		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
@@ -122,7 +121,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		MapObjects.push_back(ObjectInfo);
 	}
 
-	// 3
 	for (size_t i = 0; i < 3; i++)
 	{
 		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
@@ -141,7 +139,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		MapObjects.push_back(ObjectInfo);
 	}
 
-	// 3
 	for (size_t i = 0; i < 3; i++)
 	{
 		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
