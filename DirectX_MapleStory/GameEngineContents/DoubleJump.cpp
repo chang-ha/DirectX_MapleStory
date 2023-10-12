@@ -67,6 +67,7 @@ void DoubleJump::EndSkill()
 
 void DoubleJump::Start() 
 {
+	GameEngineInput::AddInputObject(this);
 	ContentSkill::Start();
 
 	if (nullptr == GameEngineSprite::Find("DoubleJump_Effect1"))
@@ -133,13 +134,6 @@ void DoubleJump::Start()
 
 void DoubleJump::Update(float _Delta)
 {
-	// 현재 항상 Update에 들어옴
-	// 추후 스킬 사용시에만 업데이트 들어오도록 최적화 예정
-	//if (false == IsSkillStart)
-	//{
-	//	return;
-	//}
-
 	ContentSkill::Update(_Delta);
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
 	SkillRenderer2->Transform.SetLocalPosition(PlayerPos + Pivot);

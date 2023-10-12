@@ -28,7 +28,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == Back)
 	{
 		Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
-		Back->Init("BG_Lucid_Phase1.png");
+		Back->Init("BG_Lucid_Phase2.png");
 	}
 
 	if (nullptr == CurPlayer)
