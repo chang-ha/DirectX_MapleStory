@@ -15,7 +15,8 @@ void ContentBackGround::Start()
 {
 	if (nullptr == BackGroundRenderer)
 	{
-		BackGroundRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::BackGround);
+		BackGroundRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::BACKGROUND);
+		BackGroundRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::background });
 	}
 }
 

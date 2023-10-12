@@ -26,7 +26,8 @@ void PhantasmalWind::LevelEnd(GameEngineLevel* _NextLevel)
 
 void PhantasmalWind::Start()
 {
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
+	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTERATTACK);
+	MainSpriteRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monsterattack});
 	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Attack");
 	MainSpriteRenderer->ChangeAnimation("Attack");
 	MainSpriteRenderer->LeftFlip();

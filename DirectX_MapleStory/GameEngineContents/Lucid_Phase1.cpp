@@ -107,10 +107,10 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
 		std::shared_ptr<RenderActor> Water = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		Water->Init(RenderOrder::MapObject);
+		Water->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Water->Renderer->SetSprite("Water.png");
 		Water->Renderer->AutoSpriteSizeOn();
-		Water->Transform.SetLocalPosition({ -900 + 700 * static_cast<float>(i), -830 });
+		Water->Transform.SetLocalPosition({ -900 + 700 * static_cast<float>(i), -830, 0 });
 
 		ObjectInfo->ObjectDir = 1.0f;
 		ObjectInfo->ObjectSpeed = 20.0f;
@@ -125,10 +125,10 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
 		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		Flower->Init(RenderOrder::MapObject);
+		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Flower->Renderer->SetSprite("Flower1.png");
 		Flower->Renderer->AutoSpriteSizeOn();
-		Flower->Transform.SetLocalPosition({ -200 - 1000 * static_cast<float>(i), -860 });
+		Flower->Transform.SetLocalPosition({ -200 - 1000 * static_cast<float>(i), -860, 0 });
 
 		ObjectInfo->ObjectDir = 1.0f;
 		ObjectInfo->ObjectSpeed = 20.0f;
@@ -143,16 +143,16 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
 		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		Flower->Init(RenderOrder::MapObject);
+		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Flower->Renderer->SetSprite("Flower2.png");
 		Flower->Renderer->AutoSpriteSizeOn();
-		Flower->Transform.SetLocalPosition({ -500 - 1200 * static_cast<float>(i), -790 });
+		Flower->Transform.SetLocalPosition({ -500 - 1200 * static_cast<float>(i), -790, 0 });
 
 		ObjectInfo->ObjectDir = 1.0f;
 		ObjectInfo->ObjectSpeed = 20.0f;
 		ObjectInfo->Object = Flower;
-		ObjectInfo->StartPos = float4{ -1400, -790 };
-		ObjectInfo->EndPos = float4{ 2200, -790 };
+		ObjectInfo->StartPos = float4{ -1400, -790, 0 };
+		ObjectInfo->EndPos = float4{ 2200, -790, 0 };
 
 		MapObjects.push_back(ObjectInfo);
 	}

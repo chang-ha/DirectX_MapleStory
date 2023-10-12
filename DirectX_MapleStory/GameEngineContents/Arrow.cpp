@@ -30,7 +30,8 @@ void Arrow::Start()
 {
 	if (nullptr == ArrowRenderer)
 	{
-		ArrowRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Arrow);
+		ArrowRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::ARROW);
+		ArrowRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::arrow});
 	}
 
 	if (nullptr == ArrowCollision)

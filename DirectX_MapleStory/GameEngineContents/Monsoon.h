@@ -26,7 +26,7 @@ protected:
 
 private:
 	bool FirstUse = false;
-	std::shared_ptr<GameEngineUIRenderer> SceneRenderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> SceneRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
 };
 

@@ -82,7 +82,8 @@ void BaseWindActor::Start()
 {
 	if (nullptr == MainSpriteRenderer)
 	{
-		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::SKILL);
+		MainSpriteRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::skill});
 		MainSpriteRenderer->AutoSpriteSizeOn();
 	}
 

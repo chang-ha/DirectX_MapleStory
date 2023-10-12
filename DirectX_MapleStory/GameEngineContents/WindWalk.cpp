@@ -37,6 +37,7 @@ void WindWalk::UseSkill()
 		break;
 	}
 
+	PlayerPos.Z = RenderDepth::skill;
 	SkillRenderer1->ChangeAnimation("Effect1", true);
 	SkillAfterImageRenderer->ChangeAnimation("AfterImage", true);
 	SkillAfterImageRenderer->Transform.SetLocalPosition(PlayerPos);
@@ -85,6 +86,7 @@ void WindWalk::Start()
 void WindWalk::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
+	PlayerPos.Z = RenderDepth::skill;
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos);
 
 }

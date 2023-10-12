@@ -16,7 +16,8 @@ void ContentMap::Start()
 	GameEngineInput::AddInputObject(this);
 	if (nullptr == MapRenderer)
 	{
-		MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Map);
+		MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
+		MapRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::map});
 	}
 }
 

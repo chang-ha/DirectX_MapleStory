@@ -21,21 +21,24 @@ void ContentSkill::Start()
 {
 	if (nullptr == SkillRenderer1)
 	{
-		SkillRenderer1 = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
+		SkillRenderer1 = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::SKILL);
+		SkillRenderer1->Transform.SetLocalPosition({0, 0, RenderDepth::skill});
 		SkillRenderer1->AutoSpriteSizeOn();
 		SkillRenderer1->Off();
 	}
 
 	if (nullptr == SkillRenderer2)
 	{
-		SkillRenderer2 = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
+		SkillRenderer2 = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::SKILL);
+		SkillRenderer2->Transform.SetLocalPosition({ 0, 0, RenderDepth::skill });
 		SkillRenderer2->AutoSpriteSizeOn();
 		SkillRenderer2->Off();
 	}
 
 	if (nullptr == SkillAfterImageRenderer)
 	{
-		SkillAfterImageRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Skill);
+		SkillAfterImageRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::SKILL);
+		SkillAfterImageRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::skill });
 		SkillAfterImageRenderer->AutoSpriteSizeOn();
 		SkillAfterImageRenderer->Off();
 	}
@@ -44,6 +47,7 @@ void ContentSkill::Start()
 void ContentSkill::Update(float _Delta)
 {
 	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+	PlayerPos.Z = 0.0f;
 }
 
 void ContentSkill::Release()

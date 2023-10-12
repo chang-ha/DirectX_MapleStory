@@ -121,12 +121,17 @@ void SongOfHeaven::Update(float _Delta)
 		}
 	}
 
+	float4 Pos = float4::ZERO;
 	if (true == SkillRenderer1->IsCurAnimation("Attack") || true == SkillRenderer1->IsCurAnimation("Loop_Attack"))
 	{
-		SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot2);
+		Pos = PlayerPos + Pivot2;
+		Pos.Z = RenderDepth::skill;
+		SkillRenderer1->Transform.SetLocalPosition(Pos);
 	}
 	else
 	{
-		SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
+		Pos = PlayerPos + Pivot;
+		Pos.Z = RenderDepth::skill;
+		SkillRenderer1->Transform.SetLocalPosition(Pos);
 	}
 }

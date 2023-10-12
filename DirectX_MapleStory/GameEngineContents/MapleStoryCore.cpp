@@ -20,14 +20,13 @@ MapleStoryCore::~MapleStoryCore()
 
 void MapleStoryCore::Start()
 {
-	GameEngineRenderTarget::IsDepth = false;
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
 	GameEngineCore::CreateLevel<Lucid_Enter>("Lucid_Enter");
 	GameEngineCore::CreateLevel<Lucid_Phase1>("Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("Lucid_Phase2");
-	GameEngineCore::ChangeLevel("Lucid_Enter");
+	GameEngineCore::ChangeLevel("Lucid_Phase1");
 }
 
 void MapleStoryCore::Update(float _Delta)

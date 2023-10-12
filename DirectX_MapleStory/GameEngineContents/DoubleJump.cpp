@@ -56,6 +56,7 @@ void DoubleJump::UseSkill()
 	SkillRenderer1->ChangeAnimation(AniDir + "Effect1", true, 0);
 	SkillRenderer2->ChangeAnimation(AniDir + "Effect2", true, 0);
 	SkillAfterImageRenderer->ChangeAnimation(AniDir + "AfterImage", true, 0);
+	PlayerPos.Z = RenderDepth::skill;
 	SkillAfterImageRenderer->Transform.SetLocalPosition(PlayerPos);
 }
 
@@ -135,7 +136,9 @@ void DoubleJump::Start()
 void DoubleJump::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
-	SkillRenderer1->Transform.SetLocalPosition(PlayerPos + Pivot);
-	SkillRenderer2->Transform.SetLocalPosition(PlayerPos + Pivot);
+	float4 Pos = PlayerPos + Pivot;
+	Pos.Z = RenderDepth::skill;
+	SkillRenderer1->Transform.SetLocalPosition(Pos);
+	SkillRenderer2->Transform.SetLocalPosition(Pos);
 }
 

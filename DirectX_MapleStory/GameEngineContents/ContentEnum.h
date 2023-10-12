@@ -21,17 +21,34 @@ enum class UpdateOrder
 
 enum class RenderOrder
 {
-	BackGround,
-	Map,
-	MapObject,
-	Monster,
-	PlayBelow,
-	Play,
-	MonsterAttack,
-	Skill,
-	Arrow,
-	RenderActor,
+	BACKGROUND,
+	MAP,
+	MAPOBJECT,
+	MONSTER,
+	PLAYBELOW,
+	PLAY,
+	MONSTERATTACK,
+	ARROW,
+	SKILL,
+	HITANI,
+	RENDERACTOR,
 	UI,
+};
+
+enum RenderDepth
+{
+	ui = 1,
+	renderactor,
+	hitani,
+	skill,
+	arrow,
+	monsterattack,
+	play,
+	playbelow,
+	monster,
+	mapobject,
+	map,
+	background,
 };
 
 enum class CollisionOrder

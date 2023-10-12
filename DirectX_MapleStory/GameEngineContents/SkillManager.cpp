@@ -41,7 +41,7 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 
 	for (size_t i = 0; i < _HitCount; i++)
 	{
-		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(UpdateOrder::Skill);
+		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::HITANI);
 
 		if (true == _RandomPivot)
 		{
@@ -53,7 +53,9 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 
 		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, HIT_ANI_TIME);
 		_HitAnimation->ChangeAnimation("Hit");
-		_HitAnimation->Transform.SetLocalPosition(_Object->Transform.GetWorldPosition() + _Data->RandomPivot[i]);
+		float4 Pos = _Object->Transform.GetWorldPosition() + _Data->RandomPivot[i];
+		Pos.Z = RenderDepth::hitani;
+		_HitAnimation->Transform.SetLocalPosition(Pos);
 		_HitAnimation->AutoSpriteSizeOn();
 		_HitAnimation->SetEndEvent("Hit", [&](GameEngineSpriteRenderer* _Renderer)
 			{

@@ -100,7 +100,8 @@ void ContentMonster::Start()
 		}
 
 	}
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
+	MainSpriteRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monster});
 	MainSpriteRenderer->CreateAnimation("Monster_Idle", "Monster_Idle");
 	MainSpriteRenderer->CreateAnimation("Monster_Hit", "Monster_Hit");
 	MainSpriteRenderer->CreateAnimation("Monster_Die", "Monster_Die");

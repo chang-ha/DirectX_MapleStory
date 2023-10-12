@@ -53,8 +53,8 @@ void Monsoon::Start()
 
 	if (nullptr == SceneRenderer)
 	{
-		SceneRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::Skill);
-		SceneRenderer->Transform.SetLocalPosition({50,0});
+		SceneRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::SKILL);
+		SceneRenderer->Transform.SetLocalPosition({50, 0, RenderDepth::skill});
 		SceneRenderer->AutoSpriteSizeOn();
 		SceneRenderer->Off();
 	}
@@ -63,7 +63,7 @@ void Monsoon::Start()
 	{
 		// 추후 UICollision로 개선
 		SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
-		SkillCollision->Transform.SetLocalScale({600, 450});
+		SkillCollision->Transform.SetLocalScale({900, 600});
 		SkillCollision->Off();
 	}
 
@@ -116,7 +116,11 @@ void Monsoon::Start()
 void Monsoon::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
+	PlayerPos.Z = RenderDepth::skill;
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos);
+	float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();
+	CameraPos.Z = RenderDepth::skill;
+	SceneRenderer->Transform.SetWorldPosition(CameraPos);
 	if (true == FirstUse)
 	{
 		SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));

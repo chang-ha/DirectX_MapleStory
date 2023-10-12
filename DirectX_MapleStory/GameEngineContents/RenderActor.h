@@ -13,13 +13,13 @@ public:
 	RenderActor& operator=(const RenderActor& _Other) = delete;
 	RenderActor& operator=(RenderActor&& _Other) noexcept = delete;
 
-	template <typename EnumType>
-	void Init(EnumType _Order)
+	template <typename EnumType, typename DepthType>
+	void Init(EnumType _Order, DepthType _Depth)
 	{
-		Init(static_cast<int>(_Order));
+		Init(static_cast<int>(_Order), static_cast<int>(_Depth));
 	}
 
-	void Init(int _Order);
+	void Init(int _Order, int _Depth);
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
 
 protected:

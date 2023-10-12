@@ -39,13 +39,15 @@ void Boss_Lucid_Phase1::Start()
 
 	if (nullptr == FlowerRenderer)
 	{
-		FlowerRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Map);
+		FlowerRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
+		FlowerRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
 		FlowerRenderer->AutoSpriteSizeOn();
 	}
 	
 	if (nullptr == TeleportRenderer)
 	{
-		TeleportRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		TeleportRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
+		TeleportRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
 		TeleportRenderer->AutoSpriteSizeOn();
 	}
 
@@ -78,7 +80,7 @@ void Boss_Lucid_Phase1::Start()
 	FlowerRenderer->CreateAnimation("Flower", "Lucid_Phase1_Flower", 0.15f);
 	FlowerRenderer->SetPivotType(PivotType::Bottom);
 	FlowerRenderer->ChangeAnimation("Flower");
-	FlowerRenderer->Transform.SetLocalPosition({ -5, 3 });
+	FlowerRenderer->Transform.SetLocalPosition({ -5, 3, RenderDepth::map });
 	
 	TeleportRenderer->CreateAnimation("Teleport", "Lucid_Phase1_Teleport", 0.08f);
 	TeleportRenderer->ChangeAnimation("Teleport");
@@ -114,7 +116,9 @@ void Boss_Lucid_Phase1::Start()
 			Player::MainPlayer->Transform.SetLocalPosition({ RandomValue , -500 });
 			TeleportRenderer->On();
 			Player::MainPlayer->MoveVectorForceReset();
-			TeleportRenderer->Transform.SetWorldPosition(Player::MainPlayer->Transform.GetWorldPosition());
+			float4 Pos = Player::MainPlayer->Transform.GetWorldPosition();
+			Pos.Z = RenderDepth::monster;
+			TeleportRenderer->Transform.SetWorldPosition(Pos);
 		}
 	);
 
@@ -312,7 +316,7 @@ void Boss_Lucid_Phase1::StateUpdate(float _Delta)
 void Boss_Lucid_Phase1::IdleStart()
 {
 	BossRenderer->SetPivotType(PivotType::Center);
-	BossRenderer->Transform.SetLocalPosition({ 37, 321 });
+	BossRenderer->Transform.SetLocalPosition({ 37, 321, RenderDepth::monster });
 	BossRenderer->ChangeAnimation("Idle");
 	FlowerRenderer->On();
 }
@@ -320,7 +324,7 @@ void Boss_Lucid_Phase1::IdleStart()
 void Boss_Lucid_Phase1::DeathStart()
 {
 	BossRenderer->SetPivotType(PivotType::Bottom);
-	BossRenderer->Transform.SetLocalPosition({});
+	BossRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monster});
 	BossRenderer->ChangeAnimation("Death");
 	FlowerRenderer->Off();
 }
@@ -447,7 +451,7 @@ void Boss_Lucid_Phase1::IdleEnd()
 
 void Boss_Lucid_Phase1::DeathEnd()
 {
-	BossRenderer->Transform.SetLocalPosition({ 37, 321 });
+	BossRenderer->Transform.SetLocalPosition({ 37, 321, RenderDepth::monster });
 	FlowerRenderer->On();
 }
 

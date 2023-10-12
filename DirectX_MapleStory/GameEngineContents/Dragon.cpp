@@ -25,13 +25,15 @@ void Dragon::Start()
 	{
 		if (nullptr == BreathRenderers[i])
 		{
-			BreathRenderers[i] = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
+			BreathRenderers[i] = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTERATTACK);
+			BreathRenderers[i]->Transform.SetLocalPosition({0, 0, RenderDepth::monsterattack});
 		}
 	}
 
 	if (nullptr == DragonRenderer)
 	{
-		DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
+		DragonRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
 		DragonRenderer->AutoSpriteSizeOn();
 		DragonRenderer->SetPivotType(PivotType::Bottom);
 	}
@@ -335,7 +337,7 @@ void Dragon::RightBreath()
 {
 	for (size_t i = 0; i < BreathRenderers.size(); i++)
 	{
-		BreathRenderers[i]->Transform.SetLocalPosition({ 380 + 190 * static_cast<float>(i), -120});
+		BreathRenderers[i]->Transform.SetLocalPosition({ 380 + 190 * static_cast<float>(i), -120, RenderDepth::monsterattack});
 		BreathRenderers[i]->LeftFlip();
 		BreathRenderers[i]->SetPivotValue({ 1.0f, 1.0f });
 	}
@@ -346,7 +348,7 @@ void Dragon::LeftBreath()
 
 	for (size_t i = 0; i < BreathRenderers.size(); i++)
 	{
-		BreathRenderers[i]->Transform.SetLocalPosition({ -380 - 190 * static_cast<float>(i), -120 });
+		BreathRenderers[i]->Transform.SetLocalPosition({ -380 - 190 * static_cast<float>(i), -120, RenderDepth::monsterattack });
 		BreathRenderers[i]->RightFlip();
 		BreathRenderers[i]->SetPivotValue({ 0.0f, 1.0f });
 	}

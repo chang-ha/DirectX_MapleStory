@@ -23,7 +23,8 @@ void Golem::Start()
 
 	if (nullptr == MainSpriteRenderer)
 	{
-		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
+		MainSpriteRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monster});
 		MainSpriteRenderer->AutoSpriteSizeOn();
 	}
 

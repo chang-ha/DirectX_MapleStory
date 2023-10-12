@@ -39,7 +39,8 @@ void Player::Start()
 	GameEngineInput::AddInputObject(this);
 	if (nullptr == MainSpriteRenderer)
 	{
-		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Play);
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
+		MainSpriteRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::play});
 	}
 
 	// Create Sprite 
@@ -197,6 +198,8 @@ void Player::ChasingCamera(float _Delta)
 	{
 		CameraPos.Y = -(CurMapScale.Y - GlobalValue::WinScale.hY());
 	}
+
+	CameraPos.Z = 0.0f;
 	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(CameraPos);
 }
 

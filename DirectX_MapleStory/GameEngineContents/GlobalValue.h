@@ -4,20 +4,7 @@
 #define FLOOR_COLOR GameEngineColor(0, 255, 0, 255)
 #define LADDER_COLOR GameEngineColor(255, 0, 0, 255)
 
-enum RenderDepth
-{
-	UI = 1,
-	RenderActor,
-	Arrow,
-	Skill,
-	MonsterAttack,
-	Play,
-	PlayBelow,
-	Monster,
-	MapObject,
-	Map,
-	BackGround,
-};
+
 
 
 // Ό³Έν :

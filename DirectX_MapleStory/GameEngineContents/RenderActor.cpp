@@ -11,11 +11,12 @@ RenderActor::~RenderActor()
 
 }
 
-void RenderActor::Init(int _Order)
+void RenderActor::Init(int _Order, int _Depth)
 {
 	if (nullptr == Renderer)
 	{
 		Renderer = CreateComponent<GameEngineSpriteRenderer>(_Order);
+		Renderer->Transform.SetLocalPosition({ 0, 0, static_cast<float>(_Depth) });
 	}
 }
 

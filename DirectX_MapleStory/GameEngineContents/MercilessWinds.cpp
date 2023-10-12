@@ -47,7 +47,8 @@ void MercilessWinds::Start()
 {
 	AllWindActor.reserve(8);
 	ContentSkill::Start();
-	SkillRenderer1->SetRenderOrder(RenderOrder::PlayBelow);
+	SkillRenderer1->SetRenderOrder(RenderOrder::PLAYBELOW);
+	SkillRenderer1->Transform.SetLocalPosition({0, 0, RenderDepth::playbelow});
 
 	if (nullptr == GameEngineSprite::Find("MercilessWinds_Effect1"))
 	{
@@ -98,6 +99,7 @@ void MercilessWinds::Start()
 void MercilessWinds::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
+	PlayerPos.Z = RenderDepth::playbelow;
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos);
 }
 

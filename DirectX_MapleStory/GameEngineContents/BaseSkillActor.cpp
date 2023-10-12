@@ -30,7 +30,8 @@ void BaseSkillActor::Start()
 	ContentActor::Start();
 	if (nullptr == MainSpriteRenderer)
 	{
-		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PlayBelow);
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAYBELOW);
+		MainSpriteRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::playbelow});
 	}
 
 	if (nullptr == SkillCollision)

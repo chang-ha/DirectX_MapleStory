@@ -38,17 +38,6 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	CurMap->Init("Lacheln.png");
 	CreateActor<SkillManager>();
 
-	std::shared_ptr<ContentMonster> TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
-	TestMonster->Transform.SetLocalPosition({ 400, -780 });
-	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
-	TestMonster->Transform.SetLocalPosition({ 450, -780 });
-	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
-	TestMonster->Transform.SetLocalPosition({ 500, -780 });
-	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
-	TestMonster->Transform.SetLocalPosition({ 550, -780 });
-	TestMonster = CreateActor<ContentMonster>(UpdateOrder::Monster);
-	TestMonster->Transform.SetLocalPosition({ 600, -780 });
-
 	std::shared_ptr<ContentBackGround> Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
 	Back->Init("BG_Lacheln.png");
 }

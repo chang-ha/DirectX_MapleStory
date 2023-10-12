@@ -20,7 +20,8 @@ void Laser::Start()
 {
 	if (nullptr == LaserRenderer)
 	{
-		LaserRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MonsterAttack);
+		LaserRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTERATTACK);
+		LaserRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monsterattack});
 	}
 
 	if (nullptr == LaserCollision)

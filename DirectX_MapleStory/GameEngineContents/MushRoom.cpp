@@ -18,7 +18,8 @@ void MushRoom::LevelEnd(GameEngineLevel* _NextLevel)
 
 void MushRoom::Start()
 {
-	MushRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+	MushRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
+	MushRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monster});
 	MushRenderer->AutoSpriteSizeOn();
 
 	MushCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);

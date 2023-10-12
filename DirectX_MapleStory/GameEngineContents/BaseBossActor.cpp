@@ -25,7 +25,8 @@ void BaseBossActor::Start()
 {
 	if (nullptr == BossRenderer)
 	{
-		BossRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Monster);
+		BossRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
+		BossRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monster});
 		BossRenderer->AutoSpriteSizeOn();
 	}
 
