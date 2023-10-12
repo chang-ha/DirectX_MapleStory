@@ -67,6 +67,8 @@ void BaseSkillActor::Release()
 		SkillCollision->Death();
 		SkillCollision = nullptr;
 	}
+
+	 CollisionTime.clear();
 }
 
 void BaseSkillActor::MoveUpdate(float _Delta)

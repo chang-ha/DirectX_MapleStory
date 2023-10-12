@@ -15,37 +15,37 @@ ContentLevel* ContentLevel::CurContentLevel = nullptr;
 
 void ContentLevel::Start()
 {
-
+	GameEngineInput::AddInputObject(this);
 }
 
 void ContentLevel::Update(float _Delta)
 {
-	if (true == GameEngineInput::IsPress('1'))
+	if (true == GameEngineInput::IsPress('1', this))
 	{
 		GameEngineCore::ChangeLevel("TitleLevel");
 	}
 
-	if (true == GameEngineInput::IsPress('2'))
+	if (true == GameEngineInput::IsPress('2', this))
 	{
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 
-	if (true == GameEngineInput::IsDown(VK_F3))
+	if (true == GameEngineInput::IsDown(VK_F3, this))
 	{
 		GameEngineLevel::OnDebug();
 	}
 
-	if (true == GameEngineInput::IsDown(VK_F4))
+	if (true == GameEngineInput::IsDown(VK_F4, this))
 	{
 		GameEngineLevel::OffDebug();
 	}
 
-	if (GameEngineInput::IsPress('O'))
+	if (GameEngineInput::IsPress('O', this))
 	{
 		GameEngineCore::ChangeLevel("Lucid_Phase1");
 	}
 
-	if (GameEngineInput::IsPress('P'))
+	if (GameEngineInput::IsPress('P', this))
 	{
 		GameEngineCore::ChangeLevel("Lucid_Next");
 	}

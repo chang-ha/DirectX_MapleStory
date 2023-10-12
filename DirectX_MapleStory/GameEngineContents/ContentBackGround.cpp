@@ -13,7 +13,10 @@ ContentBackGround::~ContentBackGround()
 
 void ContentBackGround::Start()
 {
-	BackGroundRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::BackGround);
+	if (nullptr == BackGroundRenderer)
+	{
+		BackGroundRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::BackGround);
+	}
 }
 
 void ContentBackGround::Update(float _Delta)

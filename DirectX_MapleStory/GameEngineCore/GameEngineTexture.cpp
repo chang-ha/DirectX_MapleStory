@@ -16,6 +16,12 @@ GameEngineTexture::GameEngineTexture()
 
 GameEngineTexture::~GameEngineTexture() 
 {
+	if (nullptr != DSV)
+	{
+		DSV->Release();
+		DSV = nullptr;
+	}
+
 	if (nullptr != SRV)
 	{
 		SRV->Release();

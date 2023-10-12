@@ -57,6 +57,8 @@ private:
 	float FOV = 60.0f;
 	float ZoomValue = 0.0f;
 
+	bool IsFreeCamera = false;
+
 	int CameraOrder = 0;
 	std::map<int, std::list<std::shared_ptr<class GameEngineRenderer>>> Renderers;
 };

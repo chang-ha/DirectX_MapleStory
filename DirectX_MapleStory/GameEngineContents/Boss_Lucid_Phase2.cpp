@@ -23,6 +23,8 @@ void Boss_Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Boss_Lucid_Phase2::Start()
 {
+	GameEngineInput::AddInputObject(this);
+
 	BaseBossActor::Start();
 }
 

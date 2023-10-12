@@ -33,6 +33,8 @@ void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Boss_Lucid_Phase1::Start()
 {
+	GameEngineInput::AddInputObject(this);
+
 	BaseBossActor::Start();
 
 	if (nullptr == FlowerRenderer)
@@ -170,32 +172,32 @@ void Boss_Lucid_Phase1::Update(float _Delta)
 	StateUpdate(_Delta);
 
 	// TestCode
-	if (true == GameEngineInput::IsDown('5'))
+	if (true == GameEngineInput::IsDown('5', this))
 	{
 		ChangeState(LucidState::Skill1);
 	}
 
-	if (true == GameEngineInput::IsDown('6'))
+	if (true == GameEngineInput::IsDown('6', this))
 	{
 		ChangeState(LucidState::Skill2);
 	}
 
-	if (true == GameEngineInput::IsDown('7'))
+	if (true == GameEngineInput::IsDown('7', this))
 	{
 		ChangeState(LucidState::Skill3);
 	}
 
-	if (true == GameEngineInput::IsDown('8'))
+	if (true == GameEngineInput::IsDown('8', this))
 	{
 		ChangeState(LucidState::Summon_Mush);
 	}
 
-	if (true == GameEngineInput::IsDown('9'))
+	if (true == GameEngineInput::IsDown('9', this))
 	{
-		ChangeState(LucidState::Idle);
+		ChangeState(LucidState::Summon_Golem);
 	}
 
-	if (true == GameEngineInput::IsDown('0'))
+	if (true == GameEngineInput::IsDown('0', this))
 	{
 		ChangeState(LucidState::Death);
 	}

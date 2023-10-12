@@ -23,7 +23,7 @@ void DoubleJump::UseSkill()
 	SkillAfterImageRenderer->On();
 
 	std::string AniDir = "";
-	if (GameEngineInput::IsPress(VK_UP))
+	if (GameEngineInput::IsPress(VK_UP, this))
 	{
 		AniDir = "Up_";
 		SkillRenderer1->SetPivotValue({ 0.5f, 0.0f });

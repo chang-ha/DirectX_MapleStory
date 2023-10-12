@@ -30,13 +30,17 @@ void Player::LevelStart(GameEngineLevel* _PrevLevel)
 void Player::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentActor::LevelEnd(_NextLevel);
-	Release();
+	Death();
 }
 
 void Player::Start()
 {
 	ContentActor::Start();
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Play);
+	GameEngineInput::AddInputObject(this);
+	if (nullptr == MainSpriteRenderer)
+	{
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Play);
+	}
 
 	// Create Sprite 
 	if (nullptr == GameEngineSprite::Find("Idle"))
@@ -127,7 +131,11 @@ void Player::Update(float _Delta)
 
 void Player::Release()
 {
-
+	if (nullptr != MainSpriteRenderer)
+	{
+		MainSpriteRenderer->Death();
+		MainSpriteRenderer = nullptr;
+	}
 }
 
 void Player::DirCheck()
@@ -140,12 +148,12 @@ void Player::DirCheck()
 	ActorDir CheckDir = ActorDir::Null;
 	// bool ChangeDir = false;
 
-	if (true == GameEngineInput::IsPress(VK_LEFT))
+	if (true == GameEngineInput::IsPress(VK_LEFT, this))
 	{
 		CheckDir = ActorDir::Left;
 		MainSpriteRenderer->RightFlip();
 	} 
-	else if (true == GameEngineInput::IsPress(VK_RIGHT))
+	else if (true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{
 		CheckDir = ActorDir::Right;
 		MainSpriteRenderer->LeftFlip();
@@ -228,11 +236,11 @@ void Player::LadderCheck()
 	//}
 
 	float YPivot = 0.0f;
-	if (GameEngineInput::IsPress(VK_UP))
+	if (GameEngineInput::IsPress(VK_UP, this))
 	{
 		YPivot = LADDER_Y_PIVOT;
 	}
-	else if(GameEngineInput::IsPress(VK_DOWN))
+	else if(GameEngineInput::IsPress(VK_DOWN, this))
 	{
 		YPivot = -LADDER_Y_PIVOT;
 	}

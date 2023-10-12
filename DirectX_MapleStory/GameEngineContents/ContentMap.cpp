@@ -13,16 +13,20 @@ ContentMap::~ContentMap()
 
 void ContentMap::Start()
 {
-	MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Map);
+	GameEngineInput::AddInputObject(this);
+	if (nullptr == MapRenderer)
+	{
+		MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::Map);
+	}
 }
 
 void ContentMap::Update(float _Delta)
 {
-	if (GameEngineInput::IsDown(VK_F1))
+	if (GameEngineInput::IsDown(VK_F1, this))
 	{
 		MapRenderer->SetSprite(MapName);
 	}
-	else if (GameEngineInput::IsDown(VK_F2))
+	else if (GameEngineInput::IsDown(VK_F2, this))
 	{
 		MapRenderer->SetSprite("Collision_" + MapName);
 	}
@@ -56,4 +60,13 @@ GameEngineColor ContentMap::GetColor(float4 _Pos, GameEngineColor _DefaultColor 
 	// 이미지는 위에서부터 아래로 내려갈수록 +가 되기 때문이다. (DirectX의 Y좌표계는 아래로 내려갈수록 -)
 	_Pos.Y *= -1.0f;
 	return MapCollisionTexture->GetColor(_Pos, _DefaultColor);
+}
+
+void ContentMap::Release()
+{
+	if (nullptr != MapRenderer)
+	{
+		MapRenderer->Death();
+		MapRenderer = nullptr;
+	}
 }

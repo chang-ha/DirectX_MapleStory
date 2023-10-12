@@ -36,11 +36,11 @@ void Player::JumpStart()
 
 	if (true == IsGround)
 	{
-		if (ActorDir::Left == Dir && GameEngineInput::IsPress(VK_LEFT))
+		if (ActorDir::Left == Dir && GameEngineInput::IsPress(VK_LEFT, this))
 		{
 			PlusMoveVectorForce(float4(-JUMP_DIS, JUMP_HEIGHT));
 		}
-		else if (ActorDir::Right == Dir && GameEngineInput::IsPress(VK_RIGHT))
+		else if (ActorDir::Right == Dir && GameEngineInput::IsPress(VK_RIGHT, this))
 		{
 			PlusMoveVectorForce(float4(JUMP_DIS, JUMP_HEIGHT));
 		}
@@ -52,11 +52,11 @@ void Player::JumpStart()
 	}
 	else if (PlayerState::Ladder == State)
 	{
-		if (/*ActorDir::Left == Dir &&*/ GameEngineInput::IsPress(VK_LEFT))
+		if (/*ActorDir::Left == Dir &&*/ GameEngineInput::IsPress(VK_LEFT, this))
 		{
 			PlusMoveVectorForce(float4(-JUMP_DIS, LADDER_JUMP_HEIGHT));
 		}
-		else if (/*ActorDir::Right == Dir &&*/ GameEngineInput::IsPress(VK_RIGHT))
+		else if (/*ActorDir::Right == Dir &&*/ GameEngineInput::IsPress(VK_RIGHT, this))
 		{
 			PlusMoveVectorForce(float4(JUMP_DIS, LADDER_JUMP_HEIGHT));
 		}
@@ -190,7 +190,7 @@ void Player::LadderEnd()
 	MoveVectorForceReset();
 	GravityOn();
 	MainSpriteRenderer->AnimationPauseOff();
-	if (true == GameEngineInput::IsPress(VK_UP))
+	if (true == GameEngineInput::IsPress(VK_UP, this))
 	{
 		// 발판의 픽셀(3픽셀)로 올라가기 위해 +4을 해주었음 << 추후 보강
 		Transform.AddLocalPosition(float4(0, 4.0f));
@@ -250,64 +250,64 @@ void Player::IdleUpdate(float _Delta)
 	}
 
 	///////////// Skill Code
-	if (GameEngineInput::IsDown(VK_SPACE))
+	if (GameEngineInput::IsDown(VK_SPACE, this))
 	{
 		ChangeState(PlayerState::WindWalk);
 		return;
 	}
 
-	if (GameEngineInput::IsPress('A'))
+	if (GameEngineInput::IsPress('A', this))
 	{
 		ChangeState(PlayerState::Shooting);
 		return;
 	}
 
-	if (GameEngineInput::IsDown('F'))
+	if (GameEngineInput::IsDown('F', this))
 	{
 		ChangeState(PlayerState::Shoot);
 		return;
 	}
 
 
-	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
+	if (GameEngineInput::IsDown(VK_SHIFT, this) || GameEngineInput::IsPress(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack2);
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('S'))
+	if (true == GameEngineInput::IsPress('S', this))
 	{
 		ChangeState(PlayerState::VortexSphere);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('E'))
+	if (true == GameEngineInput::IsDown('E', this))
 	{
 		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
 		AlertTime = ALERT_TIME;
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('R'))
+	if (true == GameEngineInput::IsDown('R', this))
 	{
 		ChangeState(PlayerState::MercilessWinds);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('W'))
+	if (true == GameEngineInput::IsDown('W', this))
 	{
 		ChangeState(PlayerState::Monsoon);
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress(VK_CONTROL))
+	if (true == GameEngineInput::IsPress(VK_CONTROL, this))
 	{
 		ChangeState(PlayerState::Attack);
 		return;
 	}
 	/////////////
 
-	if (GameEngineInput::IsPress(VK_DOWN))
+	if (GameEngineInput::IsPress(VK_DOWN, this))
 	{
 		if (false == IsLadder)
 		{
@@ -321,13 +321,13 @@ void Player::IdleUpdate(float _Delta)
 		}
 	}
 	
-	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
+	if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
 	{
 		ChangeState(PlayerState::Walk);
 		return;
 	}
 
-	if ((GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D')) && GameEngineInput::IsFree(VK_DOWN))
+	if ((GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this)) && GameEngineInput::IsFree(VK_DOWN, this))
 	{
 		ChangeState(PlayerState::Jump);
 		return;
@@ -347,57 +347,57 @@ void Player::AlertUpdate(float _Delta)
 void Player::WalkUpdate(float _Delta)
 {
 	///////////// Skill Code
-	if (GameEngineInput::IsDown(VK_SPACE))
+	if (GameEngineInput::IsDown(VK_SPACE, this))
 	{
 		ChangeState(PlayerState::WindWalk);
 		return;
 	}
 
-	if (GameEngineInput::IsPress('A'))
+	if (GameEngineInput::IsPress('A', this))
 	{
 		ChangeState(PlayerState::Shooting);
 		return;
 	}
 
-	if (GameEngineInput::IsDown('F'))
+	if (GameEngineInput::IsDown('F', this))
 	{
 		ChangeState(PlayerState::Shoot);
 		return;
 	}
 
 
-	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
+	if (GameEngineInput::IsDown(VK_SHIFT, this) || GameEngineInput::IsPress(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack2);
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('S'))
+	if (true == GameEngineInput::IsPress('S', this))
 	{
 		ChangeState(PlayerState::VortexSphere);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('E'))
+	if (true == GameEngineInput::IsDown('E', this))
 	{
 		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
 		AlertTime = ALERT_TIME;
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('R'))
+	if (true == GameEngineInput::IsDown('R', this))
 	{
 		ChangeState(PlayerState::MercilessWinds);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('W'))
+	if (true == GameEngineInput::IsDown('W', this))
 	{
 		ChangeState(PlayerState::Monsoon);
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress(VK_CONTROL))
+	if (true == GameEngineInput::IsPress(VK_CONTROL, this))
 	{
 		ChangeState(PlayerState::Attack);
 		return;
@@ -422,7 +422,7 @@ void Player::WalkUpdate(float _Delta)
 		break;
 	}
 
-	if ((GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT)))
+	if ((GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this)))
 	{
 		MovePos += MoveDir * _Delta * Speed;
 	}
@@ -472,19 +472,19 @@ void Player::WalkUpdate(float _Delta)
 	}
 	Transform.AddLocalPosition(MovePos);
 
-	if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
+	if (GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this))
 	{
 		ChangeState(PlayerState::Jump);
 		return;
 	}
 
-	if (GameEngineInput::IsFree(VK_LEFT) && GameEngineInput::IsFree(VK_RIGHT))
+	if (GameEngineInput::IsFree(VK_LEFT, this) && GameEngineInput::IsFree(VK_RIGHT, this))
 	{
 		ChangeToIdle();
 		return;
 	}
 
-	if (true == IsLadder && (GameEngineInput::IsPress(VK_UP) || GameEngineInput::IsPress(VK_DOWN)))
+	if (true == IsLadder && (GameEngineInput::IsPress(VK_UP, this) || GameEngineInput::IsPress(VK_DOWN, this)))
 	{
 		ChangeState(PlayerState::Ladder);
 		return;
@@ -494,31 +494,31 @@ void Player::WalkUpdate(float _Delta)
 void Player::JumpUpdate(float _Delta)
 {
 	///////////// Skill Code
-	if (GameEngineInput::IsDown(VK_SPACE))
+	if (GameEngineInput::IsDown(VK_SPACE, this))
 	{
 		ChangeState(PlayerState::WindWalk);
 		return;
 	}
 
-	if (GameEngineInput::IsDown(VK_SHIFT) || GameEngineInput::IsPress(VK_SHIFT))
+	if (GameEngineInput::IsDown(VK_SHIFT, this) || GameEngineInput::IsPress(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack2);
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress('S'))
+	if (true == GameEngineInput::IsPress('S', this))
 	{
 		ChangeState(PlayerState::VortexSphere);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('R'))
+	if (true == GameEngineInput::IsDown('R', this))
 	{
 		ChangeState(PlayerState::MercilessWinds);
 		return;
 	}
 
-	if (true == GameEngineInput::IsDown('W'))
+	if (true == GameEngineInput::IsDown('W', this))
 	{
 		ChangeState(PlayerState::Monsoon);
 		return;
@@ -536,7 +536,7 @@ void Player::JumpUpdate(float _Delta)
 	}
 	
 	// Ladder
-	if (true == IsLadder && GameEngineInput::IsPress(VK_UP))
+	if (true == IsLadder && GameEngineInput::IsPress(VK_UP, this))
 	{
 		ChangeState(PlayerState::Ladder);
 		GravityReset();
@@ -547,7 +547,7 @@ void Player::JumpUpdate(float _Delta)
 	}
 
 	// Move
-	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
+	if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
 	{
 		float4 MoveDir = float4::ZERO;
 
@@ -581,20 +581,20 @@ void Player::JumpUpdate(float _Delta)
 		return;
 	}
 
-	if (GameEngineInput::IsDown('D'))
+	if (GameEngineInput::IsDown('D', this))
 	{
 		GravityReset();
 		SkillManager::PlayerSkillManager->UseSkill("DoubleJump");
 		DoubleJump = true;
-		if (GameEngineInput::IsPress(VK_UP))
+		if (GameEngineInput::IsPress(VK_UP, this))
 		{
 			PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 1.3f));
 		}
-		else if (GameEngineInput::IsPress(VK_LEFT))
+		else if (GameEngineInput::IsPress(VK_LEFT, this))
 		{
 			PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
 		}
-		else if (GameEngineInput::IsPress(VK_RIGHT))
+		else if (GameEngineInput::IsPress(VK_RIGHT, this))
 		{
 			PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
 		}
@@ -618,13 +618,13 @@ void Player::JumpUpdate(float _Delta)
 
 void Player::DownUpdate(float _Delta)
 {
-	if (GameEngineInput::IsFree(VK_DOWN) || GameEngineInput::IsUp(VK_DOWN))
+	if (GameEngineInput::IsFree(VK_DOWN, this) || GameEngineInput::IsUp(VK_DOWN, this))
 	{
 		ChangeToIdle();
 		return;
 	}
 
-	else if (GameEngineInput::IsDown('D') || GameEngineInput::IsPress('D'))
+	else if (GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this))
 	{
 		if (false == CheckGround(float4(0, -3)))
 		{
@@ -639,19 +639,19 @@ void Player::DownUpdate(float _Delta)
 void Player::LadderUpdate(float _Delta)
 {
 	float4 MovePos = float4::ZERO;
-	if (GameEngineInput::IsPress(VK_UP))
+	if (GameEngineInput::IsPress(VK_UP, this))
 	{
 		MainSpriteRenderer->AnimationPauseOff();
 		MovePos += float4::UP * _Delta * Speed;
 	}
-	else if (GameEngineInput::IsPress(VK_DOWN))
+	else if (GameEngineInput::IsPress(VK_DOWN, this))
 	{
 		MainSpriteRenderer->AnimationPauseOff();
 		MovePos += float4::DOWN * _Delta * Speed;
 	}
-	else if (GameEngineInput::IsPress(VK_RIGHT) || GameEngineInput::IsPress(VK_LEFT))
+	else if (GameEngineInput::IsPress(VK_RIGHT, this) || GameEngineInput::IsPress(VK_LEFT, this))
 	{
-		if (GameEngineInput::IsDown('D'))
+		if (GameEngineInput::IsDown('D', this))
 		{
 			DirCheck();
 			ChangeState(PlayerState::Jump);
@@ -684,7 +684,7 @@ void Player::AttackUpdate(float _Delta)
 
 void Player::ShootingUpdate(float _Delta)
 {
-	if (true == GameEngineInput::IsFree('A'))
+	if (true == GameEngineInput::IsFree('A', this))
 	{
 		SkillManager::PlayerSkillManager->EndSkill("SongOfHeaven");
 		ChangeToIdle();

@@ -30,6 +30,8 @@ void PhalanxCharge_Actor::LevelEnd(GameEngineLevel* _NextLevel)
 
 void PhalanxCharge_Actor::Start()
 {
+	GameEngineInput::AddInputObject(this);
+
 	Main_PhalanxCharge = this;
 
 	BaseSkillActor::Start();
@@ -118,7 +120,7 @@ void PhalanxCharge_Actor::Update(float _Delta)
 		}
 	);
 
-	if (true == GameEngineInput::IsDown('E') && (true == MainSpriteRenderer->IsCurAnimation("Attack") || true == MainSpriteRenderer->IsCurAnimation("Attack_Loop")))
+	if (true == GameEngineInput::IsDown('E', this) && (true == MainSpriteRenderer->IsCurAnimation("Attack") || true == MainSpriteRenderer->IsCurAnimation("Attack_Loop")))
 	{
 		SwitchDir();
 	}
