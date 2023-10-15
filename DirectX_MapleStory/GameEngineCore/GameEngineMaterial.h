@@ -33,7 +33,7 @@ public:
 	void SetRasterizer(const std::string_view& _Value);
 	void SetPixelShader(const std::string_view& _Value);
 	void SetBlendState(const std::string_view& _Value);
-	// void SetDepthState(const std::string_view& _Value);
+	void SetDepthState(const std::string_view& _Value);
 
 	std::shared_ptr<class GameEngineVertexShader> GetVertexShader()
 	{

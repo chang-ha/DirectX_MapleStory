@@ -206,6 +206,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentMonster.cpp" />
+    <ClCompile Include="ContentResources.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentSkill.cpp">
       <SubType>
       </SubType>
@@ -336,6 +340,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentMonster.h" />
+    <ClInclude Include="ContentResources.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentSkill.h">
       <SubType>
       </SubType>

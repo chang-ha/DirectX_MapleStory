@@ -130,6 +130,9 @@
     <ClCompile Include="Boss_Lucid_Phase2.cpp">
       <Filter>Actor\Monster\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="ContentResources.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -260,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="Boss_Lucid_Phase2.h">
       <Filter>Actor\Monster\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentResources.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
