@@ -174,6 +174,11 @@ void Player::DirCheck()
 
 void Player::ChasingCamera(float _Delta)
 {
+	if (true == GetLevel()->GetMainCamera()->IsFreeCamera())
+	{
+		return;
+	}
+
 	float4 StartPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
 	float4 EndPos = Transform.GetWorldPosition();
 	float4 MovePos = float4::LerpClamp(StartPos, EndPos, CameraSpeed * _Delta);

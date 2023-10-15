@@ -311,3 +311,11 @@ void GameEngineInput::IsOnlyInputObject(void* _Ptr)
 	}
 
 }
+
+void GameEngineInput::IsObjectAllInputOn()
+{
+	for (std::pair<void* const, bool>& InputPair : InputObject)
+	{
+		InputPair.second = true;
+	}
+}

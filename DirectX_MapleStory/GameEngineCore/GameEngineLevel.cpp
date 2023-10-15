@@ -12,11 +12,13 @@ GameEngineLevel::GameEngineLevel()
 {
 	// Main
 	{
-		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, ECAMERAORDER::Main);
+		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(INT_MIN, ECAMERAORDER::Main);
+		// 메인카메라만 프리카메라 기능 사용 가능
+		GameEngineInput::AddInputObject(NewCamera.get());
 	}
 
 	{
-		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, ECAMERAORDER::UI);
+		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(INT_MIN, ECAMERAORDER::UI);
 	}
 
 	// UI카메라

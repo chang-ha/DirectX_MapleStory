@@ -84,6 +84,7 @@ public:
 
 	static void AddInputObject(void* _Ptr);
 	static void IsOnlyInputObject(void* _Ptr);
+	static void IsObjectAllInputOn();
 
 protected:
 

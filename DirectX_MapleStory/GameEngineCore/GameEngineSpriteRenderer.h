@@ -6,6 +6,7 @@ class GameEngineFrameAnimation
 {
 	friend class GameEngineSpriteRenderer;
 
+public:
 	void Reset();
 	SpriteData Update(float _Delta);
 
@@ -138,7 +139,7 @@ public:
 		return CurFrameAnimations->CurIndex;
 	}
 
-	std::shared_ptr<GameEngineFrameAnimation> CurAnimations()
+	std::shared_ptr<GameEngineFrameAnimation> CurAnimation()
 	{
 		return CurFrameAnimations;
 	}

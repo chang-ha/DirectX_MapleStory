@@ -341,6 +341,11 @@ public:
 		TransformUpdate();
 	}
 
+	void SetTransformData(const TransformData& Data)
+	{
+		TransData = Data;
+	}
+
 	void CalChilds();
 
 	static bool Collision(const CollisionParameter& _Data);
