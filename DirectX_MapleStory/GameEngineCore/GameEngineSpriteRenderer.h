@@ -138,6 +138,11 @@ public:
 		return CurFrameAnimations->CurIndex;
 	}
 
+	std::shared_ptr<GameEngineFrameAnimation> CurAnimations()
+	{
+		return CurFrameAnimations;
+	}
+
 	inline GameEngineTransform& GetImageTransform()
 	{
 		return ImageTransform;
