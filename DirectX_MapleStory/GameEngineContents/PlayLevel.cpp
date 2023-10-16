@@ -35,7 +35,8 @@ void PlayLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	NewPlayer->Transform.SetLocalPosition(float4(100, -800));
 	GetMainCamera()->Transform.SetLocalPosition(float4(100, -800));
 	CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
-	CurMap->Init("Lacheln.png");
+	CurMap->InitMap("Lacheln.png");
+	CurMap->InitMapCollision("Collision_Lacheln.png");
 	CreateActor<SkillManager>();
 
 	std::shared_ptr<ContentBackGround> Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);

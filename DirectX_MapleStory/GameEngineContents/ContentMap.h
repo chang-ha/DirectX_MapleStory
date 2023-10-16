@@ -19,7 +19,8 @@ public:
 		return MapCollisionTexture->GetScale();
 	}
 
-	void Init(std::string_view _MapName);
+	void InitMap(std::string_view _MapName);
+	void InitMapCollision(std::string_view _MapName);
 	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = GROUND_COLOR);
 
 protected:
@@ -28,8 +29,9 @@ protected:
 	void Release() override;
 
 private:
-	std::string MapName = "";
+	// std::string MapName = "";
 	std::shared_ptr<GameEngineTexture> MapCollisionTexture = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> MapCollisionRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> MapRenderer = nullptr;
 };
 

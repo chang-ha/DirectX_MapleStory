@@ -14,27 +14,36 @@ ContentMap::~ContentMap()
 void ContentMap::Start()
 {
 	GameEngineInput::AddInputObject(this);
-	if (nullptr == MapRenderer)
-	{
-		MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
-		MapRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::map});
-	}
 }
 
 void ContentMap::Update(float _Delta)
 {
 	if (GameEngineInput::IsDown(VK_F1, this))
 	{
-		MapRenderer->SetSprite(MapName);
+		if (true == MapRenderer->IsUpdate())
+		{
+			MapRenderer->Off();
+		}
+		else
+		{
+			MapRenderer->On();
+		}
 	}
 	else if (GameEngineInput::IsDown(VK_F2, this))
 	{
-		MapRenderer->SetSprite("Collision_" + MapName);
+		if (true == MapCollisionRenderer->IsUpdate())
+		{
+			MapCollisionRenderer->Off();
+		}
+		else
+		{
+			MapCollisionRenderer->On();
+		}
 	}
 }
 
 
-void ContentMap::Init(std::string_view _MapName)
+void ContentMap::InitMap(std::string_view _MapName)
 {
 	if (nullptr == GameEngineTexture::Find(_MapName))
 	{
@@ -43,13 +52,45 @@ void ContentMap::Init(std::string_view _MapName)
 		Path.MoveParentToExistsChild("ContentResources");
 		Path.MoveChild("ContentResources\\Textures\\Map\\");
 		GameEngineTexture::Load(Path.GetStringPath() + std::string(_MapName.data()));
-		GameEngineTexture::Load(Path.GetStringPath() + "Collision_" + std::string(_MapName.data()));
 		GameEngineSprite::CreateSingle(_MapName);
-		GameEngineSprite::CreateSingle("Collision_" + std::string(_MapName.data()));
 	}
-	MapName = _MapName;
-	MapCollisionTexture = GameEngineTexture::Find("Collision_" + std::string(_MapName.data()));
-	MapRenderer->SetSprite(MapName);
+
+	if (nullptr == MapRenderer)
+	{
+		MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
+		MapRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
+	}
+
+	// MapName = _MapName;
+	MapRenderer->SetSprite(_MapName);
+	
+	//float4 HalfMapScale = GameEngineTexture::Find(_MapName)->GetScale().Half();
+	//HalfMapScale.Y *= -1.0f;
+	//this->Transform.SetLocalPosition(HalfMapScale);
+}
+
+void ContentMap::InitMapCollision(std::string_view _MapName)
+{
+	if (nullptr == GameEngineTexture::Find(_MapName))
+	{
+		GameEnginePath Path;
+		Path.SetCurrentPath();
+		Path.MoveParentToExistsChild("ContentResources");
+		Path.MoveChild("ContentResources\\Textures\\Map\\");
+		GameEngineTexture::Load(Path.GetStringPath() + std::string(_MapName.data()));
+		GameEngineSprite::CreateSingle(_MapName);
+	}
+
+	if (nullptr == MapCollisionRenderer)
+	{
+		MapCollisionRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
+		MapCollisionRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
+	}
+
+	MapCollisionRenderer->SetSprite(_MapName);
+	MapCollisionRenderer->Off();
+
+	MapCollisionTexture = GameEngineTexture::Find(_MapName);
 	float4 HalfMapScale = MapCollisionTexture->GetScale().Half();
 	HalfMapScale.Y *= -1.0f;
 	this->Transform.SetLocalPosition(HalfMapScale);
@@ -69,5 +110,11 @@ void ContentMap::Release()
 	{
 		MapRenderer->Death();
 		MapRenderer = nullptr;
+	}
+
+	if (nullptr != MapCollisionRenderer)
+	{
+		MapCollisionRenderer->Death();
+		MapCollisionRenderer = nullptr;
 	}
 }

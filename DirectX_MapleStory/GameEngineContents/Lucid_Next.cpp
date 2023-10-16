@@ -21,7 +21,8 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
-		CurMap->Init("Lucid_Next.png");
+		CurMap->InitMap("Lucid_Next.png");
+		CurMap->InitMapCollision("Collision_Lucid_Next.png");
 	}
 
 	if (nullptr == Back)
@@ -36,8 +37,8 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == PlayerRender)
 	{
 		PlayerRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		PlayerRender->Renderer->Transform.SetLocalPosition({0, 0, RenderDepth::renderactor});
 		PlayerRender->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+		PlayerRender->Renderer->Transform.SetLocalPosition({0, 0, RenderDepth::renderactor});
 		PlayerRender->Renderer->CreateAnimation("Idle", "Idle", 0.5f);
 		PlayerRender->Renderer->ChangeAnimation("Idle");
 		PlayerRender->Renderer->AutoSpriteSizeOn();
@@ -59,8 +60,8 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == Clock)
 	{
 		Clock = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		Clock->Renderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::renderactor });
 		Clock->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+		Clock->Renderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::renderactor });
 		Clock->Renderer->SetSprite("Clock.Png");
 		Clock->Renderer->AutoSpriteSizeOn();
 		Clock->Transform.SetLocalPosition({ 1099, -488 });
@@ -78,8 +79,8 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == LucidRender)
 	{
 		LucidRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		LucidRender->Renderer->Transform.SetLocalPosition({0, 0, RenderDepth::renderactor});
 		LucidRender->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+		LucidRender->Renderer->Transform.SetLocalPosition({0, 0, RenderDepth::renderactor});
 		LucidRender->Renderer->CreateAnimation("Lucid_PhaseChange", "Lucid_PhaseChange", 0.09f, -1, -1, false);
 		LucidRender->Renderer->ChangeAnimation("Lucid_PhaseChange");
 		LucidRender->Renderer->AutoSpriteSizeOn();

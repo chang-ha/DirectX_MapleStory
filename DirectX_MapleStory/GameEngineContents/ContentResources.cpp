@@ -1,7 +1,7 @@
 ﻿#include "PreCompile.h"
 
 #include <GameEngineCore\GameEngineDepthStencil.h>
-
+#include <GameEngineCore\GameEngineVertex.h>
 #include "ContentResources.h"
 
 ContentResources::ContentResources()

@@ -32,6 +32,7 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 	std::shared_ptr<ContentMap> CurMap = nullptr;
+
 private:
 
 };

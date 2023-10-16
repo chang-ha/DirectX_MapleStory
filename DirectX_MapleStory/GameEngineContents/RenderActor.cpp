@@ -17,6 +17,7 @@ void RenderActor::Init(int _Order, int _Depth)
 	{
 		Renderer = CreateComponent<GameEngineSpriteRenderer>(_Order);
 		Renderer->Transform.SetLocalPosition({ 0, 0, static_cast<float>(_Depth) });
+		Renderer->AutoSpriteSizeOn();
 	}
 }
 
@@ -27,12 +28,20 @@ void RenderActor::LevelEnd(GameEngineLevel* _NextLevel)
 
 void RenderActor::Start()
 {
-
+	GameEngineInput::AddInputObject(this);
 }
 
 void RenderActor::Update(float _Delta)
 {
+	if (true == GameEngineInput::IsDown(VK_F5, this))
+	{
+		Renderer->On();
+	}
 
+	if (true == GameEngineInput::IsDown(VK_F6, this))
+	{
+		Renderer->Off();
+	}
 }
 
 void RenderActor::Release()

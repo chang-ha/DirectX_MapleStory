@@ -17,6 +17,7 @@ void ContentBackGround::Start()
 	{
 		BackGroundRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::BACKGROUND);
 		BackGroundRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::background });
+		BackGroundRenderer->SetCameraOrder(ECAMERAORDER::MainPrev);
 	}
 }
 
@@ -58,7 +59,7 @@ void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _Ba
 	}
 	BackGroundRenderer->SetImageScale(BackScale);
 
-	float4 HalfBackScale = BackScale.Half();
-	HalfBackScale.Y *= -1.0f;
-	Transform.SetLocalPosition(HalfBackScale);
+	//float4 HalfBackScale = BackScale.Half();
+	//HalfBackScale.Y *= -1.0f;
+	//Transform.SetLocalPosition(HalfBackScale);
 }

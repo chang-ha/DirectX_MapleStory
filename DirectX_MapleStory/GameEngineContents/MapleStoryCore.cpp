@@ -33,7 +33,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase1>("Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("Lucid_Phase2");
-	GameEngineCore::ChangeLevel("Lucid_Phase1");
+	GameEngineCore::ChangeLevel("Lucid_Phase2");
 }
 
 void MapleStoryCore::Update(float _Delta)

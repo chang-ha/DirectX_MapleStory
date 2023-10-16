@@ -16,6 +16,10 @@ ContentLevel* ContentLevel::CurContentLevel = nullptr;
 void ContentLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
+
+	{
+		std::shared_ptr<GameEngineCamera> BackGroundCamera = CreateCamera(INT_MIN, ECAMERAORDER::MainPrev);
+	}
 }
 
 void ContentLevel::Update(float _Delta)

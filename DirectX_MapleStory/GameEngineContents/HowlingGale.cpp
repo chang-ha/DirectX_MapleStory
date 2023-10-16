@@ -2,7 +2,7 @@
 #include "HowlingGale.h"
 #include "HowlingGale_Actor.h"
 
-#define ANI_SPEED 0.09f
+#define ANI_SPEED 0.08f
 
 HowlingGale::HowlingGale()
 {

@@ -29,37 +29,43 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	ContentLevel::LevelStart(_PrevLevel);
 	MapObjects.clear();
 
-	if (nullptr == GameEngineSprite::Find("Water"))
+	if (nullptr == GameEngineSprite::Find("Water.png"))
 	{
-		GameEnginePath Path;
-		Path.SetCurrentPath();
-		Path.MoveParentToExistsChild("ContentResources");
-		Path.MoveChild("ContentResources\\Textures\\MapObject\\Water.png");
-		GameEngineTexture::Load(Path.GetStringPath());
-		GameEngineSprite::CreateSingle("Water.png");
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase1");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& Childs = Files[i];
+			GameEngineTexture::Load(Childs.GetStringPath());
+			GameEngineSprite::CreateSingle(Childs.GetFileName());
+		}
 	}
 
-	if (nullptr == GameEngineSprite::Find("Flower1"))
-	{
-		GameEnginePath Path;
-		Path.SetCurrentPath();
-		Path.MoveParentToExistsChild("ContentResources");
-		Path.MoveChild("ContentResources\\Textures\\MapObject\\");
-		GameEngineTexture::Load(Path.GetStringPath() + "Flower1.png");
-		GameEngineTexture::Load(Path.GetStringPath() + "Flower2.png");
-		GameEngineSprite::CreateSingle("Flower1.png");
-		GameEngineSprite::CreateSingle("Flower2.png");
-		//for (size_t i = 1; i < 5; i++)
-		//{
-		//	GameEngineTexture::Load(Path.GetStringPath() + "Flower" + std::to_string(i) + ".png");
-		//	GameEngineSprite::CreateSingle("Flower" + std::to_string(i) + ".png");
-		//}
-	}
+	//if (nullptr == GameEngineSprite::Find("Flower1"))
+	//{
+	//	GameEnginePath Path;
+	//	Path.SetCurrentPath();
+	//	Path.MoveParentToExistsChild("ContentResources");
+	//	Path.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase1\\");
+	//	GameEngineTexture::Load(Path.GetStringPath() + "Flower1.png");
+	//	GameEngineTexture::Load(Path.GetStringPath() + "Flower2.png");
+	//	GameEngineSprite::CreateSingle("Flower1.png");
+	//	GameEngineSprite::CreateSingle("Flower2.png");
+	//	//for (size_t i = 1; i < 5; i++)
+	//	//{
+	//	//	GameEngineTexture::Load(Path.GetStringPath() + "Flower" + std::to_string(i) + ".png");
+	//	//	GameEngineSprite::CreateSingle("Flower" + std::to_string(i) + ".png");
+	//	//}
+	//}
 
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
-		CurMap->Init("Lucid_Phase1.png");
+		CurMap->InitMap("Lucid_Phase1.png");
+		CurMap->InitMapCollision("Collision_Lucid_Phase1.png");
 	}
 
 	if (nullptr == Back)
@@ -86,6 +92,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		Boss->Transform.SetLocalPosition(float4(1000, -700));
 	}
 
+	// Dragon
 	// while -750
 	if (nullptr == LeftDragon)
 	{
@@ -103,13 +110,50 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		RightDragon->SetBreathPos({ -1100, 150 });
 	}
 
+	// BackGround Object
+	for (size_t i = 0; i < 4; i++)
+	{
+		std::shared_ptr<RenderActor> BackObject1 = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		BackObject1->Init(RenderOrder::BACKGROUND, RenderDepth::background);
+		BackObject1->Renderer->SetSprite("BackObject1.png");
+		BackObject1->Renderer->SetPivotType(PivotType::Bottom);
+		BackObject1->Transform.SetLocalPosition({ 285 + static_cast<float>(i) * 571, -700});
+	}
+
+	for (size_t i = 0; i < 3; i++)
+	{
+		std::shared_ptr<RenderActor> BackObject2 = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		BackObject2->Init(RenderOrder::BACKGROUND, RenderDepth::background);
+		BackObject2->Renderer->SetSprite("BackObject2.png");
+		BackObject2->Renderer->SetPivotType(PivotType::Bottom);
+		BackObject2->Transform.SetLocalPosition({ 326 + static_cast<float>(i) * 652, -700 });
+	}
+
+	for (size_t i = 0; i < 3; i++)
+	{
+		std::shared_ptr<RenderActor> BackObject3 = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		BackObject3->Init(RenderOrder::BACKGROUND, RenderDepth::background);
+		BackObject3->Renderer->SetSprite("BackObject3.png");
+		BackObject3->Renderer->SetPivotType(PivotType::Bottom);
+		BackObject3->Transform.SetLocalPosition({ static_cast<float>(i) * 888, -700 });	
+	}
+
+	for (size_t i = 1; i < 5; i++)
+	{
+		std::shared_ptr<RenderActor> BackTree = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		BackTree->Init(RenderOrder::BACKGROUND, RenderDepth::background);
+		BackTree->Renderer->SetSprite("BackTree" + std::to_string(i) + ".png");
+		BackTree->Renderer->SetPivotType(PivotType::Bottom);
+		BackTree->Transform.SetLocalPosition({ -250 + static_cast<float>(i) * 500, -660 });
+	}
+
+	// Map Object
 	for (size_t i = 0; i < 5; i++)
 	{
 		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
 		std::shared_ptr<RenderActor> Water = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Water->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Water->Renderer->SetSprite("Water.png");
-		Water->Renderer->AutoSpriteSizeOn();
 		Water->Transform.SetLocalPosition({ -900 + 700 * static_cast<float>(i), -830, 0 });
 
 		ObjectInfo->ObjectDir = 1.0f;
@@ -127,7 +171,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Flower->Renderer->SetSprite("Flower1.png");
-		Flower->Renderer->AutoSpriteSizeOn();
 		Flower->Transform.SetLocalPosition({ -200 - 1000 * static_cast<float>(i), -860, 0 });
 
 		ObjectInfo->ObjectDir = 1.0f;
@@ -145,7 +188,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Flower->Renderer->SetSprite("Flower2.png");
-		Flower->Renderer->AutoSpriteSizeOn();
 		Flower->Transform.SetLocalPosition({ -500 - 1200 * static_cast<float>(i), -790, 0 });
 
 		ObjectInfo->ObjectDir = 1.0f;
