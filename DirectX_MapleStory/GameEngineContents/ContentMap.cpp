@@ -18,7 +18,7 @@ void ContentMap::Start()
 
 void ContentMap::Update(float _Delta)
 {
-	if (GameEngineInput::IsDown(VK_F1, this))
+	if (GameEngineInput::IsDown(VK_F1, this) && nullptr != MapRenderer)
 	{
 		if (true == MapRenderer->IsUpdate())
 		{
@@ -29,7 +29,7 @@ void ContentMap::Update(float _Delta)
 			MapRenderer->On();
 		}
 	}
-	else if (GameEngineInput::IsDown(VK_F2, this))
+	else if (GameEngineInput::IsDown(VK_F2, this) && nullptr != MapCollisionRenderer)
 	{
 		if (true == MapCollisionRenderer->IsUpdate())
 		{
@@ -83,8 +83,8 @@ void ContentMap::InitMapCollision(std::string_view _MapName)
 
 	if (nullptr == MapCollisionRenderer)
 	{
-		MapCollisionRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
-		MapCollisionRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
+		MapCollisionRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::UI);
+		MapCollisionRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::ui });
 	}
 
 	MapCollisionRenderer->SetSprite(_MapName);

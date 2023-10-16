@@ -22,7 +22,6 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 		CurMap->InitMap("Lucid_Next.png");
-		CurMap->InitMapCollision("Collision_Lucid_Next.png");
 	}
 
 	if (nullptr == Back)

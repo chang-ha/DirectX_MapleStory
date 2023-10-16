@@ -1,5 +1,13 @@
 #pragma once
 #include "ContentLevel.h"
+#include "RenderActor.h"
+
+class FootHold : public RenderActor
+{
+	friend class Lucid_Phase2;
+private:
+	void Init(int _FootHoldNumber);
+};
 
 class Lucid_Phase2 : public ContentLevel
 {
@@ -22,6 +30,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	float4 CurMapScale = float4::ZERO;
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
 	std::shared_ptr<class Boss_Lucid_Phase1> Boss = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;

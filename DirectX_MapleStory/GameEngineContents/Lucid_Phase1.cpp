@@ -27,7 +27,6 @@ Lucid_Phase1::~Lucid_Phase1()
 void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
-	MapObjects.clear();
 
 	if (nullptr == GameEngineSprite::Find("Water.png"))
 	{
@@ -244,13 +243,15 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 		MapObjects[i]->Object->Death();
 		MapObjects[i]->Object = nullptr;
 	}
+
+	MapObjects.clear();
 }
 
 void Lucid_Phase1::Start()
 {
 	ContentLevel::Start();
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
-	MapObjects.resize(11);
+	MapObjects.reserve(11);
 }
 
 void Lucid_Phase1::Update(float _Delta)

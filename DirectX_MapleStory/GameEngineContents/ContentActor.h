@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
-#define MAX_GRAVITY_FORCE 1500.0f
+#define MAX_GRAVITY_FORCE 1400.0f
 
 #define UP_PIXEL_LIMIT 4
 #define DOWN_PIXEL_LIMIT 4
@@ -31,14 +31,14 @@ public:
 		IsGravity = false;
 	}
 
-	inline void AirResisOn(ActorDir _Dir = ActorDir::Null, const float _ResistanceForce = 0.0f)
+	void AirResisOn(ActorDir _Dir = ActorDir::Null, const float _ResistanceForce = 0.0f)
 	{
 		IsAirResis = true;
 		AirResisDir = _Dir;
 		ResistanceForce = _ResistanceForce;
 	}
 
-	inline void AirResisOff()
+	void AirResisOff()
 	{
 		IsAirResis = false;
 		AirResisDir = ActorDir::Null;
@@ -60,7 +60,7 @@ public:
 		GravityForce = 0.0f;
 	}
 
-	inline void MoveVectorForceReset()
+	void MoveVectorForceReset()
 	{
 		MoveVectorForce = float4::ZERO;
 	}
@@ -78,6 +78,11 @@ public:
 	inline const ActorDir GetDir()
 	{
 		return Dir;
+	}
+
+	inline void SetDir(ActorDir _Dir)
+	{
+		Dir = _Dir;
 	}
 
 	void Gravity(float _Delta);

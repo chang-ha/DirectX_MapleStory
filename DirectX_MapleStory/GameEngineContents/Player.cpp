@@ -85,7 +85,7 @@ void Player::Start()
 	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
-	Dir = ActorDir::Right; 
+	Dir = ActorDir::Right;
 	MainSpriteRenderer->LeftFlip();
 	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
 
@@ -231,7 +231,7 @@ void Player::BlockOutMap()
 	}
 	else if (CurMapScale.Y <= CurPos.Y + PlayerScale.hY())
 	{
-		Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y - PlayerScale.hY() });
+		Transform.SetLocalPosition(float4{ CurPos.X, - CurMapScale.Y});
 		MoveVectorForceYReset();
 	}
 }
