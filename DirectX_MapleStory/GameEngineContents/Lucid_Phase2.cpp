@@ -205,5 +205,6 @@ void Lucid_Phase2::Update(float _Delta)
 	if (Player::MainPlayer->Transform.GetWorldPosition().Y == - CurMapScale.Y)
 	{
 		Player::MainPlayer->Transform.SetLocalPosition({ 1120, -800 });
+		Player::MainPlayer->MoveVectorForceReset();
 	}
 }
