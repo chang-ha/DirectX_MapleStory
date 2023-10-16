@@ -6,6 +6,7 @@
 class GameEngineWindow
 {
 public:
+	static std::function<LRESULT(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)> MsgFunction;
 
 	// constrcuter destructer
 	GameEngineWindow();
