@@ -350,3 +350,9 @@ void GameEngineSpriteRenderer::SetMaterialEvent(std::string_view _Name, int _Ind
 	GetShaderResHelper().SetConstantBufferLink("SpriteRendererInfo", SpriteRendererInfoValue);
 	SetSprite("NSet.Png");
 }
+
+void GameEngineSpriteRenderer::SetMaskTexture(std::string_view _Texture)
+{
+	GameEngineRenderer::SetMaterial("2DTextureMask");
+	GetShaderResHelper().SetTexture("MaskTex", _Texture);
+}

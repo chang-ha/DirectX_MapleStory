@@ -301,7 +301,7 @@ void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::string_v
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find(_TextureName);
 	if (nullptr == Tex)
 	{
-		MsgBoxAssert("존재하지 않는 텍스처 입니다.");
+		MsgBoxAssert(std::string(_Name) + "존재하지 않는 텍스터를 세팅하려고 했습니다.");
 	}
 
 	SetTexture(_Name, Tex);
