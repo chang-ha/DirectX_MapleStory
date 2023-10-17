@@ -12,6 +12,23 @@
 #include "Laser.h"
 #include "RenderActor.h"
 
+void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
+{
+	ObjectSpeed = _ObjectSpeed;
+	StartPos = _StartPos;
+	EndPos = _EndPos;
+}
+
+void FlowObject::Update(float _Delta)
+{
+	Transform.AddLocalPosition(float4::LEFT * ObjectSpeed * _Delta);
+
+	if (EndPos.X <= Transform.GetWorldPosition().X)
+	{
+		Transform.SetLocalPosition(StartPos);
+	}
+}
+
 #define Lase_Cooldown 8.0f
 
 Lucid_Phase1::Lucid_Phase1()
@@ -149,53 +166,30 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	// Map Object
 	for (size_t i = 0; i < 5; i++)
 	{
-		std::shared_ptr<Phase1_MapObject> ObjectInfo = std::make_shared<Phase1_MapObject>();
-		std::shared_ptr<RenderActor> Water = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		Water->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
-		Water->Renderer->SetSprite("Water.png");
+		std::shared_ptr<FlowObject> Water = CreateActor<FlowObject>(UpdateOrder::RenderActor);
+		Water->RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
+		Water->Init("Water.png", 20.0f, float4{ -1000, -830 }, float4{ 2400, -830 });
 		Water->Transform.SetLocalPosition({ -900 + 700 * static_cast<float>(i), -830, 0 });
-
-		ObjectInfo->ObjectDir = 1.0f;
-		ObjectInfo->ObjectSpeed = 20.0f;
-		ObjectInfo->Object = Water;
-		ObjectInfo->StartPos = float4{ -1000, -830 };
-		ObjectInfo->EndPos = float4{ 2400, -830 };
-
-		MapObjects.push_back(ObjectInfo);
+		MapObjects.push_back(Water);
 	}
 
 	for (size_t i = 0; i < 3; i++)
 	{
-		std::shared_ptr<Phase1_MapObject> ObjectInfo = std::make_shared<Phase1_MapObject>();
-		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
-		Flower->Renderer->SetSprite("Flower1.png");
+		std::shared_ptr<FlowObject> Flower = CreateActor<FlowObject>(UpdateOrder::RenderActor);
+		Flower->RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
+		Flower->Init("Flower1.png", 20.0f, float4{ -800, -860 }, float4{ 2200, -860 });
 		Flower->Transform.SetLocalPosition({ -200 - 1000 * static_cast<float>(i), -860, 0 });
-
-		ObjectInfo->ObjectDir = 1.0f;
-		ObjectInfo->ObjectSpeed = 20.0f;
-		ObjectInfo->Object = Flower;
-		ObjectInfo->StartPos = float4{ -800, -860 };
-		ObjectInfo->EndPos = float4{ 2200, -860 };
-
-		MapObjects.push_back(ObjectInfo);
+		MapObjects.push_back(Flower);
 	}
 
 	for (size_t i = 0; i < 3; i++)
 	{
-		std::shared_ptr<Phase1_MapObject> ObjectInfo = std::make_shared<Phase1_MapObject>();
-		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
+		std::shared_ptr<FlowObject> Flower = CreateActor<FlowObject>(UpdateOrder::RenderActor);
+		Flower->RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
+		Flower->Init("Flower2.png", 20.0f, float4{ -1400, -790, 0 }, float4{ 2200, -790, 0 });
 		Flower->Renderer->SetSprite("Flower2.png");
 		Flower->Transform.SetLocalPosition({ -500 - 1200 * static_cast<float>(i), -790, 0 });
-
-		ObjectInfo->ObjectDir = 1.0f;
-		ObjectInfo->ObjectSpeed = 20.0f;
-		ObjectInfo->Object = Flower;
-		ObjectInfo->StartPos = float4{ -1400, -790, 0 };
-		ObjectInfo->EndPos = float4{ 2200, -790, 0 };
-
-		MapObjects.push_back(ObjectInfo);
+		MapObjects.push_back(Flower);
 	}
 }
 
@@ -240,8 +234,8 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 
 	for (size_t i = 0; i < MapObjects.size(); i++)
 	{
-		MapObjects[i]->Object->Death();
-		MapObjects[i]->Object = nullptr;
+		MapObjects[i]->Death();
+		MapObjects[i] = nullptr;
 	}
 
 	MapObjects.clear();
@@ -322,12 +316,7 @@ void Lucid_Phase1::ObjectUpdate(float _Delta)
 {
 	for (size_t i = 0; i < MapObjects.size(); i++)
 	{
-		std::shared_ptr<RenderActor> CurObject = MapObjects[i]->Object;
-		CurObject->Transform.AddLocalPosition(MapObjects[i]->ObjectDir * MapObjects[i]->ObjectSpeed * _Delta);
-
-		if (MapObjects[i]->EndPos.X <= CurObject->Transform.GetWorldPosition().X)
-		{
-			CurObject->Transform.SetLocalPosition(MapObjects[i]->StartPos);
-		}
+		std::shared_ptr<FlowObject> CurObject = MapObjects[i];
+		CurObject->Update(_Delta);
 	}
 }

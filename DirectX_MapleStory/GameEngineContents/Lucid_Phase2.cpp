@@ -6,11 +6,34 @@
 #include "ContentBackGround.h"
 #include "RenderActor.h"
 
-//void Phase2_MapObject::Init(int _ObjectNumber)
-//{
-//	RenderActor::Init(RenderOrder::BACKGROUND, RenderDepth::background);
-//	Renderer->SetSprite("FallingObject_001.png");
-//}
+void FallingObject::Init(int _ObjectNumber, float _Speed, const float4& _StartPos, const float4& _EndPos)
+{
+	RenderActor::Init(RenderOrder::BACKGROUND, RenderDepth::background);
+
+	if (10 > _ObjectNumber)
+	{
+		Renderer->SetSprite("FallingObject_00" + std::to_string(_ObjectNumber) + ".png");
+	}
+	else
+	{
+		Renderer->SetSprite("FallingObject_0"+ std::to_string(_ObjectNumber) + ".png");
+	}
+	Renderer->SetPivotType(PivotType::Bottom);
+
+	ObjectSpeed = _Speed;
+	StartPos = _StartPos;
+	EndPos = _EndPos;
+}
+
+void FallingObject::Update(float _Delta)
+{
+	Transform.AddLocalPosition(float4::UP * ObjectSpeed * _Delta);
+
+	if (EndPos.Y <= Transform.GetWorldPosition().Y)
+	{
+		Transform.SetLocalPosition(StartPos);
+	}
+}
 
 void FootHold::Init(int _FootHoldNumber)
 {
@@ -192,19 +215,10 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	FootHold1->Transform.SetLocalPosition({ 1009, -1346 });
 
 	// FallingObject
-	std::shared_ptr<Phase2_MapObject> ObjectInfo = std::make_shared<Phase2_MapObject>();
-	std::shared_ptr<RenderActor> FallObject = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-	FallObject->Init(RenderOrder::BACKGROUND, RenderDepth::background);
-	FallObject->Renderer->SetSprite("FallingObject_006.png");
-	FallObject->Renderer->SetPivotType(PivotType::Bottom);
+	std::shared_ptr<FallingObject> FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
 	FallObject->Transform.SetLocalPosition({ 600, -2000, 0 });
-
-	ObjectInfo->ObjectSpeed = 200.0f;
-	ObjectInfo->Object = FallObject;
-	ObjectInfo->StartPos = float4{ 600, -2000 };
-	ObjectInfo->EndPos = float4{ 600, 0 };
-
-	MapObjects.push_back(ObjectInfo);
+	FallObject->Init(6, 200, float4{ 600, -2500 }, float4{ 600, 0 });
+	MapObjects.push_back(FallObject);
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 }
@@ -229,8 +243,8 @@ void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 
 	for (size_t i = 0; i < MapObjects.size(); i++)
 	{
-		MapObjects[i]->Object->Death();
-		MapObjects[i]->Object = nullptr;
+		MapObjects[i]->Death();
+		MapObjects[i] = nullptr;
 	}
 
 	MapObjects.clear();
@@ -248,7 +262,7 @@ void Lucid_Phase2::Update(float _Delta)
 	ContentLevel::Update(_Delta);
 	ObjectUpdate(_Delta);
 
-	if (Player::MainPlayer->Transform.GetWorldPosition().Y == - CurMapScale.Y)
+	if (Player::MainPlayer->Transform.GetWorldPosition().Y == -CurMapScale.Y)
 	{
 		Player::MainPlayer->Transform.SetLocalPosition({ 1120, -800 });
 		Player::MainPlayer->MoveVectorForceReset();
@@ -259,12 +273,7 @@ void Lucid_Phase2::ObjectUpdate(float _Delta)
 {
 	for (size_t i = 0; i < MapObjects.size(); i++)
 	{
-		std::shared_ptr<RenderActor> CurObject = MapObjects[i]->Object;
-		CurObject->Transform.AddLocalPosition(float4::UP * MapObjects[i]->ObjectSpeed * _Delta);
-
-		if (MapObjects[i]->EndPos.Y <= CurObject->Transform.GetWorldPosition().Y)
-		{
-			CurObject->Transform.SetLocalPosition(MapObjects[i]->StartPos);
-		}
+		std::shared_ptr<FallingObject> CurObject = MapObjects[i];
+		CurObject->Update(_Delta);
 	}
 }

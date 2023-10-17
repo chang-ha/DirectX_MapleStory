@@ -2,14 +2,16 @@
 #include "ContentLevel.h"
 #include "RenderActor.h"
 
-class Phase2_MapObject
+class FallingObject : public RenderActor
 {
 	friend class Lucid_Phase2;
 private:
+	void Init(int _ObjectNumber, float _Speed, const float4& _StartPos, const float4& _EndPos);
+	void Update(float _Delta) override;
+
 	float ObjectSpeed = 0.0f;
 	float4 StartPos = 0.0f;
 	float4 EndPos = 0.0f;
-	std::shared_ptr<RenderActor> Object = nullptr;
 };
 
 class FootHold : public RenderActor
@@ -21,6 +23,7 @@ private:
 
 class Lucid_Phase2 : public ContentLevel
 {
+	friend FallingObject;
 public:
 	// constructer destructer
 	Lucid_Phase2();
@@ -48,6 +51,6 @@ private:
 
 	// Map Detail
 	void ObjectUpdate(float _Delta);
-	std::vector<std::shared_ptr<Phase2_MapObject>> MapObjects;
+	std::vector<std::shared_ptr<FallingObject>> MapObjects;
 };
 

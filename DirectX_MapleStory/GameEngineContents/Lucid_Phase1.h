@@ -1,15 +1,16 @@
 #pragma once
 #include "ContentLevel.h"
 
-class Phase1_MapObject
+class FlowObject : public RenderActor
 {
 	friend class Lucid_Phase1;
 private:
-	float ObjectDir = 0.0f;
+	void Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos);
+	void Update(float _Delta) override;
+
 	float ObjectSpeed = 0.0f;
 	float4 StartPos = 0.0f;
 	float4 EndPos = 0.0f;
-	std::shared_ptr<class RenderActor> Object = nullptr;
 };
 
 class Lucid_Phase1 : public ContentLevel
@@ -45,6 +46,6 @@ private:
 
 	// Map Detail
 	void ObjectUpdate(float _Delta);
-	std::vector<std::shared_ptr<Phase1_MapObject>> MapObjects;
+	std::vector<std::shared_ptr<FlowObject>> MapObjects;
 };
 
