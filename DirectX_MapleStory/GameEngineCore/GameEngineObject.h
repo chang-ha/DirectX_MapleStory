@@ -51,6 +51,11 @@ public:
 		return IsDeathValue;
 	}
 
+	void SetName(std::string_view _Name)
+	{
+		Name = _Name.data();
+	}
+
 	void SetName(const std::string& _Name)
 	{
 		Name = _Name;
@@ -174,10 +179,10 @@ public:
 	template<typename EnumType>
 	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(EnumType _GroupIndex)
 	{
-		return GetObjectGroup(static_cast<int>(_GroupIndex));
+		return GetObjectGroupInt(static_cast<int>(_GroupIndex));
 	}
 
-	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(int _GroupIndex)
+	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroupInt(int _GroupIndex)
 	{
 		std::list<std::shared_ptr<GameEngineObject>>& Group = Childs[_GroupIndex];
 		return Group;

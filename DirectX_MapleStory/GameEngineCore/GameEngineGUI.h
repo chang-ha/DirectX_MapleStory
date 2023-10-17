@@ -8,7 +8,7 @@ public:
 	void End();
 
 	virtual void Start() = 0;
-	virtual void OnGUI(float _DeltaTime) = 0;
+	virtual void OnGUI(GameEngineLevel* _Level, float _DeltaTime) = 0;
 };
 
 class GameEngineGUI
@@ -17,7 +17,7 @@ public:
 	static void Start();
 	static void Release();
 
-	static void GUIRender(float _DeltaTime);
+	static void GUIRender(GameEngineLevel* _Level, float _DeltaTime);
 
 	// constructer destructer
 	GameEngineGUI();
