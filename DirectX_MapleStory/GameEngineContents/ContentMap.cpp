@@ -91,7 +91,8 @@ void ContentMap::InitMapCollision(std::string_view _MapName)
 	MapCollisionRenderer->Off();
 
 	MapCollisionTexture = GameEngineTexture::Find(_MapName);
-	float4 HalfMapScale = MapCollisionTexture->GetScale().Half();
+	MapScale = MapCollisionTexture->GetScale();
+	float4 HalfMapScale = MapScale.Half();
 	HalfMapScale.Y *= -1.0f;
 	this->Transform.SetLocalPosition(HalfMapScale);
 }

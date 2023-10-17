@@ -83,9 +83,16 @@ void PhalanxCharge_Actor::Start()
 void PhalanxCharge_Actor::Update(float _Delta)
 {
 	LiveTime -= _Delta;
+
 	if (0.0f >= LiveTime || 70 <= HitCount)
 	{
 		MainSpriteRenderer->ChangeAnimation("Death");
+	}
+
+	if (true == IsGround && 0.0f > MoveVectorForce.Y)
+	{
+		GravityReset();
+		MoveVectorForceYReset();
 	}
 
 	BaseSkillActor::Update(_Delta);

@@ -2,6 +2,16 @@
 #include "ContentLevel.h"
 #include "RenderActor.h"
 
+class Phase2_MapObject
+{
+	friend class Lucid_Phase2;
+private:
+	float ObjectSpeed = 0.0f;
+	float4 StartPos = 0.0f;
+	float4 EndPos = 0.0f;
+	std::shared_ptr<RenderActor> Object = nullptr;
+};
+
 class FootHold : public RenderActor
 {
 	friend class Lucid_Phase2;
@@ -35,5 +45,9 @@ private:
 	std::shared_ptr<class Boss_Lucid_Phase1> Boss = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
 	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
+
+	// Map Detail
+	void ObjectUpdate(float _Delta);
+	std::vector<std::shared_ptr<Phase2_MapObject>> MapObjects;
 };
 

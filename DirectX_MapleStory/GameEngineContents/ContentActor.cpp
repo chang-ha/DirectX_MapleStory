@@ -126,9 +126,10 @@ void ContentActor::AirResistance(float _Delta)
 bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 {
 	bool Result = false;
-	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
+	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos/*, GameEngineColor(0, 0, 0, 255)*/);
 	if (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor)
 	{
+		GravityReset();
 		Result = true;
 	}
 	else
@@ -141,6 +142,6 @@ bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 
 GameEngineColor ContentActor::CheckGroundColor(float4 PlusCheckPos /*= float4::ZERO*/)
 {
-	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos, GROUND_COLOR);
+	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos/*, GameEngineColor(0, 0, 0, 255)*/);
 	return CheckColor;
 }

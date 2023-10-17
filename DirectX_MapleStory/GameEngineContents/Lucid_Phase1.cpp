@@ -149,7 +149,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	// Map Object
 	for (size_t i = 0; i < 5; i++)
 	{
-		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
+		std::shared_ptr<Phase1_MapObject> ObjectInfo = std::make_shared<Phase1_MapObject>();
 		std::shared_ptr<RenderActor> Water = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Water->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Water->Renderer->SetSprite("Water.png");
@@ -166,7 +166,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 
 	for (size_t i = 0; i < 3; i++)
 	{
-		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
+		std::shared_ptr<Phase1_MapObject> ObjectInfo = std::make_shared<Phase1_MapObject>();
 		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Flower->Renderer->SetSprite("Flower1.png");
@@ -183,7 +183,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 
 	for (size_t i = 0; i < 3; i++)
 	{
-		std::shared_ptr<MapObject> ObjectInfo = std::make_shared<MapObject>();
+		std::shared_ptr<Phase1_MapObject> ObjectInfo = std::make_shared<Phase1_MapObject>();
 		std::shared_ptr<RenderActor> Flower = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Flower->Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Flower->Renderer->SetSprite("Flower2.png");

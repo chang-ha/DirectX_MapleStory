@@ -1,7 +1,7 @@
 #pragma once
 #include "ContentLevel.h"
 
-class MapObject
+class Phase1_MapObject
 {
 	friend class Lucid_Phase1;
 private:
@@ -45,6 +45,6 @@ private:
 
 	// Map Detail
 	void ObjectUpdate(float _Delta);
-	std::vector<std::shared_ptr<MapObject>> MapObjects;
+	std::vector<std::shared_ptr<Phase1_MapObject>> MapObjects;
 };
 

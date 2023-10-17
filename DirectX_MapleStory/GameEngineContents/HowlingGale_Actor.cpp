@@ -80,12 +80,13 @@ void HowlingGale_Actor::Update(float _Delta)
 		MainSpriteRenderer->ChangeAnimation("Death");
 	}
 
-	if (true == IsGround && 0.0f < GravityForce)
+	BaseSkillActor::Update(_Delta);
+
+	if (true == IsGround && 0.0f > MoveVectorForce.Y)
 	{
 		GravityReset();
+		MoveVectorForceYReset();
 	}
-
-	BaseSkillActor::Update(_Delta);
 
 	if (SPEED == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{

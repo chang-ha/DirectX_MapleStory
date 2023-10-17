@@ -14,9 +14,9 @@ public:
 	ContentMap& operator=(const ContentMap& _Other) = delete;
 	ContentMap& operator=(ContentMap&& _Other) noexcept = delete;
 
-	inline float4 GetMapScale()
+	inline float4& GetMapScale()
 	{
-		return MapCollisionTexture->GetScale();
+		return MapScale;
 	}
 
 	void InitMap(std::string_view _MapName);
@@ -29,6 +29,7 @@ protected:
 	void Release() override;
 
 private:
+	float4 MapScale = float4::ZERO;
 	// std::string MapName = "";
 	std::shared_ptr<GameEngineTexture> MapCollisionTexture = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> MapCollisionRenderer = nullptr;

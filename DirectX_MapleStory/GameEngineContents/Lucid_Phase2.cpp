@@ -6,8 +6,13 @@
 #include "ContentBackGround.h"
 #include "RenderActor.h"
 
-void FootHold::Init(int _FootHoldNumber)
+//void Phase2_MapObject::Init(int _ObjectNumber)
+//{
+//	RenderActor::Init(RenderOrder::BACKGROUND, RenderDepth::background);
+//	Renderer->SetSprite("FallingObject_001.png");
+//}
 
+void FootHold::Init(int _FootHoldNumber)
 {
 	RenderActor::Init(RenderOrder::MAP, RenderDepth::map);
 	Renderer->CreateAnimation("Idle", "StainedGlass" + std::to_string(_FootHoldNumber) + "_Idle");
@@ -33,7 +38,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase2");
+		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase2\\StarObject");
 		std::vector<GameEngineFile> Files = Dir.GetAllFile();
 
 		for (size_t i = 0; i < Files.size(); i++)
@@ -65,10 +70,26 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("FallingObject_001.png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase2\\FallingObject");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& Childs = Files[i];
+			GameEngineTexture::Load(Childs.GetStringPath(), "FallingObject_" + Childs.GetFileName());
+			GameEngineSprite::CreateSingle("FallingObject_" + Childs.GetFileName());
+		}
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 		CurMap->InitMapCollision("Collision_Lucid_Phase2.png");
+		CurMap->GetMapScale().Y = 1550.0f;
 	}
 
 	if (nullptr == Back)
@@ -109,6 +130,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	BackObject1->Renderer->SetPivotType(PivotType::Bottom);
 	BackObject1->Transform.SetLocalPosition({ 1550, -1100 });
 
+	// FootHold Renderer
 	std::shared_ptr<FootHold> FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(0);
 	FootHold1->Transform.SetLocalPosition({ 712, -1277 });
@@ -165,10 +187,24 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	FootHold1->Init(5);
 	FootHold1->Transform.SetLocalPosition({ 1417, -550 });
 
-
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(5);
 	FootHold1->Transform.SetLocalPosition({ 1009, -1346 });
+
+	// FallingObject
+	std::shared_ptr<Phase2_MapObject> ObjectInfo = std::make_shared<Phase2_MapObject>();
+	std::shared_ptr<RenderActor> FallObject = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+	FallObject->Init(RenderOrder::BACKGROUND, RenderDepth::background);
+	FallObject->Renderer->SetSprite("FallingObject_006.png");
+	FallObject->Renderer->SetPivotType(PivotType::Bottom);
+	FallObject->Transform.SetLocalPosition({ 600, -2000, 0 });
+
+	ObjectInfo->ObjectSpeed = 200.0f;
+	ObjectInfo->Object = FallObject;
+	ObjectInfo->StartPos = float4{ 600, -2000 };
+	ObjectInfo->EndPos = float4{ 600, 0 };
+
+	MapObjects.push_back(ObjectInfo);
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 }
@@ -190,21 +226,45 @@ void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		Boss = nullptr;
 	}
+
+	for (size_t i = 0; i < MapObjects.size(); i++)
+	{
+		MapObjects[i]->Object->Death();
+		MapObjects[i]->Object = nullptr;
+	}
+
+	MapObjects.clear();
 }
 
 void Lucid_Phase2::Start()
 {
 	ContentLevel::Start();
+	MapObjects.reserve(100);
 	// GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 }
 
 void Lucid_Phase2::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
+	ObjectUpdate(_Delta);
 
 	if (Player::MainPlayer->Transform.GetWorldPosition().Y == - CurMapScale.Y)
 	{
 		Player::MainPlayer->Transform.SetLocalPosition({ 1120, -800 });
 		Player::MainPlayer->MoveVectorForceReset();
+	}
+}
+
+void Lucid_Phase2::ObjectUpdate(float _Delta)
+{
+	for (size_t i = 0; i < MapObjects.size(); i++)
+	{
+		std::shared_ptr<RenderActor> CurObject = MapObjects[i]->Object;
+		CurObject->Transform.AddLocalPosition(float4::UP * MapObjects[i]->ObjectSpeed * _Delta);
+
+		if (MapObjects[i]->EndPos.Y <= CurObject->Transform.GetWorldPosition().Y)
+		{
+			CurObject->Transform.SetLocalPosition(MapObjects[i]->StartPos);
+		}
 	}
 }

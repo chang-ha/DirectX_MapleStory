@@ -151,17 +151,6 @@ void BaseSkillActor::BlockOutMap()
 		Transform.SetLocalPosition(float4{ CurMapScale.X - Scale.hX(), CurPos.Y });
 		SetDir(ActorDir::Left);
 	}
-
-	//// Need Test More
-	//CurPos.Y *= -1.0f;
-	//if (0 > CurPos.Y - Scale.hY())
-	//{
-	//	Transform.SetLocalPosition(float4{ CurPos.X, -Scale.hY() });
-	//}
-	//else if (CurMapScale.Y <= CurPos.Y + Scale.hY())
-	//{
-	//	Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y - Scale.hY() }); 
-	//}
 }
 
 void BaseSkillActor::CollisionTimeUpdate(float _Delta)
