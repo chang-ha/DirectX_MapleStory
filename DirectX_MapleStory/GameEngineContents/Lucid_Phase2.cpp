@@ -6,9 +6,37 @@
 #include "ContentBackGround.h"
 #include "RenderActor.h"
 
-void FallingObject::Init(int _ObjectNumber, float _Speed, const float4& _StartPos, const float4& _EndPos)
+#define FALL_SPEED1 60.0f
+#define FALL_SPEED2 55.0f
+#define FALL_SPEED3 50.0f
+#define FALL_SPEED4 45.0f
+#define FALL_SPEED5 40.0f
+#define FALL_SPEED6 35.0f
+#define FALL_SPEED7 30.0f
+#define FALL_SPEED8 25.0f
+#define FALL_SPEED9 20.0f
+#define FALL_SPEED10 10.0f
+
+void FallingObject::Init(int _ObjectNumber, float _Speed, float _StartPos)
 {
-	RenderActor::Init(RenderOrder::BACKGROUND, RenderDepth::background);
+	float Depth = RenderDepth::background;
+	if (20 >= _ObjectNumber)
+	{
+	}
+	else if (29 >= _ObjectNumber)
+	{
+		Depth += 0.2f;
+	}
+	else if (36 >= _ObjectNumber)
+	{
+		Depth += 0.4f;
+	}
+	else
+	{
+		Depth += 0.6f;
+	}
+
+	RenderActor::Init(RenderOrder::BACKGROUND, Depth);
 
 	if (10 > _ObjectNumber)
 	{
@@ -22,16 +50,15 @@ void FallingObject::Init(int _ObjectNumber, float _Speed, const float4& _StartPo
 
 	ObjectSpeed = _Speed;
 	StartPos = _StartPos;
-	EndPos = _EndPos;
 }
 
 void FallingObject::Update(float _Delta)
 {
 	Transform.AddLocalPosition(float4::UP * ObjectSpeed * _Delta);
 
-	if (EndPos.Y <= Transform.GetWorldPosition().Y)
+	if (0.0f <= Transform.GetWorldPosition().Y)
 	{
-		Transform.SetLocalPosition(StartPos);
+		Transform.SetLocalPosition({Transform.GetLocalPosition().X, -StartPos });
 	}
 }
 
@@ -215,29 +242,309 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	FootHold1->Transform.SetLocalPosition({ 1009, -1346 });
 
 	// FallingObject
+	//// BackBackBackBack
 	std::shared_ptr<FallingObject> FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
-	FallObject->Transform.SetLocalPosition({ 600, -2000, 0 });
-	FallObject->Init(6, 200, float4{ 600, -2500 }, float4{ 600, 0 });
+	FallObject->Transform.SetLocalPosition({ 510, -1428, 0 });
+	FallObject->Init(49, FALL_SPEED10, 2000);
 	MapObjects.push_back(FallObject);
 
 	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
-	FallObject->Transform.SetLocalPosition({ 900, -2000, 0 });
-	FallObject->Init(1, 200, float4{ 900, -2500 }, float4{ 900, 0 });
+	FallObject->Transform.SetLocalPosition({ 950, -921, 0 });
+	FallObject->Init(50, FALL_SPEED9, 2000);
 	MapObjects.push_back(FallObject);
 
 	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
-	FallObject->Transform.SetLocalPosition({ 1200, -2000, 0 });
-	FallObject->Init(2, 200, float4{ 1200, -2500 }, float4{ 1200, 0 });
+	FallObject->Transform.SetLocalPosition({ 850, -790, 0 });
+	FallObject->Init(50, FALL_SPEED9, 2000);
 	MapObjects.push_back(FallObject);
 
 	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
-	FallObject->Transform.SetLocalPosition({ 1500, -2000, 0 });
-	FallObject->Init(3, 200, float4{ 1500, -2500 }, float4{ 1500, 0 });
+	FallObject->Transform.SetLocalPosition({ 750, -224, 0 });
+	FallObject->Init(51, FALL_SPEED9, 2000);
 	MapObjects.push_back(FallObject);
 
 	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
-	FallObject->Transform.SetLocalPosition({ 1800, -2000, 0 });
-	FallObject->Init(4, 200, float4{ 1800, -2500 }, float4{ 1800, 0 });
+	FallObject->Transform.SetLocalPosition({ 750, -743, 0 });
+	FallObject->Init(51, FALL_SPEED9, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1590, -605, 0 });
+	FallObject->Init(52, FALL_SPEED9, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1450, -228, 0 });
+	FallObject->Init(53, FALL_SPEED9, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1170, -6, 0 });
+	FallObject->Init(54, FALL_SPEED9, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 960, -409, 0 });
+	FallObject->Init(55, FALL_SPEED9, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 880, -294, 0 });
+	FallObject->Init(56, FALL_SPEED9, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 530, -218, 0 });
+	FallObject->Init(57, FALL_SPEED9, 2000);
+	MapObjects.push_back(FallObject);
+
+	//// BackBackBack
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 650, -905, 0 });
+	FallObject->Init(37, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 810, -844, 0 });
+	FallObject->Init(38, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1400, -1469, 0 });
+	FallObject->Init(39, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 720, -1361, 0 });
+	FallObject->Init(40, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 120, -1242, 0 });
+	FallObject->Init(41, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1550, -786, 0 });
+	FallObject->Init(42, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 570, -857, 0 });
+	FallObject->Init(43, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1430, -193, 0 });
+	FallObject->Init(44, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1380, -537, 0 });
+	FallObject->Init(45, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 840, -379, 0 });
+	FallObject->Init(46, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 920, -255, 0 });
+	FallObject->Init(47, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 480, -1454, 0 });
+	FallObject->Init(48, FALL_SPEED8, 2000);
+	MapObjects.push_back(FallObject);
+
+	//// BackBack
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1550, -363, 0 });
+	FallObject->Init(30, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 700, -624, 0 });
+	FallObject->Init(31, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 910, -280, 0 });
+	FallObject->Init(32, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 910, -288, 0 });
+	FallObject->Init(32, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1500, -1014, 0 });
+	FallObject->Init(33, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1260, -267, 0 });
+	FallObject->Init(34, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 830, -1135, 0 });
+	FallObject->Init(35, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1190, -767, 0 });
+	FallObject->Init(36, FALL_SPEED7, 2000);
+	MapObjects.push_back(FallObject);
+
+	//// Back
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 670, -1670, 0 });
+	FallObject->Init(21, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1400, -2230, 0 });
+	FallObject->Init(22, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 820, -634, 0 });
+	FallObject->Init(23, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1330, -2332, 0 });
+	FallObject->Init(24, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 430, -1501, 0 });
+	FallObject->Init(25, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1560, -1689, 0 });
+	FallObject->Init(26, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1380, -961, 0 });
+	FallObject->Init(27, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1810, -1383, 0 });
+	FallObject->Init(28, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 780, -197, 0 });
+	FallObject->Init(29, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	//// 
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 950, -4000, 0 });
+	FallObject->Init(1, FALL_SPEED1, 7000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1500, -243, 0 });
+	FallObject->Init(2, FALL_SPEED1, 7000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1050, -5068, 0 });
+	FallObject->Init(3, FALL_SPEED2, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1000, -2320, 0 });
+	FallObject->Init(4, FALL_SPEED2, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 350, -4017, 0 });
+	FallObject->Init(5, FALL_SPEED2, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 600, -4238, 0 });
+	FallObject->Init(6, FALL_SPEED2, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1300, -2607, 0 });
+	FallObject->Init(7, FALL_SPEED2, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1050, -2381, 0 });
+	FallObject->Init(8, FALL_SPEED2, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1450, -472, 0 });
+	FallObject->Init(9, FALL_SPEED3, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1250, -150, 0 });
+	FallObject->Init(10, FALL_SPEED3, 6000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1550, -609, 0 });
+	FallObject->Init(11, FALL_SPEED4, 5000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1500, -484, 0 });
+	FallObject->Init(12, FALL_SPEED4, 5000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 650, -40, 0 });
+	FallObject->Init(13, FALL_SPEED4, 5000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1130, -502, 0 });
+	FallObject->Init(14, FALL_SPEED5, 4000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1750, -773, 0 });
+	FallObject->Init(15, FALL_SPEED5, 4000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 500, -1249, 0 });
+	FallObject->Init(16, FALL_SPEED5, 4000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1200, -982, 0 });
+	FallObject->Init(17, FALL_SPEED5, 4000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 400, -251, 0 });
+	FallObject->Init(18, FALL_SPEED5, 4000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 900, -321, 0 });
+	FallObject->Init(19, FALL_SPEED6, 3000);
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1850, -683, 0 });
+	FallObject->Init(20, FALL_SPEED6, 3000);
 	MapObjects.push_back(FallObject);
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();

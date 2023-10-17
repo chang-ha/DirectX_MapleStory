@@ -2,6 +2,7 @@
 
 struct GameEngineVertex2D
 {
+    // POSITION은 View직전까지 곱한 녀석 -> W값을 나누고 ViewPort를 곱해주는건 Rasterizer가 자동으로 곱해줌
     float4 POSITION : POSITION;
     float4 TEXCOORD : TEXCOORD;
 };
@@ -9,6 +10,7 @@ struct GameEngineVertex2D
 
 struct PixelOutPut
 {
+    // SV_POSITION이란 ViewPort까지 다 곱한 녀석
     float4 POSITION : SV_POSITION;
     float4 TEXCOORD : TEXCOORD;
 };
@@ -31,9 +33,11 @@ cbuffer SpriteRendererInfo : register(b3)
 
 PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 {
+    // _Input은 VertexBuffer값 0.5, 0.5등 이 6번 들어옴
     // Init PixelOutput
     PixelOutPut Result = (PixelOutPut) 0;
 
+    // 해당 VertexBuffer에 WorldViewProjection을 곱해줌
     Result.POSITION = mul(_Input.POSITION, WorldViewProjectionMatrix);
 
     float4 CalUV = _Input.TEXCOORD;
@@ -62,6 +66,7 @@ SamplerState DiffuseTexSampler : register(s0);
 
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
+    // _Input == VertexShader에서 ViewPort까지 다 곱한 SV_POSITION을 _Input값으로 들어옴
     float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCOORD.xy);
     
     if (0.0f >= Color.a)

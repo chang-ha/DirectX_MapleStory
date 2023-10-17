@@ -6,12 +6,11 @@ class FallingObject : public RenderActor
 {
 	friend class Lucid_Phase2;
 private:
-	void Init(int _ObjectNumber, float _Speed, const float4& _StartPos, const float4& _EndPos);
+	void Init(int _ObjectNumber, float _Speed, float _StartPos);
 	void Update(float _Delta) override;
 
 	float ObjectSpeed = 0.0f;
-	float4 StartPos = 0.0f;
-	float4 EndPos = 0.0f;
+	float StartPos = 0.0f;
 };
 
 class FootHold : public RenderActor
