@@ -220,6 +220,26 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	FallObject->Init(6, 200, float4{ 600, -2500 }, float4{ 600, 0 });
 	MapObjects.push_back(FallObject);
 
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 900, -2000, 0 });
+	FallObject->Init(1, 200, float4{ 900, -2500 }, float4{ 900, 0 });
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1200, -2000, 0 });
+	FallObject->Init(2, 200, float4{ 1200, -2500 }, float4{ 1200, 0 });
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1500, -2000, 0 });
+	FallObject->Init(3, 200, float4{ 1500, -2500 }, float4{ 1500, 0 });
+	MapObjects.push_back(FallObject);
+
+	FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	FallObject->Transform.SetLocalPosition({ 1800, -2000, 0 });
+	FallObject->Init(4, 200, float4{ 1800, -2500 }, float4{ 1800, 0 });
+	MapObjects.push_back(FallObject);
+
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 }
 

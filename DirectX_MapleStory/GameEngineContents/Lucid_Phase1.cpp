@@ -14,6 +14,8 @@
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
+	RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
+	Renderer->SetSprite(_SpriteName);
 	ObjectSpeed = _ObjectSpeed;
 	StartPos = _StartPos;
 	EndPos = _EndPos;
@@ -187,7 +189,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		std::shared_ptr<FlowObject> Flower = CreateActor<FlowObject>(UpdateOrder::RenderActor);
 		Flower->RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
 		Flower->Init("Flower2.png", 20.0f, float4{ -1400, -790, 0 }, float4{ 2200, -790, 0 });
-		Flower->Renderer->SetSprite("Flower2.png");
 		Flower->Transform.SetLocalPosition({ -500 - 1200 * static_cast<float>(i), -790, 0 });
 		MapObjects.push_back(Flower);
 	}

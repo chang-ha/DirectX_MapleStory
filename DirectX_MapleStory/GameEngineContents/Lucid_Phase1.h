@@ -1,5 +1,6 @@
 #pragma once
 #include "ContentLevel.h"
+#include "RenderActor.h"
 
 class FlowObject : public RenderActor
 {
