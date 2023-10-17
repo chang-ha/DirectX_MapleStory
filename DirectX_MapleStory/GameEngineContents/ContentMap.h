@@ -3,7 +3,10 @@
 
 class ContentMap : public GameEngineActor
 {
+	friend class ContentLevel;
 public:
+	static bool IsCollisionDebug;
+
 	// constructer destructer
 	ContentMap();
 	~ContentMap();
@@ -24,6 +27,7 @@ public:
 	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = GROUND_COLOR);
 
 protected:
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;

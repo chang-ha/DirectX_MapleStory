@@ -12,6 +12,44 @@
 #include "Lucid_Next.h"
 #include "Lucid_Phase2.h"
 
+void LevelChangeGUI::Start()
+{
+
+}
+
+void LevelChangeGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
+{
+	if (ImGui::Button("TitleLevel", {100, 20}))
+	{
+		GameEngineCore::ChangeLevel("TitleLevel");
+	}
+
+	if (ImGui::Button("PlayLevel", { 100, 20 }))
+	{
+		GameEngineCore::ChangeLevel("PlayLevel");
+	}
+
+	if (ImGui::Button("Lucid_Enter", { 100, 20 }))
+	{
+		GameEngineCore::ChangeLevel("Lucid_Enter");
+	}
+
+	if (ImGui::Button("Lucid_Phase1", { 100, 20 }))
+	{
+		GameEngineCore::ChangeLevel("Lucid_Phase1");
+	}
+
+	if (ImGui::Button("Lucid_Next", { 100, 20 }))
+	{
+		GameEngineCore::ChangeLevel("Lucid_Next");
+	}
+
+	if (ImGui::Button("Lucid_Phase2", { 100, 20 }))
+	{
+		GameEngineCore::ChangeLevel("Lucid_Phase2");
+	}
+}
+
 MapleStoryCore::MapleStoryCore()
 {
 
@@ -24,6 +62,8 @@ MapleStoryCore::~MapleStoryCore()
 
 void MapleStoryCore::Start()
 {
+	GameEngineGUI::CreateGUIWindow<LevelChangeGUI>("LevelChange");
+
 	ContentResources::ContentResourcesInit();
 	std::shared_ptr<GameEngineMaterial> _Mat = GameEngineResources<GameEngineMaterial>::Find("2DTexture");
 	_Mat->SetDepthState("LessEqualDepth");

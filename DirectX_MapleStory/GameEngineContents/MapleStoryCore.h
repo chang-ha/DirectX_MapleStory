@@ -1,6 +1,13 @@
 #pragma once
 #include <GameEngineCore/GameEngineObject.h>
 
+class LevelChangeGUI : public GameEngineGUIWindow
+{
+public:
+	void Start() override;
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
+};
+
 class MapleStoryCore : public GameEngineObject
 {
 public:

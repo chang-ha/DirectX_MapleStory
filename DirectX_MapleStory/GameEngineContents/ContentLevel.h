@@ -1,6 +1,13 @@
 #pragma once
 #include <GameEngineCore\GameEngineLevel.h>
 
+class LevelDebug : public GameEngineGUIWindow
+{
+public:
+	void Start() override;
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
+};
+
 // Ό³Έν :
 class ContentMap;
 class ContentLevel : public GameEngineLevel

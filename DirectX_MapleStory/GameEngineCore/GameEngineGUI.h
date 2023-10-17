@@ -40,11 +40,9 @@ public:
 		}
 
 		std::shared_ptr<WindowType> NewWindow = std::make_shared<WindowType>();
-		NewWindow->abc(0, 1, 2);
 		NewWindow->SetName(UpperName);
 		NewWindow->Start();
 		GUIWindows[UpperName] = NewWindow;
-
 		return NewWindow;
 	}
 

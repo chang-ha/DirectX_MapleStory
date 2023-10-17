@@ -1,6 +1,8 @@
 ﻿#include "PreCompile.h"
 #include "ContentMap.h"
 
+bool ContentMap::IsCollisionDebug = false;
+
 ContentMap::ContentMap()
 {
 
@@ -9,6 +11,11 @@ ContentMap::ContentMap()
 ContentMap::~ContentMap()
 {
 
+}
+
+void ContentMap::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	IsCollisionDebug = false;
 }
 
 void ContentMap::Start()
@@ -29,16 +36,14 @@ void ContentMap::Update(float _Delta)
 			MapRenderer->On();
 		}
 	}
-	else if (GameEngineInput::IsDown(VK_F2, this) && nullptr != MapCollisionRenderer)
+
+	if (true == IsCollisionDebug && false == MapCollisionRenderer->IsUpdate())
 	{
-		if (true == MapCollisionRenderer->IsUpdate())
-		{
-			MapCollisionRenderer->Off();
-		}
-		else
-		{
-			MapCollisionRenderer->On();
-		}
+		MapCollisionRenderer->On();
+	}
+	else if (false == IsCollisionDebug && true == MapCollisionRenderer->IsUpdate())
+	{
+		MapCollisionRenderer->Off();
 	}
 }
 
@@ -64,9 +69,9 @@ void ContentMap::InitMap(std::string_view _MapName)
 	// MapName = _MapName;
 	MapRenderer->SetSprite(_MapName);
 	
-	//float4 HalfMapScale = GameEngineTexture::Find(_MapName)->GetScale().Half();
-	//HalfMapScale.Y *= -1.0f;
-	//this->Transform.SetLocalPosition(HalfMapScale);
+	float4 HalfMapScale = GameEngineTexture::Find(_MapName)->GetScale().Half();
+	HalfMapScale.Y *= -1.0f;
+	this->Transform.SetLocalPosition(HalfMapScale);
 }
 
 void ContentMap::InitMapCollision(std::string_view _MapName)
