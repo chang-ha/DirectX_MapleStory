@@ -161,6 +161,12 @@ public:
 	{
 		Pivot = _Value;
 	}
+
+	float4 GetPivotValue()
+	{
+		return Pivot;
+	}
+
 	void SetPivotType(PivotType _Type);
 	void SetImageScale(const float4& _Scale);
 	void AddImageScale(const float4& _Scale);
