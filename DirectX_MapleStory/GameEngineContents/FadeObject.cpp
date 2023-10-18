@@ -23,17 +23,28 @@ void FadeObject::Start()
 		FadeRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::FADEOBJECT);
 		FadeRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::fadeobject});
 		FadeRenderer->SetImageScale(GlobalValue::WinScale);
+		// 기본으로 검은 FadeObject
+		FadeRenderer->GetColorData().PlusColor = { -1.0f, -1.0f, -1.0f };
 	}
 }
 
 void FadeObject::Update(float _Delta)
 {
+	if (1.0f <= FadeRenderer->GetColorData().MulColor.A && "" != ChangeLevelName)
+	{
+		GameEngineCore::ChangeLevel(ChangeLevelName);
+	}
+
 	if (false == IsFadeOn)
 	{
 		return;
 	}
 
-	FadeRenderer->GetColorData().MulColor.A -= _Delta * FadeSpeed;
+	float _Alpha = _Delta * FadeSpeed;
+	FadeRenderer->GetColorData().MulColor.A -= _Alpha;
+
+	float test = FadeRenderer->GetColorData().MulColor.A;
+
 }
 
 void FadeObject::Release()

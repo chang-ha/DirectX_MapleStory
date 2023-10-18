@@ -16,7 +16,11 @@ ServerLevel::~ServerLevel()
 void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
+	FadeInObject->SetWhiteFade();
 	FadeInObject->SetAlpha(0.0f);
+
+	FadeOutObject->SetChangeLevel("3.Lucid_Enter");
+	FadeOutObject->SetFadeSpeed(-1.0f);
 
 	if (nullptr == GameEngineSprite::Find("ServerLogo"))
 	{

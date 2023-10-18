@@ -30,7 +30,12 @@ void TitleLevel::Update(float _Delta)
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
-	FadeInObject->SetFadeSpeed(0.4f);
+	FadeInObject->SetWhiteFade();
+	FadeInObject->SetAlpha(0.0f);
+
+	FadeOutObject->SetWhiteFade();
+	FadeOutObject->SetChangeLevel("2.ServerLevel");
+	FadeOutObject->SetFadeSpeed(-0.5f);
 
 	if (nullptr == GameEngineSprite::Find("Logo"))
 	{
@@ -45,10 +50,9 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Renderer->CreateAnimation("Logo", "Logo", 0.12f, -1, -1, false);
 	_Actor->Renderer->ChangeAnimation("Logo");
 
-	_Actor->Renderer->SetEndEvent("Logo", [&](GameEngineSpriteRenderer*)
+	_Actor->Renderer->SetFrameEvent("Logo", 36 ,[&](GameEngineSpriteRenderer*)
 		{
-			Death();
-			GameEngineCore::ChangeLevel("2.ServerLevel");
+			FadeOutObject->FadeStart();
 		}
 	);
 

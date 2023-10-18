@@ -47,7 +47,7 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == FadeInObject)
 	{
 		FadeInObject = CreateActor<FadeObject>(UpdateOrder::UI);
-		FadeInObject->SetWhiteFade();
+		FadeInObject->SetBlackFade();
 		FadeInObject->SetFadeSpeed(0.5f);
 		FadeInObject->SetAlpha(1.0f);
 	}
@@ -56,7 +56,7 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		FadeOutObject = CreateActor<FadeObject>(UpdateOrder::UI);
 		FadeOutObject->SetBlackFade();
-		FadeOutObject->SetFadeSpeed(0.1f);
+		FadeOutObject->SetFadeSpeed(-0.5f);
 		FadeOutObject->SetAlpha(0.0f);
 	}
 

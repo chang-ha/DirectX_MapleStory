@@ -31,6 +31,8 @@ public:
 		return CurMap;
 	}
 
+	std::shared_ptr<class FadeObject> FadeInObject = nullptr;
+	std::shared_ptr<class FadeObject> FadeOutObject = nullptr;
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -39,8 +41,6 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 	std::shared_ptr<ContentMap> CurMap = nullptr;
-	std::shared_ptr<class FadeObject> FadeInObject = nullptr;
-	std::shared_ptr<class FadeObject> FadeOutObject = nullptr;
 private:
 
 };

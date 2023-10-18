@@ -12,6 +12,7 @@
 #include "Lucid_Next.h"
 #include "Lucid_Phase2.h"
 #include "ServerLevel.h"
+#include "FadeObject.h"
 
 void LevelChangeGUI::Start()
 {
@@ -26,7 +27,9 @@ void LevelChangeGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	{
 		if (ImGui::Button(Pair.first.c_str(), {120, 20}))
 		{
-			GameEngineCore::ChangeLevel(Pair.first);
+			ContentLevel::CurContentLevel->FadeOutObject->SetChangeLevel(Pair.first);
+			ContentLevel::CurContentLevel->FadeOutObject->FadeStart();
+			// GameEngineCore::ChangeLevel(Pair.first);
 		}
 	}
 }
@@ -58,7 +61,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
-	GameEngineCore::ChangeLevel("2.ServerLevel");
+	GameEngineCore::ChangeLevel("1.TitleLevel");
 }
 
 void MapleStoryCore::Update(float _Delta)

@@ -1,5 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "CutsceneActor.h"
+#include "ContentLevel.h"
+#include "FadeObject.h"
 
 CutsceneActor::CutsceneActor()
 {
@@ -19,6 +21,7 @@ void CutsceneActor::Init(std::string_view _BossName, std::string_view _NextLevel
 	if (nullptr == CutRenderer)
 	{
 		CutRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+		CutRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
 	}
 
 	if (nullptr == GameEngineSprite::Find(std::string(_BossName) + "_Cutscene"))
@@ -30,15 +33,19 @@ void CutsceneActor::Init(std::string_view _BossName, std::string_view _NextLevel
 		GameEngineSprite::CreateFolder(std::string(_BossName.data()) + "_Cutscene", Path.GetStringPath());
 	}
 
-	CutRenderer->CreateAnimation("Cutscene", std::string(_BossName.data()) + "_Cutscene", 0.03f);
+	CutRenderer->CreateAnimation("Cutscene", std::string(_BossName.data()) + "_Cutscene", 0.03f, -1, -1, false);
 	CutRenderer->ChangeAnimation("Cutscene");
 	CutRenderer->SetImageScale(GlobalValue::WinScale);
 
 	CutRenderer->SetEndEvent("Cutscene", [&](GameEngineSpriteRenderer* _Renderer)
 		{
-			GameEngineCore::ChangeLevel(NextLevelName);
+			ContentLevel::CurContentLevel->FadeOutObject->FadeStart();
+			// GameEngineCore::ChangeLevel(NextLevelName);
 		}
 	);
+
+	std::shared_ptr<GameEngineFrameAnimation> _Animation = CutRenderer->FindAnimation("Cutscene");
+	_Animation->Inter[0] = 1.0f;
 }
 
 void CutsceneActor::LevelEnd(GameEngineLevel* _NextLevel)
