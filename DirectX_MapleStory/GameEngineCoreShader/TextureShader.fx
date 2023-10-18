@@ -64,6 +64,12 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 Texture2D DiffuseTex : register(t0);
 SamplerState DiffuseTexSampler : register(s0);
 
+cbuffer ColorData : register(b1)
+{
+    float4 PlusColor; // 최종색상에 더한다.
+    float4 MulColor; // 최종색상에 곱한다.
+};
+
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
     // _Input == VertexShader에서 ViewPort까지 다 곱한 SV_POSITION을 _Input값으로 들어옴
@@ -72,6 +78,14 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     if (0.0f >= Color.a)
     {
         clip(-1);
+    }
+    
+    Color += PlusColor;
+    Color *= MulColor;
+    
+    if (0 >= Color.a)
+    {
+        Color.a = 0.0f;
     }
     
     return Color;

@@ -54,6 +54,12 @@ struct SpriteRendererInfo
 	float Temp2;
 };
 
+struct ColorData
+{
+	float4 PlusColor = float4::ZERONULL; // 최종색상에 더한다.
+	float4 MulColor = float4::ONE; // 최종색상에 곱한다.
+};
+
 // 설명 :
 class GameEngineSpriteRenderer : public GameEngineRenderer
 {
@@ -149,6 +155,11 @@ public:
 		return ImageTransform;
 	}
 
+	inline ColorData& GetColorData()
+	{
+		return ColorDataValue;
+	}
+
 	void SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function);
@@ -194,5 +205,6 @@ private:
 	float4 Pivot = { 0.5f, 0.5f };
 	GameEngineTransform ImageTransform;
 	SpriteRendererInfo SpriteRendererInfoValue;
+	ColorData ColorDataValue;
 };
 

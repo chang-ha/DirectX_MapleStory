@@ -94,6 +94,12 @@ Texture2D DiffuseTex : register(t0);
 Texture2D MaskTex : register(t1);
 SamplerState DiffuseTexSampler : register(s0);
 
+cbuffer ColorData : register(b1)
+{
+    float4 PlusColor; // 최종색상에 더한다.
+    float4 MulColor; // 최종색상에 곱한다.
+};
+
 float4 TextureShaderMask_PS(PixelOutPut _Input) : SV_Target0
 {
    
@@ -111,6 +117,9 @@ float4 TextureShaderMask_PS(PixelOutPut _Input) : SV_Target0
     {
         clip(-1);
     }
+    
+    Color += PlusColor;
+    Color *= MulColor;
     
     return Color;
 }
