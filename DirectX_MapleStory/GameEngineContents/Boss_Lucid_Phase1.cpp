@@ -159,7 +159,7 @@ void Boss_Lucid_Phase1::Start()
 
 	BossRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
-			GameEngineCore::ChangeLevel("Lucid_Next");
+			GameEngineCore::ChangeLevel("5.Lucid_Next");
 		}
 	);
 

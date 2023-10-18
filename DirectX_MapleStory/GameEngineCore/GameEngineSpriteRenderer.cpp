@@ -354,6 +354,22 @@ void GameEngineSpriteRenderer::SetMaterialEvent(std::string_view _Name, int _Ind
 
 void GameEngineSpriteRenderer::SetMaskTexture(std::string_view _Texture)
 {
+	std::shared_ptr<GameEngineFrameAnimation> TempCurFrameAnimation = CurFrameAnimations;
+	std::shared_ptr<GameEngineSprite> TempSprite = Sprite;
+	SpriteData TempCurSprite = CurSprite;
+
 	GameEngineRenderer::SetMaterial("2DTextureMask");
+
+	if (CurFrameAnimations != TempCurFrameAnimation)
+	{
+		CurFrameAnimations = TempCurFrameAnimation;
+	}
+
+	if (Sprite != TempSprite)
+	{
+		Sprite = TempSprite;
+		CurSprite = TempCurSprite;
+	}
+
 	GetShaderResHelper().SetTexture("MaskTex", _Texture);
 }

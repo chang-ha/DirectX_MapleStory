@@ -260,6 +260,10 @@
     </ClInclude>
     <ClInclude Include="GameEngineSprite.h" />
     <ClInclude Include="GameEngineSpriteRenderer.h" />
+    <ClInclude Include="GameEngineState.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineTexture.h">
       <SubType>
       </SubType>
@@ -377,6 +381,10 @@
     </ClCompile>
     <ClCompile Include="GameEngineSprite.cpp" />
     <ClCompile Include="GameEngineSpriteRenderer.cpp" />
+    <ClCompile Include="GameEngineState.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineTexture.cpp">
       <SubType>
       </SubType>

@@ -37,6 +37,11 @@ void ContentMap::Update(float _Delta)
 		}
 	}
 
+	if (nullptr == MapCollisionRenderer)
+	{
+		return;
+	}
+
 	if (true == IsCollisionDebug && false == MapCollisionRenderer->IsUpdate())
 	{
 		MapCollisionRenderer->On();

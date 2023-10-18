@@ -19,34 +19,14 @@ void LevelChangeGUI::Start()
 
 void LevelChangeGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
-	if (ImGui::Button("TitleLevel", {100, 20}))
-	{
-		GameEngineCore::ChangeLevel("TitleLevel");
-	}
+	std::map<std::string, std::shared_ptr<GameEngineLevel>>& AllLevels = GameEngineCore::GetAllLevel();
 
-	if (ImGui::Button("PlayLevel", { 100, 20 }))
+	for (std::pair<const std::string, std::shared_ptr<GameEngineLevel>> Pair : AllLevels)
 	{
-		GameEngineCore::ChangeLevel("PlayLevel");
-	}
-
-	if (ImGui::Button("Lucid_Enter", { 100, 20 }))
-	{
-		GameEngineCore::ChangeLevel("Lucid_Enter");
-	}
-
-	if (ImGui::Button("Lucid_Phase1", { 100, 20 }))
-	{
-		GameEngineCore::ChangeLevel("Lucid_Phase1");
-	}
-
-	if (ImGui::Button("Lucid_Next", { 100, 20 }))
-	{
-		GameEngineCore::ChangeLevel("Lucid_Next");
-	}
-
-	if (ImGui::Button("Lucid_Phase2", { 100, 20 }))
-	{
-		GameEngineCore::ChangeLevel("Lucid_Phase2");
+		if (ImGui::Button(Pair.first.c_str()))
+		{
+			GameEngineCore::ChangeLevel(Pair.first);
+		}
 	}
 }
 
@@ -67,13 +47,13 @@ void MapleStoryCore::Start()
 	ContentResources::ContentResourcesInit();
 	std::shared_ptr<GameEngineMaterial> _Mat = GameEngineResources<GameEngineMaterial>::Find("2DTexture");
 	_Mat->SetDepthState("LessEqualDepth");
-	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
-	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
-	GameEngineCore::CreateLevel<Lucid_Enter>("Lucid_Enter");
-	GameEngineCore::CreateLevel<Lucid_Phase1>("Lucid_Phase1");
-	GameEngineCore::CreateLevel<Lucid_Next>("Lucid_Next");
-	GameEngineCore::CreateLevel<Lucid_Phase2>("Lucid_Phase2");
-	GameEngineCore::ChangeLevel("Lucid_Phase2");
+	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
+	GameEngineCore::CreateLevel<PlayLevel>("2.PlayLevel");
+	GameEngineCore::CreateLevel<Lucid_Enter>("3.Lucid_Enter");
+	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
+	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
+	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
+	GameEngineCore::ChangeLevel("6.Lucid_Phase2");
 }
 
 void MapleStoryCore::Update(float _Delta)

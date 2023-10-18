@@ -18,7 +18,7 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == _CutsceneActor)
 	{
 		_CutsceneActor = CreateActor<CutsceneActor>(UpdateOrder::UI);
-		_CutsceneActor->Init("Lucid", "Lucid_Phase1");
+		_CutsceneActor->Init("Lucid", "4.Lucid_Phase1");
 	}
 }
 

@@ -93,7 +93,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 
 		LucidRender->Renderer->SetEndEvent("Lucid_PhaseChange", [&](GameEngineRenderer* _Renderer)
 			{
-				GameEngineCore::ChangeLevel("Lucid_Phase2");
+				GameEngineCore::ChangeLevel("6.Lucid_Phase2");
 			}
 		);
 	}
