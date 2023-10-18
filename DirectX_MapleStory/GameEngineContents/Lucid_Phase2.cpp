@@ -16,10 +16,11 @@
 #define FALL_SPEED8 25.0f
 #define FALL_SPEED9 20.0f
 #define FALL_SPEED10 10.0f
+#define FALL_SPEED11 300.0f
 
-void FallingObject::Init(int _ObjectNumber, float _Speed, float _StartPos)
+void FallingObject::Init(int _ObjectNumber, float _Speed, float _StartPos, int _RenderOrder, float _RenderDepth)
 {
-	float Depth = RenderDepth::background;
+	float Depth = _RenderDepth;
 	if (20 >= _ObjectNumber)
 	{
 	}
@@ -36,7 +37,7 @@ void FallingObject::Init(int _ObjectNumber, float _Speed, float _StartPos)
 		Depth += 0.6f;
 	}
 
-	RenderActor::Init(RenderOrder::BACKGROUND, Depth);
+	RenderActor::Init(_RenderOrder, Depth);
 
 	if (10 > _ObjectNumber)
 	{
@@ -242,6 +243,28 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	FootHold1->Transform.SetLocalPosition({ 1009, -1346 });
 
 	// FallingObject
+
+	// Front Object
+	//std::shared_ptr<FallingObject> FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	//FallObject->Transform.SetLocalPosition({ 423, -12, 0 });
+	//FallObject->Init(58, FALL_SPEED11, 10000, RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+	//MapObjects.push_back(FallObject);
+
+	//FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	//FallObject->Transform.SetLocalPosition({ 1021, 1575, 0 });
+	//FallObject->Init(59, FALL_SPEED11, 10000, RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+	//MapObjects.push_back(FallObject);
+
+	//FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	//FallObject->Transform.SetLocalPosition({ 24, 4996, 0 });
+	//FallObject->Init(60, FALL_SPEED11, 10000, RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+	//MapObjects.push_back(FallObject);
+
+	//FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
+	//FallObject->Transform.SetLocalPosition({ 482, 6000, 0 });
+	//FallObject->Init(61, FALL_SPEED11, 10000, RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+	//MapObjects.push_back(FallObject);
+
 	//// BackBackBackBack
 	std::shared_ptr<FallingObject> FallObject = CreateActor<FallingObject>(UpdateOrder::RenderActor);
 	FallObject->Transform.SetLocalPosition({ 510, -1428, 0 });

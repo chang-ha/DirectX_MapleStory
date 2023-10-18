@@ -23,7 +23,7 @@ void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const fl
 
 void FlowObject::Update(float _Delta)
 {
-	Transform.AddLocalPosition(float4::LEFT * ObjectSpeed * _Delta);
+	Transform.AddLocalPosition(float4::RIGHT * ObjectSpeed * _Delta);
 
 	if (EndPos.X <= Transform.GetWorldPosition().X)
 	{
@@ -96,7 +96,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
 		CurPlayer->Transform.SetLocalPosition(float4(100, -700));
-		GetMainCamera()->Transform.SetLocalPosition(float4(100, -700));
+		GetMainCamera()->Transform.SetLocalPosition(float4(100, -700, -100000));
 	}
 
 	if (nullptr == SkillManagerActor)
@@ -293,8 +293,6 @@ void Lucid_Phase1::Update(float _Delta)
 		}
 		LaserCooldown = Lase_Cooldown;
 	}
-
-
 }
 
 void Lucid_Phase1::CallDragon()

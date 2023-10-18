@@ -23,7 +23,14 @@ void ContentBackGround::Start()
 
 void ContentBackGround::Update(float _Delta)
 {
-
+	if (true == GetLevel()->GetMainCamera()->IsFreeCamera())
+	{
+		BackGroundRenderer->Off();
+	}
+	else
+	{
+		BackGroundRenderer->On();
+	}
 }
 
 void ContentBackGround::Release()

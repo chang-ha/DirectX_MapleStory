@@ -16,10 +16,10 @@ public:
 	template <typename EnumType, typename DepthType>
 	void Init(EnumType _Order, DepthType _Depth)
 	{
-		Init(static_cast<int>(_Order), static_cast<int>(_Depth));
+		Init(static_cast<int>(_Order), static_cast<float>(_Depth));
 	}
 
-	void Init(int _Order, int _Depth);
+	void Init(int _Order, float _Depth);
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
 
 protected:

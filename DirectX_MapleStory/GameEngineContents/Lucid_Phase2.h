@@ -6,7 +6,13 @@ class FallingObject : public RenderActor
 {
 	friend class Lucid_Phase2;
 private:
-	void Init(int _ObjectNumber, float _Speed, float _StartPos);
+	template <typename RenderEnum, typename DepthEnum>
+	void Init(int _ObjectNumber, float _Speed, float _StartPos, RenderEnum _RenderOrder = RenderOrder::BACKGROUND, DepthEnum _RenderDepth = RenderDepth::background)
+	{
+		Init(_ObjectNumber, _Speed, _StartPos, static_cast<int>(_RenderOrder), static_cast<float>(_RenderDepth));
+	}
+
+	void Init(int _ObjectNumber, float _Speed, float _StartPos, int _RenderOrder = static_cast<int>(RenderOrder::BACKGROUND), float _RenderDepth = static_cast<float>(RenderDepth::background));
 	void Update(float _Delta) override;
 
 	float ObjectSpeed = 0.0f;
