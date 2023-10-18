@@ -22,6 +22,7 @@ enum class UpdateOrder
 enum class RenderOrder
 {
 	BACKGROUND,
+	BACKGROUNDOBJECT,
 	MAP,
 	MAPOBJECT,
 	MONSTER,
@@ -48,6 +49,7 @@ enum RenderDepth
 	monster,
 	mapobject,
 	map,
+	backgroundobject,
 	background,
 };
 
