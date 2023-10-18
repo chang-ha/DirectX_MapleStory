@@ -1,6 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "ContentLevel.h"
 #include "ContentMap.h"
+#include "FadeObject.h"
 
 void LevelDebug::Start()
 {
@@ -42,9 +43,37 @@ void ContentLevel::Update(float _Delta)
 void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	CurContentLevel = this;
+
+	if (nullptr == FadeInObject)
+	{
+		FadeInObject = CreateActor<FadeObject>(UpdateOrder::UI);
+		FadeInObject->SetWhiteFade();
+		FadeInObject->SetFadeSpeed(0.5f);
+		FadeInObject->SetAlpha(1.0f);
+	}
+
+	if (nullptr == FadeOutObject)
+	{
+		FadeOutObject = CreateActor<FadeObject>(UpdateOrder::UI);
+		FadeOutObject->SetBlackFade();
+		FadeOutObject->SetFadeSpeed(0.1f);
+		FadeOutObject->SetAlpha(0.0f);
+	}
+
+	FadeInObject->FadeStart();
 }
 
 void ContentLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	// sFadeOutObject->FadeStart();
 
+	if (nullptr != FadeInObject)
+	{
+		FadeInObject = nullptr;
+	}
+
+	if (nullptr != FadeOutObject)
+	{
+		FadeOutObject = nullptr;
+	}
 }

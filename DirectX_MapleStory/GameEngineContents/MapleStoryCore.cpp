@@ -11,6 +11,7 @@
 #include "Lucid_Phase1.h"
 #include "Lucid_Next.h"
 #include "Lucid_Phase2.h"
+#include "ServerLevel.h"
 
 void LevelChangeGUI::Start()
 {
@@ -23,7 +24,7 @@ void LevelChangeGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 	for (std::pair<const std::string, std::shared_ptr<GameEngineLevel>> Pair : AllLevels)
 	{
-		if (ImGui::Button(Pair.first.c_str()))
+		if (ImGui::Button(Pair.first.c_str(), {120, 20}))
 		{
 			GameEngineCore::ChangeLevel(Pair.first);
 		}
@@ -44,16 +45,20 @@ void MapleStoryCore::Start()
 {
 	GameEngineGUI::CreateGUIWindow<LevelChangeGUI>("LevelChange");
 
+	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({1.0f, 1.0f, 1.0f});
+
 	ContentResources::ContentResourcesInit();
 	std::shared_ptr<GameEngineMaterial> _Mat = GameEngineResources<GameEngineMaterial>::Find("2DTexture");
 	_Mat->SetDepthState("LessEqualDepth");
+
 	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
-	GameEngineCore::CreateLevel<PlayLevel>("2.PlayLevel");
+	// GameEngineCore::CreateLevel<PlayLevel>("2.PlayLevel");
+	GameEngineCore::CreateLevel<ServerLevel>("2.ServerLevel");
 	GameEngineCore::CreateLevel<Lucid_Enter>("3.Lucid_Enter");
 	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
-	GameEngineCore::ChangeLevel("6.Lucid_Phase2");
+	GameEngineCore::ChangeLevel("2.ServerLevel");
 }
 
 void MapleStoryCore::Update(float _Delta)

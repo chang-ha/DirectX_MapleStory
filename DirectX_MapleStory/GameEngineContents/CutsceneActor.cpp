@@ -21,7 +21,7 @@ void CutsceneActor::Init(std::string_view _BossName, std::string_view _NextLevel
 		CutRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	}
 
-	if (nullptr == GameEngineSprite::Find(std::string(_BossName) + "Cutscene"))
+	if (nullptr == GameEngineSprite::Find(std::string(_BossName) + "_Cutscene"))
 	{
 		GameEnginePath Path;
 		Path.SetCurrentPath();
@@ -30,7 +30,7 @@ void CutsceneActor::Init(std::string_view _BossName, std::string_view _NextLevel
 		GameEngineSprite::CreateFolder(std::string(_BossName.data()) + "_Cutscene", Path.GetStringPath());
 	}
 
-	CutRenderer->CreateAnimation("Cutscene", "Lucid_Cutscene", 0.03f);
+	CutRenderer->CreateAnimation("Cutscene", std::string(_BossName.data()) + "_Cutscene", 0.03f);
 	CutRenderer->ChangeAnimation("Cutscene");
 	CutRenderer->SetImageScale(GlobalValue::WinScale);
 
@@ -52,5 +52,10 @@ void CutsceneActor::Release()
 	{
 		CutRenderer->Death();
 		CutRenderer = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find(std::string(BossName) + "_Cutscene"))
+	{
+		GameEngineSprite::Release(std::string(BossName) + "_Cutscene");
 	}
 }

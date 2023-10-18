@@ -106,9 +106,6 @@
     <ClCompile Include="Lucid_Enter.cpp">
       <Filter>Level\Boss_Stage</Filter>
     </ClCompile>
-    <ClCompile Include="CutsceneActor.cpp">
-      <Filter>Level\Boss_Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Laser.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
@@ -132,6 +129,15 @@
     </ClCompile>
     <ClCompile Include="ContentResources.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CutsceneActor.cpp">
+      <Filter>Level\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeObject.cpp">
+      <Filter>Level\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerLevel.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,9 +246,6 @@
     <ClInclude Include="Lucid_Enter.h">
       <Filter>Level\Boss_Stage</Filter>
     </ClInclude>
-    <ClInclude Include="CutsceneActor.h">
-      <Filter>Level\Boss_Stage</Filter>
-    </ClInclude>
     <ClInclude Include="Laser.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
@@ -266,6 +269,15 @@
     </ClInclude>
     <ClInclude Include="ContentResources.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CutsceneActor.h">
+      <Filter>Level\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeObject.h">
+      <Filter>Level\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerLevel.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +340,9 @@
     </Filter>
     <Filter Include="Actor\Monster\Boss\SummonActor">
       <UniqueIdentifier>{d55e9272-96d5-4838-85df-8981fa05f30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Actor">
+      <UniqueIdentifier>{5a8f65e3-df48-41f5-aca2-d6ef0a3de220}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

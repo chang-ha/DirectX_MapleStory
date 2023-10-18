@@ -34,11 +34,13 @@ enum class RenderOrder
 	HITANI,
 	RENDERACTOR,
 	UI,
+	FADEOBJECT,
 };
 
 enum RenderDepth
 {
-	ui = 1,
+	fadeobject = 1,
+	ui,
 	renderactor,
 	hitani,
 	skill,

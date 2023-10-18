@@ -15,12 +15,12 @@ public:
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
 protected:
-	void Start() override;
-	void Update(float _Delta) override;
 
+private:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
-private:
 
+	void Start() override;
+	void Update(float _Delta) override;
 };
 
