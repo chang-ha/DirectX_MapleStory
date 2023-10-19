@@ -36,6 +36,7 @@ void Boss_Lucid_Phase1::Start()
 	GameEngineInput::AddInputObject(this);
 
 	BaseBossActor::Start();
+	PhantasmalWind::AllAngleValue = true;
 
 	if (nullptr == FlowerRenderer)
 	{
@@ -125,7 +126,6 @@ void Boss_Lucid_Phase1::Start()
 		}
 	);
 
-	///// TestCode
 	BossRenderer->SetFrameEvent("Skill4", 10, [&](GameEngineRenderer* _Renderer)
 		{
 			switch (State)

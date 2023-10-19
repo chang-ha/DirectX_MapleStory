@@ -4,6 +4,8 @@
 
 #include "PhantasmalWind.h"
 
+bool PhantasmalWind::AllAngleValue = false;
+
 PhantasmalWind::PhantasmalWind()
 {
 
@@ -38,7 +40,15 @@ void PhantasmalWind::Start()
 	// Random Angle
 	GameEngineRandom Random;
 	Random.SetSeed(reinterpret_cast<long long>(this));
-	DirAngle = Random.RandomFloat(0.0f, 180.0f);
+	if (true == AllAngleValue)
+	{
+		DirAngle = Random.RandomFloat(0.0f, 360.0f);
+	}
+	else if (false == AllAngleValue)
+	{
+		DirAngle = Random.RandomFloat(0.0f, 180.0f);
+	}
+
 	MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
 	MoveVector.Y *= -1.0f;
 	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, -DirAngle });

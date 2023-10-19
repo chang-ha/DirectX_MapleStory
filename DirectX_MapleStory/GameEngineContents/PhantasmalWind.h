@@ -3,6 +3,7 @@
 class PhantasmalWind : public GameEngineActor
 {
 public:
+	static bool AllAngleValue;
 	// constructer destructer
 	PhantasmalWind();
 	~PhantasmalWind();
@@ -12,6 +13,11 @@ public:
 	PhantasmalWind(PhantasmalWind&& _Ohter) noexcept = delete;
 	PhantasmalWind& operator=(const PhantasmalWind& _Other) = delete;
 	PhantasmalWind& operator=(PhantasmalWind&& _Other) noexcept = delete;
+
+	void SetSpeed(float _Speed)
+	{
+		Speed = _Speed;
+	}
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
