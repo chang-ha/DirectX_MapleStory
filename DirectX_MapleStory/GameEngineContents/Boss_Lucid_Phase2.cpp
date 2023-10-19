@@ -53,6 +53,7 @@ void Boss_Lucid_Phase2::Start()
 	}
 
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase2_Idle");
+	BossRenderer->CreateAnimation("Death", "Lucid_Phase2_Death");
 	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase2_PhantasmalWind");
 	BossRenderer->CreateAnimation("Summon_Dragon", "Lucid_Phase2_Summon_Dragon");
 	BossRenderer->ChangeAnimation("Idle");
@@ -99,6 +100,11 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('6', this))
 	{
 		ChangeState(LucidState::Summon_Dragon);
+	}
+
+	if (true == GameEngineInput::IsDown('0', this))
+	{
+		ChangeState(LucidState::Death);
 	}
 }
 
@@ -200,6 +206,23 @@ void Boss_Lucid_Phase2::IdleStart()
 
 void Boss_Lucid_Phase2::DeathStart()
 {
+	BossRenderer->ChangeAnimation("Death");
+
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		BossRenderer->SetPivotValue({ 0.463f, 0.62f });
+		BossRenderer->LeftFlip();
+		break;
+	case ActorDir::Left:
+		BossRenderer->SetPivotValue({ 0.537f, 0.62f });
+		BossRenderer->RightFlip();
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 }
 
 void Boss_Lucid_Phase2::PhantasmalWindStart()
@@ -246,6 +269,7 @@ void Boss_Lucid_Phase2::Summon_DragonStart()
 
 void Boss_Lucid_Phase2::Summon_GolemStart()
 {
+
 }
 
 ///// Update
