@@ -49,8 +49,9 @@ protected:
 
 private:
 	float4 CurMapScale = float4::ZERO;
+	std::shared_ptr<class Dragon> LeftDragon = nullptr;
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
-	std::shared_ptr<class Boss_Lucid_Phase1> Boss = nullptr;
+	std::shared_ptr<class Boss_Lucid_Phase2> Boss = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
 	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
 

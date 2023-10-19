@@ -64,9 +64,12 @@ void Boss_Lucid_Phase1::Start()
 			GameEngineSprite::CreateFolder("Lucid_Phase1_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
 
-		Dir.MoveParentToExistsChild("Phase1");
-		Dir.MoveChild("Attack");
-		GameEngineSprite::CreateFolder("Lucid_" + Dir.GetFileName(), Dir.GetStringPath());
+		if (nullptr == GameEngineSprite::Find("Lucid_Attack"))
+		{
+			Dir.MoveParentToExistsChild("Phase1");
+			Dir.MoveChild("Attack");
+			GameEngineSprite::CreateFolder("Lucid_" + Dir.GetFileName(), Dir.GetStringPath());
+		}
 	}
 
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase1_Idle");

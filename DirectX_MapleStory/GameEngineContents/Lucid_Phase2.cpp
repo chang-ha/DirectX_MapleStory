@@ -5,6 +5,7 @@
 #include "SkillManager.h"
 #include "ContentBackGround.h"
 #include "RenderActor.h"
+#include "Boss_Lucid_Phase2.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -147,6 +148,12 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
 		Back->Init("BG_Lucid_Phase2.png");
+	}
+
+	if (nullptr == Boss)
+	{
+		Boss = CreateActor<Boss_Lucid_Phase2>(UpdateOrder::Monster);
+		Boss->Transform.SetLocalPosition(float4(1000, -850));
 	}
 
 	if (nullptr == CurPlayer)
