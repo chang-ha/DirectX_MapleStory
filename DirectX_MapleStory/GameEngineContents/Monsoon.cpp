@@ -149,6 +149,4 @@ void Monsoon::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& 
 		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
 		SkillManager::PlayerSkillManager->HitPrint("Monsoon_Hit", 12, _Other->GetParentObject());
 	}
-
-	BaseWindActor::CreateTriflingWind();
 }

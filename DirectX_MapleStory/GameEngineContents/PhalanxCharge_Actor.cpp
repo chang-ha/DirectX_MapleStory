@@ -121,7 +121,6 @@ void PhalanxCharge_Actor::Update(float _Delta)
 					HitCount += 1;
 					SkillManager::PlayerSkillManager->HitPrint("PhalanxCharge_Hit", 1, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
-					BaseWindActor::CreateTriflingWind();
 				}
 			}
 		}

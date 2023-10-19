@@ -341,6 +341,7 @@ void Dragon::BreathEnd()
 {
 	DragonRenderer->SetPivotType(PivotType::Bottom);
 	IsMoveBreath = false;
+	BreathCollision->Off();
 }
 
 void Dragon::BreathOn()

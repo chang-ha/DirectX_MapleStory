@@ -13,6 +13,7 @@
 #include "VortexSphere.h"
 #include "PhalanxCharge.h"
 #include "MercilessWinds.h"
+#include "BaseWindActor.h"
 
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
@@ -46,9 +47,9 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 		if (true == _RandomPivot)
 		{
 			RandomActor.SetSeed(reinterpret_cast<long long>(_Object) + time(nullptr) + i);
-			_Data->RandomPivot[i].X = RandomActor.RandomFloat(-RANDOMRANGE, RANDOMRANGE);
-			RandomActor.SetSeed(reinterpret_cast<long long>(_Object) + time(nullptr) + i);
-			_Data->RandomPivot[i].Y = RandomActor.RandomFloat(-RANDOMRANGE, RANDOMRANGE);
+			float4 RandomValue = RandomActor.RandomVectorBox2D(-RANDOMRANGE, RANDOMRANGE, -RANDOMRANGE, RANDOMRANGE);
+			_Data->RandomPivot[i].X = RandomValue.X;
+			_Data->RandomPivot[i].Y = RandomValue.Y;
 		}
 
 		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, HIT_ANI_TIME);
@@ -67,6 +68,8 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 		_HitAnimation->SetPivotType(_PivotType);
 
 		_Data->HitAnimations[i] = _HitAnimation;
+
+		BaseWindActor::CreateTriflingWind();
 	}
 
 	AllHitRenderers.push_back(_Data);

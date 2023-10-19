@@ -142,5 +142,4 @@ void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Oth
 {
 	++CollisionCount;
 	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject(), false);
-	BaseWindActor::CreateTriflingWind();
 }

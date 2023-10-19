@@ -69,7 +69,6 @@ void VortexSphere_Actor::Update(float _Delta)
 				{
 					SkillManager::PlayerSkillManager->HitPrint("VortexSphere_Hit", 6, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
-					BaseWindActor::CreateTriflingWind();
 				}
 			}
 		}

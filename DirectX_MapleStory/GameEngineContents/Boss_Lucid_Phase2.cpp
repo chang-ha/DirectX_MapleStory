@@ -58,8 +58,8 @@ void Boss_Lucid_Phase2::Start()
 	BossRenderer->ChangeAnimation("Idle");
 	IdleStart();
 
-	BossCollision->Transform.SetLocalScale({ 1,1 });
-	//BossCollision->Transform.SetLocalPosition({ 0, 100});
+	BossCollision->Transform.SetLocalScale({ 70, 130 });
+	BossCollision->Transform.SetLocalPosition({ -5, 60});
 
 	// Renderer Event
 	BossRenderer->SetFrameEvent("PhantasmalWind", 22, [&](GameEngineRenderer* _Renderer)

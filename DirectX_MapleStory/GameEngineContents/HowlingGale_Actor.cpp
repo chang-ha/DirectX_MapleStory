@@ -64,7 +64,7 @@ void HowlingGale_Actor::Start()
 
 	Scale = { 100, 600 };
 	SkillCollision->Transform.SetLocalScale(Scale);
-	SkillCollision->Transform.SetLocalPosition({0, 0});
+	SkillCollision->Transform.SetLocalPosition({0, 300});
 }
 
 void HowlingGale_Actor::Update(float _Delta)
@@ -111,7 +111,6 @@ void HowlingGale_Actor::Update(float _Delta)
 				{
 					SkillManager::PlayerSkillManager->HitPrint("HowlingGale_Hit", 3, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
-					BaseWindActor::CreateTriflingWind();
 				}
 			}
 		}
