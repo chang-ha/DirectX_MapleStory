@@ -268,14 +268,21 @@ void Player::LadderCheck()
 
 bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 {
-	if (0.0f != SkipGround && SkipGround <= Transform.GetWorldPosition().Y)
+	float CurYPos = Transform.GetWorldPosition().Y;
+	if (0.0f != SkipGround && SkipGround <= CurYPos)
 	{
 		return false;
 	}
-	else if (0.0f != SkipGround && SkipGround > Transform.GetWorldPosition().Y)
+	else if (0.0f != SkipGround && SkipGround > CurYPos)
 	{
 		SkipGround = 0.0f;
 	}
+
+	if (0.0f != NotGround && (NotGround + 1.0f >= CurYPos && NotGround - 2.0f <= CurYPos))
+	{
+		return false;
+	}
+
 	return ContentActor::CheckGround(PlusCheckPos);
 }
 

@@ -33,6 +33,7 @@ public:
 	void StateUpdate(float _Delta);
 private:
 	int FootHoldNumber = -1;
+	float FootHoldYPos = 0.0f;
 	float BreakTime = 0.0f;
 	FootHoldState State = FootHoldState::Idle;
 
@@ -68,6 +69,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	int PrevFootHold = -1;
 	float4 CurMapScale = float4::ZERO;
 	std::shared_ptr<class Dragon> LeftDragon = nullptr;
 	std::shared_ptr<class Dragon> RightDragon = nullptr;

@@ -57,6 +57,10 @@ public:
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
 	void Release() override;
+	void SetNotGroundValue(float _Value)
+	{
+		NotGround = _Value;
+	}
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -83,6 +87,7 @@ private:
 	float AlertTime = 0.0f;
 
 	float SkipGround = 0.0f;
+	float NotGround = 0.0f;
 
 	float4 CurMapScale = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;

@@ -130,16 +130,23 @@ void FootHold::IdleUpdate(float _Delta)
 	if (1.0f > Renderer->GetColorData().MulColor.A)
 	{
 		Renderer->GetColorData().MulColor.A += _Delta;
+
+		if (1.0f <= Renderer->GetColorData().MulColor.A)
+		{
+			Player::MainPlayer->SetNotGroundValue(0.0f);
+		}
 	}
 }
 
 void FootHold::BreakUpdate(float _Delta)
 {
 	BreakTime += _Delta;
-	if (2.0f <= BreakTime)
+	// 2.0f
+	if (5.0f <= BreakTime)
 	{
 		ChangeState(FootHoldState::Idle);
 		Renderer->GetColorData().MulColor.A = 0.0f;
+		BreakTime = 0.0f;
 	}
 }
 
@@ -283,56 +290,68 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<FootHold> FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(0);
 	FootHold1->Transform.SetLocalPosition({ 712, -1277 });
+	FootHold1->FootHoldYPos = -1225;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(0);
 	FootHold1->Transform.SetLocalPosition({ 1120, -913 });
+	FootHold1->FootHoldYPos = -859;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(0);
 	FootHold1->Transform.SetLocalPosition({ 730, -550 });
+	FootHold1->FootHoldYPos = -495;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(1);
 	FootHold1->Transform.SetLocalPosition({ 563, -845 });
+	FootHold1->FootHoldYPos = -800;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(1);
 	FootHold1->Transform.SetLocalPosition({ 1198, -1200 });
+	FootHold1->FootHoldYPos = -1155;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(1);
 	FootHold1->Transform.SetLocalPosition({ 1507, -775 });
+	FootHold1->FootHoldYPos = -731;
 	AllFootHolds.push_back(FootHold1);
 
+	//48
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(2);
 	FootHold1->Transform.SetLocalPosition({ 1555, -1255 });
+	FootHold1->FootHoldYPos = -1207;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(2);
 	FootHold1->Transform.SetLocalPosition({ 530, -1130 });
+	FootHold1->FootHoldYPos = -1082;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(2);
 	FootHold1->Transform.SetLocalPosition({ 935, -712 });
+	FootHold1->FootHoldYPos = -664;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(3);
 	FootHold1->Transform.SetLocalPosition({ 783, -1020 });
+	FootHold1->FootHoldYPos = -974;
 	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(3);
 	FootHold1->Transform.SetLocalPosition({ 1370, -1065 });
+	FootHold1->FootHoldYPos = -1018;
 	AllFootHolds.push_back(FootHold1);
 
 	////// UnBreak FootHold [11]~[14]
@@ -751,18 +770,13 @@ void Lucid_Phase2::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('K', this))
 	{
-		for (size_t i = 0; i < AllFootHolds.size(); i++)
-		{
-			AllFootHolds[i]->ChangeState(FootHold::FootHoldState::Break);
-		}
-	}
+		GameEngineRandom Random;
+		Random.SetSeed(time(nullptr));
+		int RandomInt = Random.RandomInt(0, 10);
 
-	if (true == GameEngineInput::IsDown('L', this))
-	{
-		for (size_t i = 0; i < AllFootHolds.size(); i++)
-		{
-			AllFootHolds[i]->ChangeState(FootHold::FootHoldState::Idle);
-		}
+		std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[RandomInt];
+		_CurFootHold->ChangeState(FootHold::FootHoldState::Break);
+		Player::MainPlayer->SetNotGroundValue(_CurFootHold->FootHoldYPos);
 	}
 }
 
