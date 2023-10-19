@@ -11,6 +11,7 @@
 #include "Dragon.h"
 #include "Laser.h"
 #include "RenderActor.h"
+#include "FadeObject.h"
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
@@ -46,6 +47,8 @@ Lucid_Phase1::~Lucid_Phase1()
 void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
+
+	FadeOutObject->SetWhiteFade();
 
 	if (nullptr == GameEngineSprite::Find("Water.png"))
 	{

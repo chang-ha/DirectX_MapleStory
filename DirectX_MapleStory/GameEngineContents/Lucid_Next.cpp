@@ -3,6 +3,7 @@
 #include "RenderActor.h"
 #include "ContentMap.h"
 #include "ContentBackGround.h"
+#include "FadeObject.h"
 
 Lucid_Next::Lucid_Next()
 {
@@ -17,6 +18,10 @@ Lucid_Next::~Lucid_Next()
 void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
+
+	FadeInObject->SetWhiteFade();
+
+	FadeOutObject->SetChangeLevel("6.Lucid_Phase2");
 
 	if (nullptr == CurMap)
 	{
@@ -91,9 +96,10 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 			}
 		);
 
-		LucidRender->Renderer->SetEndEvent("Lucid_PhaseChange", [&](GameEngineRenderer* _Renderer)
+		LucidRender->Renderer->SetFrameEvent("Lucid_PhaseChange", 37, [&](GameEngineRenderer* _Renderer)
 			{
-				GameEngineCore::ChangeLevel("6.Lucid_Phase2");
+				FadeOutObject->FadeStart();
+				// GameEngineCore::ChangeLevel("6.Lucid_Phase2");
 			}
 		);
 	}
