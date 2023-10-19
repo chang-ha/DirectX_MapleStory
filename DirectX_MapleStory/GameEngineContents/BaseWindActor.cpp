@@ -6,8 +6,8 @@
 #include "BaseWindActor.h"
 #include "Player.h"
 
-#define DETECT_XRANGE 1000
-#define DETECT_YRANGE 700
+#define DETECT_XRANGE 1500
+#define DETECT_YRANGE 1000
 
 BaseWindActor::BaseWindActor()
 {

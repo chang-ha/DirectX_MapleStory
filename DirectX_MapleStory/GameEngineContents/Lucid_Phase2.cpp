@@ -1,4 +1,7 @@
 ﻿#include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
 #include "Lucid_Phase2.h"
 #include "Player.h"
 #include "ContentMap.h"
@@ -67,10 +70,77 @@ void FallingObject::Update(float _Delta)
 
 void FootHold::Init(int _FootHoldNumber)
 {
+	FootHoldNumber = _FootHoldNumber;
 	RenderActor::Init(RenderOrder::MAP, RenderDepth::map);
-	Renderer->CreateAnimation("Idle", "StainedGlass" + std::to_string(_FootHoldNumber) + "_Idle");
+	Renderer->CreateAnimation("Idle", "StainedGlass" + std::to_string(_FootHoldNumber) + "_Idle", 0.09f);
+	Renderer->CreateAnimation("Break", "StainedGlass" + std::to_string(_FootHoldNumber) + "_Break", 0.09f, -1, -1, false);
+	IdleStart();
+}
+
+void FootHold::ChangeState(FootHoldState _State)
+{
+	if (_State != State)
+	{
+		switch (_State)
+		{
+		case FootHold::FootHoldState::Idle:
+			IdleStart();
+			break;
+		case FootHold::FootHoldState::Break:
+			BreakStart();
+			break;
+		default:
+			break;
+		}
+	}
+
+	State = _State;
+}
+
+void FootHold::StateUpdate(float _Delta)
+{
+	switch (State)
+	{
+	case FootHoldState::Idle:
+		return IdleUpdate(_Delta);
+		break;
+	case FootHoldState::Break:
+		return BreakUpdate(_Delta);
+		break;
+	default:
+		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
+		break;
+	}
+}
+
+void FootHold::IdleStart()
+{
 	Renderer->ChangeAnimation("Idle");
 	Renderer->SetPivotType(PivotType::Bottom);
+}
+
+void FootHold::BreakStart()
+{
+	Renderer->ChangeAnimation("Break");
+	Renderer->SetPivotType(PivotType::Center);
+}
+
+void FootHold::IdleUpdate(float _Delta)
+{
+	if (1.0f > Renderer->GetColorData().MulColor.A)
+	{
+		Renderer->GetColorData().MulColor.A += _Delta;
+	}
+}
+
+void FootHold::BreakUpdate(float _Delta)
+{
+	BreakTime += _Delta;
+	if (2.0f <= BreakTime)
+	{
+		ChangeState(FootHoldState::Idle);
+		Renderer->GetColorData().MulColor.A = 0.0f;
+	}
 }
 
 Lucid_Phase2::Lucid_Phase2()
@@ -179,6 +249,16 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		LeftDragon->SetBreathMinMaxPos(850.0f, 1200.0f);
 	}
 
+	if (nullptr == RightDragon)
+	{
+		RightDragon = CreateActor<Dragon>(UpdateOrder::Monster);
+		RightDragon->Transform.SetLocalPosition(float4(2000, 200));
+		RightDragon->SetDir(ActorDir::Left);
+		RightDragon->SetBreathPos({ -1100, 150 });
+		RightDragon->SetDestination_YPos(-1050.0f);
+		RightDragon->SetBreathMinMaxPos(850.0f, 1200.0f);
+	}
+
 	// 2050, 1550
 	// StarObject
 	std::shared_ptr<RenderActor> BackObject1 = CreateActor<RenderActor>(UpdateOrder::RenderActor);
@@ -203,62 +283,78 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<FootHold> FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(0);
 	FootHold1->Transform.SetLocalPosition({ 712, -1277 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(0);
 	FootHold1->Transform.SetLocalPosition({ 1120, -913 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(0);
 	FootHold1->Transform.SetLocalPosition({ 730, -550 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(1);
 	FootHold1->Transform.SetLocalPosition({ 563, -845 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(1);
 	FootHold1->Transform.SetLocalPosition({ 1198, -1200 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(1);
 	FootHold1->Transform.SetLocalPosition({ 1507, -775 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(2);
 	FootHold1->Transform.SetLocalPosition({ 1555, -1255 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(2);
 	FootHold1->Transform.SetLocalPosition({ 530, -1130 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(2);
 	FootHold1->Transform.SetLocalPosition({ 935, -712 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(3);
 	FootHold1->Transform.SetLocalPosition({ 783, -1020 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(3);
 	FootHold1->Transform.SetLocalPosition({ 1370, -1065 });
+	AllFootHolds.push_back(FootHold1);
 
+	////// UnBreak FootHold [11]~[14]
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(4);
 	FootHold1->Transform.SetLocalPosition({ 475, -698 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(4);
 	FootHold1->Transform.SetLocalPosition({ 1610, -1013 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(5);
 	FootHold1->Transform.SetLocalPosition({ 1417, -550 });
+	AllFootHolds.push_back(FootHold1);
 
 	FootHold1 = CreateActor<FootHold>(UpdateOrder::RenderActor);
 	FootHold1->Init(5);
 	FootHold1->Transform.SetLocalPosition({ 1009, -1346 });
+	AllFootHolds.push_back(FootHold1);
 
 	// FallingObject
 
@@ -609,20 +705,37 @@ void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 		Boss = nullptr;
 	}
 
+	if (nullptr != LeftDragon)
+	{
+		LeftDragon = nullptr;
+	}
+
+	if (nullptr != RightDragon)
+	{
+		RightDragon = nullptr;
+	}
+
 	for (size_t i = 0; i < MapObjects.size(); i++)
 	{
 		MapObjects[i]->Death();
 		MapObjects[i] = nullptr;
 	}
 
+	for (size_t i = 0; i < AllFootHolds.size(); i++)
+	{
+		AllFootHolds[i]->Death();
+		AllFootHolds[i] = nullptr;
+	}
+
 	MapObjects.clear();
+	AllFootHolds.clear();
 }
 
 void Lucid_Phase2::Start()
 {
 	ContentLevel::Start();
 	MapObjects.reserve(100);
-	// GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
+	AllFootHolds.reserve(15);
 }
 
 void Lucid_Phase2::Update(float _Delta)
@@ -630,10 +743,26 @@ void Lucid_Phase2::Update(float _Delta)
 	ContentLevel::Update(_Delta);
 	ObjectUpdate(_Delta);
 
-	if (Player::MainPlayer->Transform.GetWorldPosition().Y == -CurMapScale.Y)
+	if (Player::MainPlayer->Transform.GetWorldPosition().Y <= -CurMapScale.Y)
 	{
 		Player::MainPlayer->Transform.SetLocalPosition({ 1120, -800 });
 		Player::MainPlayer->MoveVectorForceReset();
+	}
+
+	if (true == GameEngineInput::IsDown('K', this))
+	{
+		for (size_t i = 0; i < AllFootHolds.size(); i++)
+		{
+			AllFootHolds[i]->ChangeState(FootHold::FootHoldState::Break);
+		}
+	}
+
+	if (true == GameEngineInput::IsDown('L', this))
+	{
+		for (size_t i = 0; i < AllFootHolds.size(); i++)
+		{
+			AllFootHolds[i]->ChangeState(FootHold::FootHoldState::Idle);
+		}
 	}
 }
 
@@ -641,12 +770,28 @@ void Lucid_Phase2::ObjectUpdate(float _Delta)
 {
 	for (size_t i = 0; i < MapObjects.size(); i++)
 	{
-		std::shared_ptr<FallingObject> CurObject = MapObjects[i];
-		CurObject->Update(_Delta);
+		// std::shared_ptr<FallingObject> CurObject = MapObjects[i];
+		MapObjects[i]->Update(_Delta);
+	}
+
+	for (size_t i = 0; i < AllFootHolds.size(); i++)
+	{
+		AllFootHolds[i]->StateUpdate(_Delta);
 	}
 }
 
 void Lucid_Phase2::CallDragon()
 {
-	LeftDragon->ChangeState(DragonState::Down);
+	GameEngineRandom Random;
+	Random.SetSeed(time(nullptr));
+	int RandomValue = Random.RandomInt(0, 1);
+
+	if (0 == RandomValue)
+	{
+		LeftDragon->ChangeState(DragonState::Down);
+	}
+	else
+	{
+		RightDragon->ChangeState(DragonState::Down);
+	}
 }

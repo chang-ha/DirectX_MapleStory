@@ -95,6 +95,7 @@ void Dragon::Start()
 	DragonRenderer->SetFrameEvent("Breath", 33, [&](GameEngineSpriteRenderer*)
 		{
 			BreathOff();
+			BreathCollision->Off();
 		}
 	);
 
@@ -341,7 +342,6 @@ void Dragon::BreathEnd()
 {
 	DragonRenderer->SetPivotType(PivotType::Bottom);
 	IsMoveBreath = false;
-	BreathCollision->Off();
 }
 
 void Dragon::BreathOn()

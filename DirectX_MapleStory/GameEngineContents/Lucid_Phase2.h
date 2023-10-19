@@ -22,8 +22,26 @@ private:
 class FootHold : public RenderActor
 {
 	friend class Lucid_Phase2;
+public:
+	enum class FootHoldState
+	{
+		Idle,
+		Break,
+	};
+
+	void ChangeState(FootHoldState _State);
+	void StateUpdate(float _Delta);
 private:
+	int FootHoldNumber = -1;
+	float BreakTime = 0.0f;
+	FootHoldState State = FootHoldState::Idle;
+
 	void Init(int _FootHoldNumber);
+
+	void IdleStart();
+	void BreakStart();
+	void IdleUpdate(float _Delta);
+	void BreakUpdate(float _Delta);
 };
 
 class Lucid_Phase2 : public ContentLevel
@@ -52,6 +70,7 @@ protected:
 private:
 	float4 CurMapScale = float4::ZERO;
 	std::shared_ptr<class Dragon> LeftDragon = nullptr;
+	std::shared_ptr<class Dragon> RightDragon = nullptr;
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
 	std::shared_ptr<class Boss_Lucid_Phase2> Boss = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
@@ -59,6 +78,7 @@ private:
 
 	// Map Detail
 	void ObjectUpdate(float _Delta);
+	std::vector<std::shared_ptr<FootHold>> AllFootHolds;
 	std::vector<std::shared_ptr<FallingObject>> MapObjects;
 };
 
