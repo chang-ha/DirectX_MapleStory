@@ -784,7 +784,6 @@ void Lucid_Phase2::ObjectUpdate(float _Delta)
 {
 	for (size_t i = 0; i < MapObjects.size(); i++)
 	{
-		// std::shared_ptr<FallingObject> CurObject = MapObjects[i];
 		MapObjects[i]->Update(_Delta);
 	}
 

@@ -35,37 +35,6 @@ void Golem::Start()
 		GolemCollision->Transform.SetLocalPosition({ 0, 100 });
 		GolemCollision->Off();
 	}
-
-	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_Golem_Ready"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Phase1_Golem");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Childs = Directorys[i];
-			GameEngineSprite::CreateFolder("Lucid_Phase1_Golem_" + Childs.GetFileName(), Childs.GetStringPath());
-		}
-	}
-
-	MainSpriteRenderer->CreateAnimation("Ready", "Lucid_Phase1_Golem_Ready", 0.1f, -1, -1, false);
-	MainSpriteRenderer->CreateAnimation("Revive", "Lucid_Phase1_Golem_Revive", 0.1f, -1, -1, false);
-	MainSpriteRenderer->CreateAnimation("Idle", "Lucid_Phase1_Golem_Idle");
-	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Phase1_Golem_Attack");
-	MainSpriteRenderer->CreateAnimation("Death", "Lucid_Phase1_Golem_Death");
-	MainSpriteRenderer->ChangeAnimation("Ready");
-	MainSpriteRenderer->SetPivotValue({0.48f, 0.8f});
-	GravityOff();
-	MaxGraviry = 100.0f;
-
-	MainSpriteRenderer->SetFrameEvent("Ready", 9, [&](GameEngineSpriteRenderer*)
-		{
-			GravityOn();
-			MoveVectorForce.Y -= 800.0f;
-		}
-	);
 }
 
 void Golem::Update(float _Delta)
@@ -83,6 +52,43 @@ void Golem::Release()
 		GolemCollision->Death();
 		GolemCollision = nullptr;
 	}
+}
+
+void Golem::Init(int _PhaseNumber)
+{
+	std::string PhaseNumber = "";
+	PhaseNumber = std::to_string(_PhaseNumber);
+
+	if (nullptr == GameEngineSprite::Find("Lucid_Phase" + PhaseNumber + "_Golem_Ready"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Phase" + PhaseNumber + "_Golem");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("Lucid_Phase" + PhaseNumber + "_Golem_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+	}
+
+	MainSpriteRenderer->CreateAnimation("Ready", "Lucid_Phase" + PhaseNumber + "_Golem_Ready", 0.09f, -1, -1, false);
+	MainSpriteRenderer->CreateAnimation("Revive", "Lucid_Phase" + PhaseNumber + "_Golem_Revive", 0.1f, -1, -1, false);
+	MainSpriteRenderer->CreateAnimation("Idle", "Lucid_Phase" + PhaseNumber + "_Golem_Idle");
+	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Phase" + PhaseNumber + "_Golem_Attack");
+	MainSpriteRenderer->CreateAnimation("Death", "Lucid_Phase" + PhaseNumber + "_Golem_Death", 0.09f);
+	MainSpriteRenderer->ChangeAnimation("Ready");
+	MainSpriteRenderer->SetPivotValue({ 0.48f, 0.8f });
+	GravityOff();
+	MaxGraviry = 100.0f;
+
+	MainSpriteRenderer->SetFrameEvent("Ready", 9, [&](GameEngineSpriteRenderer*)
+		{
+			GravityOn();
+			MoveVectorForce.Y -= 800.0f;
+		}
+	);
 }
 
 void Golem::ChangeState(GolemState _State)

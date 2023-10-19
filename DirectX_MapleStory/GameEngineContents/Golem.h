@@ -25,6 +25,7 @@ public:
 	Golem& operator=(const Golem& _Other) = delete;
 	Golem& operator=(Golem&& _Other) noexcept = delete;
 
+	void Init(int _PhaseNumber);
 	void ChangeState(GolemState _State);
 	void StateUpdate(float _Delta);
 
