@@ -68,6 +68,7 @@ protected:
 	void ChasingCamera(float _Delta);
 	void BlockOutMap();
 	void LadderCheck();
+	bool CheckGround(float4 PlusCheckPos = float4::ZERO) override;
 
 private:
 	bool IsLadder = false;
@@ -80,8 +81,9 @@ private:
 	float CameraSpeed = 2.0f;
 	float LadderPivot = 0.0f;
 	float AlertTime = 0.0f;
-	float WindWalkSpeed = 400.0f;
-	float WindWalkTime = 1.0f;
+
+	float SkipGround = 0.0f;
+
 	float4 CurMapScale = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;

@@ -102,7 +102,7 @@ protected:
 	void Update(float _Delta) override;
 	void Release() override;
 
-	bool CheckGround(float4 PlusCheckPos = float4::ZERO);
+	virtual bool CheckGround(float4 PlusCheckPos = float4::ZERO);
 	GameEngineColor CheckGroundColor(float4 PlusCheckPos = float4::ZERO);
 
 private:

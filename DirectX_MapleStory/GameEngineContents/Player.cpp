@@ -266,6 +266,19 @@ void Player::LadderCheck()
 	}
 }
 
+bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
+{
+	if (0.0f != SkipGround && SkipGround <= Transform.GetWorldPosition().Y)
+	{
+		return false;
+	}
+	else if (0.0f != SkipGround && SkipGround > Transform.GetWorldPosition().Y)
+	{
+		SkipGround = 0.0f;
+	}
+	return ContentActor::CheckGround(PlusCheckPos);
+}
+
 void Player::ChangeToIdle()
 {
 	//GravityReset();

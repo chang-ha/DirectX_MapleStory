@@ -626,13 +626,17 @@ void Player::DownUpdate(float _Delta)
 
 	else if (GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this))
 	{
-		if (false == CheckGround(float4(0, -3)))
-		{
-			IsGround = false;
-			ChangeState(PlayerState::Jump);
-			Transform.AddLocalPosition(float4(0, -3));
-			return;
-		}
+		PlusMoveVectorForce({0, 150.0f});
+		IsGround = false;
+		SkipGround = Transform.GetWorldPosition().Y - 3.0f;
+		ChangeState(PlayerState::Jump);
+		//if (false == CheckGround(float4(0, -3)))
+		//{
+		//	IsGround = false;
+		//	ChangeState(PlayerState::Jump);
+		//	Transform.AddLocalPosition(float4(0, -3));
+		//	return;
+		//}
 	}
 }
 
