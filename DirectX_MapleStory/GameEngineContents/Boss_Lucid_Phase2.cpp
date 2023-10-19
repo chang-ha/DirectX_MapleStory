@@ -2,6 +2,7 @@
 #include "Boss_Lucid_Phase2.h"
 #include "PhantasmalWind.h"
 #include "ContentLevel.h"
+#include "Lucid_Phase2.h"
 
 Boss_Lucid_Phase2::Boss_Lucid_Phase2()
 {
@@ -71,6 +72,13 @@ void Boss_Lucid_Phase2::Start()
 			}
 		}
 	);
+
+	BossRenderer->SetEndEvent("Summon_Dragon", [&](GameEngineRenderer* _Renderer)
+		{
+			Lucid_Phase2* Map = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
+			Map->CallDragon();
+		}
+	);
 }
 
 void Boss_Lucid_Phase2::Update(float _Delta)
@@ -78,9 +86,19 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 	BaseBossActor::Update(_Delta);
 	StateUpdate(_Delta);
 
+	if (true == GameEngineInput::IsDown('4', this))
+	{
+		ChangeState(LucidState::Idle);
+	}
+
 	if (true == GameEngineInput::IsDown('5',this))
 	{
 		ChangeState(LucidState::PhantasmalWind);
+	}
+
+	if (true == GameEngineInput::IsDown('6', this))
+	{
+		ChangeState(LucidState::Summon_Dragon);
 	}
 }
 
@@ -166,11 +184,11 @@ void Boss_Lucid_Phase2::IdleStart()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		BossRenderer->SetPivotValue({ 0.33f, 0.5f });
+		BossRenderer->SetPivotValue({ 0.33f, 0.63f });
 		BossRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
-		BossRenderer->SetPivotValue({ 0.67f, 0.5f });
+		BossRenderer->SetPivotValue({ 0.67f, 0.63f });
 		BossRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
@@ -186,14 +204,16 @@ void Boss_Lucid_Phase2::DeathStart()
 
 void Boss_Lucid_Phase2::PhantasmalWindStart()
 {
+	BossRenderer->ChangeAnimation("PhantasmalWind");
+
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		BossRenderer->SetPivotValue({ 0.47f, 0.61f });
+		BossRenderer->SetPivotValue({ 0.47f, 0.68f });
 		BossRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
-		BossRenderer->SetPivotValue({ 0.53f, 0.61f });
+		BossRenderer->SetPivotValue({ 0.53f, 0.68f });
 		BossRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
@@ -201,12 +221,27 @@ void Boss_Lucid_Phase2::PhantasmalWindStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
-	BossRenderer->ChangeAnimation("PhantasmalWind");
 }
 
 void Boss_Lucid_Phase2::Summon_DragonStart()
 {
+	BossRenderer->ChangeAnimation("Summon_Dragon");
 
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		BossRenderer->SetPivotValue({ 0.595f, 0.758f });
+		BossRenderer->LeftFlip();
+		break;
+	case ActorDir::Left:
+		BossRenderer->SetPivotValue({ 0.405f, 0.758f });
+		BossRenderer->RightFlip();
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 }
 
 void Boss_Lucid_Phase2::Summon_GolemStart()
@@ -234,7 +269,10 @@ void Boss_Lucid_Phase2::PhantasmalWindUpdate(float _Delta)
 
 void Boss_Lucid_Phase2::Summon_DragonUpdate(float _Delta)
 {
-
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
 }
 
 void Boss_Lucid_Phase2::Summon_GolemUpdate(float _Delta)

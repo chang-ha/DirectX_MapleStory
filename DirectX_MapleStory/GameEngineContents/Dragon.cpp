@@ -2,6 +2,8 @@
 #include "Dragon.h"
 
 #define DELAY_TIME 1.0f
+#define Dir_Up 1.0f
+#define Dir_Down -1.0f
 
 Dragon::Dragon()
 {
@@ -81,6 +83,11 @@ void Dragon::Start()
 			default:
 				MsgBoxAssert("존재하지 않는 방향입니다.");
 				break;
+			}
+
+			if (0.0f != Breath_MoveDir)
+			{
+				IsMoveBreath = true;
 			}
 		}
 	);
@@ -265,9 +272,9 @@ void Dragon::DownUpdate(float _Delta)
 		Delay = DELAY_TIME;
 	}
 
-	if (-750.0f > Transform.GetWorldPosition().Y)
+	if (Destination_YPos > Transform.GetWorldPosition().Y)
 	{
-		Transform.SetLocalPosition({ Transform.GetWorldPosition().X, -750.0f });
+		Transform.SetLocalPosition({ Transform.GetWorldPosition().X, Destination_YPos });
 		Delay -= _Delta;
 	}
 
@@ -295,6 +302,24 @@ void Dragon::BreathUpdate(float _Delta)
 	{
 		ChangeState(DragonState::Up);
 	}
+
+	if (false == IsMoveBreath)
+	{
+		return;
+	}
+
+	if (-Breath_Min_Pos < Transform.GetWorldPosition().Y && Dir_Up == Breath_MoveDir)
+	{
+		Transform.SetLocalPosition({ Transform.GetWorldPosition().X, -Breath_Min_Pos });
+		Breath_MoveDir = Dir_Down;
+	}
+	else if (-Breath_Max_Pos > Transform.GetWorldPosition().Y && Dir_Down == Breath_MoveDir)
+	{
+		Transform.SetLocalPosition({ Transform.GetWorldPosition().X, -Breath_Max_Pos });
+		Breath_MoveDir = Dir_Up;
+	}
+
+	Transform.AddLocalPosition({ 0, Breath_MoveDir * BreathSpeed * _Delta });
 }
 
 void Dragon::IdleEnd()
@@ -315,6 +340,7 @@ void Dragon::UpEnd()
 void Dragon::BreathEnd()
 {
 	DragonRenderer->SetPivotType(PivotType::Bottom);
+	IsMoveBreath = false;
 }
 
 void Dragon::BreathOn()
@@ -345,7 +371,6 @@ void Dragon::RightBreath()
 
 void Dragon::LeftBreath()
 {
-
 	for (size_t i = 0; i < BreathRenderers.size(); i++)
 	{
 		BreathRenderers[i]->Transform.SetLocalPosition({ -380 - 190 * static_cast<float>(i), -120, RenderDepth::monsterattack });

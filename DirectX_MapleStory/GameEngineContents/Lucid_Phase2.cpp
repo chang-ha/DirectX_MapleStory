@@ -6,6 +6,7 @@
 #include "ContentBackGround.h"
 #include "RenderActor.h"
 #include "Boss_Lucid_Phase2.h"
+#include "Dragon.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -166,6 +167,16 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == SkillManagerActor)
 	{
 		SkillManagerActor = CreateActor<SkillManager>();
+	}
+
+	if (nullptr == LeftDragon)
+	{
+		LeftDragon = CreateActor<Dragon>(UpdateOrder::Monster);
+		LeftDragon->Transform.SetLocalPosition(float4(50, 200));
+		LeftDragon->SetDir(ActorDir::Right);
+		LeftDragon->SetBreathPos({ 1100, 150 });
+		LeftDragon->SetDestination_YPos(-1050.0f);
+		LeftDragon->SetBreathMinMaxPos(850.0f, 1200.0f);
 	}
 
 	// 2050, 1550
@@ -633,4 +644,9 @@ void Lucid_Phase2::ObjectUpdate(float _Delta)
 		std::shared_ptr<FallingObject> CurObject = MapObjects[i];
 		CurObject->Update(_Delta);
 	}
+}
+
+void Lucid_Phase2::CallDragon()
+{
+	LeftDragon->ChangeState(DragonState::Down);
 }

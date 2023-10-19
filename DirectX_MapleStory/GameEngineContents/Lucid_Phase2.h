@@ -40,6 +40,8 @@ public:
 	Lucid_Phase2& operator=(const Lucid_Phase2& _Other) = delete;
 	Lucid_Phase2& operator=(Lucid_Phase2&& _Other) noexcept = delete;
 
+	void CallDragon();
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;

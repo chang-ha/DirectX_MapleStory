@@ -32,6 +32,18 @@ public:
 
 	void SetBreathPos(const float4& _Pos);
 
+	void SetDestination_YPos(float _Pos)
+	{
+		Destination_YPos = _Pos;
+	}
+
+	void SetBreathMinMaxPos(float _MinPos, float _MaxPos)
+	{
+		Breath_MoveDir = 1.0f;
+		Breath_Min_Pos = _MinPos;
+		Breath_Max_Pos = _MaxPos;
+	}
+
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
@@ -41,6 +53,14 @@ protected:
 private:
 	float Delay = 0.0f;
 	float Speed = 150.0f;
+	float Destination_YPos = -750.0f;
+
+	bool IsMoveBreath = false;
+	float BreathSpeed = 200.0f;
+	float Breath_MoveDir = 0.0f;
+	float Breath_Max_Pos = 0.0f;
+	float Breath_Min_Pos = 0.0f;
+
 	ActorDir Dir = ActorDir::Right;
 	DragonState State = DragonState::Idle;
 	std::shared_ptr<GameEngineSpriteRenderer> DragonRenderer = nullptr;
