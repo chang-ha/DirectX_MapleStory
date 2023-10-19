@@ -50,14 +50,30 @@ void Boss_Lucid_Phase2::Start()
 
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase2_Idle");
 	BossRenderer->ChangeAnimation("Idle");
+
+	BossCollision->Transform.SetLocalScale({ 100,100 });
 }
 
 void Boss_Lucid_Phase2::Update(float _Delta)
 {
 	BaseBossActor::Update(_Delta);
 	StateUpdate(_Delta);
-}
 
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		BossRenderer->LeftFlip();
+		BossRenderer->SetPivotValue({0.35f, 0.45f});
+		break;
+	case ActorDir::Left:
+		BossRenderer->RightFlip();
+		BossRenderer->SetPivotType(PivotType::Left);
+		break;
+	case ActorDir::Null:
+	default:
+		break;
+	}
+}
 
 void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 {

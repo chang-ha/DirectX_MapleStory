@@ -31,6 +31,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 private:
+	ActorDir Dir = ActorDir::Right;
 	LucidState State = LucidState::Idle;
 
 	///// State
