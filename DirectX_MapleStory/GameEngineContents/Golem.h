@@ -25,6 +25,10 @@ public:
 	Golem& operator=(const Golem& _Other) = delete;
 	Golem& operator=(Golem&& _Other) noexcept = delete;
 
+	/// <summary>
+	/// Init 1 or 2
+	/// </summary>
+	/// <param name="_PhaseNumber"> == CurPhaseNumber</param>
 	void Init(int _PhaseNumber);
 	void ChangeState(GolemState _State);
 	void StateUpdate(float _Delta);

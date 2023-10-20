@@ -11,6 +11,8 @@
 #include "Boss_Lucid_Phase2.h"
 #include "Dragon.h"
 
+#include "Golem_Phase2.h"
+
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
 #define FALL_SPEED3 50.0f
@@ -775,8 +777,9 @@ void Lucid_Phase2::Update(float _Delta)
 		int RandomInt = Random.RandomInt(0, 10);
 
 		std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[RandomInt];
-		_CurFootHold->ChangeState(FootHold::FootHoldState::Break);
-		Player::MainPlayer->SetNotGroundValue(_CurFootHold->FootHoldYPos);
+		std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);
+		_CurGolme->SetSummonFootHold(RandomInt);
+		_CurGolme->Transform.SetLocalPosition({ _CurFootHold->Transform.GetWorldPosition().X, _CurFootHold->FootHoldYPos + 100.0f });
 	}
 }
 
@@ -807,4 +810,11 @@ void Lucid_Phase2::CallDragon()
 	{
 		RightDragon->ChangeState(DragonState::Down);
 	}
+}
+
+void Lucid_Phase2::BreakFootHold(int _FootHoldNumber)
+{
+	std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[_FootHoldNumber];
+	_CurFootHold->ChangeState(FootHold::FootHoldState::Break);
+	Player::MainPlayer->SetNotGroundValue(_CurFootHold->FootHoldYPos);
 }

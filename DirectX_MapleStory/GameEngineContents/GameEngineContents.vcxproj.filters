@@ -139,6 +139,9 @@
     <ClCompile Include="ServerLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Golem_Phase2.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="ServerLevel.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Golem_Phase2.h">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

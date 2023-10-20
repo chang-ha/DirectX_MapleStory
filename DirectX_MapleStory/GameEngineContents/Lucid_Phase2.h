@@ -60,6 +60,7 @@ public:
 	Lucid_Phase2& operator=(Lucid_Phase2&& _Other) noexcept = delete;
 
 	void CallDragon();
+	void BreakFootHold(int _FootHoldNumber);
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
