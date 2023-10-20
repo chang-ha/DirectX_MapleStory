@@ -9,9 +9,6 @@
       <Filter>Header</Filter>
     </FxCompile>
     <FxCompile Include="DebugColorShader.fx" />
-    <FxCompile Include="TextureMaskShader.fx">
-      <Filter>2D</Filter>
-    </FxCompile>
     <FxCompile Include="TextureShader.fx">
       <Filter>2D</Filter>
     </FxCompile>
