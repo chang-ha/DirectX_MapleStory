@@ -89,6 +89,12 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
         clip(-1);
     }
     
+    if (BaseColorOnly != 0)
+    {
+        Color = BaseColor;
+        Color.a = 1;
+    }
+    
     Color += PlusColor;
     Color *= MulColor;
     

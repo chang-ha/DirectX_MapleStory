@@ -63,7 +63,7 @@ public:
 		Target = nullptr;
 	}
 
-	int SetZSort(int _SortOrder)
+	void SetZSort(int _SortOrder)
 	{
 		ZSortMap.insert(_SortOrder);
 	}
