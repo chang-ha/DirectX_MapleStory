@@ -243,6 +243,17 @@ void GameEngineRenderer::SetMaterial(std::string_view _Name, int _Index /*= 0*/)
 {
 	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
 	Unit->SetMaterial(_Name);
+
+	if (Unit->ShaderResHelper.IsConstantBuffer("TransformData"))
+	{
+		Unit->ShaderResHelper.SetConstantBufferLink("TransformData", Transform.GetConstTransformDataRef());
+	}
+
+	if (Unit->ShaderResHelper.IsConstantBuffer("RenderBaseInfo"))
+	{
+		Unit->ShaderResHelper.SetConstantBufferLink("RenderBaseInfo", RenderBaseInfoValue);
+	}
+
 	SetMaterialEvent(_Name, _Index);
 }
 

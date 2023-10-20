@@ -3,6 +3,7 @@
 #include <map>
 #include <list>
 #include <memory>
+#include <set>
 
 // 설명 :
 class GameEngineCamera : public GameEngineActor
@@ -62,6 +63,11 @@ public:
 		Target = nullptr;
 	}
 
+	int SetZSort(int _SortOrder)
+	{
+		ZSortMap.insert(_SortOrder);
+	}
+
 	float4 GetScreenMousePrevPos() { return ScreenMousePrevPos; }
 	float4 GetScreenMousePos() { return ScreenMousePos; }
 	float4 GetScreenMouseDir() { return ScreenMouseDir; }
@@ -98,6 +104,8 @@ private:
 	float4 ScreenMouseDir;
 	float4 ScreenMouseDirNormal;
 	TransformData OriginData; // FreeCamera하기 전 Transform 저장
+
+	std::set<int> ZSortMap;
 
 	void CameraUpdate(float _DeltaTime);
 };

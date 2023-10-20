@@ -150,6 +150,14 @@ void GameEngineCamera::Render(float _DeltaTime)
 	{
 		std::list<std::shared_ptr<class GameEngineRenderer>>& RendererList = RendererPair.second;
 
+		if (true == ZSortMap.contains(RendererPair.first))
+		{
+			RendererList.sort([](std::shared_ptr<class GameEngineRenderer> _Left, std::shared_ptr<class GameEngineRenderer> _Right)
+				{
+					return _Left->Transform.GetWorldPosition().Z > _Right->Transform.GetWorldPosition().Z;
+				});
+		}
+
 		for (std::shared_ptr<class GameEngineRenderer> & Renderer : RendererList)
 		{
 			if (false == Renderer->IsUpdate())

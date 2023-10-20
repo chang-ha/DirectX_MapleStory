@@ -5,6 +5,15 @@
 #include "GameEngineMaterial.h"
 #include "GameEngineRenderUnit.h"
 
+struct RenderBaseInfo
+{
+	float4 BaseColor;
+	int IsMask = 0;
+	int BaseTemp0 = 0;
+	int BaseTemp1 = 0;
+	int BaseTemp2 = 0;
+};
+
 // 설명 : GameEngineRenderer에게 Order는 랜더링 되는 순서를 의미합니다.
 class GameEngineRenderer : public GameEngineComponent
 {
@@ -62,6 +71,7 @@ public:
 
 protected:
 	std::vector<std::shared_ptr<GameEngineRenderUnit>> Units;
+	RenderBaseInfo RenderBaseInfoValue;
 
 	void Start();
 	virtual void Render(class GameEngineCamera* _Camera, float _Delta);

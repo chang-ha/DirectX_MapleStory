@@ -1,4 +1,5 @@
 #include "Transform.fx"
+#include "RenderBase.fx"
 
 struct GameEngineVertex2D
 {
@@ -62,6 +63,7 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 // 규칙
 // Texture이름이 A이면 Sampler이름은 ASampler << 규칙을 지켜야 내가 만든 자동 쉐이더 컴파일이 작동함
 Texture2D DiffuseTex : register(t0);
+Texture2D MaskTex : register(t1);
 SamplerState DiffuseTexSampler : register(s0);
 
 cbuffer ColorData : register(b1)
@@ -75,6 +77,13 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     // _Input == VertexShader에서 ViewPort까지 다 곱한 SV_POSITION을 _Input값으로 들어옴
     float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCOORD.xy);
     
+    int2 ScreenPos = int2(_Input.POSITION.x, _Input.POSITION.y);
+    
+    if (IsMask == 1 && MaskTex[ScreenPos].r <= 0.0f)
+    {
+        clip(-1);
+    }
+    
     if (0.0f >= Color.a)
     {
         clip(-1);
@@ -82,11 +91,6 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     
     Color += PlusColor;
     Color *= MulColor;
-    
-    if (0 >= Color.a)
-    {
-        Color.a = 0.0f;
-    }
     
     return Color;
 }
