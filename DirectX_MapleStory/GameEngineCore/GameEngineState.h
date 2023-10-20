@@ -31,16 +31,17 @@ public:
 
 	void ChangeState(int _Stateindex)
 	{
-		if (nullptr != CurState)
+		if (nullptr != CurState && nullptr != CurState->Event.End)
 		{
 			CurState->Event.End(this);
 		}
 
-		CurState = &State[_Stateindex];
+		CurState = &States[_Stateindex];
 
-		if (nullptr != CurState)
+		if (nullptr != CurState && nullptr != CurState->Event.Start)
 		{
 			CurState->Event.Start(this);
+			StateTime = 0.0f;
 		}
 	}
 
@@ -52,7 +53,7 @@ public:
 
 	void CreateState(int _Stateindex, const CreateStateParameter& _Para)
 	{
-		State[_Stateindex].Event = _Para;
+		States[_Stateindex].Event = _Para;
 	}
 
 
@@ -65,12 +66,18 @@ public:
 
 	State* Find(int _Index)
 	{
-
+		if (false == States.contains(_Index))
+		{
+			return nullptr;
+		}
+		return &States[_Index];
 	}
 
 	void Update(float _DeltaTime)
 	{
-		if (nullptr == CurState)
+		StateTime += _DeltaTime;
+
+		if (nullptr == CurState || nullptr == CurState->Event.Stay)
 		{
 			return;
 		}
@@ -78,10 +85,16 @@ public:
 		CurState->Event.Stay(_DeltaTime, this);
 	}
 
+	float GetStateTime()
+	{
+		return StateTime;
+	}
+
 protected:
 
 private:
-	State* CurState;
-	std::map<int, State> State;
+	float StateTime = 0.0f;
+	State* CurState = nullptr;
+	std::map<int, State> States;
 };
 
