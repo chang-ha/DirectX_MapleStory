@@ -81,6 +81,7 @@ private:
 
 	// Map Detail
 	void ObjectUpdate(float _Delta);
+	std::set<int> FootHoldsNumber;
 	std::vector<std::shared_ptr<FootHold>> AllFootHolds;
 	std::vector<std::shared_ptr<FallingObject>> MapObjects;
 };
