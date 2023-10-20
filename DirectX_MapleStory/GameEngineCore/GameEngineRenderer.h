@@ -69,9 +69,9 @@ public:
 
 	GameEngineShaderResHelper& GetShaderResHelper(int _Index = 0);
 
+	RenderBaseInfo RenderBaseInfoValue;
 protected:
 	std::vector<std::shared_ptr<GameEngineRenderUnit>> Units;
-	RenderBaseInfo RenderBaseInfoValue;
 
 	void Start();
 	virtual void Render(class GameEngineCamera* _Camera, float _Delta);
