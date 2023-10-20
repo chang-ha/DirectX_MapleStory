@@ -43,3 +43,35 @@ void Golem_Phase2::SetSummonFootHold(int _SummonFootHold)
 			Map->BreakFootHold(SummonFootHold);
 		});
 }
+
+void Golem_Phase2::ReadyStart()
+{
+	Golem::ReadyStart();
+	MainSpriteRenderer->SetPivotValue({0.45f, 0.58f});
+}
+
+
+void Golem_Phase2::ReviveStart()
+{
+	Golem::ReviveStart();
+	MainSpriteRenderer->SetPivotValue({ 0.49f, 0.63f });
+}
+
+void Golem_Phase2::IdleStart()
+{
+	Golem::IdleStart();
+	MainSpriteRenderer->SetPivotValue({ 0.49f, 0.915f });
+	// MainSpriteRenderer->SetPivotValue();
+}
+
+void Golem_Phase2::AttackStart()
+{
+	Golem::AttackStart();
+	// MainSpriteRenderer->SetPivotValue();
+}
+
+void Golem_Phase2::DeathStart()
+{
+	Golem::DeathStart();
+	// MainSpriteRenderer->SetPivotValue();
+}

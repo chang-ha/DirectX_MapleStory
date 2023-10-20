@@ -86,6 +86,7 @@ private:
 	float LadderPivot = 0.0f;
 	float AlertTime = 0.0f;
 
+	// 추후 Set으로 개선
 	float SkipGround = 0.0f;
 	float NotGround = 0.0f;
 

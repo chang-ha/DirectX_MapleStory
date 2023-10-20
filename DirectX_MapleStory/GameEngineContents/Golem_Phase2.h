@@ -25,5 +25,11 @@ private:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
+
+	void ReadyStart() override;
+	void ReviveStart() override;
+	void IdleStart() override;
+	void AttackStart() override;
+	void DeathStart() override;
 };
 

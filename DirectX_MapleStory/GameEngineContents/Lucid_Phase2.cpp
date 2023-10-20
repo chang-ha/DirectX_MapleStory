@@ -790,9 +790,9 @@ void Lucid_Phase2::Update(float _Delta)
 
 		PrevFootHold = RandomInt;
 
-		std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[RandomInt];
+		std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[0];
 		std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);
-		_CurGolme->SetSummonFootHold(RandomInt);
+		_CurGolme->SetSummonFootHold(0);
 		_CurGolme->Transform.SetLocalPosition({ _CurFootHold->Transform.GetWorldPosition().X + RandomFloat, _CurFootHold->FootHoldYPos + 100.0f });
 	}
 }

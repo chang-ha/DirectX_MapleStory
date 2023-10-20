@@ -39,19 +39,20 @@ protected:
 	void Update(float _Delta) override;
 	void Release() override;
 
-private:
-	GolemState State = GolemState::Ready;
-	std::shared_ptr<GameEngineCollision> GolemCollision = nullptr;
-
-	void ReviveStart();
-	void IdleStart();
-	void AttackStart();
-	void DeathStart();
+	virtual void ReadyStart();
+	virtual void ReviveStart();
+	virtual void IdleStart();
+	virtual void AttackStart();
+	virtual void DeathStart();
 
 	void ReadyUpdate(float _Delta);
 	void ReviveUpdate(float _Delta);
 	void IdleUpdate(float _Delta);
 	void AttackUpdate(float _Delta);
 	void DeathUpdate(float _Delta);
+
+	GolemState State = GolemState::Ready;
+	std::shared_ptr<GameEngineCollision> GolemCollision = nullptr;
+private:
 };
 

@@ -78,8 +78,8 @@ void Golem::Init(int _PhaseNumber)
 	MainSpriteRenderer->CreateAnimation("Idle", "Lucid_Phase" + PhaseNumber + "_Golem_Idle");
 	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Phase" + PhaseNumber + "_Golem_Attack");
 	MainSpriteRenderer->CreateAnimation("Death", "Lucid_Phase" + PhaseNumber + "_Golem_Death", 0.09f);
-	MainSpriteRenderer->ChangeAnimation("Ready");
-	MainSpriteRenderer->SetPivotValue({ 0.48f, 0.8f });
+
+	ReadyStart();
 	GravityOff();
 	MaxGraviry = 100.0f;
 
@@ -168,6 +168,12 @@ void Golem::ReadyUpdate(float _Delta)
 	{
 		ChangeState(GolemState::Revive);
 	}
+}
+
+void Golem::ReadyStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Ready");
+	MainSpriteRenderer->SetPivotValue({ 0.48f, 0.8f });
 }
 
 void Golem::ReviveStart()
