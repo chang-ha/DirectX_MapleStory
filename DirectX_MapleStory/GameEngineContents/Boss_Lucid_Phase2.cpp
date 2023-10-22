@@ -311,6 +311,10 @@ void Boss_Lucid_Phase2::LaserStart()
 	}
 }
 
+void Boss_Lucid_Phase2::BodySlamStart()
+{
+
+}
 
 void Boss_Lucid_Phase2::Summon_DragonStart()
 {
@@ -366,6 +370,11 @@ void Boss_Lucid_Phase2::LaserUpdate(float _Delta)
 	}
 }
 
+void Boss_Lucid_Phase2::BodySlamUpdate(float _Delta)
+{
+
+}
+
 void Boss_Lucid_Phase2::Summon_DragonUpdate(float _Delta)
 {
 	if (true == BossRenderer->IsCurAnimationEnd())
@@ -394,6 +403,11 @@ void Boss_Lucid_Phase2::PhantasmalWindEnd()
 }
 
 void Boss_Lucid_Phase2::LaserEnd()
+{
+
+}
+
+void Boss_Lucid_Phase2::BodySlamEnd()
 {
 
 }
