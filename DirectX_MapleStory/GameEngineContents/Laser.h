@@ -13,7 +13,7 @@ public:
 	Laser& operator=(const Laser& _Other) = delete;
 	Laser& operator=(Laser&& _Other) noexcept = delete;
 
-	void Init(std::string_view _LaserName);
+	void Init(std::string_view _LaserName, int _ReadyEndIndex = 12, float _AniSpeed = 0.09f);
 	void SetAngle(float _Angle);
 	void SetColScale(const float4& _Scale);
 

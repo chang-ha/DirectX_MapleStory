@@ -52,7 +52,7 @@ void Laser::Release()
 	}
 }
 
-void Laser::Init(std::string_view _LaserName)
+void Laser::Init(std::string_view _LaserName, int _ReadyEndIndex, float _AniSpeed)
 {
 	if (nullptr == GameEngineSprite::Find(std::string(_LaserName.data())))
 	{
@@ -71,8 +71,8 @@ void Laser::Init(std::string_view _LaserName)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 
-	LaserRenderer->CreateAnimation("Ready", _LaserName, 0.1f, 0, 12);
-	LaserRenderer->CreateAnimation("Attack", _LaserName, 0.1f, 12);
+	LaserRenderer->CreateAnimation("Ready", _LaserName, _AniSpeed, 0, _ReadyEndIndex);
+	LaserRenderer->CreateAnimation("Attack", _LaserName, _AniSpeed, _ReadyEndIndex);
 	LaserRenderer->ChangeAnimation("Ready");
 	LaserRenderer->AutoSpriteSizeOn();
 

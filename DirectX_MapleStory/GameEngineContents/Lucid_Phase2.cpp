@@ -10,7 +10,7 @@
 #include "RenderActor.h"
 #include "Boss_Lucid_Phase2.h"
 #include "Dragon.h"
-
+#include "Laser.h"
 #include "Golem_Phase2.h"
 
 #define FALL_SPEED1 60.0f
@@ -259,6 +259,12 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		_Animation->Inter[0] = 3.0f;
 
 		BG_LucidLaser->Renderer->Transform.SetWorldPosition({ 1025, -775, static_cast<float>(RenderDepth::map) + 0.2f });
+
+		BG_LucidLaser->Renderer->SetFrameEvent("BG_Laser", 20, [&](GameEngineRenderer* _Renderer)
+			{
+				LaserPatternValue = true;
+			}
+		);
 
 		BG_LucidLaser->Renderer->SetEndEvent("BG_Laser", [&](GameEngineRenderer* _Renderer)
 			{
@@ -825,6 +831,24 @@ void Lucid_Phase2::Update(float _Delta)
 		std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);
 		_CurGolme->SetSummonFootHold(RandomInt);
 		_CurGolme->Transform.SetLocalPosition({ _CurFootHold->Transform.GetWorldPosition().X + RandomFloat, _CurFootHold->FootHoldYPos + 100.0f });
+	}
+
+	if (true == LaserPatternValue)
+	{
+		LaserCooldown -= _Delta;
+		if (0.0f >= LaserCooldown)
+		{
+			GameEngineRandom Random;
+
+			std::shared_ptr<Laser> _Laser = CreateActor<Laser>(UpdateOrder::Monster);
+			Random.SetSeed(reinterpret_cast<long long>(_Laser.get()));
+			float RandomFloat = Random.RandomFloat(0.0f , 180.0f);
+			_Laser->Init("Phase2", 20, 0.06f);
+			_Laser->SetColScale({25, 1500});
+			_Laser->SetAngle(RandomFloat);
+			_Laser->Transform.SetLocalPosition(Player::MainPlayer->Transform.GetWorldPosition());
+			LaserCooldown = Lase_Cooldown;
+		}
 	}
 }
 

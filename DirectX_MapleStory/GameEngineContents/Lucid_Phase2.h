@@ -45,6 +45,8 @@ private:
 	void BreakUpdate(float _Delta);
 };
 
+#define Lase_Cooldown 0.7f
+
 class Lucid_Phase2 : public ContentLevel
 {
 	friend FallingObject;
@@ -62,6 +64,10 @@ public:
 	void CallDragon();
 	void BreakFootHold(int _FootHoldNumber);
 	void LucidLaserOn();
+	void LucidLaserOff()
+	{
+		LaserPatternValue = false;
+	}
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -71,6 +77,8 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	bool LaserPatternValue = false;
+	float LaserCooldown = Lase_Cooldown;
 	int PrevFootHold = -1;
 	float4 CurMapScale = float4::ZERO;
 	std::shared_ptr<class Dragon> LeftDragon = nullptr;

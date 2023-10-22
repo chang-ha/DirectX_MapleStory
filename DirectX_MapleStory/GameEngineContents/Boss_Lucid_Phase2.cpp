@@ -68,6 +68,13 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	);
 
+	BossRenderer->SetFrameEvent("Laser", 32, [&](GameEngineRenderer* _Renderer)
+		{
+			Lucid_Phase2* Map = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
+			Map->LucidLaserOff();
+		}
+	);
+
 	BossRenderer->SetFrameEvent("Laser", 37, [&](GameEngineRenderer* _Renderer)
 		{
 			BossCollision->On();
