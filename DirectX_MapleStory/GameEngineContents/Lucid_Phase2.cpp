@@ -166,6 +166,9 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
+	GetMainCamera()->SetZSort(RenderOrder::BACKGROUNDOBJECT);
+	GetMainCamera()->SetZSort(RenderOrder::MAP);
+
 	if (nullptr == GameEngineSprite::Find("BackStar1.png"))
 	{
 		GameEngineDirectory Dir;
@@ -217,6 +220,15 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("LaserBackGround"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase2\\LaserBackGround");
+
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -234,6 +246,25 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		Boss = CreateActor<Boss_Lucid_Phase2>(UpdateOrder::Monster);
 		Boss->Transform.SetLocalPosition(float4(1000, -850));
+	}
+
+	if (nullptr == BG_LucidLaser)
+	{
+		BG_LucidLaser = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		BG_LucidLaser->Init(RenderOrder::MAP, RenderDepth::map);
+		BG_LucidLaser->Renderer->CreateAnimation("BG_Laser", "LaserBackGround", 0.09f, -1, -1, false);
+		BG_LucidLaser->Off();
+
+		std::shared_ptr<GameEngineFrameAnimation> _Animation = BG_LucidLaser->Renderer->FindAnimation("BG_Laser");
+		_Animation->Inter[0] = 3.0f;
+
+		BG_LucidLaser->Renderer->Transform.SetWorldPosition({ 1025, -775, static_cast<float>(RenderDepth::map) + 0.2f });
+
+		BG_LucidLaser->Renderer->SetEndEvent("BG_Laser", [&](GameEngineRenderer* _Renderer)
+			{
+				BG_LucidLaser->Off();
+			}
+		);
 	}
 
 	if (nullptr == CurPlayer)
@@ -790,9 +821,9 @@ void Lucid_Phase2::Update(float _Delta)
 
 		PrevFootHold = RandomInt;
 
-		std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[0];
+		std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[RandomInt];
 		std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);
-		_CurGolme->SetSummonFootHold(0);
+		_CurGolme->SetSummonFootHold(RandomInt);
 		_CurGolme->Transform.SetLocalPosition({ _CurFootHold->Transform.GetWorldPosition().X + RandomFloat, _CurFootHold->FootHoldYPos + 100.0f });
 	}
 }
@@ -831,4 +862,10 @@ void Lucid_Phase2::BreakFootHold(int _FootHoldNumber)
 	std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[_FootHoldNumber];
 	_CurFootHold->ChangeState(FootHold::FootHoldState::Break);
 	Player::MainPlayer->SetNotGroundValue(_CurFootHold->FootHoldYPos);
+}
+
+void Lucid_Phase2::LucidLaserOn()
+{
+	BG_LucidLaser->Renderer->ChangeAnimation("BG_Laser", true, 0);
+	BG_LucidLaser->On();
 }

@@ -6,6 +6,7 @@ enum class LucidState
 	Idle,
 	Death,
 	PhantasmalWind,
+	Laser,
 	Summon_Dragon,
 	Summon_Golem,
 };
@@ -41,6 +42,7 @@ private:
 	void IdleStart();
 	void DeathStart();
 	void PhantasmalWindStart();
+	void LaserStart();
 	void Summon_DragonStart();
 	void Summon_GolemStart();
 	//
@@ -48,6 +50,7 @@ private:
 	void IdleUpdate(float _Delta);
 	void DeathUpdate(float _Delta);
 	void PhantasmalWindUpdate(float _Delta);
+	void LaserUpdate(float _Delta);
 	void Summon_DragonUpdate(float _Delta);
 	void Summon_GolemUpdate(float _Delta);
 	// 
@@ -55,6 +58,7 @@ private:
 	void IdleEnd();
 	void DeathEnd();
 	void PhantasmalWindEnd();
+	void LaserEnd();
 	void Summon_DragonEnd();
 	void Summon_GolemEnd();
 	// 
