@@ -44,6 +44,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase2_PhantasmalWind");
 	BossRenderer->CreateAnimation("Summon_Dragon", "Lucid_Phase2_Summon_Dragon");
 	BossRenderer->CreateAnimation("Laser", "Lucid_Phase2_Laser", 0.09f, -1, -1, false);
+	BossRenderer->CreateAnimation("BodySlam", "Lucid_Phase2_BodySlam");
 	BossRenderer->ChangeAnimation("Idle");
 	IdleStart();
 
@@ -62,6 +63,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	);
 
+	// Laser Render Event
 	BossRenderer->SetFrameEvent("Laser", 16, [&](GameEngineRenderer* _Renderer)
 		{
 			BossCollision->Off();
@@ -80,6 +82,21 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 			BossCollision->On();
 		}
 	);
+	//
+
+	// BodySlam Render Evnet
+	BossRenderer->SetFrameEvent("BodySlam", 3, [&](GameEngineRenderer* _Renderer)
+		{
+			BossCollision->Off();
+		}
+	);
+
+	BossRenderer->SetFrameEvent("BodySlam", 25, [&](GameEngineRenderer* _Renderer)
+		{
+			BossCollision->On();
+		}
+	);
+	//
 
 	BossRenderer->SetEndEvent("Summon_Dragon", [&](GameEngineRenderer* _Renderer)
 		{
@@ -91,6 +108,9 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	/// Animation Detail
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = BossRenderer->FindAnimation("Laser");
 	_Animation->Inter[30] = 15.0f;
+
+	_Animation = BossRenderer->FindAnimation("BodySlam");
+	_Animation->Inter[14] = 20.0f;
 }
 
 void Boss_Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
@@ -131,14 +151,14 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 		ChangeState(LucidState::Laser);
 	}
 
+	if (true == GameEngineInput::IsDown('8', this))
+	{
+		ChangeState(LucidState::BodySlam);
+	}
+
 	if (true == GameEngineInput::IsDown('0', this))
 	{
 		ChangeState(LucidState::Death);
-	}
-
-	if (true == GameEngineInput::IsDown('M', this))
-	{
-		Transform.AddLocalPosition({100.0f});
 	}
 }
 
@@ -160,6 +180,9 @@ void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 			break;
 		case LucidState::Laser:
 			LaserEnd();
+			break;
+		case LucidState::BodySlam:
+			BodySlamEnd();
 			break;
 		case LucidState::Summon_Dragon:
 			Summon_DragonEnd();
@@ -187,6 +210,9 @@ void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 		case LucidState::Laser:
 			LaserStart();
 			break;
+		case LucidState::BodySlam:
+			BodySlamStart();
+			break;
 		case LucidState::Summon_Dragon:
 			Summon_DragonStart();
 			break;
@@ -213,6 +239,8 @@ void Boss_Lucid_Phase2::StateUpdate(float _Delta)
 		return PhantasmalWindUpdate(_Delta);
 	case LucidState::Laser:
 		return LaserUpdate(_Delta);
+	case LucidState::BodySlam:
+		return BodySlamUpdate(_Delta);
 	case LucidState::Summon_Dragon:
 		return Summon_DragonUpdate(_Delta);
 	case LucidState::Summon_Golem:
@@ -301,7 +329,7 @@ void Boss_Lucid_Phase2::LaserStart()
 		BossRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
-		BossRenderer->SetPivotValue({ 0.48f, 0.75f });
+		BossRenderer->SetPivotValue({ 0.517f, 0.75f });
 		BossRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
@@ -313,7 +341,25 @@ void Boss_Lucid_Phase2::LaserStart()
 
 void Boss_Lucid_Phase2::BodySlamStart()
 {
+	BossRenderer->ChangeAnimation("BodySlam");
+	// Lucid_Phase2* Map = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
+	// Map->LucidLaserOn();
 
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		BossRenderer->SetPivotValue({ 0.375f, 0.566f });
+		BossRenderer->LeftFlip();
+		break;
+	case ActorDir::Left:
+		BossRenderer->SetPivotValue({ 0.625f, 0.566f });
+		BossRenderer->RightFlip();
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 }
 
 void Boss_Lucid_Phase2::Summon_DragonStart()
@@ -363,7 +409,6 @@ void Boss_Lucid_Phase2::PhantasmalWindUpdate(float _Delta)
 
 void Boss_Lucid_Phase2::LaserUpdate(float _Delta)
 {
-	//2050, 1550
 	if (true == BossRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(LucidState::Idle);
@@ -372,7 +417,10 @@ void Boss_Lucid_Phase2::LaserUpdate(float _Delta)
 
 void Boss_Lucid_Phase2::BodySlamUpdate(float _Delta)
 {
-
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
 }
 
 void Boss_Lucid_Phase2::Summon_DragonUpdate(float _Delta)
