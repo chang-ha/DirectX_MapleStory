@@ -142,6 +142,9 @@
     <ClCompile Include="Golem_Phase2.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
+    <ClCompile Include="Lucid_BodySlam.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -283,6 +286,9 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Golem_Phase2.h">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClInclude>
+    <ClInclude Include="Lucid_BodySlam.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
   </ItemGroup>
