@@ -3,6 +3,7 @@
 #include "PhantasmalWind.h"
 #include "ContentLevel.h"
 #include "Lucid_Phase2.h"
+#include "Lucid_BodySlam.h"
 
 Boss_Lucid_Phase2::Boss_Lucid_Phase2()
 {
@@ -36,6 +37,20 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 			Dir.MoveParentToExistsChild("Phase2");
 			Dir.MoveChild("Attack");
 			GameEngineSprite::CreateFolder("Lucid_" + Dir.GetFileName(), Dir.GetStringPath());
+		}
+	}
+
+	if (nullptr == GameEngineSprite::Find("Lucid_BodySlam"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Phase2_BodySlam");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("Lucid_BodySlam_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
 	}
 
@@ -88,6 +103,12 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	BossRenderer->SetFrameEvent("BodySlam", 3, [&](GameEngineRenderer* _Renderer)
 		{
 			BossCollision->Off();
+		}
+	);
+
+	BossRenderer->SetFrameEvent("BodySlam", 14, [&](GameEngineRenderer* _Renderer)
+		{
+			ContentLevel::CurContentLevel->CreateActor<Lucid_BodySlam>(UpdateOrder::Monster);
 		}
 	);
 

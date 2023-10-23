@@ -23,7 +23,10 @@ public:
 protected:
 
 private:
+	ActorDir Dir = ActorDir::Null;
+	float DelayTime = 1.0f;
 	BodySlamState State = BodySlamState::Ready;
+	std::vector<float4> MoveLocation;
 	std::shared_ptr<GameEngineSpriteRenderer> BodySlamRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BodySlamCollision = nullptr;
 
@@ -34,14 +37,11 @@ private:
 
 	void ChangeState(BodySlamState _State);
 	void StateUpdate(float _Delta);
+	void ChangeDir(ActorDir _Dir);
 
 	void ReadyStart();
 	void AttackStart();
 	void DeathStart();
-
-	void ReadyEnd();
-	void AttackEnd();
-	void DeathEnd();
 
 	void ReadyUpdate(float _Delta);
 	void AttackUpdate(float _Delta);
