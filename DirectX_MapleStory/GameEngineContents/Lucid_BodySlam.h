@@ -1,5 +1,25 @@
 #pragma once
 
+class BodySlamData
+{
+	friend class Lucid_BodySlam;
+public:
+	BodySlamData(float _PlusMoveSpeed, float4 _DestinationPos)
+		: PlusMoveSpeed(_PlusMoveSpeed), DestinationPos(_DestinationPos)
+	{
+
+	}
+
+	BodySlamData()
+	{
+
+	}
+private:
+	float PlusMoveSpeed = 0.0f;
+	float4 DestinationPos = float4::ZERO;
+
+};
+
 enum class BodySlamState
 {
 	Ready,
@@ -24,9 +44,14 @@ protected:
 
 private:
 	ActorDir Dir = ActorDir::Null;
-	float DelayTime = 1.0f;
 	BodySlamState State = BodySlamState::Ready;
-	std::vector<float4> MoveLocation;
+	float DelayTime = 1.0f;
+
+	int CurLocationIndex = 0;
+	float BaseSpeed = 25.0f;
+	float4 MoveVector = float4::ZERO;
+
+	std::vector<BodySlamData> MoveLocation;
 	std::shared_ptr<GameEngineSpriteRenderer> BodySlamRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BodySlamCollision = nullptr;
 
@@ -37,7 +62,7 @@ private:
 
 	void ChangeState(BodySlamState _State);
 	void StateUpdate(float _Delta);
-	void ChangeDir(ActorDir _Dir);
+	void ChangeAttackDir(ActorDir _Dir);
 
 	void ReadyStart();
 	void AttackStart();

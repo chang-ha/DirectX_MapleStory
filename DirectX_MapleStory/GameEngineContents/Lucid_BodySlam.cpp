@@ -20,20 +20,20 @@ void Lucid_BodySlam::LevelEnd(GameEngineLevel* _NextLevel)
 void Lucid_BodySlam::Start()
 {
 	MoveLocation.resize(14);
-	MoveLocation[0] = float4(445, -685);
-	MoveLocation[1] = float4(581, -836);
-	MoveLocation[2] = float4(794, -1003);
-	MoveLocation[3] = float4(1098, -1057);
-	MoveLocation[4] = float4(1378, -1011);
-	MoveLocation[5] = float4(1467, -852);
-	MoveLocation[6] = float4(1428, -668);
-	MoveLocation[7] = float4(1132, -382);
-	MoveLocation[8] = float4(869, -372);
-	MoveLocation[9] = float4(741, -490);
-	MoveLocation[10] = float4(756, -682);
-	MoveLocation[11] = float4(938, -841);
-	MoveLocation[12] = float4(1204, -1007);
-	MoveLocation[13] = float4(1378, -1007);
+	MoveLocation[0] = { 15.0f, float4(445, -865) };
+	MoveLocation[1] = { 20.0f, float4(581, -741) };
+	MoveLocation[2] = { 25.0f, float4(794, -547) };
+	MoveLocation[3] = { 30.0f, float4(1098, -493) };
+	MoveLocation[4] = { 25.0f, float4(1378, -539) };
+	MoveLocation[5] = { 20.0f,float4(1467, -698) };
+	MoveLocation[6] = { 15.0f, float4(1428, -882) };
+	MoveLocation[7] = { 20.0f, float4(1132, -1168) };
+	MoveLocation[8] = { 25.0f, float4(869, -1178) };
+	MoveLocation[9] = { 20.0f, float4(741, -1060) };
+	MoveLocation[10] = { 15.0f, float4(756, -868) };
+	MoveLocation[11] = { 20.0f, float4(938, -709) };
+	MoveLocation[12] = { 25.0f,float4(1204, -543) };
+	MoveLocation[13] = { 20.0f, float4(1378, -543) };
 
 	if (nullptr == BodySlamRenderer)
 	{
@@ -62,8 +62,15 @@ void Lucid_BodySlam::Start()
 		}
 	);
 
+	BodySlamRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
+		{
+			Death();
+		}
+	);
+
 	Transform.SetLocalPosition({ 1085, -775});
 	BodySlamRenderer->Off();
+	Dir = ActorDir::Right;
 }
 
 void Lucid_BodySlam::Update(float _Delta)
@@ -143,7 +150,7 @@ void Lucid_BodySlam::StateUpdate(float _Delta)
 	}
 }
 
-void Lucid_BodySlam::ChangeDir(ActorDir _Dir)
+void Lucid_BodySlam::ChangeAttackDir(ActorDir _Dir)
 {
 	if (Dir == _Dir)
 	{
@@ -207,7 +214,8 @@ void Lucid_BodySlam::AttackStart()
 void Lucid_BodySlam::DeathStart()
 {
 	BodySlamRenderer->ChangeAnimation("Death");
-	BodySlamRenderer->SetPivotValue({ 0.462f, 0.54f });
+	BodySlamRenderer->LeftFlip();
+	BodySlamRenderer->SetPivotValue({ 0.538f, 0.54f });
 }
 
 void Lucid_BodySlam::ReadyUpdate(float _Delta)
@@ -221,7 +229,33 @@ void Lucid_BodySlam::ReadyUpdate(float _Delta)
 
 void Lucid_BodySlam::AttackUpdate(float _Delta)
 {
+	float4 CurPos = Transform.GetLocalPosition();
+	float4 DestinationPos = MoveLocation[CurLocationIndex].DestinationPos;
+	MoveVector = DestinationPos - CurPos;
+	Transform.AddLocalPosition(MoveVector.NormalizeReturn() * BaseSpeed * MoveLocation[CurLocationIndex].PlusMoveSpeed * _Delta);
+
+	if (0.0f >= MoveVector.X && Dir == ActorDir::Right)
+	{
+		Dir = ActorDir::Left;
+		BodySlamRenderer->RightFlip();
+	}
+	else if (0.0f < MoveVector.X && Dir == ActorDir::Left)
+	{
+		Dir = ActorDir::Right;
+		BodySlamRenderer->LeftFlip();
+	}
 	
+	float size = MoveVector.Size();
+	if (5.0f >= MoveVector.Size())
+	{
+		Transform.SetLocalPosition(DestinationPos);
+		++CurLocationIndex;
+	}
+
+	if (MoveLocation.size() == CurLocationIndex)
+	{
+		ChangeState(BodySlamState::Death);
+	}
 }
 
 void Lucid_BodySlam::DeathUpdate(float _Delta)

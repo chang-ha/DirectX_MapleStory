@@ -131,7 +131,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	_Animation->Inter[30] = 15.0f;
 
 	_Animation = BossRenderer->FindAnimation("BodySlam");
-	_Animation->Inter[14] = 20.0f;
+	_Animation->Inter[14] = 13.0f;
 }
 
 void Boss_Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
