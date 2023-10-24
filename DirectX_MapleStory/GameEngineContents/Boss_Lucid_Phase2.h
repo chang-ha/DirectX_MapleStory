@@ -1,6 +1,10 @@
 #pragma once
 #include "BaseBossActor.h"
 
+#define Laser_Pattern_Cooldown 15.0f
+#define BodySlam_Pattern_Cooldown 15.0f
+#define Summon_Golem2_Cooldown 20.0f 
+
 enum class LucidState
 {
 	Idle,
@@ -10,6 +14,24 @@ enum class LucidState
 	BodySlam,
 	Summon_Dragon,
 	Summon_Golem,
+};
+
+struct Phase2_Boss_Skill_Info
+{
+	Phase2_Boss_Skill_Info()
+	{
+
+	}
+
+	Phase2_Boss_Skill_Info(float _SkillCooldown, LucidState _SkillState)
+		: SkillCooldownValue(_SkillCooldown), SkillCooldown(_SkillCooldown), SkillState(_SkillState)
+	{
+
+	}
+
+	float SkillCooldownValue = 0.0f;
+	float SkillCooldown = 0.0f;
+	LucidState SkillState = LucidState::Idle;
 };
 
 class Boss_Lucid_Phase2 : public BaseBossActor
@@ -37,6 +59,7 @@ protected:
 private:
 	ActorDir Dir = ActorDir::Right;
 	LucidState State = LucidState::Idle;
+	std::vector<Phase2_Boss_Skill_Info> SkillInfo;
 
 	///// State
 	// Start

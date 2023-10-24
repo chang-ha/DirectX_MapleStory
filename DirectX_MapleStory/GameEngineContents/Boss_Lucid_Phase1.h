@@ -1,8 +1,6 @@
 #pragma once
 #include "BaseBossActor.h"
 
-#define PhantasmalWind_Colldown 3.0f
-#define Summon_Dragon_Cooldown 13.0f
 #define Teleport_Cooldown 10.0f
 #define Summon_Mush_Cooldown 7.0f 
 #define Summon_Golem_Cooldown 5.0f 

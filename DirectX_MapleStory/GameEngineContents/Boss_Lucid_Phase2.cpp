@@ -19,6 +19,13 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BaseBossActor::LevelStart(_PrevLevel);
 	PhantasmalWind::AllAngleValue = true;
+	SkillInfo.resize(5);
+
+	SkillInfo[0] = { PhantasmalWind_Colldown, LucidState::PhantasmalWind };
+	SkillInfo[1] = { Laser_Pattern_Cooldown, LucidState::Laser };
+	SkillInfo[2] = { BodySlam_Pattern_Cooldown, LucidState::BodySlam };
+	SkillInfo[3] = { Summon_Dragon_Cooldown, LucidState::Summon_Dragon };
+	SkillInfo[4] = { Summon_Golem2_Cooldown, LucidState::Summon_Golem };
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase2_Death"))
 	{
@@ -62,6 +69,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	BossRenderer->CreateAnimation("Summon_Dragon", "Lucid_Phase2_Summon_Dragon");
 	BossRenderer->CreateAnimation("Laser", "Lucid_Phase2_Laser", 0.09f, -1, -1, false);
 	BossRenderer->CreateAnimation("BodySlam", "Lucid_Phase2_BodySlam");
+	BossRenderer->CreateAnimation("Summon", "Lucid_Phase2_Summon");
 	BossRenderer->ChangeAnimation("Idle");
 	IdleStart();
 
@@ -128,6 +136,22 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	);
 
+	BossRenderer->SetFrameEvent("Summon", 7, [&](GameEngineRenderer* _Renderer)
+		{
+			switch (State)
+			{
+			case LucidState::Summon_Golem:
+			{
+				Lucid_Phase2* Map = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
+				Map->SummonGolem();
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	);
+
 	/// Animation Detail
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = BossRenderer->FindAnimation("Laser");
 	_Animation->Inter[30] = 15.0f;
@@ -176,6 +200,11 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('8', this))
 	{
 		ChangeState(LucidState::BodySlam);
+	}
+
+	if (true == GameEngineInput::IsDown('9', this))
+	{
+		ChangeState(LucidState::Summon_Golem);
 	}
 
 	if (true == GameEngineInput::IsDown('0', this))
@@ -272,7 +301,7 @@ void Boss_Lucid_Phase2::StateUpdate(float _Delta)
 		break;
 	}
 }
-
+	
 ///// Start
 
 void Boss_Lucid_Phase2::IdleStart()
@@ -407,13 +436,25 @@ void Boss_Lucid_Phase2::Summon_DragonStart()
 
 void Boss_Lucid_Phase2::Summon_GolemStart()
 {
-
+	BossRenderer->ChangeAnimation("Summon");
+	BossRenderer->SetPivotValue({ 0.5f, 0.635f });
 }
 
 ///// Update
 
 void Boss_Lucid_Phase2::IdleUpdate(float _Delta)
 {
+	for (size_t i = 0; i < SkillInfo.size(); i++)
+	{
+		SkillInfo[i].SkillCooldown -= _Delta;
+
+		if (0.0f >= SkillInfo[i].SkillCooldown)
+		{
+			ChangeState(SkillInfo[i].SkillState);
+			SkillInfo[i].SkillCooldown = SkillInfo[i].SkillCooldownValue;
+			return;
+		}
+	}
 }
 
 void Boss_Lucid_Phase2::DeathUpdate(float _Delta)
@@ -455,6 +496,10 @@ void Boss_Lucid_Phase2::Summon_DragonUpdate(float _Delta)
 
 void Boss_Lucid_Phase2::Summon_GolemUpdate(float _Delta)
 {
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
 }
 
 ///// End
