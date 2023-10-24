@@ -63,7 +63,14 @@ public:
 
 	bool CollisionEvent(int _Order, const EventParameter& _Event);
 
-	bool CollisionLineEvent(int _Order, float4 EndLine, const EventParameter& _Event);
+	template<typename EnumType>
+	bool CollisionLineEvent(EnumType _Order, float4 _EndLine, const EventParameter& _Event)
+	{
+		return CollisionLineEvent(static_cast<int>(_Order), _EndLine, _Event);
+	}
+
+	bool CollisionLineEvent(int _Order, float4 _EndLine, const EventParameter& _Event);
+
 
 	void SetCollisionType(ColType _CollisionType)
 	{
