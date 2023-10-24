@@ -128,3 +128,31 @@ bool GameEngineCollision::CollisionEvent(int _Order, const EventParameter& _Even
 
 	return OtherGroup->CollisionEvent(GetDynamic_Cast_This<GameEngineCollision>(), _Event);
 }
+
+bool GameEngineCollision::CollisionLineEvent(int _Order, float4 _EndLine, const EventParameter& _Event)
+{
+	if (false == GetLevel()->CollisionGroups.contains(_Order))
+	{
+		return false;
+	}
+	std::shared_ptr<GameEngineCollisionGroup> OtherGroup = GetLevel()->CollisionGroups[_Order];
+
+	std::set<std::shared_ptr<GameEngineCollision>>::iterator Start = Others.begin();
+	std::set<std::shared_ptr<GameEngineCollision>>::iterator End = Others.end();
+
+	for (; Start != End; )
+	{
+		std::shared_ptr<GameEngineCollision> OtherCol = *Start;
+
+		if (false == OtherCol->IsDeath())
+		{
+			++Start;
+			continue;
+		}
+
+		Start = Others.erase(Start);
+	}
+
+	Transform.ColData.OBB.Extents = _EndLine.Float3;
+	return OtherGroup->CollisionEvent(GetDynamic_Cast_This<GameEngineCollision>(), _Event);
+}

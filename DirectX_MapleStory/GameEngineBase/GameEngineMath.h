@@ -79,6 +79,12 @@ public:
 
 	}
 
+	float4(DirectX::XMFLOAT3 _Float3)
+		: Float3(_Float3)
+	{
+
+	}
+
 	float4(float _X = 0.0f, float _Y = 0.0f, float _Z = 0.0f, float _W = 1.0f)
 		: X(_X), Y(_Y), Z(_Z), W(_W)
 	{

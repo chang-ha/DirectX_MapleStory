@@ -22,6 +22,57 @@ public:
 		}
 
 		// Function
+		ArrColFunction[static_cast<int>(ColType::LINE2D)][static_cast<int>(ColType::AABBBOX2D)] = [](const CollisionParameter& _Data)
+			{
+				DirectX::BoundingBox Left = _Data.Left.AABB;
+				Left.Center.z = 0.0f;
+				DirectX::BoundingBox Right = _Data.Right.AABB;
+				Right.Center.z = 0.0f;
+
+				float4 Start = Left.Center;
+				float4 End = Left.Extents;
+
+				float4 Direction = End - Start;
+				Direction.Normalize();
+
+				float Dist = 0.0f;
+				return Right.Intersects(Start.DirectXVector, End.DirectXVector, Dist);
+			};
+
+		ArrColFunction[static_cast<int>(ColType::LINE2D)][static_cast<int>(ColType::SPHERE2D)] = [](const CollisionParameter& _Data)
+			{
+				DirectX::BoundingBox Left = _Data.Left.AABB;
+				Left.Center.z = 0.0f;
+				DirectX::BoundingSphere Right = _Data.Right.SPHERE;
+				Right.Center.z = 0.0f;
+
+				float4 Start = Left.Center;
+				float4 End = Left.Extents;
+
+				float4 Direction = End - Start;
+				Direction.Normalize();
+
+				float Dist = 0.0f;
+				return Right.Intersects(Start.DirectXVector, End.DirectXVector, Dist);
+			};
+
+		ArrColFunction[static_cast<int>(ColType::LINE2D)][static_cast<int>(ColType::OBBBOX2D)] = [](const CollisionParameter& _Data)
+			{
+				DirectX::BoundingBox Left = _Data.Left.AABB;
+				Left.Center.z = 0.0f;
+				DirectX::BoundingOrientedBox Right = _Data.Right.OBB;
+				Right.Center.z = 0.0f;
+
+				float4 Start = Left.Center;
+				float4 End = Left.Extents;
+
+				float4 Direction = End - Start;
+				Direction.Normalize();
+
+				float Dist = 0.0f;
+				return Right.Intersects(Start.DirectXVector, End.DirectXVector, Dist);
+			};
+
 		ArrColFunction[static_cast<int>(ColType::AABBBOX2D)][static_cast<int>(ColType::AABBBOX2D)] = [](const CollisionParameter& _Data)
 			{
 				DirectX::BoundingBox Left = _Data.Left.AABB;

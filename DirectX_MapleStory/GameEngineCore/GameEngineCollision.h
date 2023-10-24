@@ -63,6 +63,8 @@ public:
 
 	bool CollisionEvent(int _Order, const EventParameter& _Event);
 
+	bool CollisionLineEvent(int _Order, float4 EndLine, const EventParameter& _Event);
+
 	void SetCollisionType(ColType _CollisionType)
 	{
 		CollisionType = _CollisionType;
