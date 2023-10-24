@@ -3,7 +3,12 @@
 
 #define Laser_Pattern_Cooldown 15.0f
 #define BodySlam_Pattern_Cooldown 15.0f
-#define Summon_Golem2_Cooldown 20.0f 
+#define Summon_Golem2_Cooldown 10.0f 
+
+#define Move_Delay_Value 0.05f
+#define Accel_MoveSpeed 100.0f
+#define Default_MoveSpeed 200.0f
+#define Max_MoveSpeed 300.0f
 
 enum class LucidState
 {
@@ -57,6 +62,13 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 private:
+	int CurLocationIndex = 0;
+	float MoveSpeed = Default_MoveSpeed;
+	float MoveDelay = 1.5f;
+	float4 MoveVector = float4::ZERO;
+	std::vector<int> LocationNumber;
+	std::vector<float4> MoveLocation;
+
 	ActorDir Dir = ActorDir::Right;
 	LucidState State = LucidState::Idle;
 	std::vector<Phase2_Boss_Skill_Info> SkillInfo;

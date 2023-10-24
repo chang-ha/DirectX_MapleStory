@@ -1,4 +1,7 @@
 ﻿#include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
 #include "Boss_Lucid_Phase2.h"
 #include "PhantasmalWind.h"
 #include "ContentLevel.h"
@@ -18,14 +21,33 @@ Boss_Lucid_Phase2::~Boss_Lucid_Phase2()
 void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BaseBossActor::LevelStart(_PrevLevel);
+	GameEngineRandom Random;
+	Random.SetSeed(time(nullptr));
+	CurLocationIndex = Random.RandomInt(0, 10);
 	PhantasmalWind::AllAngleValue = true;
+	// Skill Cooldown
 	SkillInfo.resize(5);
 
-	SkillInfo[0] = { PhantasmalWind_Colldown, LucidState::PhantasmalWind };
+	SkillInfo[0] = { PhantasmalWind_Cooldown, LucidState::PhantasmalWind };
 	SkillInfo[1] = { Laser_Pattern_Cooldown, LucidState::Laser };
 	SkillInfo[2] = { BodySlam_Pattern_Cooldown, LucidState::BodySlam };
 	SkillInfo[3] = { Summon_Dragon_Cooldown, LucidState::Summon_Dragon };
 	SkillInfo[4] = { Summon_Golem2_Cooldown, LucidState::Summon_Golem };
+
+	// Move Location
+	MoveLocation.resize(11);
+	LocationNumber.reserve(10);
+	MoveLocation[0] = { 1170, -585 };
+	MoveLocation[1] = { 785, -885 };
+	MoveLocation[2] = { 1400, -885 };
+	MoveLocation[3] = { 1210, -554 };
+	MoveLocation[4] = { 840, -1005 };
+	MoveLocation[5] = { 1400, -1085 };
+	MoveLocation[6] = { 1450, -685 };
+	MoveLocation[7] = { 900, -785 };
+	MoveLocation[8] = { 1390, -1035 };
+	MoveLocation[9] = { 770, -665 };
+	MoveLocation[10] = { 1170, -865 };
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase2_Death"))
 	{
@@ -182,7 +204,7 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 		ChangeState(LucidState::Idle);
 	}
 
-	if (true == GameEngineInput::IsDown('5',this))
+	if (true == GameEngineInput::IsDown('5', this))
 	{
 		ChangeState(LucidState::PhantasmalWind);
 	}
@@ -301,7 +323,7 @@ void Boss_Lucid_Phase2::StateUpdate(float _Delta)
 		break;
 	}
 }
-	
+
 ///// Start
 
 void Boss_Lucid_Phase2::IdleStart()
@@ -444,6 +466,7 @@ void Boss_Lucid_Phase2::Summon_GolemStart()
 
 void Boss_Lucid_Phase2::IdleUpdate(float _Delta)
 {
+	// Skill Cooldown
 	for (size_t i = 0; i < SkillInfo.size(); i++)
 	{
 		SkillInfo[i].SkillCooldown -= _Delta;
@@ -454,6 +477,63 @@ void Boss_Lucid_Phase2::IdleUpdate(float _Delta)
 			SkillInfo[i].SkillCooldown = SkillInfo[i].SkillCooldownValue;
 			return;
 		}
+	}
+
+	// Move
+	MoveDelay -= _Delta;
+	if (0.0f < MoveDelay)
+	{
+		return;
+	}
+
+	if (Max_MoveSpeed > MoveSpeed)
+	{
+		MoveSpeed += Accel_MoveSpeed * _Delta;
+	}
+	else if (Max_MoveSpeed <= MoveSpeed)
+	{
+		MoveSpeed = Max_MoveSpeed;
+	}
+
+	float4 CurPos = Transform.GetLocalPosition();
+	float4 DestinationPos = MoveLocation[CurLocationIndex];
+	MoveVector = DestinationPos - CurPos;
+	Transform.AddLocalPosition(MoveVector.NormalizeReturn() * MoveSpeed * _Delta);
+
+	if (0.0f >= MoveVector.X && Dir == ActorDir::Right)
+	{
+		Dir = ActorDir::Left;
+		BossRenderer->RightFlip();
+		BossRenderer->SetPivotValue({ 0.67f, 0.63f });
+	}
+	else if (0.0f < MoveVector.X && Dir == ActorDir::Left)
+	{
+		Dir = ActorDir::Right;
+		BossRenderer->LeftFlip();
+		BossRenderer->SetPivotValue({ 0.33f, 0.63f });
+	}
+
+	if (5.0f >= MoveVector.Size())
+	{
+		LocationNumber.clear();
+		Transform.SetLocalPosition(DestinationPos);
+		MoveDelay = Move_Delay_Value;
+
+		for (int i = 0; i < LocationNumber.capacity(); i++)
+		{
+			if (CurLocationIndex == i)
+			{
+				continue;
+			}
+			LocationNumber.push_back(i);
+		}
+
+		GameEngineRandom Random;
+		Random.SetSeed(time(nullptr) + CurLocationIndex);
+		int RandomInt = Random.RandomInt(0, static_cast<int>(LocationNumber.size()));
+
+		CurLocationIndex = RandomInt;
+		MoveSpeed = Default_MoveSpeed;
 	}
 }
 

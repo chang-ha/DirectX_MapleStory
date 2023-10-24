@@ -25,7 +25,7 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BaseBossActor::LevelStart(_PrevLevel);
 	SkillInfo.resize(5);
-	SkillInfo[0] = { PhantasmalWind_Colldown , LucidState::PhantasmalWind };
+	SkillInfo[0] = { PhantasmalWind_Cooldown , LucidState::PhantasmalWind };
 	SkillInfo[1] = { Teleport_Cooldown , LucidState::TeleportSkill };
 	SkillInfo[2] = { Summon_Dragon_Cooldown , LucidState::Summon_Dragon };
 	SkillInfo[3] = { Summon_Mush_Cooldown , LucidState::Summon_Mush };

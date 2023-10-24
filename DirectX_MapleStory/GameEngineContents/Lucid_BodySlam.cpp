@@ -181,7 +181,6 @@ void Lucid_BodySlam::AttackUpdate(float _Delta)
 		BodySlamRenderer->LeftFlip();
 	}
 	
-	float size = MoveVector.Size();
 	if (5.0f >= MoveVector.Size())
 	{
 		Transform.SetLocalPosition(DestinationPos);

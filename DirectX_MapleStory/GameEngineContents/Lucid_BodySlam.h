@@ -14,6 +14,7 @@ public:
 	{
 
 	}
+
 private:
 	float PlusMoveSpeed = 0.0f;
 	float4 DestinationPos = float4::ZERO;
