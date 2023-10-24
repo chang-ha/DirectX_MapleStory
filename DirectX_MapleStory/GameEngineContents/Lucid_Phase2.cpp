@@ -220,12 +220,22 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	// Laser Resources
 	if (nullptr == GameEngineSprite::Find("LaserBackGround"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
 		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase2\\LaserBackGround");
 
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+
+	if (nullptr == GameEngineSprite::Find("Phase2"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser");
+		Dir.MoveChild("Phase2");
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 

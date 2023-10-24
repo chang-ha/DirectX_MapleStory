@@ -40,6 +40,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	// BodySlam Resources
 	if (nullptr == GameEngineSprite::Find("Lucid_BodySlam"))
 	{
 		GameEngineDirectory Dir;

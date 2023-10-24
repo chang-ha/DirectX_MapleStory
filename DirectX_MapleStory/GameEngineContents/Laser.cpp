@@ -54,22 +54,14 @@ void Laser::Release()
 
 void Laser::Init(std::string_view _LaserName, int _ReadyEndIndex, float _AniSpeed)
 {
-	if (nullptr == GameEngineSprite::Find(std::string(_LaserName.data())))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser");
-		Dir.MoveChild(_LaserName);
-		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
-	}
-
-	if (nullptr == GameEngineSprite::Find("Phasr1_Hit"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser\\Phase1_Hit");
-		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
-	}
+	//if (nullptr == GameEngineSprite::Find(std::string(_LaserName.data())))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentResources");
+	//	Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser");
+	//	Dir.MoveChild(_LaserName);
+	//	GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	//}
 
 	LaserRenderer->CreateAnimation("Ready", _LaserName, _AniSpeed, 0, _ReadyEndIndex);
 	LaserRenderer->CreateAnimation("Attack", _LaserName, _AniSpeed, _ReadyEndIndex);
