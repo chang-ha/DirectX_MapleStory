@@ -149,6 +149,8 @@ void GameEngineSpriteRenderer::Update(float _Delta)
 		Scale.W = 0.0f;
 		SetImageScale(Scale * AutoScaleRatio);
 	}
+
+	RenderBaseInfoValue.RenderScreenScale = CurSprite.GetScale();
 }
 
 void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int Index /*= 0*/)
@@ -352,8 +354,11 @@ void GameEngineSpriteRenderer::SetMaterialEvent(std::string_view _Name, int _Ind
 	SetSprite("NSet.Png");
 }
 
-void GameEngineSpriteRenderer::SetMaskTexture(std::string_view _Texture)
+void GameEngineSpriteRenderer::SetMaskTexture(std::string_view _Texture, MaskMode _Mask)
 {
 	RenderBaseInfoValue.IsMask = 1;
+	RenderBaseInfoValue.MaskMode = static_cast<int>(_Mask);
 	GetShaderResHelper().SetTexture("MaskTex", _Texture);
+	std::shared_ptr<GameEngineTexture> Ptr = GameEngineTexture::Find(_Texture);
+	RenderBaseInfoValue.MaskScreeneScale = Ptr->GetScale();
 }

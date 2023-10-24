@@ -81,6 +81,7 @@ void GameEngineRenderer::SetCameraOrder(int _Order)
 
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
+	RenderBaseInfoValue.RendererScreenPos = GetScreenPosition();
 	for (size_t i = 0; i < Units.size(); i++)
 	{
 		Units[i]->ResSetting();
@@ -279,4 +280,16 @@ GameEngineShaderResHelper& GameEngineRenderer::GetShaderResHelper(int _Index /*=
 void GameEngineRenderer::SetMaterialEvent(std::string_view _Name, int _Index)
 {
 
+}
+
+float4 GameEngineRenderer::GetScreenPosition()
+{
+	float4x4 ViewPort;
+	float4 ScreenPos = Transform.GetWorldPosition();
+	float4 Scale = GameEngineCore::MainWindow.GetScale();
+	ViewPort.ViewPort(Scale.X, Scale.Y, 0, 0);
+	ScreenPos *= ViewPort.InverseReturn();
+	ScreenPos *= Transform.GetConstTransformDataRef().ProjectionMatrix.InverseReturn();
+	ScreenPos *= Transform.GetConstTransformDataRef().ViewMatrix.InverseReturn();
+	return ScreenPos;
 }
