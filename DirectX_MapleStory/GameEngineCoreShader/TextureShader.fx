@@ -81,8 +81,8 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     
     if (MaskMode == 1)
     {
-        ScreenPos.x = RendererScreenPos.x - ScreenPos.x;
-        ScreenPos.y = RendererScreenPos.y - ScreenPos.y;
+        ScreenPos.x = ScreenPos.x - RendererScreenPos.x;
+        ScreenPos.y = ScreenPos.y - RendererScreenPos.y;
         
         ScreenPos.x += MaskScreenScale.x * 0.5f;
         ScreenPos.y += MaskScreenScale.y * 0.5f;
