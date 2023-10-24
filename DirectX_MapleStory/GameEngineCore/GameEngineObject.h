@@ -188,17 +188,18 @@ public:
 		return Group;
 	}
 
+	// List -> Vector로 변경 : Vector가 재할당이 일어나는것을 감안해도 Vector가 더 빠름
 	template<typename ObjectType, typename EnumType>
-	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(EnumType _GroupIndex)
+	std::vector<std::shared_ptr<ObjectType>> GetObjectGroupConvert(EnumType _GroupIndex)
 	{
 		return GetObjectGroupConvert<ObjectType>(static_cast<int>(_GroupIndex));
 	}
 
 	// 특정그룹에 있는 특정 클래스만 골라서 다이나믹캐스팅 후 리턴해주는 함수
 	template<typename ObjectType>
-	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(int _GroupIndex)
+	std::vector<std::shared_ptr<ObjectType>> GetObjectGroupConvert(int _GroupIndex)
 	{
-		std::list<std::shared_ptr<ObjectType>> Result;
+		std::vector<std::shared_ptr<ObjectType>> Result;
 		std::list<std::shared_ptr<class GameEngineObject>>& Group = Childs[_GroupIndex];
 
 		for (std::shared_ptr<class GameEngineObject> Obejct : Group)

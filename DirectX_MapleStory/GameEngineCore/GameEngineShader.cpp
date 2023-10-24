@@ -51,7 +51,11 @@ void GameEngineShader::CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _
 bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 {
 	_File.Open(FileOpenType::Read, FileDataType::Text);
-	std::string_view ShaderCode = _File.GetStringView();
+	GameEngineSerializer Ser;
+	_File.DataAllRead(Ser);
+
+	std::string_view ShaderCode = Ser.GetStringView();
+
 	{
 		size_t EntryIndex = ShaderCode.find("_VS(");
 		if (EntryIndex != std::string::npos)

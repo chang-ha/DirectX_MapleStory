@@ -23,6 +23,7 @@ public:
 	void MoveParent();
 	void MoveParentToExistsChild(std::string_view _ChildPath);
 	void MoveChild(std::string_view _ChildPath);
+	bool IsExits();
 
 	std::string GetStringPath() 
 	{

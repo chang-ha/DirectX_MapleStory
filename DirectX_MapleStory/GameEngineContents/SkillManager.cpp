@@ -22,7 +22,7 @@ void SkillManagerGUI::Start()
 
 void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
-	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.1f, 1.0f);
+	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
 }
 
 SkillManager* SkillManager::PlayerSkillManager = nullptr;

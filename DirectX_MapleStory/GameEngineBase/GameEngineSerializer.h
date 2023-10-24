@@ -12,6 +12,7 @@ public:
 
 	void Write(const void* Data, unsigned int _Size);
 	void operator<<(const std::string& _Value);
+	void operator<<(std::string_view _Value);
 	void operator<<(const int& _Value);
 	void operator<<(const unsigned int& _Value);
 	void operator<<(const uint64_t& _Value);
@@ -22,6 +23,7 @@ public:
 
 	void Read(void* Data, unsigned int _Size);
 	void operator>>(std::string& _Value);
+	// void operator>>(std::string_view _Value); 스트링뷰는 읽어오는게 불가능 (스트링뷰가 원하는 것 : 주소값, 내가 저장한 것 : 문자열의 배열)
 	void operator>>(int& _Value);
 	void operator>>(unsigned int& _Value);
 	void operator>>(uint64_t& _Value);
@@ -36,6 +38,8 @@ public:
 	// GameEngineSerializer& operator=(const GameEngineSerializer& _Other) = delete;
 	// GameEngineSerializer& operator=(GameEngineSerializer&& _Other) noexcept = delete;
 
+	std::string_view GetStringView();
+
 	void BufferResize(size_t _BufferSize)
 	{
 		Data.resize(_BufferSize);
@@ -44,6 +48,11 @@ public:
 	size_t GetBufferSize()
 	{
 		return Data.size();
+	}
+
+	size_t GetWriteOffset()
+	{
+		return WriteOffset;
 	}
 
 	template<typename PtrType>
