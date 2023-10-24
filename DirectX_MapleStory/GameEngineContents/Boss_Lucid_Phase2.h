@@ -8,7 +8,7 @@
 #define Move_Delay_Value 0.05f
 #define Accel_MoveSpeed 100.0f
 #define Default_MoveSpeed 200.0f
-#define Max_MoveSpeed 300.0f
+#define Max_MoveSpeed 350.0f
 
 enum class LucidState
 {
@@ -19,6 +19,7 @@ enum class LucidState
 	BodySlam,
 	Summon_Dragon,
 	Summon_Golem,
+	Summon_ButterFly,
 };
 
 struct Phase2_Boss_Skill_Info
@@ -82,6 +83,7 @@ private:
 	void BodySlamStart();
 	void Summon_DragonStart();
 	void Summon_GolemStart();
+	void Summon_ButterFlyStart();
 	//
 	// Update
 	void IdleUpdate(float _Delta);
@@ -91,6 +93,7 @@ private:
 	void BodySlamUpdate(float _Delta);
 	void Summon_DragonUpdate(float _Delta);
 	void Summon_GolemUpdate(float _Delta);
+	void Summon_ButterFlyUpdate(float _Delta);
 	// 
 	// End
 	void IdleEnd();
@@ -100,6 +103,7 @@ private:
 	void BodySlamEnd();
 	void Summon_DragonEnd();
 	void Summon_GolemEnd();
+	void Summon_ButterFlyEnd();
 	// 
 	/////
 };

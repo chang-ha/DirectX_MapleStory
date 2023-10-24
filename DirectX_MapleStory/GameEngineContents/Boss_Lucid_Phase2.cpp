@@ -7,6 +7,7 @@
 #include "ContentLevel.h"
 #include "Lucid_Phase2.h"
 #include "Lucid_BodySlam.h"
+#include "ButterFly.h"
 
 Boss_Lucid_Phase2::Boss_Lucid_Phase2()
 {
@@ -166,6 +167,12 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 			{
 				Lucid_Phase2* Map = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
 				Map->SummonGolem();
+				break;
+			}
+			case LucidState::Summon_ButterFly:
+			{
+				std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
+				_CurButterFly->Init(Phase::Phase2);
 				break;
 			}
 			default:
@@ -462,6 +469,12 @@ void Boss_Lucid_Phase2::Summon_GolemStart()
 	BossRenderer->SetPivotValue({ 0.5f, 0.635f });
 }
 
+void Boss_Lucid_Phase2::Summon_ButterFlyStart()
+{
+	BossRenderer->ChangeAnimation("Summon");
+	BossRenderer->SetPivotValue({ 0.5f, 0.635f });
+}
+
 ///// Update
 
 void Boss_Lucid_Phase2::IdleUpdate(float _Delta)
@@ -582,6 +595,15 @@ void Boss_Lucid_Phase2::Summon_GolemUpdate(float _Delta)
 	}
 }
 
+void Boss_Lucid_Phase2::Summon_ButterFlyUpdate(float _Delta)
+{
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
+}
+
+
 ///// End
 
 void Boss_Lucid_Phase2::IdleEnd()
@@ -613,6 +635,11 @@ void Boss_Lucid_Phase2::Summon_DragonEnd()
 }
 
 void Boss_Lucid_Phase2::Summon_GolemEnd()
+{
+
+}
+
+void Boss_Lucid_Phase2::Summon_ButterFlyEnd()
 {
 
 }
