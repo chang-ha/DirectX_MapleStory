@@ -2,6 +2,7 @@
 #include "ContentSkill.h"
 #include "Player.h"
 
+
 ContentSkill::ContentSkill()
 {
 
@@ -48,6 +49,10 @@ void ContentSkill::Update(float _Delta)
 {
 	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 	PlayerPos.Z = 0.0f;
+
+	SkillRenderer1->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
+	SkillRenderer2->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
+	SkillAfterImageRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
 }
 
 void ContentSkill::Release()

@@ -4,6 +4,8 @@ class ContentSkill : public GameEngineActor
 { 
 	friend class SkillManager;
 public:
+
+
 	// constructer destructer
 	ContentSkill();
 	~ContentSkill();

@@ -102,6 +102,7 @@ void BaseWindActor::Start()
 
 void BaseWindActor::Update(float _Delta)
 {
+	MainSpriteRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
 	if (true == MainSpriteRenderer->IsCurAnimation("Hit") || true == MainSpriteRenderer->IsCurAnimation("Death"))
 	{
 		return;

@@ -116,6 +116,7 @@ void Monsoon::Start()
 void Monsoon::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
+	SceneRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
 	PlayerPos.Z = RenderDepth::skill;
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos);
 	float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();

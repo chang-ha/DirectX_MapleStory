@@ -1,5 +1,12 @@
 #pragma once
 
+class SkillManagerGUI : public GameEngineGUIWindow
+{
+public:
+	void Start() override;
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
+};
+
 struct HitRenderData
 {
 	friend class SkillManager;

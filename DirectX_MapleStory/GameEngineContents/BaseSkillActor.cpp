@@ -44,6 +44,8 @@ void BaseSkillActor::Start()
 
 void BaseSkillActor::Update(float _Delta)
 {
+	MainSpriteRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
+
 	if (false == IsUpdate)
 	{
 		return;

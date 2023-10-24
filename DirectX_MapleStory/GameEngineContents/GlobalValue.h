@@ -4,13 +4,12 @@
 #define FLOOR_COLOR GameEngineColor(0, 255, 0, 255)
 #define LADDER_COLOR GameEngineColor(255, 0, 0, 255)
 
-
-
-
 // Ό³Έν :
 class GlobalValue
 {
 public:
+	static float SkillEffectAlpha;
+
 	// constrcuter destructer
 	GlobalValue();
 	~GlobalValue();

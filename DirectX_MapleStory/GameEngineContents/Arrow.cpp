@@ -3,8 +3,6 @@
 #include "Player.h"
 #include "ContentMonster.h"
 #include "SkillManager.h"
-//Test Code
-#include "BaseWindActor.h"
 
 Arrow::Arrow()
 {
@@ -30,8 +28,8 @@ void Arrow::Start()
 {
 	if (nullptr == ArrowRenderer)
 	{
-		ArrowRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::ARROW);
-		ArrowRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::arrow});
+		ArrowRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::SKILL);
+		ArrowRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::skill});
 	}
 
 	if (nullptr == ArrowCollision)
@@ -43,23 +41,23 @@ void Arrow::Start()
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Arrow");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\SongOfHeaven_Actor");
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 		for (size_t i = 0; i < Directorys.size(); i++)
 		{
 			GameEngineDirectory& ChildDir = Directorys[i];
-			GameEngineSprite::CreateFolder(ChildDir.GetStringPath());
+			GameEngineSprite::CreateFolder("SongOfHeaven_Actor_" + ChildDir.GetFileName(), ChildDir.GetStringPath());
 		}
 	}
 
+	ArrowRenderer->CreateAnimation("Arrow", "SongOfHeaven_Actor_Arrow", 0.1f, -1, -1, true);
+	ArrowRenderer->CreateAnimation("Arrow_Hit", "SongOfHeaven_Actor_Arrow_Hit", 0.1f, -1, -1, true);
+	ArrowRenderer->ChangeAnimation("Arrow");
 	ArrowRenderer->AutoSpriteSizeOn();
 	ArrowRenderer->SetPivotType(PivotType::Bottom);
-	ArrowRenderer->CreateAnimation("TestArrow", "TestArrow", 0.1f, 0, 2, true);
-	ArrowRenderer->CreateAnimation("TestArrow_Hit", "TestArrow_Hit", 0.1f, 0, 2, true);
-	ArrowRenderer->ChangeAnimation("TestArrow");
 	float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 
-	ArrowRenderer->SetEndEvent("TestArrow_Hit", [&](GameEngineRenderer* _Renderer)
+	ArrowRenderer->SetEndEvent("Arrow_Hit", [&](GameEngineRenderer* _Renderer)
 		{
 			Death();
 		}
@@ -80,7 +78,7 @@ void Arrow::Start()
 		break;
 	}
 
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("TestArrow");
+	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("SongOfHeaven_Actor_Arrow");
 	ArrowScale = Sprite->GetSpriteData(0).GetScale();
 
 	ArrowCollision->Transform.SetLocalScale(ArrowScale);
@@ -97,7 +95,7 @@ void Arrow::Update(float _Delta)
 		return;
 	}
 
-	if (true == ArrowRenderer->IsCurAnimation("TestArrow_Hit"))
+	if (true == ArrowRenderer->IsCurAnimation("Arrow_Hit"))
 	{
 		return;
 	}
@@ -115,11 +113,12 @@ void Arrow::Update(float _Delta)
 		break;
 	}
 
-	if (0.0f >= LiveTime && true == ArrowRenderer->IsCurAnimation("TestArrow"))
+	if (0.0f >= LiveTime && true == ArrowRenderer->IsCurAnimation("Arrow"))
 	{
 		Death();
 	}
 
+	ArrowRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
 	ArrowCollision->CollisionEvent(CollisionOrder::Monster, ArrowEvent);
 }
 
@@ -141,5 +140,5 @@ void Arrow::Release()
 void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
 	++CollisionCount;
-	SkillManager::PlayerSkillManager->HitPrint("TestArrow_Hit", 1, _Other->GetParentObject(), false);
+	SkillManager::PlayerSkillManager->HitPrint("SongOfHeaven_Actor_Arrow_Hit", 1, _Other->GetParentObject(), false);
 }

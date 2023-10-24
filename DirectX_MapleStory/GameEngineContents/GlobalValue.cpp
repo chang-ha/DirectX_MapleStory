@@ -13,3 +13,4 @@ GlobalValue::~GlobalValue()
 }
 
 float4 GlobalValue::WinScale = MapleStoryCore::GetStartWindowSize();
+float GlobalValue::SkillEffectAlpha = 1.0f;

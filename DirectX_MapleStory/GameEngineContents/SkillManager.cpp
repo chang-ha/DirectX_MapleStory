@@ -15,6 +15,16 @@
 #include "MercilessWinds.h"
 #include "BaseWindActor.h"
 
+void SkillManagerGUI::Start()
+{
+	
+}
+
+void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
+{
+	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.1f, 1.0f);
+}
+
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
 
 #define HIT_ANI_TIME 0.04f
@@ -99,6 +109,7 @@ void SkillManager::HitPrintUpdate(float _Delta)
 		if (0.0f >= _CurData->DelayTime)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
+			_CurData->HitAnimations[_CurData->CurIndex]->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
 			_CurData->CurIndex += 1;
 			_CurData->DelayTime = HIT_DELAY;
 		}
@@ -160,6 +171,8 @@ void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 
 void SkillManager::Start()
 {
+	GameEngineGUI::CreateGUIWindow<SkillManagerGUI>("SkillManager");
+
 	CreateSkill<DoubleJump>("DoubleJump");
 	CreateSkill<SongOfHeaven>("SongOfHeaven");
 	CreateSkill<FairySpiral>("FairySpiral");

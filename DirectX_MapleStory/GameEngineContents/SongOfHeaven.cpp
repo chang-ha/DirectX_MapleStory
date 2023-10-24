@@ -117,7 +117,7 @@ void SongOfHeaven::Update(float _Delta)
 		if (0.0f >= ShootDps)
 		{
 			ShootDps = 0.12f;
-			GetLevel()->CreateActor<Arrow>(UpdateOrder::Arrow);
+			GetLevel()->CreateActor<Arrow>(UpdateOrder::Skill);
 		}
 	}
 
