@@ -18,6 +18,7 @@ Boss_Lucid_Phase2::~Boss_Lucid_Phase2()
 void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BaseBossActor::LevelStart(_PrevLevel);
+	PhantasmalWind::AllAngleValue = true;
 
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase2_Death"))
 	{
@@ -145,7 +146,6 @@ void Boss_Lucid_Phase2::Start()
 	GameEngineInput::AddInputObject(this);
 
 	BaseBossActor::Start();
-	PhantasmalWind::AllAngleValue = true;
 }
 
 void Boss_Lucid_Phase2::Update(float _Delta)
