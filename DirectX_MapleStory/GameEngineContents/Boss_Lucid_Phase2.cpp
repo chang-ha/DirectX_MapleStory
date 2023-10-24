@@ -101,7 +101,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	// Renderer Event
 	BossRenderer->SetFrameEvent("PhantasmalWind", 22, [&](GameEngineRenderer* _Renderer)
 		{
-			for (size_t i = 0; i < 6; i++)
+			for (size_t i = 0; i < 8; i++)
 			{
 				std::shared_ptr<PhantasmalWind> Wind = ContentLevel::CurContentLevel->CreateActor<PhantasmalWind>(UpdateOrder::Monster);
 				Wind->Transform.SetLocalPosition(Transform.GetWorldPosition() + float4{ 0, 50 });

@@ -145,6 +145,9 @@
     <ClCompile Include="Lucid_BodySlam.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
+    <ClCompile Include="ButterFly.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -289,6 +292,9 @@
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
     <ClInclude Include="Lucid_BodySlam.h">
+      <Filter>Actor\Monster\Boss\SummonActor</Filter>
+    </ClInclude>
+    <ClInclude Include="ButterFly.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
   </ItemGroup>

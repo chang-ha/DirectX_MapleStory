@@ -142,7 +142,7 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 				for (size_t i = 0; i < 2; i++)
 				{
 					std::shared_ptr<Golem> _Golem = ContentLevel::CurContentLevel->CreateActor<Golem>(UpdateOrder::Monster);
-					_Golem->Init(1);
+					_Golem->Init(Phase::Phase1);
 					Random.SetSeed(reinterpret_cast<long long>(_Golem.get()));
 					float RandomValue = Random.RandomFloat(400.0f, 1700.0f);
 					_Golem->Transform.SetLocalPosition({ RandomValue , -450 });
