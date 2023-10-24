@@ -20,7 +20,20 @@ enum class LucidState
 
 struct Phase1_Boss_Skill_Info
 {
+	Phase1_Boss_Skill_Info()
+	{
 
+	}
+
+	Phase1_Boss_Skill_Info(float _SkillCooldown, LucidState _SkillState)
+		: SkillCooldownValue(_SkillCooldown), SkillCooldown(_SkillCooldown), SkillState(_SkillState)
+	{
+
+	}
+
+	float SkillCooldownValue = 0.0f;
+	float SkillCooldown = 0.0f;
+	LucidState SkillState = LucidState::Idle;
 };
 
 class Boss_Lucid_Phase1 : public BaseBossActor
@@ -48,11 +61,6 @@ protected:
 	void Update(float _Delta) override;
 
 private:
-	float PhantasmalWindCooldown = PhantasmalWind_Colldown;
-	float DragonCooldown = Summon_Dragon_Cooldown;
-	float TeleportCooldown = Teleport_Cooldown;
-	float MushCooldown = Summon_Mush_Cooldown;
-	float GolemCooldown = Summon_Golem_Cooldown;
 	std::vector<Phase1_Boss_Skill_Info> SkillInfo;
 	std::shared_ptr<GameEngineSpriteRenderer> FlowerRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> TeleportRenderer = nullptr;

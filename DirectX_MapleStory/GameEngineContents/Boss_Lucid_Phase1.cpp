@@ -24,18 +24,13 @@ Boss_Lucid_Phase1::~Boss_Lucid_Phase1()
 void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BaseBossActor::LevelStart(_PrevLevel);
-}
+	SkillInfo.resize(5);
+	SkillInfo[0] = { PhantasmalWind_Colldown , LucidState::PhantasmalWind };
+	SkillInfo[1] = { Teleport_Cooldown , LucidState::TeleportSkill };
+	SkillInfo[2] = { Summon_Dragon_Cooldown , LucidState::Summon_Dragon };
+	SkillInfo[3] = { Summon_Mush_Cooldown , LucidState::Summon_Mush };
+	SkillInfo[4] = { Summon_Golem_Cooldown , LucidState::Summon_Golem };
 
-void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
-{
-	BaseBossActor::LevelEnd(_NextLevel);
-}
-
-void Boss_Lucid_Phase1::Start()
-{
-	GameEngineInput::AddInputObject(this);
-
-	BaseBossActor::Start();
 	PhantasmalWind::AllAngleValue = false;
 
 	if (nullptr == FlowerRenderer)
@@ -44,7 +39,7 @@ void Boss_Lucid_Phase1::Start()
 		FlowerRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
 		FlowerRenderer->AutoSpriteSizeOn();
 	}
-	
+
 	if (nullptr == TeleportRenderer)
 	{
 		TeleportRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
@@ -85,14 +80,14 @@ void Boss_Lucid_Phase1::Start()
 	FlowerRenderer->SetPivotType(PivotType::Bottom);
 	FlowerRenderer->ChangeAnimation("Flower");
 	FlowerRenderer->Transform.SetLocalPosition({ -5, 3, RenderDepth::map });
-	
+
 	TeleportRenderer->CreateAnimation("Teleport", "Lucid_Phase1_Teleport", 0.08f);
 	TeleportRenderer->ChangeAnimation("Teleport");
-	TeleportRenderer->SetPivotValue({0.5f, 0.8f});
+	TeleportRenderer->SetPivotValue({ 0.5f, 0.8f });
 	TeleportRenderer->Off();
 
-	BossCollision->Transform.SetLocalScale({150, 400});
-	BossCollision->Transform.SetLocalPosition({0, 200});
+	BossCollision->Transform.SetLocalScale({ 150, 400 });
+	BossCollision->Transform.SetLocalPosition({ 0, 200 });
 
 	// Render Event
 	BossRenderer->SetFrameEvent("PhantasmalWind", 22, [&](GameEngineRenderer* _Renderer)
@@ -172,6 +167,18 @@ void Boss_Lucid_Phase1::Start()
 			TeleportRenderer->Off();
 		}
 	);
+}
+
+void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	BaseBossActor::LevelEnd(_NextLevel);
+}
+
+void Boss_Lucid_Phase1::Start()
+{
+	GameEngineInput::AddInputObject(this);
+
+	BaseBossActor::Start();
 }
 
 void Boss_Lucid_Phase1::Update(float _Delta)
@@ -366,40 +373,16 @@ void Boss_Lucid_Phase1::Summon_GolemStart()
 
 void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 {
-	PhantasmalWindCooldown -= _Delta;
-	DragonCooldown -= _Delta;
-	TeleportCooldown -= _Delta;
-	MushCooldown -= _Delta;
-	GolemCooldown -= _Delta;
-
-	if (0.0f >= TeleportCooldown)
+	for (size_t i = 0; i < SkillInfo.size(); i++)
 	{
-		ChangeState(LucidState::TeleportSkill);
-		TeleportCooldown = Teleport_Cooldown;
-	}
+		SkillInfo[i].SkillCooldown -= _Delta;
 
-	if (0.0f >= PhantasmalWindCooldown)
-	{
-		ChangeState(LucidState::PhantasmalWind);
-		PhantasmalWindCooldown = PhantasmalWind_Colldown;
-	}
-
-	if (0.0f >= DragonCooldown)
-	{
-		ChangeState(LucidState::Summon_Dragon);
-		DragonCooldown = Summon_Dragon_Cooldown;
-	}
-
-	if (0.0f >= MushCooldown)
-	{
-		ChangeState(LucidState::Summon_Mush);
-		MushCooldown = Summon_Mush_Cooldown;
-	}
-
-	if (0.0f >= GolemCooldown)
-	{
-		ChangeState(LucidState::Summon_Golem);
-		GolemCooldown = Summon_Golem_Cooldown;
+		if (0.0f >= SkillInfo[i].SkillCooldown)
+		{
+			ChangeState(SkillInfo[i].SkillState);
+			SkillInfo[i].SkillCooldown = SkillInfo[i].SkillCooldownValue;
+			return;
+		}
 	}
 }
 
