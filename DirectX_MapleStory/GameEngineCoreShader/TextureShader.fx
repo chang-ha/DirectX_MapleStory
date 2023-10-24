@@ -86,6 +86,9 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
         
         ScreenPos.x += MaskScreenScale.x * 0.5f;
         ScreenPos.y += MaskScreenScale.y * 0.5f;
+        
+        ScreenPos.x += MaskPivot.x;
+        ScreenPos.y += MaskPivot.y;
     }
 
     if (IsMask == 1 && MaskTex[ScreenPos].r <= 0.0f)
