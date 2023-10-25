@@ -23,11 +23,13 @@ void ButterFly_Ball::Start()
 	BallRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monsterattack});
 
 	BallCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+	BallCollision->SetCollisionType(ColType::SPHERE2D);
+	BallCollision->Transform.SetLocalScale({21, 21});
 }
 
 void ButterFly_Ball::Update(float _Delta)
 {
-	
+	Transform.AddLocalPosition(DirVector * Speed * _Delta);
 }
 
 void ButterFly_Ball::Release()

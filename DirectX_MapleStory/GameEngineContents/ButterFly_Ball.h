@@ -25,6 +25,11 @@ public:
 		Init(static_cast<int>(_Phase));
 	}
 
+	void SetDirVector(const float4& _Vector)
+	{
+		DirVector = _Vector;
+	}
+
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
@@ -32,6 +37,8 @@ protected:
 	void Release() override;
 
 private:
+	float Speed = 150.0f;
+	float4 DirVector = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> BallRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BallCollision = nullptr;
 

@@ -105,7 +105,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		for (size_t i = 0; i < Directorys.size(); i++)
 		{
 			GameEngineDirectory& Childs = Directorys[i];
-			GameEngineSprite::CreateFolder("Phase2_ButterFly_Ball" + Childs.GetFileName(), Childs.GetStringPath());
+			GameEngineSprite::CreateFolder("Phase2_ButterFly_Ball_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
 	}
 

@@ -4,6 +4,7 @@
 
 #include "ButterFly.h"
 #include "ButterFly_Ball.h"
+#include "Player.h"
 
 ButterFly::ButterFly()
 {
@@ -28,8 +29,6 @@ void ButterFly::Start()
 	}
 	FlyRenderer->AutoSpriteSizeOn();
 	FlyRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
-
-	std::shared_ptr<GameEngineCollision> Test = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
 }
 
 void ButterFly::Update(float _Delta)
@@ -69,7 +68,7 @@ void ButterFly::Release()
 
 void ButterFly::Init(int _Phase)
 {
-	FlyRenderer->CreateAnimation("Ready", "Phase" + std::to_string(_Phase) + "_ButterFly_Ready", 0.1f, -1, -1, false);
+	FlyRenderer->CreateAnimation("Ready", "Phase" + std::to_string(_Phase) + "_ButterFly_Ready", 0.1f, -1, -1);
 	FlyRenderer->CreateAnimation("Move", "Phase" + std::to_string(_Phase) + "_ButterFly_Move");
 	FlyRenderer->CreateAnimation("Attack", "Phase" + std::to_string(_Phase) + "_ButterFly_Attack");
 	FlyRenderer->CreateAnimation("Death", "Phase" + std::to_string(_Phase) + "_ButterFly_Death");
@@ -78,8 +77,33 @@ void ButterFly::Init(int _Phase)
 		{
 			std::shared_ptr<ButterFly_Ball> _Ball = GetLevel()->CreateActor<ButterFly_Ball>(UpdateOrder::Monster);
 			_Ball->Init(Phase::Phase2);
+
+			float4 CurPos = Transform.GetWorldPosition();
+			float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+			float4 Vector = PlayerPos - CurPos;
+			_Ball->SetDirVector(Vector.NormalizeReturn());
+
+			float PivotValue = 0.0f;
+
+			switch (Dir)
+			{
+			case ActorDir::Right:
+				PivotValue = 50.0f;
+				break;
+			case ActorDir::Left:
+				PivotValue = -50.0f;
+				break;
+			case ActorDir::Null:
+			default:
+				MsgBoxAssert("존재하지 않는 방향입니다.");
+				break;
+			}
+			
+			_Ball->Transform.SetLocalPosition(Transform.GetWorldPosition() + PivotValue);
 		});
-	ReadyStart();
+	// ReadyStart();
+	Dir = ActorDir::Right;
+	AttackStart();
 }
 
 
