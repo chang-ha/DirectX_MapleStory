@@ -33,7 +33,8 @@ public:
 
 	void Init(ButterFly_Phase _Phase)
 	{
-		Init(static_cast<int>(_Phase));
+		Phase = static_cast<int>(_Phase);
+		Init(Phase);
 	}
 
 	void ChangeState(ButterFlyState _State);
@@ -46,6 +47,7 @@ protected:
 	void Release() override;
 
 private:
+	int Phase = 0;
 	int CurLocationIndex = 0;
 	float LiveTime = 20.0f;
 	float MoveSpeed = Fly_Default_MoveSpeed;

@@ -29,13 +29,6 @@ void ButterFly::Start()
 	}
 	FlyRenderer->AutoSpriteSizeOn();
 	FlyRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
-
-	MoveLocation.resize(9);
-	LocationNumber.resize(8);
-
-	GameEngineRandom Random;
-	Random.SetSeed(reinterpret_cast<long long>(this));
-	CurLocationIndex = Random.RandomInt(0, 8);
 }
 
 void ButterFly::Update(float _Delta)
@@ -55,12 +48,30 @@ void ButterFly::Release()
 
 void ButterFly::Init(int _Phase)
 {
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(this));
 	//Path
-	switch (_Phase)
+	switch (Phase)
 	{
 	case 1:
+		MoveLocation.resize(11);
+		LocationNumber.resize(10);
+		MoveLocation[0] = { 160, -280 };
+		MoveLocation[1] = { 501, -250 };
+		MoveLocation[2] = { 800, -280 };
+		MoveLocation[3] = { 1100, -300 };
+		MoveLocation[4] = { 1400, -270 };
+		MoveLocation[5] = { 1700, -220 };
+		MoveLocation[6] = { 1700, -200 };
+		MoveLocation[7] = { 1400, -210 };
+		MoveLocation[8] = { 1100, -260 };
+		MoveLocation[9] = { 800, -270 };
+		MoveLocation[10] = { 501, -260 };
+		CurLocationIndex = Random.RandomInt(0, 10);
 		break;
 	case 2:
+		MoveLocation.resize(9);
+		LocationNumber.resize(8);
 		MoveLocation[0] = { 500, -435 };
 		MoveLocation[1] = { 400, -635 };
 		MoveLocation[2] = { 600, -1085 };
@@ -70,18 +81,27 @@ void ButterFly::Init(int _Phase)
 		MoveLocation[6] = { 1400, -585 };
 		MoveLocation[7] = { 1240, -285 };
 		MoveLocation[8] = { 900, -285 };
+		CurLocationIndex = Random.RandomInt(0, 8);
 		break;
 	}
 
-	FlyRenderer->CreateAnimation("Ready", "Phase" + std::to_string(_Phase) + "_ButterFly_Ready");
-	FlyRenderer->CreateAnimation("Move", "Phase" + std::to_string(_Phase) + "_ButterFly_Move");
-	FlyRenderer->CreateAnimation("Attack", "Phase" + std::to_string(_Phase) + "_ButterFly_Attack");
-	FlyRenderer->CreateAnimation("Death", "Phase" + std::to_string(_Phase) + "_ButterFly_Death", 0.1f, -1, -1, false);
+	FlyRenderer->CreateAnimation("Ready", "Phase" + std::to_string(Phase) + "_ButterFly_Ready");
+	FlyRenderer->CreateAnimation("Move", "Phase" + std::to_string(Phase) + "_ButterFly_Move");
+	FlyRenderer->CreateAnimation("Attack", "Phase" + std::to_string(Phase) + "_ButterFly_Attack");
+	FlyRenderer->CreateAnimation("Death", "Phase" + std::to_string(Phase) + "_ButterFly_Death", 0.1f, -1, -1, false);
 
 	FlyRenderer->SetFrameEvent("Attack", 8, [&](GameEngineSpriteRenderer* _Renderer)
 		{
 			std::shared_ptr<ButterFly_Ball> _Ball = GetLevel()->CreateActor<ButterFly_Ball>(UpdateOrder::Monster);
-			_Ball->Init(Phase::Phase2);
+			switch (Phase)
+			{
+			case 1:
+				_Ball->Init(ButterFly_Ball_Phase::Phase1);
+				break;
+			case 2:
+				_Ball->Init(ButterFly_Ball_Phase::Phase2);
+				break;
+			}
 
 			float4 CurPos = Transform.GetWorldPosition();
 			float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
@@ -217,7 +237,7 @@ void ButterFly::AttackStart()
 
 	float4 CurPos = Transform.GetWorldPosition();
 	float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
-	
+
 	if (0.0f >= PlayerPos.X - CurPos.X)
 	{
 		Dir = ActorDir::Left;

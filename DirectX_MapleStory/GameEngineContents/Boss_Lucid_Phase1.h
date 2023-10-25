@@ -13,7 +13,8 @@ enum class LucidState
 	TeleportSkill, // Teleport
 	Summon_Dragon, // Summon Dragon
 	Summon_Mush,  
-	Summon_Golem, 
+	Summon_Golem,
+	Summon_ButterFly,
 };
 
 struct Phase1_Boss_Skill_Info
@@ -73,6 +74,7 @@ private:
 	void TeleportSkillStart();
 	void Summon_MushStart();
 	void Summon_GolemStart();
+	void Summon_ButterFlyStart();
 	//
 	// Update
 	void IdleUpdate(float _Delta);
@@ -82,6 +84,7 @@ private:
 	void TeleportSkillUpdate(float _Delta);
 	void Summon_MushUpdate(float _Delta);
 	void Summon_GolemUpdate(float _Delta);
+	void Summon_ButterFlyUpdate(float _Delta);
 	// 
 	// End
 	void IdleEnd();
@@ -91,6 +94,7 @@ private:
 	void TeleportSkillEnd();
 	void Summon_MushEnd();
 	void Summon_GolemEnd();
+	void Summon_ButterFlyEnd();
 	// 
 	/////
 };

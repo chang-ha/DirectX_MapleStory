@@ -79,8 +79,8 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 
 		_Data->HitAnimations[i] = _HitAnimation;
 
-		BaseWindActor::CreateTriflingWind();
 	}
+	BaseWindActor::CreateTriflingWind();
 
 	AllHitRenderers.push_back(_Data);
 }

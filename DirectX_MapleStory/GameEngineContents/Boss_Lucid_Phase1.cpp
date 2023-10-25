@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "MushRoom.h"
 #include "Golem.h"
+#include "ButterFly.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -24,12 +25,14 @@ Boss_Lucid_Phase1::~Boss_Lucid_Phase1()
 void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BaseBossActor::LevelStart(_PrevLevel);
-	SkillInfo.resize(5);
+	SkillInfo.resize(6);
 	SkillInfo[0] = { PhantasmalWind_Cooldown , LucidState::PhantasmalWind };
 	SkillInfo[1] = { Teleport_Cooldown , LucidState::TeleportSkill };
 	SkillInfo[2] = { Summon_Dragon_Cooldown , LucidState::Summon_Dragon };
 	SkillInfo[3] = { Summon_Mush_Cooldown , LucidState::Summon_Mush };
 	SkillInfo[4] = { Summon_Golem_Cooldown , LucidState::Summon_Golem };
+	SkillInfo[5] = { Summon_Fly_Cooldown , LucidState::Summon_ButterFly };
+	SkillInfo[5].SkillCooldown = 0.0f;
 
 	PhantasmalWind::AllAngleValue = false;
 
@@ -65,6 +68,29 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 			Dir.MoveParentToExistsChild("Phase1");
 			Dir.MoveChild("Attack");
 			GameEngineSprite::CreateFolder("Lucid_" + Dir.GetFileName(), Dir.GetStringPath());
+		}
+	}
+
+	if (nullptr == GameEngineSprite::Find("Phase1_ButterFly_Ready"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Phase1_ButterFly\\ButterFly");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("Phase1_ButterFly_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+
+		Dir.MoveParent();
+		Dir.MoveChild("ButterFly_Ball");
+		Directorys = Dir.GetAllDirectory();
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("Phase1_ButterFly_Ball_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
 	}
 
@@ -149,6 +175,19 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 				}
 				break;
 			}
+			case LucidState::Summon_ButterFly:
+			{
+				GameEngineRandom Random;
+				for (int i = 0; i < 3; i++)
+				{
+					std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
+					_CurButterFly->Init(ButterFly_Phase::Phase1);
+					Random.SetSeed(reinterpret_cast<long long>(_CurButterFly.get()));
+					float RandomValue = Random.RandomFloat(400.0f, 1700.0f);
+					_CurButterFly->Transform.SetLocalPosition({ RandomValue , -650 });
+				}
+				break;
+			}
 			default:
 				break;
 			}
@@ -209,7 +248,7 @@ void Boss_Lucid_Phase1::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('9', this))
 	{
-		ChangeState(LucidState::Summon_Golem);
+		ChangeState(LucidState::Summon_ButterFly);
 	}
 
 	if (true == GameEngineInput::IsDown('0', this))
@@ -262,6 +301,9 @@ void Boss_Lucid_Phase1::ChangeState(LucidState _State)
 		case LucidState::Summon_Golem:
 			Summon_GolemEnd();
 			break;
+		case LucidState::Summon_ButterFly:
+			Summon_ButterFlyEnd();
+			break;
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
 			break;
@@ -291,7 +333,11 @@ void Boss_Lucid_Phase1::ChangeState(LucidState _State)
 		case LucidState::Summon_Golem:
 			Summon_GolemStart();
 			break;
+		case LucidState::Summon_ButterFly:
+			Summon_ButterFlyStart();
+			break;
 		default:
+			MsgBoxAssert("존재하지 않는 상태값을 시작하려고 했습니다.");
 			break;
 		}
 	}
@@ -317,6 +363,8 @@ void Boss_Lucid_Phase1::StateUpdate(float _Delta)
 		return Summon_MushUpdate(_Delta);
 	case LucidState::Summon_Golem:
 		return Summon_GolemUpdate(_Delta);
+	case LucidState::Summon_ButterFly:
+		return Summon_ButterFlyUpdate(_Delta);
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
 		break;
@@ -365,6 +413,12 @@ void Boss_Lucid_Phase1::Summon_MushStart()
 }
 
 void Boss_Lucid_Phase1::Summon_GolemStart()
+{
+	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
+	BossRenderer->ChangeAnimation("Skill4");
+}
+
+void Boss_Lucid_Phase1::Summon_ButterFlyStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Skill4");
@@ -431,6 +485,14 @@ void Boss_Lucid_Phase1::Summon_GolemUpdate(float _Delta)
 	}
 }
 
+void Boss_Lucid_Phase1::Summon_ButterFlyUpdate(float _Delta)
+{
+	if (true == BossRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(LucidState::Idle);
+	}
+}
+
 void Boss_Lucid_Phase1::IdleEnd()
 {
 
@@ -463,6 +525,11 @@ void Boss_Lucid_Phase1::Summon_MushEnd()
 }
 
 void Boss_Lucid_Phase1::Summon_GolemEnd()
+{
+
+}
+
+void Boss_Lucid_Phase1::Summon_ButterFlyEnd()
 {
 
 }

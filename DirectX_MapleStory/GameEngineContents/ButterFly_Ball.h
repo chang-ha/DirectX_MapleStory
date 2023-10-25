@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Phase
+enum class ButterFly_Ball_Phase
 {
 	Phase1 = 1,
 	Phase2 = 2,
@@ -8,7 +8,7 @@ enum class Phase
 
 class ButterFly_Ball : public GameEngineActor
 {
-	// friend class ButterFly;
+	friend class ButterFly;
 public:
 	// constructer destructer
 	ButterFly_Ball();
@@ -20,7 +20,7 @@ public:
 	ButterFly_Ball& operator=(const ButterFly_Ball& _Other) = delete;
 	ButterFly_Ball& operator=(ButterFly_Ball&& _Other) noexcept = delete;
 	
-	void Init(Phase _Phase)
+	void Init(ButterFly_Ball_Phase _Phase)
 	{
 		Init(static_cast<int>(_Phase));
 	}
