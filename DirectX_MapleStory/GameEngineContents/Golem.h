@@ -12,7 +12,7 @@ enum class GolemState
 	Death,
 };
 
-enum class Phase
+enum class Golem_Phase
 {
 	Phase1 = 1,
 	Phase2 = 2
@@ -35,7 +35,7 @@ public:
 	/// Init 1 or 2
 	/// </summary>
 	/// <param name="_PhaseNumber"> == CurPhaseNumber</param>
-	void Init(Phase _Phase)
+	void Init(Golem_Phase _Phase)
 	{
 		Init(static_cast<int>(_Phase));
 	}

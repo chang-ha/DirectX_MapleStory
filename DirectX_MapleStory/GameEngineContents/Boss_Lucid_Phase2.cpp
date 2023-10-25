@@ -195,7 +195,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 			case LucidState::Summon_ButterFly:
 			{
 				std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
-				_CurButterFly->Init(Phase::Phase2);
+				_CurButterFly->Init(ButterFly_Phase::Phase2);
 				_CurButterFly->Transform.SetLocalPosition({ 1000, -850 });
 				break;
 			}

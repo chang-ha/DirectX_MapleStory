@@ -19,7 +19,7 @@ void Golem_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 void Golem_Phase2::Start()
 {
 	Golem::Start();
-	Golem::Init(Phase::Phase2);
+	Golem::Init(Golem_Phase::Phase2);
 }
 
 void Golem_Phase2::Update(float _Delta)

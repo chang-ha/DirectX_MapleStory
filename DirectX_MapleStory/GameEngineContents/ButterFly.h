@@ -8,7 +8,7 @@ enum class ButterFlyState
 	Death,
 };
 
-enum class Phase
+enum class ButterFly_Phase
 {
 	Phase1 = 1,
 	Phase2 = 2,
@@ -27,7 +27,7 @@ public:
 	ButterFly& operator=(const ButterFly& _Other) = delete;
 	ButterFly& operator=(ButterFly&& _Other) noexcept = delete;
 
-	void Init(Phase _Phase)
+	void Init(ButterFly_Phase _Phase)
 	{
 		Init(static_cast<int>(_Phase));
 	}

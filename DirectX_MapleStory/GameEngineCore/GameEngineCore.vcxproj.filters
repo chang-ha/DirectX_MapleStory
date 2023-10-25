@@ -70,6 +70,9 @@
     <Filter Include="Contents">
       <UniqueIdentifier>{f8bde3b4-805b-4c74-a886-3c30e9e9dd7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Font">
+      <UniqueIdentifier>{40096c4a-76fa-48a9-8183-90724d64368a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineActor.h">
@@ -223,6 +226,9 @@
     <ClInclude Include="ThirdParty\FW1FontWrapper\inc\FW1FontWrapper.h">
       <Filter>ThirdParty\inc</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineFont.h">
+      <Filter>Resources\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -363,6 +369,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineState.cpp">
       <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineFont.cpp">
+      <Filter>Resources\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
