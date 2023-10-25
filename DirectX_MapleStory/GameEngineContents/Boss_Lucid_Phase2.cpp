@@ -22,9 +22,11 @@ Boss_Lucid_Phase2::~Boss_Lucid_Phase2()
 void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	BaseBossActor::LevelStart(_PrevLevel);
+
 	GameEngineRandom Random;
 	Random.SetSeed(time(nullptr));
 	CurLocationIndex = Random.RandomInt(0, 10);
+
 	PhantasmalWind::AllAngleValue = true;
 	// Skill Cooldown
 	SkillInfo.resize(6);
@@ -35,6 +37,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	SkillInfo[3] = { Summon_Dragon_Cooldown, LucidState::Summon_Dragon };
 	SkillInfo[4] = { Summon_Golem2_Cooldown, LucidState::Summon_Golem };
 	SkillInfo[5] = { Summon_Fly_Cooldown, LucidState::Summon_ButterFly };
+	SkillInfo[5].SkillCooldown = 0.0f;
 
 	// Move Location
 	MoveLocation.resize(11);
@@ -199,7 +202,11 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 				{
 					std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
 					_CurButterFly->Init(ButterFly_Phase::Phase2);
-					_CurButterFly->Transform.SetLocalPosition({ 1000.0f + 100.0f * i, -800.0f });
+
+					float4 CurBossPos = Transform.GetWorldPosition();
+					Random.SetSeed(reinterpret_cast<long long>(_CurButterFly.get()));
+					float4 RandomFloat4 = Random.RandomVectorBox2D(-300.0f, 300.0f, -300.0f, 300.0f);
+					_CurButterFly->Transform.SetLocalPosition({ CurBossPos + RandomFloat4 });
 				}
 				break;
 			}

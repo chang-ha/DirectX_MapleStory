@@ -39,7 +39,10 @@ void ButterFly_Ball::Release()
 
 void ButterFly_Ball::Init(int _Phase)
 {
-	BallRenderer->CreateAnimation("Ball", "Phase" + std::to_string(_Phase) + "_ButterFly_Ball_Ball");
-	BallRenderer->CreateAnimation("Hit", "Phase" + std::to_string(_Phase) + "_ButterFly_Ball_Hit");
+	std::string PhaseNumber = "";
+	PhaseNumber = std::to_string(_Phase);
+
+	BallRenderer->CreateAnimation("Ball", "Phase" + PhaseNumber + "_ButterFly_Ball_Ball");
+	BallRenderer->CreateAnimation("Hit", "Phase" + PhaseNumber + "_ButterFly_Ball_Hit");
 	BallRenderer->ChangeAnimation("Ball");
 }

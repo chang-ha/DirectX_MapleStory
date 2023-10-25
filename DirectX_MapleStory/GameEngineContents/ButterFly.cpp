@@ -50,6 +50,10 @@ void ButterFly::Init(int _Phase)
 {
 	GameEngineRandom Random;
 	Random.SetSeed(reinterpret_cast<long long>(this));
+
+	std::string PhaseNumber = "";
+	PhaseNumber = std::to_string(Phase);
+
 	//Path
 	switch (Phase)
 	{
@@ -85,10 +89,10 @@ void ButterFly::Init(int _Phase)
 		break;
 	}
 
-	FlyRenderer->CreateAnimation("Ready", "Phase" + std::to_string(Phase) + "_ButterFly_Ready");
-	FlyRenderer->CreateAnimation("Move", "Phase" + std::to_string(Phase) + "_ButterFly_Move");
-	FlyRenderer->CreateAnimation("Attack", "Phase" + std::to_string(Phase) + "_ButterFly_Attack");
-	FlyRenderer->CreateAnimation("Death", "Phase" + std::to_string(Phase) + "_ButterFly_Death", 0.1f, -1, -1, false);
+	FlyRenderer->CreateAnimation("Ready", "Phase" + PhaseNumber + "_ButterFly_Ready");
+	FlyRenderer->CreateAnimation("Move", "Phase" + PhaseNumber + "_ButterFly_Move");
+	FlyRenderer->CreateAnimation("Attack", "Phase" + PhaseNumber + "_ButterFly_Attack");
+	FlyRenderer->CreateAnimation("Death", "Phase" + PhaseNumber + "_ButterFly_Death", 0.1f, -1, -1, false);
 
 	FlyRenderer->SetFrameEvent("Attack", 8, [&](GameEngineSpriteRenderer* _Renderer)
 		{
