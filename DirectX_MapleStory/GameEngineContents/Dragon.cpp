@@ -34,8 +34,8 @@ void Dragon::Start()
 
 	if (nullptr == DragonRenderer)
 	{
-		DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
-		DragonRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
+		DragonRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::DRAGON);
+		DragonRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::dragon });
 		DragonRenderer->AutoSpriteSizeOn();
 		DragonRenderer->SetPivotType(PivotType::Bottom);
 	}
