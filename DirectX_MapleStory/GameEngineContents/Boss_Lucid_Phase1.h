@@ -1,8 +1,6 @@
 #pragma once
 #include "BaseBossActor.h"
 
-#define Skill1_Colldown 3.0f
-#define Skill2_Cooldown 13.0f
 #define Teleport_Cooldown 10.0f
 #define Summon_Mush_Cooldown 7.0f 
 #define Summon_Golem_Cooldown 5.0f 
@@ -11,11 +9,29 @@ enum class LucidState
 {
 	Idle,
 	Death,
-	Skill1, // Shoot
-	Skill2, // Summon Dragon
-	Skill3, // Teleport
+	PhantasmalWind, // Shoot
+	TeleportSkill, // Teleport
+	Summon_Dragon, // Summon Dragon
 	Summon_Mush,  
 	Summon_Golem, 
+};
+
+struct Phase1_Boss_Skill_Info
+{
+	Phase1_Boss_Skill_Info()
+	{
+
+	}
+
+	Phase1_Boss_Skill_Info(float _SkillCooldown, LucidState _SkillState)
+		: SkillCooldownValue(_SkillCooldown), SkillCooldown(_SkillCooldown), SkillState(_SkillState)
+	{
+
+	}
+
+	float SkillCooldownValue = 0.0f;
+	float SkillCooldown = 0.0f;
+	LucidState SkillState = LucidState::Idle;
 };
 
 class Boss_Lucid_Phase1 : public BaseBossActor
@@ -43,11 +59,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
-	float Skill1Cooldown = Skill1_Colldown;
-	float Skill2Cooldown = Skill2_Cooldown;
-	float TeleportCooldown = Teleport_Cooldown;
-	float MushCooldown = Summon_Mush_Cooldown;
-	float GolemCooldown = Summon_Golem_Cooldown;
+	std::vector<Phase1_Boss_Skill_Info> SkillInfo;
 	std::shared_ptr<GameEngineSpriteRenderer> FlowerRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> TeleportRenderer = nullptr;
 	LucidState State = LucidState::Idle;
@@ -56,27 +68,27 @@ private:
 	// Start
 	void IdleStart();
 	void DeathStart();
-	void Skill1Start(); 
-	void Skill2Start(); 
-	void Skill3Start();
+	void PhantasmalWindStart();
+	void Summon_DragonStart();
+	void TeleportSkillStart();
 	void Summon_MushStart();
 	void Summon_GolemStart();
 	//
 	// Update
 	void IdleUpdate(float _Delta);
 	void DeathUpdate(float _Delta);
-	void Skill1Update(float _Delta);
-	void Skill2Update(float _Delta);
-	void Skill3Update(float _Delta);
+	void PhantasmalWindUpdate(float _Delta);
+	void Summon_DragonUpdate(float _Delta);
+	void TeleportSkillUpdate(float _Delta);
 	void Summon_MushUpdate(float _Delta);
 	void Summon_GolemUpdate(float _Delta);
 	// 
 	// End
 	void IdleEnd();
 	void DeathEnd();
-	void Skill1End();
-	void Skill2End();
-	void Skill3End();
+	void PhantasmalWindEnd();
+	void Summon_DragonEnd();
+	void TeleportSkillEnd();
 	void Summon_MushEnd();
 	void Summon_GolemEnd();
 	// 

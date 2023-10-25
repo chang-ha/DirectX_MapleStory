@@ -145,6 +145,12 @@
     <ClCompile Include="Lucid_BodySlam.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
+    <ClCompile Include="ButterFly.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor\ButterFly</Filter>
+    </ClCompile>
+    <ClCompile Include="ButterFly_Ball.cpp">
+      <Filter>Actor\Monster\Boss\SummonActor\ButterFly</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -291,6 +297,12 @@
     <ClInclude Include="Lucid_BodySlam.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
+    <ClInclude Include="ButterFly.h">
+      <Filter>Actor\Monster\Boss\SummonActor\ButterFly</Filter>
+    </ClInclude>
+    <ClInclude Include="ButterFly_Ball.h">
+      <Filter>Actor\Monster\Boss\SummonActor\ButterFly</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -355,6 +367,9 @@
     </Filter>
     <Filter Include="Level\Actor">
       <UniqueIdentifier>{5a8f65e3-df48-41f5-aca2-d6ef0a3de220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Monster\Boss\SummonActor\ButterFly">
+      <UniqueIdentifier>{723525eb-e80a-42cc-afdc-4f6565fbf2c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

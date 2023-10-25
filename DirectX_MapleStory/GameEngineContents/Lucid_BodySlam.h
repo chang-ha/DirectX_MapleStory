@@ -14,6 +14,7 @@ public:
 	{
 
 	}
+
 private:
 	float PlusMoveSpeed = 0.0f;
 	float4 DestinationPos = float4::ZERO;
@@ -62,7 +63,6 @@ private:
 
 	void ChangeState(BodySlamState _State);
 	void StateUpdate(float _Delta);
-	void ChangeAttackDir(ActorDir _Dir);
 
 	void ReadyStart();
 	void AttackStart();

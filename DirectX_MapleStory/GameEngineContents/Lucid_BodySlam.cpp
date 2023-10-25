@@ -77,21 +77,6 @@ void Lucid_BodySlam::Update(float _Delta)
 {
 	GameEngineInput::AddInputObject(this);
 	StateUpdate(_Delta);
-
-	if (true == GameEngineInput::IsDown('B', this))
-	{
-		ChangeState(BodySlamState::Ready);
-	}
-
-	if (true == GameEngineInput::IsDown('N', this))
-	{
-		ChangeState(BodySlamState::Attack);
-	}
-
-	if (true == GameEngineInput::IsDown('M', this))
-	{
-		ChangeState(BodySlamState::Death);
-	}
 }
 
 void Lucid_BodySlam::Release()
@@ -150,55 +135,6 @@ void Lucid_BodySlam::StateUpdate(float _Delta)
 	}
 }
 
-void Lucid_BodySlam::ChangeAttackDir(ActorDir _Dir)
-{
-	if (Dir == _Dir)
-	{
-		return;
-	}
-	Dir = _Dir;
-
-	switch (Dir)
-	{
-	case ActorDir::Right:
-		switch (State)
-		{
-		case BodySlamState::Ready:
-			break;
-		case BodySlamState::Attack:
-			break;
-		case BodySlamState::Death:
-			BodySlamRenderer->SetPivotValue({ 0.5f, 0.5f });
-			break;
-		default:
-			break;
-		}
-		BodySlamRenderer->LeftFlip();
-		break;
-	case ActorDir::Left:
-		switch (State)
-		{
-		case BodySlamState::Ready:
-			BodySlamRenderer->SetPivotValue({ 0.6f, 0.5f });
-			break;
-		case BodySlamState::Attack:
-			BodySlamRenderer->SetPivotValue({ 0.5f, 0.5f });
-			break;
-		case BodySlamState::Death:
-			BodySlamRenderer->SetPivotValue({ 0.5f, 0.5f });
-			break;
-		default:
-			break;
-		}
-		BodySlamRenderer->RightFlip();
-		break;
-	case ActorDir::Null:
-	default:
-		MsgBoxAssert("존재하지 않는 방향입니다.");
-		break;
-	}
-}
-
 void Lucid_BodySlam::ReadyStart()
 {
 	BodySlamRenderer->ChangeAnimation("Ready");
@@ -245,7 +181,6 @@ void Lucid_BodySlam::AttackUpdate(float _Delta)
 		BodySlamRenderer->LeftFlip();
 	}
 	
-	float size = MoveVector.Size();
 	if (5.0f >= MoveVector.Size())
 	{
 		Transform.SetLocalPosition(DestinationPos);

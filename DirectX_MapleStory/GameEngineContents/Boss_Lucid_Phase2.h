@@ -1,6 +1,15 @@
 #pragma once
 #include "BaseBossActor.h"
 
+#define Laser_Pattern_Cooldown 15.0f
+#define BodySlam_Pattern_Cooldown 15.0f
+#define Summon_Golem2_Cooldown 10.0f 
+
+#define Move_Delay_Value 0.05f
+#define Accel_MoveSpeed 100.0f
+#define Default_MoveSpeed 200.0f
+#define Max_MoveSpeed 350.0f
+
 enum class LucidState
 {
 	Idle,
@@ -10,6 +19,25 @@ enum class LucidState
 	BodySlam,
 	Summon_Dragon,
 	Summon_Golem,
+	Summon_ButterFly,
+};
+
+struct Phase2_Boss_Skill_Info
+{
+	Phase2_Boss_Skill_Info()
+	{
+
+	}
+
+	Phase2_Boss_Skill_Info(float _SkillCooldown, LucidState _SkillState)
+		: SkillCooldownValue(_SkillCooldown), SkillCooldown(_SkillCooldown), SkillState(_SkillState)
+	{
+
+	}
+
+	float SkillCooldownValue = 0.0f;
+	float SkillCooldown = 0.0f;
+	LucidState SkillState = LucidState::Idle;
 };
 
 class Boss_Lucid_Phase2 : public BaseBossActor
@@ -35,8 +63,16 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 private:
+	int CurLocationIndex = 0;
+	float MoveSpeed = Default_MoveSpeed;
+	float MoveDelay = 1.5f;
+	float4 MoveVector = float4::ZERO;
+	std::vector<int> LocationNumber;
+	std::vector<float4> MoveLocation;
+
 	ActorDir Dir = ActorDir::Right;
 	LucidState State = LucidState::Idle;
+	std::vector<Phase2_Boss_Skill_Info> SkillInfo;
 
 	///// State
 	// Start
@@ -47,6 +83,7 @@ private:
 	void BodySlamStart();
 	void Summon_DragonStart();
 	void Summon_GolemStart();
+	void Summon_ButterFlyStart();
 	//
 	// Update
 	void IdleUpdate(float _Delta);
@@ -56,6 +93,7 @@ private:
 	void BodySlamUpdate(float _Delta);
 	void Summon_DragonUpdate(float _Delta);
 	void Summon_GolemUpdate(float _Delta);
+	void Summon_ButterFlyUpdate(float _Delta);
 	// 
 	// End
 	void IdleEnd();
@@ -65,6 +103,7 @@ private:
 	void BodySlamEnd();
 	void Summon_DragonEnd();
 	void Summon_GolemEnd();
+	void Summon_ButterFlyEnd();
 	// 
 	/////
 };

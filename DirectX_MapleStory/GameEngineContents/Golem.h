@@ -12,6 +12,12 @@ enum class GolemState
 	Death,
 };
 
+enum class Phase
+{
+	Phase1 = 1,
+	Phase2 = 2
+};
+
 class Golem : public ContentActor
 {
 public:
@@ -29,7 +35,11 @@ public:
 	/// Init 1 or 2
 	/// </summary>
 	/// <param name="_PhaseNumber"> == CurPhaseNumber</param>
-	void Init(int _PhaseNumber);
+	void Init(Phase _Phase)
+	{
+		Init(static_cast<int>(_Phase));
+	}
+	
 	void ChangeState(GolemState _State);
 	void StateUpdate(float _Delta);
 
@@ -53,6 +63,8 @@ protected:
 
 	GolemState State = GolemState::Ready;
 	std::shared_ptr<GameEngineCollision> GolemCollision = nullptr;
+
+	void Init(int _PhaseNumber);
 private:
 };
 

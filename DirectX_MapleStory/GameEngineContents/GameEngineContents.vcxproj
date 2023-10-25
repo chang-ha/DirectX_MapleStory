@@ -192,6 +192,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ButterFly.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ButterFly_Ball.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentActor.cpp">
       <SubType>
       </SubType>
@@ -338,6 +346,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Boss_Lucid_Phase2.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ButterFly.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ButterFly_Ball.h">
       <SubType>
       </SubType>
     </ClInclude>

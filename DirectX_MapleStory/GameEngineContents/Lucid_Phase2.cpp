@@ -818,31 +818,6 @@ void Lucid_Phase2::Update(float _Delta)
 		Player::MainPlayer->MoveVectorForceReset();
 	}
 
-	if (true == GameEngineInput::IsDown('K', this))
-	{
-		FootHoldsNumber.clear();
-		for (int i = 0; i <= 10; i++)
-		{
-			if (i == PrevFootHold)
-			{
-				continue;
-			}
-			FootHoldsNumber.insert(i);
-		}
-
-		GameEngineRandom Random;
-		Random.SetSeed(time(nullptr));
-		int RandomInt = Random.RandomInt(0, static_cast<int>(FootHoldsNumber.size()));
-		float RandomFloat = Random.RandomFloat(-30.0f, 30.0f);
-
-		PrevFootHold = RandomInt;
-
-		std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[RandomInt];
-		std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);
-		_CurGolme->SetSummonFootHold(RandomInt);
-		_CurGolme->Transform.SetLocalPosition({ _CurFootHold->Transform.GetWorldPosition().X + RandomFloat, _CurFootHold->FootHoldYPos + 100.0f });
-	}
-
 	if (true == LaserPatternValue)
 	{
 		LaserCooldown -= _Delta;
@@ -889,6 +864,31 @@ void Lucid_Phase2::CallDragon()
 	{
 		RightDragon->ChangeState(DragonState::Down);
 	}
+}
+
+void Lucid_Phase2::SummonGolem()
+{
+	FootHoldsNumber.clear();
+	for (int i = 0; i <= 10; i++)
+	{
+		if (i == PrevFootHold)
+		{
+			continue;
+		}
+		FootHoldsNumber.insert(i);
+	}
+
+	GameEngineRandom Random;
+	Random.SetSeed(time(nullptr));
+	int RandomInt = Random.RandomInt(0, static_cast<int>(FootHoldsNumber.size()));
+	float RandomFloat = Random.RandomFloat(-50.0f, 50.0f);
+
+	PrevFootHold = RandomInt;
+
+	std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[RandomInt];
+	std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);
+	_CurGolme->SetSummonFootHold(RandomInt);
+	_CurGolme->Transform.SetLocalPosition({ _CurFootHold->Transform.GetWorldPosition().X + RandomFloat, _CurFootHold->FootHoldYPos + 100.0f });
 }
 
 void Lucid_Phase2::BreakFootHold(int _FootHoldNumber)
