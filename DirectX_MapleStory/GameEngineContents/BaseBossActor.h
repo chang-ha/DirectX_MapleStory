@@ -1,7 +1,8 @@
 #pragma once
 
-#define PhantasmalWind_Cooldown 5.0f
+#define PhantasmalWind_Cooldown 4.0f
 #define Summon_Dragon_Cooldown 13.0f
+#define Summon_Fly_Cooldown 5.0f
 
 class BaseBossActor : public GameEngineActor
 {

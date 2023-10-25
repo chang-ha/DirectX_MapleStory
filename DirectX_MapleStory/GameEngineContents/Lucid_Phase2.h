@@ -91,7 +91,7 @@ private:
 
 	// Map Detail
 	void ObjectUpdate(float _Delta);
-	std::set<int> FootHoldsNumber;
+	std::vector<int> FootHoldsNumber;
 	std::shared_ptr<RenderActor> BG_LucidLaser = nullptr;
 	std::vector<std::shared_ptr<FootHold>> AllFootHolds;
 	std::vector<std::shared_ptr<FallingObject>> MapObjects;

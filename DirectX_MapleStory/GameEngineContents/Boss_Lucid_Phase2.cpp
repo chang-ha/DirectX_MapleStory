@@ -27,13 +27,14 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	CurLocationIndex = Random.RandomInt(0, 10);
 	PhantasmalWind::AllAngleValue = true;
 	// Skill Cooldown
-	SkillInfo.resize(5);
+	SkillInfo.resize(6);
 
 	SkillInfo[0] = { PhantasmalWind_Cooldown, LucidState::PhantasmalWind };
 	SkillInfo[1] = { Laser_Pattern_Cooldown, LucidState::Laser };
 	SkillInfo[2] = { BodySlam_Pattern_Cooldown, LucidState::BodySlam };
 	SkillInfo[3] = { Summon_Dragon_Cooldown, LucidState::Summon_Dragon };
 	SkillInfo[4] = { Summon_Golem2_Cooldown, LucidState::Summon_Golem };
+	SkillInfo[5] = { Summon_Fly_Cooldown, LucidState::Summon_ButterFly };
 
 	// Move Location
 	MoveLocation.resize(11);
@@ -194,9 +195,12 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 			}
 			case LucidState::Summon_ButterFly:
 			{
-				std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
-				_CurButterFly->Init(ButterFly_Phase::Phase2);
-				_CurButterFly->Transform.SetLocalPosition({ 1000, -850 });
+				for (int i = 0; i < 3; i++)
+				{
+					std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
+					_CurButterFly->Init(ButterFly_Phase::Phase2);
+					_CurButterFly->Transform.SetLocalPosition({ 1000.0f + 100.0f * i, -800.0f });
+				}
 				break;
 			}
 			default:
@@ -572,10 +576,10 @@ void Boss_Lucid_Phase2::IdleUpdate(float _Delta)
 		}
 
 		GameEngineRandom Random;
-		Random.SetSeed(time(nullptr) + CurLocationIndex);
-		int RandomInt = Random.RandomInt(0, static_cast<int>(LocationNumber.size()));
+		Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + CurLocationIndex);
+		int RandomInt = Random.RandomInt(0, static_cast<int>(LocationNumber.size() - 1));
 
-		CurLocationIndex = RandomInt;
+		CurLocationIndex = LocationNumber[RandomInt];
 		MoveSpeed = Default_MoveSpeed;
 	}
 }

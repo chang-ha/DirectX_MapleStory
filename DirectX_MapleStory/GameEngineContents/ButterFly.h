@@ -1,5 +1,9 @@
 #pragma once
 
+#define Fly_Accel_MoveSpeed 100.0f
+#define Fly_Default_MoveSpeed 150.0f
+#define Fly_Max_MoveSpeed 250.0f
+
 enum class ButterFlyState
 {
 	Ready,
@@ -42,6 +46,13 @@ protected:
 	void Release() override;
 
 private:
+	int CurLocationIndex = 0;
+	float LiveTime = 20.0f;
+	float MoveSpeed = Fly_Default_MoveSpeed;
+	float4 MoveVector = float4::ZERO;
+	std::vector<int> LocationNumber;
+	std::vector<float4> MoveLocation;
+
 	ActorDir Dir = ActorDir::Null;
 	ButterFlyState State = ButterFlyState::Ready;
 	std::shared_ptr<GameEngineSpriteRenderer> FlyRenderer = nullptr;

@@ -875,19 +875,19 @@ void Lucid_Phase2::SummonGolem()
 		{
 			continue;
 		}
-		FootHoldsNumber.insert(i);
+		FootHoldsNumber.push_back(i);
 	}
 
 	GameEngineRandom Random;
 	Random.SetSeed(time(nullptr));
-	int RandomInt = Random.RandomInt(0, static_cast<int>(FootHoldsNumber.size()));
+	int RandomInt = Random.RandomInt(0, static_cast<int>(FootHoldsNumber.size() - 1));
 	float RandomFloat = Random.RandomFloat(-50.0f, 50.0f);
 
-	PrevFootHold = RandomInt;
+	PrevFootHold = FootHoldsNumber[RandomInt];
 
-	std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[RandomInt];
+	std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[PrevFootHold];
 	std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);
-	_CurGolme->SetSummonFootHold(RandomInt);
+	_CurGolme->SetSummonFootHold(PrevFootHold);
 	_CurGolme->Transform.SetLocalPosition({ _CurFootHold->Transform.GetWorldPosition().X + RandomFloat, _CurFootHold->FootHoldYPos + 100.0f });
 }
 

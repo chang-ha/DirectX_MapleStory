@@ -1,9 +1,9 @@
 #pragma once
 #include "BaseBossActor.h"
 
-#define Laser_Pattern_Cooldown 15.0f
-#define BodySlam_Pattern_Cooldown 15.0f
-#define Summon_Golem2_Cooldown 10.0f 
+#define Laser_Pattern_Cooldown 10.0f
+#define BodySlam_Pattern_Cooldown 10.0f
+#define Summon_Golem2_Cooldown 5.0f 
 
 #define Move_Delay_Value 0.05f
 #define Accel_MoveSpeed 100.0f

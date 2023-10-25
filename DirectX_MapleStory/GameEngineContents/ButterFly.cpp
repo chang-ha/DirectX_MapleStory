@@ -29,32 +29,19 @@ void ButterFly::Start()
 	}
 	FlyRenderer->AutoSpriteSizeOn();
 	FlyRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
+
+	MoveLocation.resize(9);
+	LocationNumber.resize(8);
+
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(this));
+	CurLocationIndex = Random.RandomInt(0, 8);
 }
 
 void ButterFly::Update(float _Delta)
 {
-	GameEngineInput::AddInputObject(this);
+	LiveTime -= _Delta;
 	StateUpdate(_Delta);
-
-	if (true == GameEngineInput::IsDown('V', this))
-	{
-		ChangeState(ButterFlyState::Ready);
-	}
-
-	if (true == GameEngineInput::IsDown('B', this))
-	{
-		ChangeState(ButterFlyState::Move);
-	}
-
-	if (true == GameEngineInput::IsDown('N', this))
-	{
-		ChangeState(ButterFlyState::Attack);
-	}
-
-	if (true == GameEngineInput::IsDown('M', this))
-	{
-		ChangeState(ButterFlyState::Death);
-	}
 }
 
 void ButterFly::Release()
@@ -68,10 +55,28 @@ void ButterFly::Release()
 
 void ButterFly::Init(int _Phase)
 {
-	FlyRenderer->CreateAnimation("Ready", "Phase" + std::to_string(_Phase) + "_ButterFly_Ready", 0.1f, -1, -1);
+	//Path
+	switch (_Phase)
+	{
+	case 1:
+		break;
+	case 2:
+		MoveLocation[0] = { 500, -435 };
+		MoveLocation[1] = { 400, -635 };
+		MoveLocation[2] = { 600, -1085 };
+		MoveLocation[3] = { 1050, -1285 };
+		MoveLocation[4] = { 1400, -1285 };
+		MoveLocation[5] = { 1600, -885 };
+		MoveLocation[6] = { 1400, -585 };
+		MoveLocation[7] = { 1240, -285 };
+		MoveLocation[8] = { 900, -285 };
+		break;
+	}
+
+	FlyRenderer->CreateAnimation("Ready", "Phase" + std::to_string(_Phase) + "_ButterFly_Ready");
 	FlyRenderer->CreateAnimation("Move", "Phase" + std::to_string(_Phase) + "_ButterFly_Move");
 	FlyRenderer->CreateAnimation("Attack", "Phase" + std::to_string(_Phase) + "_ButterFly_Attack");
-	FlyRenderer->CreateAnimation("Death", "Phase" + std::to_string(_Phase) + "_ButterFly_Death");
+	FlyRenderer->CreateAnimation("Death", "Phase" + std::to_string(_Phase) + "_ButterFly_Death", 0.1f, -1, -1, false);
 
 	FlyRenderer->SetFrameEvent("Attack", 8, [&](GameEngineSpriteRenderer* _Renderer)
 		{
@@ -98,12 +103,10 @@ void ButterFly::Init(int _Phase)
 				MsgBoxAssert("존재하지 않는 방향입니다.");
 				break;
 			}
-			
+
 			_Ball->Transform.SetLocalPosition(Transform.GetWorldPosition() + PivotValue);
 		});
-	// ReadyStart();
-	Dir = ActorDir::Right;
-	AttackStart();
+	ReadyStart();
 }
 
 
@@ -212,6 +215,18 @@ void ButterFly::AttackStart()
 {
 	FlyRenderer->ChangeAnimation("Attack");
 
+	float4 CurPos = Transform.GetWorldPosition();
+	float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+	
+	if (0.0f >= PlayerPos.X - CurPos.X)
+	{
+		Dir = ActorDir::Left;
+	}
+	else
+	{
+		Dir = ActorDir::Right;
+	}
+
 	switch (Dir)
 	{
 	case ActorDir::Right:
@@ -252,20 +267,82 @@ void ButterFly::DeathStart()
 
 void ButterFly::ReadyUpdate(float _Delta)
 {
-
+	if (true == FlyRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(ButterFlyState::Move);
+	}
 }
 
 void ButterFly::MoveUpdate(float _Delta)
 {
+	if (Fly_Max_MoveSpeed > MoveSpeed)
+	{
+		MoveSpeed += Fly_Accel_MoveSpeed * _Delta;
+	}
+	else if (Fly_Max_MoveSpeed <= MoveSpeed)
+	{
+		MoveSpeed = Fly_Max_MoveSpeed;
+	}
 
+	float4 CurPos = Transform.GetLocalPosition();
+	float4 DestinationPos = MoveLocation[CurLocationIndex];
+	MoveVector = DestinationPos - CurPos;
+	Transform.AddLocalPosition(MoveVector.NormalizeReturn() * MoveSpeed * _Delta);
+
+	if (0.0f >= MoveVector.X && Dir == ActorDir::Right)
+	{
+		Dir = ActorDir::Left;
+		FlyRenderer->RightFlip();
+		FlyRenderer->SetPivotValue({ 0.585f, 0.573f });
+	}
+	else if (0.0f < MoveVector.X && Dir == ActorDir::Left)
+	{
+		Dir = ActorDir::Right;
+		FlyRenderer->LeftFlip();
+		FlyRenderer->SetPivotValue({ 0.415f, 0.573f });
+	}
+
+	if (5.0f >= MoveVector.Size())
+	{
+		LocationNumber.clear();
+		Transform.SetLocalPosition(DestinationPos);
+
+		for (int i = 0; i < LocationNumber.capacity(); i++)
+		{
+			if (CurLocationIndex == i)
+			{
+				continue;
+			}
+			LocationNumber.push_back(i);
+		}
+
+		GameEngineRandom Random;
+		Random.SetSeed(reinterpret_cast<long long>(this) + CurLocationIndex);
+		int RandomInt = Random.RandomInt(0, static_cast<int>(LocationNumber.size() - 1));
+
+		CurLocationIndex = LocationNumber[RandomInt];
+		MoveSpeed = Fly_Default_MoveSpeed;
+		ChangeState(ButterFlyState::Attack);
+	}
 }
 
 void ButterFly::AttackUpdate(float _Delta)
 {
+	if (true == FlyRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(ButterFlyState::Move);
+	}
 
+	if (0.0f >= LiveTime)
+	{
+		ChangeState(ButterFlyState::Death);
+	}
 }
 
 void ButterFly::DeathUpdate(float _Delta)
 {
-
+	if (true == FlyRenderer->IsCurAnimationEnd())
+	{
+		Death();
+	}
 }
