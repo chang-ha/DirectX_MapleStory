@@ -42,6 +42,7 @@ protected:
 	void Release() override;
 
 private:
+	ActorDir Dir = ActorDir::Null;
 	ButterFlyState State = ButterFlyState::Ready;
 	std::shared_ptr<GameEngineSpriteRenderer> FlyRenderer = nullptr;
 

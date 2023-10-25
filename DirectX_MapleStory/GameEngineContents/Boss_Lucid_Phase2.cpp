@@ -86,6 +86,29 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("Phase2_ButterFly_Ready"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Phase2_ButterFly\\ButterFly");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("Phase2_ButterFly_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+
+		Dir.MoveParent();
+		Dir.MoveChild("ButterFly_Ball");
+		Directorys = Dir.GetAllDirectory();
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("Phase2_ButterFly_Ball" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+	}
+
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase2_Idle");
 	BossRenderer->CreateAnimation("Death", "Lucid_Phase2_Death");
 	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase2_PhantasmalWind");
@@ -173,6 +196,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 			{
 				std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
 				_CurButterFly->Init(Phase::Phase2);
+				_CurButterFly->Transform.SetLocalPosition({ 1000, -850 });
 				break;
 			}
 			default:
@@ -238,7 +262,7 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('0', this))
 	{
-		ChangeState(LucidState::Death);
+		ChangeState(LucidState::Summon_ButterFly);
 	}
 }
 
@@ -270,6 +294,9 @@ void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 		case LucidState::Summon_Golem:
 			Summon_GolemEnd();
 			break;
+		case LucidState::Summon_ButterFly:
+			Summon_ButterFlyEnd();
+			break;
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
 			break;
@@ -299,6 +326,9 @@ void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 		case LucidState::Summon_Golem:
 			Summon_GolemStart();
 			break;
+		case LucidState::Summon_ButterFly:
+			Summon_ButterFlyStart();
+			break;
 		default:
 			break;
 		}
@@ -325,6 +355,8 @@ void Boss_Lucid_Phase2::StateUpdate(float _Delta)
 		return Summon_DragonUpdate(_Delta);
 	case LucidState::Summon_Golem:
 		return Summon_GolemUpdate(_Delta);
+	case LucidState::Summon_ButterFly:
+		return Summon_ButterFlyUpdate(_Delta);
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
 		break;
@@ -422,8 +454,6 @@ void Boss_Lucid_Phase2::LaserStart()
 void Boss_Lucid_Phase2::BodySlamStart()
 {
 	BossRenderer->ChangeAnimation("BodySlam");
-	// Lucid_Phase2* Map = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
-	// Map->LucidLaserOn();
 
 	switch (Dir)
 	{

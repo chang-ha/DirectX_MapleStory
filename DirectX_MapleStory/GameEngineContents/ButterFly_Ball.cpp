@@ -10,3 +10,34 @@ ButterFly_Ball::~ButterFly_Ball()
 {
 
 }
+
+void ButterFly_Ball::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
+}
+
+void ButterFly_Ball::Start()
+{
+	BallRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTERATTACK);
+	BallRenderer->AutoSpriteSizeOn();
+	BallRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monsterattack});
+
+	BallCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+}
+
+void ButterFly_Ball::Update(float _Delta)
+{
+	
+}
+
+void ButterFly_Ball::Release()
+{
+
+}
+
+void ButterFly_Ball::Init(int _Phase)
+{
+	BallRenderer->CreateAnimation("Ball", "Phase" + std::to_string(_Phase) + "_ButterFly_Ball_Ball");
+	BallRenderer->CreateAnimation("Hit", "Phase" + std::to_string(_Phase) + "_ButterFly_Ball_Hit");
+	BallRenderer->ChangeAnimation("Ball");
+}
