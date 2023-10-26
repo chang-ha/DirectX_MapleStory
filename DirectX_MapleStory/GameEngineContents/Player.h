@@ -57,9 +57,15 @@ public:
 	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
 	void Release() override;
+
 	void SetNotGroundValue(float _Value)
 	{
-		NotGround = _Value;
+		NotGround.insert( _Value);
+	}
+	
+	void PopNotGroundValue(float _Value)
+	{
+		NotGround.erase(_Value);
 	}
 
 protected:
@@ -88,7 +94,7 @@ private:
 
 	// 추후 Set으로 개선
 	float SkipGround = 0.0f;
-	float NotGround = 0.0f;
+	std::set<float> NotGround;
 
 	float4 CurMapScale = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;

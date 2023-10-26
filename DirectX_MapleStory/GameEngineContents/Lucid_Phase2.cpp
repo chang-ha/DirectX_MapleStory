@@ -135,7 +135,7 @@ void FootHold::IdleUpdate(float _Delta)
 
 		if (1.0f <= Renderer->GetColorData().MulColor.A)
 		{
-			Player::MainPlayer->SetNotGroundValue(0.0f);
+			Player::MainPlayer->PopNotGroundValue(FootHoldYPos);
 		}
 	}
 }
@@ -840,6 +840,11 @@ void Lucid_Phase2::Update(float _Delta)
 	if (0.0f >= GolemCooldown)
 	{
 		GolemCooldown = Golem_Cooldown;
+		SummonGolem();
+	}
+
+	if (true == GameEngineInput::IsDown('9', this))
+	{
 		SummonGolem();
 	}
 }

@@ -278,9 +278,17 @@ bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 		SkipGround = 0.0f;
 	}
 
-	if (0.0f != NotGround && (NotGround + 1.0f >= CurYPos && NotGround - 2.0f <= CurYPos))
+	std::set<float>::iterator StartIter = NotGround.begin();
+	std::set<float>::iterator EndIter = NotGround.end();
+
+	for (; StartIter != EndIter ;)
 	{
-		return false;
+		float CheckPos = *StartIter;
+		if (0.0f != CheckPos && (CheckPos + 1.0f >= CurYPos && CheckPos - 2.0f <= CurYPos))
+		{
+			return false;
+		}
+		++StartIter;
 	}
 
 	return ContentActor::CheckGround(PlusCheckPos);
