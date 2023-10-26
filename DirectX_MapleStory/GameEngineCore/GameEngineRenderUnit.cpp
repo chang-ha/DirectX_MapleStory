@@ -19,6 +19,22 @@ GameEngineRenderUnit::~GameEngineRenderUnit()
 
 }
 
+void GameEngineRenderUnit::SetText(const std::string& _Font, const std::string& _Text, float _Scale, const float4& _Color, FW1_TEXT_FLAG Flag)
+{
+	Font = GameEngineFont::Find(_Font);
+
+	if (nullptr == Font)
+	{
+		MsgBoxAssert("로드하지 않는 폰트를 사용하려고 했습니다.");
+	}
+
+
+	FontText = _Text;
+	FontScale = _Scale;
+	FontColor = _Color;
+	FontFlag = Flag;
+}
+
 void GameEngineRenderUnit::ResSetting()
 {
 	Mesh->InputAssembler1();
@@ -46,6 +62,25 @@ void GameEngineRenderUnit::ResSetting()
 
 void GameEngineRenderUnit::Draw()
 {
+	if (nullptr != Font)
+	{
+		float4x4 ViewPort;
+
+		float4 ScreenPos = ParentRenderer->Transform.GetWorldPosition();
+		float4 Scale = GameEngineCore::MainWindow.GetScale();
+		ViewPort.ViewPort(Scale.X, Scale.Y, 0, 0);
+
+		ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ViewMatrix;
+		ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ProjectionMatrix;
+		ScreenPos *= ViewPort;
+		// WindowPos
+		Font->FontDraw(FontText, FontScale, ScreenPos, FontColor, FontFlag);
+
+		GameEngineCore::GetContext()->GSSetShader(nullptr, nullptr, 0);
+
+		return;
+	}
+
 	Mesh->Draw();
 }
 

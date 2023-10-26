@@ -91,6 +91,22 @@ public:
 
 	}
 
+	UINT ColorToUint() const
+	{
+		UINT Return;
+
+		char* Ptr = reinterpret_cast<char*>(&Return);
+
+		// 0~1
+		Ptr[0] = static_cast<int>(R * 255.0f);
+		Ptr[1] = static_cast<int>(G * 255.0f);
+		Ptr[2] = static_cast<int>(B * 255.0f);
+		Ptr[3] = static_cast<int>(A * 255.0f);
+
+		return Return;
+	}
+
+
 	inline int iX() const
 	{
 		return static_cast<int>(X);

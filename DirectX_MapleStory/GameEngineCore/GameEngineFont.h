@@ -35,6 +35,8 @@ public:
 		return Res;
 	}
 
+	void FontDraw(const std::string& _Text, float _FontScale, const float4& _Pos, const float4& _Color, FW1_TEXT_FLAG _Flag);
+
 protected:
 
 private:
