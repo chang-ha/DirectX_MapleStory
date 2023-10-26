@@ -29,15 +29,14 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	PhantasmalWind::AllAngleValue = true;
 	// Skill Cooldown
-	SkillInfo.resize(6);
+	SkillInfo.resize(5);
 
 	SkillInfo[0] = { PhantasmalWind_Cooldown, LucidState::PhantasmalWind };
 	SkillInfo[1] = { Laser_Pattern_Cooldown, LucidState::Laser };
 	SkillInfo[2] = { BodySlam_Pattern_Cooldown, LucidState::BodySlam };
 	SkillInfo[3] = { Summon_Dragon_Cooldown, LucidState::Summon_Dragon };
-	SkillInfo[4] = { Summon_Golem2_Cooldown, LucidState::Summon_Golem };
-	SkillInfo[5] = { Summon_Fly_Cooldown, LucidState::Summon_ButterFly };
-	SkillInfo[5].SkillCooldown = 0.0f;
+	SkillInfo[4] = { Summon_Fly_Cooldown, LucidState::Summon_ButterFly };
+	SkillInfo[4].SkillCooldown = 0.0f;
 
 	// Move Location
 	MoveLocation.resize(11);
@@ -190,12 +189,6 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			switch (State)
 			{
-			case LucidState::Summon_Golem:
-			{
-				Lucid_Phase2* Map = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
-				Map->SummonGolem();
-				break;
-			}
 			case LucidState::Summon_ButterFly:
 			{
 				for (int i = 0; i < 3; i++)
@@ -266,11 +259,6 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 		ChangeState(LucidState::BodySlam);
 	}
 
-	if (true == GameEngineInput::IsDown('9', this))
-	{
-		ChangeState(LucidState::Summon_Golem);
-	}
-
 	if (true == GameEngineInput::IsDown('0', this))
 	{
 		ChangeState(LucidState::Summon_ButterFly);
@@ -302,9 +290,6 @@ void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 		case LucidState::Summon_Dragon:
 			Summon_DragonEnd();
 			break;
-		case LucidState::Summon_Golem:
-			Summon_GolemEnd();
-			break;
 		case LucidState::Summon_ButterFly:
 			Summon_ButterFlyEnd();
 			break;
@@ -334,9 +319,6 @@ void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 		case LucidState::Summon_Dragon:
 			Summon_DragonStart();
 			break;
-		case LucidState::Summon_Golem:
-			Summon_GolemStart();
-			break;
 		case LucidState::Summon_ButterFly:
 			Summon_ButterFlyStart();
 			break;
@@ -364,8 +346,6 @@ void Boss_Lucid_Phase2::StateUpdate(float _Delta)
 		return BodySlamUpdate(_Delta);
 	case LucidState::Summon_Dragon:
 		return Summon_DragonUpdate(_Delta);
-	case LucidState::Summon_Golem:
-		return Summon_GolemUpdate(_Delta);
 	case LucidState::Summon_ButterFly:
 		return Summon_ButterFlyUpdate(_Delta);
 	default:
@@ -504,12 +484,6 @@ void Boss_Lucid_Phase2::Summon_DragonStart()
 	}
 }
 
-void Boss_Lucid_Phase2::Summon_GolemStart()
-{
-	BossRenderer->ChangeAnimation("Summon");
-	BossRenderer->SetPivotValue({ 0.5f, 0.635f });
-}
-
 void Boss_Lucid_Phase2::Summon_ButterFlyStart()
 {
 	BossRenderer->ChangeAnimation("Summon");
@@ -628,14 +602,6 @@ void Boss_Lucid_Phase2::Summon_DragonUpdate(float _Delta)
 	}
 }
 
-void Boss_Lucid_Phase2::Summon_GolemUpdate(float _Delta)
-{
-	if (true == BossRenderer->IsCurAnimationEnd())
-	{
-		ChangeState(LucidState::Idle);
-	}
-}
-
 void Boss_Lucid_Phase2::Summon_ButterFlyUpdate(float _Delta)
 {
 	if (true == BossRenderer->IsCurAnimationEnd())
@@ -671,11 +637,6 @@ void Boss_Lucid_Phase2::BodySlamEnd()
 }
 
 void Boss_Lucid_Phase2::Summon_DragonEnd()
-{
-
-}
-
-void Boss_Lucid_Phase2::Summon_GolemEnd()
 {
 
 }

@@ -3,7 +3,6 @@
 
 #define Laser_Pattern_Cooldown 10.0f
 #define BodySlam_Pattern_Cooldown 10.0f
-#define Summon_Golem2_Cooldown 5.0f 
 
 #define Move_Delay_Value 0.05f
 #define Accel_MoveSpeed 100.0f
@@ -18,7 +17,6 @@ enum class LucidState
 	Laser,
 	BodySlam,
 	Summon_Dragon,
-	Summon_Golem,
 	Summon_ButterFly,
 };
 
@@ -82,7 +80,6 @@ private:
 	void LaserStart();
 	void BodySlamStart();
 	void Summon_DragonStart();
-	void Summon_GolemStart();
 	void Summon_ButterFlyStart();
 	//
 	// Update
@@ -92,7 +89,6 @@ private:
 	void LaserUpdate(float _Delta);
 	void BodySlamUpdate(float _Delta);
 	void Summon_DragonUpdate(float _Delta);
-	void Summon_GolemUpdate(float _Delta);
 	void Summon_ButterFlyUpdate(float _Delta);
 	// 
 	// End
@@ -102,7 +98,6 @@ private:
 	void LaserEnd();
 	void BodySlamEnd();
 	void Summon_DragonEnd();
-	void Summon_GolemEnd();
 	void Summon_ButterFlyEnd();
 	// 
 	/////

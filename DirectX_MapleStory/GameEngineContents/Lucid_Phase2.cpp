@@ -835,6 +835,13 @@ void Lucid_Phase2::Update(float _Delta)
 			LaserCooldown = Lase_Cooldown;
 		}
 	}
+
+	GolemCooldown -= _Delta;
+	if (0.0f >= GolemCooldown)
+	{
+		GolemCooldown = Golem_Cooldown;
+		SummonGolem();
+	}
 }
 
 void Lucid_Phase2::ObjectUpdate(float _Delta)
