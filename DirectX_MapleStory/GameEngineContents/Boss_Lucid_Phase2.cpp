@@ -265,6 +265,11 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 	}
 }
 
+void Boss_Lucid_Phase2::Release()
+{
+
+}
+
 void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 {
 	if (_State != State)

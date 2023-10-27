@@ -151,6 +151,9 @@
     <ClCompile Include="ButterFly_Ball.cpp">
       <Filter>Actor\Monster\Boss\SummonActor\ButterFly</Filter>
     </ClCompile>
+    <ClCompile Include="Minimap.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -303,6 +306,9 @@
     <ClInclude Include="ButterFly_Ball.h">
       <Filter>Actor\Monster\Boss\SummonActor\ButterFly</Filter>
     </ClInclude>
+    <ClInclude Include="Minimap.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -370,6 +376,9 @@
     </Filter>
     <Filter Include="Actor\Monster\Boss\SummonActor\ButterFly">
       <UniqueIdentifier>{723525eb-e80a-42cc-afdc-4f6565fbf2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{8d0fa0bc-3f9f-43ee-983d-5793b934664f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

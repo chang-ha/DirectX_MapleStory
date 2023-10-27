@@ -25,6 +25,8 @@ void FadeObject::Start()
 		FadeRenderer->SetImageScale(GlobalValue::WinScale);
 		// 기본으로 검은 FadeObject
 		FadeRenderer->GetColorData().PlusColor = { -1.0f, -1.0f, -1.0f };
+
+		Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	}
 }
 

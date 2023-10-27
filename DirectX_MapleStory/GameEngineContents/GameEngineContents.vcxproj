@@ -279,6 +279,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Minimap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Monsoon.cpp" />
     <ClCompile Include="MushRoom.cpp">
       <SubType>
@@ -440,6 +444,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="MercilessWinds.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Minimap.h">
       <SubType>
       </SubType>
     </ClInclude>

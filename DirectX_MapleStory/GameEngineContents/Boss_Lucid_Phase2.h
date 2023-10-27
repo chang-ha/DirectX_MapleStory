@@ -60,6 +60,7 @@ protected:
 
 	void Start() override;
 	void Update(float _Delta) override;
+	void Release() override;
 private:
 	int CurLocationIndex = 0;
 	float MoveSpeed = Default_MoveSpeed;

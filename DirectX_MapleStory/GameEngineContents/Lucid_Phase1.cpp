@@ -12,6 +12,7 @@
 #include "Laser.h"
 #include "RenderActor.h"
 #include "FadeObject.h"
+#include "Minimap.h"
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
@@ -208,6 +209,8 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		Flower->Transform.SetLocalPosition({ -500 - 1200 * static_cast<float>(i), -790, 0 });
 		MapObjects.push_back(Flower);
 	}
+
+	Minimap::CreateMinimap("Minimap_Lucid_Phase1.png");
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)

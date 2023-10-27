@@ -31,6 +31,8 @@ void ContentLevel::Start()
 	GameEngineInput::AddInputObject(this);
 	GameEngineGUI::CreateGUIWindow<LevelDebug>("LevelDebug");
 
+	std::shared_ptr<GameEngineCamera> UICamera = GetCamera(static_cast<int>(ECAMERAORDER::UI));
+	UICamera->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	{
 		std::shared_ptr<GameEngineCamera> BackGroundCamera = CreateCamera(INT_MIN, ECAMERAORDER::MainPrev);
 	}

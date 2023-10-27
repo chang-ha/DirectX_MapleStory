@@ -21,6 +21,12 @@ public:
 	GlobalValue& operator=(GlobalValue&& _Other) noexcept = delete;
 
 	static float4 WinScale;
+	static float4 GetDirectXWinScale()
+	{
+		float4 Scale = WinScale;
+		Scale.Y *= -1.0f;
+		return Scale;
+	}
 protected:
 
 private:
