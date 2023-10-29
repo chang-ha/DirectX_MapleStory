@@ -304,7 +304,27 @@ void GameEngineDevice::ResourcesInit()
 		Desc.MinLOD = -FLT_MAX;
 		Desc.MaxLOD = FLT_MAX;
 
-		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("EngineBaseSampler", Desc);
+		std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Create("EngineBaseSampler", Desc);
+	}
+
+	{
+
+		D3D11_SAMPLER_DESC Desc = {};
+		// 일반적인 보간형식 <= 뭉개진다.
+		// D3D11_FILTER_MIN_MAG_MIP_
+		// 그 밉맵에서 색상가져올때 다 뭉개는 방식으로 가져오겠다.
+		Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		Desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
+		Desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
+		Desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;
+
+		Desc.MipLODBias = 0.0f;
+		Desc.MaxAnisotropy = 1;
+		Desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		Desc.MinLOD = -FLT_MAX;
+		Desc.MaxLOD = FLT_MAX;
+
+		std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Create("EngineBaseWRAPSampler", Desc);
 	}
 
 	// 엔진수준에서 지원해주는 가장 기초적인 리소스들은 여기에서 만들어질 겁니다.

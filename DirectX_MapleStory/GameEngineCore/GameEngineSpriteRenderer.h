@@ -174,6 +174,8 @@ public:
 	void AnimationPauseOn();
 	void AnimationPauseOff();
 
+	void SetSampler(std::string_view _Name);
+
 	void SetPivotValue(const float4& _Value)
 	{
 		Pivot = _Value;
@@ -206,6 +208,7 @@ private:
 	/////////// Animation Member
 	bool IsPause = false;
 	bool IsImageSize = false; // Rendering ImageSize
+	bool IsUserSampler = true; // if using user Sampler, not auto sampler setting
 	float4 AutoScaleRatio = { 1.0f, 1.0f, 1.0f };// Rendering ScaleRation
 	std::shared_ptr<GameEngineFrameAnimation> CurFrameAnimations;
 	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>> FrameAnimations;

@@ -97,9 +97,11 @@ public:
 
 	void SetConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
 
-	void SetTexture(std::string_view _Name, std::string_view _TextureName);
+	void SetTexture(std::string_view _Name, std::string_view _TextureName, bool _SamplerCheck = true);
 
-	void SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture);
+	void SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _TextureName, bool _SamplerCheck = true);
+
+	void SetSampler(std::string_view _Name, std::string_view _SamplerName);
 
 	void SetSampler(std::string_view _Name, std::shared_ptr<GameEngineSampler> _TextureSampler);
 
