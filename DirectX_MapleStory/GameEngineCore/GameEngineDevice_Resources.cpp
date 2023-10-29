@@ -63,18 +63,16 @@ void GameEngineDevice::ResourcesInit()
 	// Line¿ë Vertex
 	{
 		std::vector<GameEngineVertex> Vertex;
-		Vertex.resize(2);
+		Vertex.resize(3);
 
-		GameEngineVertex BaseVertexs[2];
-
-		BaseVertexs[0] = { { 0.5f, 0.5f, 0.0f, 1.0f } };
-		BaseVertexs[1] = { { 0.0f, 0.0f, 0.0f, 1.0f } };
+		Vertex[0] = { { 0.0f, 0.0f, 0.0f, 1.0f } };
+		Vertex[1] = { { 0.0f, 0.0f, 0.0f, 1.0f } };
 
 		GameEngineVertexBuffer::Create("Line", Vertex);
 
 		std::vector<unsigned int> Index =
 		{
-			0, 1, 1, 0
+			0, 1
 		};
 		GameEngineIndexBuffer::Create("Line", Index);
 

@@ -100,6 +100,6 @@ void GameEngineDebug::DrawLine(float4 _Start, float4 _End, float4 _Color/* = flo
 	Value.Data.ProjectionMatrix = _Camera->Transform.GetConstTransformDataRef().ProjectionMatrix;
 	Value.Data.WorldViewProjectionCalculation();
 
-	// Value.Unit.ShaderResHelper.SetConstantBufferLink("TransformData", Value.Data);
+	Value.Unit.ShaderResHelper.SetConstantBufferLink("TransformData", Value.Data);
 	Value.Unit.ShaderResHelper.SetConstantBufferLink("DebugColor", Value.Color);
 }
