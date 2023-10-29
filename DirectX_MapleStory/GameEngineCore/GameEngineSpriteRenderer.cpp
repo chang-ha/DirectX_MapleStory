@@ -215,9 +215,25 @@ void GameEngineSpriteRenderer::CreateAnimation(std::string_view _AnimationName, 
 	
 	// Save Animation Index to Vector
 	// if use Sprite Image 3 to 5 = save 3 4 5 to vector
-	for (unsigned int i = NewAnimation->Start; i <= NewAnimation->End; i++)
+	int Plus = 1;
+
+	if (NewAnimation->Start > NewAnimation->End)
 	{
-		NewAnimation->Index.push_back(i);
+		int Temp = NewAnimation->End;
+		NewAnimation->End = NewAnimation->Start;
+		NewAnimation->Start = Temp;
+
+		for (unsigned int i = NewAnimation->Start; i <= NewAnimation->End; i--)
+		{
+			NewAnimation->Index.push_back(i);
+		}
+	}
+	else
+	{
+		for (unsigned int i = NewAnimation->Start; i <= NewAnimation->End; i++)
+		{
+			NewAnimation->Index.push_back(i);
+		}
 	}
 
 	NewAnimation->Inter.resize(NewAnimation->Index.size());
