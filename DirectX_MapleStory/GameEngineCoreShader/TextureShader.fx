@@ -42,6 +42,13 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
     Result.POSITION = mul(_Input.POSITION, WorldViewProjectionMatrix);
 
     float4 CalUV = _Input.TEXCOORD;
+    
+    CalUV.x *= VertexUVMul.x;
+    CalUV.y *= VertexUVMul.y;
+       
+    CalUV.x += VertexUVPlus.x;
+    CalUV.y += VertexUVPlus.y;
+    
     if (0 != FlipLeft)
     {
         CalUV.x *= -1;
@@ -74,9 +81,6 @@ cbuffer ColorData : register(b1)
 
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
-    _Input.TEXCOORD.x += VertexUVPlus.x;
-    _Input.TEXCOORD.y += VertexUVPlus.y;
-    
     // _Input == VertexShader에서 ViewPort까지 다 곱한 SV_POSITION을 _Input값으로 들어옴
     float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCOORD.xy);
     
