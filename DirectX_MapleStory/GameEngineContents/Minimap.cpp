@@ -78,6 +78,7 @@ void Minimap::Init(std::string_view _MinimapName)
 	}
 	MinimapScale = GameEngineTexture::Find(_MinimapName)->GetScale();
 	MinimapObject.Minimap->SetSprite(_MinimapName);
+	FullMinimapScale = MinimapScale + float4{18, 70};
 
 	MinimapObject.LT->SetSprite("Map_LT.png");
 	MinimapObject.RT->SetSprite("Map_RT.png");
@@ -90,13 +91,22 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.MT->SetSprite("Map_MT.png");
 
 	MinimapObject.LT->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.RT->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.LB->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.RB->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.RM->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.LM->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.MB->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.MT->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
-	MinimapObject.Minimap->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
+	MinimapObject.RT->Transform.SetLocalPosition({ FullMinimapScale.X, 0, RenderDepth::ui});
+	MinimapObject.LB->Transform.SetLocalPosition({0, - FullMinimapScale.Y, RenderDepth::ui});
+	MinimapObject.RB->Transform.SetLocalPosition({ FullMinimapScale.X, - FullMinimapScale.Y, RenderDepth::ui});
+	MinimapObject.RM->Transform.SetLocalPosition({ FullMinimapScale.X, - FullMinimapScale.Y + 61, RenderDepth::ui});
+	MinimapObject.LM->Transform.SetLocalPosition({0, - FullMinimapScale.Y + 61, RenderDepth::ui});
+	MinimapObject.MB->Transform.SetLocalPosition({64, FullMinimapScale.Y, RenderDepth::ui});
+	MinimapObject.MT->Transform.SetLocalPosition({64, 0, RenderDepth::ui});
+	MinimapObject.Minimap->Transform.SetLocalPosition({9, -FullMinimapScale.Y + 9, RenderDepth::ui});
 
+	MinimapObject.LT->SetPivotType(PivotType::LeftTop);
+	MinimapObject.RT->SetPivotType(PivotType::RightUp);
+	MinimapObject.LB->SetPivotType(PivotType::LeftBottom);
+	MinimapObject.RB->SetPivotType(PivotType::RightBottom);
+	MinimapObject.MT->SetPivotType(PivotType::LeftTop);
+	MinimapObject.MB->SetPivotType(PivotType::LeftBottom);
+	MinimapObject.RM->SetPivotType(PivotType::RightUp);
+	MinimapObject.LM->SetPivotType(PivotType::LeftTop);
+	MinimapObject.Minimap->SetPivotType(PivotType::LeftBottom);
 }

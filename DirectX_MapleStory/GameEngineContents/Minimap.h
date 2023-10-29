@@ -41,6 +41,7 @@ protected:
 	void Release() override;
 private:
 	float4 MinimapScale = float4::ZERO;
+	float4 FullMinimapScale = float4::ZERO;
 	MinimapStruct MinimapObject;
 	void Init(std::string_view _MinimapName);
 };
