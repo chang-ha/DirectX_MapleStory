@@ -49,6 +49,7 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.LM = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MinimapObject.MB = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MinimapObject.MT = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+
 	
 	// Load MinimapFrame
 	if (nullptr == GameEngineSprite::Find("Map_LT.png"))
@@ -94,9 +95,9 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.RT->Transform.SetLocalPosition({ FullMinimapScale.X, 0, RenderDepth::ui});
 	MinimapObject.LB->Transform.SetLocalPosition({0, - FullMinimapScale.Y, RenderDepth::ui});
 	MinimapObject.RB->Transform.SetLocalPosition({ FullMinimapScale.X, - FullMinimapScale.Y, RenderDepth::ui});
-	MinimapObject.RM->Transform.SetLocalPosition({ FullMinimapScale.X, - FullMinimapScale.Y + 61, RenderDepth::ui});
-	MinimapObject.LM->Transform.SetLocalPosition({0, - FullMinimapScale.Y + 61, RenderDepth::ui});
-	MinimapObject.MB->Transform.SetLocalPosition({64, FullMinimapScale.Y, RenderDepth::ui});
+	MinimapObject.RM->Transform.SetLocalPosition({ FullMinimapScale.X, -67, RenderDepth::ui});
+	MinimapObject.LM->Transform.SetLocalPosition({0, -67, RenderDepth::ui});
+	MinimapObject.MB->Transform.SetLocalPosition({64, - FullMinimapScale.Y, RenderDepth::ui});
 	MinimapObject.MT->Transform.SetLocalPosition({64, 0, RenderDepth::ui});
 	MinimapObject.Minimap->Transform.SetLocalPosition({9, -FullMinimapScale.Y + 9, RenderDepth::ui});
 
@@ -104,9 +105,21 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.RT->SetPivotType(PivotType::RightUp);
 	MinimapObject.LB->SetPivotType(PivotType::LeftBottom);
 	MinimapObject.RB->SetPivotType(PivotType::RightBottom);
-	MinimapObject.MT->SetPivotType(PivotType::LeftTop);
+	MinimapObject.MT->SetPivotType(PivotType::LeftBottom);
 	MinimapObject.MB->SetPivotType(PivotType::LeftBottom);
-	MinimapObject.RM->SetPivotType(PivotType::RightUp);
-	MinimapObject.LM->SetPivotType(PivotType::LeftTop);
+	MinimapObject.RM->SetPivotType(PivotType::RightBottom);
+	MinimapObject.LM->SetPivotType(PivotType::LeftBottom);
 	MinimapObject.Minimap->SetPivotType(PivotType::LeftBottom);
+
+	MinimapObject.MT->SetImageScale({ FullMinimapScale.X - 128 , 61});
+	MinimapObject.MT->RenderBaseInfoValue.VertexUVMul.X = FullMinimapScale.X - 128;
+
+	MinimapObject.MB->SetImageScale({ FullMinimapScale.X - 128 , 9 });
+	MinimapObject.MB->RenderBaseInfoValue.VertexUVMul.X = FullMinimapScale.X - 128;
+
+	MinimapObject.LM->SetImageScale({ 9 , FullMinimapScale.Y - 94 });
+	MinimapObject.LM->RenderBaseInfoValue.VertexUVMul.Y = FullMinimapScale.Y - 94;
+
+	MinimapObject.RM->SetImageScale({ 9 , FullMinimapScale.Y - 94 });
+	MinimapObject.RM->RenderBaseInfoValue.VertexUVMul.Y = FullMinimapScale.Y - 94;
 }
