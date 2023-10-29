@@ -1,8 +1,8 @@
 ﻿#include "PreCompile.h"
 #include "Minimap.h"
-
 #include "Player.h"
 #include "ContentMap.h"
+
 Minimap::Minimap()
 {
 
@@ -42,7 +42,7 @@ void Minimap::Release()
 
 }
 
-void Minimap::Init(std::string_view _MinimapName)
+void Minimap::Init(std::string_view _MinimapName, std::string_view _MinimapTextName)
 {
 	MinimapObject.LT = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MinimapObject.LT->AutoSpriteSizeOn();
@@ -63,7 +63,9 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.MiniPlayer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MinimapObject.MiniPlayer->AutoSpriteSizeOn();
 
-	
+	MinimapObject.MapName1 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MinimapObject.MapName2 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+
 	// Load MinimapFrame
 	if (nullptr == GameEngineSprite::Find("Map_LT.png"))
 	{
@@ -115,6 +117,8 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.MB->Transform.SetLocalPosition({64, - FullMinimapScale.Y, RenderDepth::ui});
 	MinimapObject.MT->Transform.SetLocalPosition({64, 0, RenderDepth::ui});
 	MinimapObject.Minimap->Transform.SetLocalPosition({9, -FullMinimapScale.Y + 9, RenderDepth::ui});
+	MinimapObject.MapName1->Transform.SetLocalPosition({ 48, -17, RenderDepth::ui });
+	MinimapObject.MapName2->Transform.SetLocalPosition({ 48, -35, RenderDepth::ui });
 
 	MinimapObject.LT->SetPivotType(PivotType::LeftTop);
 	MinimapObject.RT->SetPivotType(PivotType::RightUp);
@@ -140,4 +144,7 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.RM->RenderBaseInfoValue.VertexUVMul.Y = FullMinimapScale.Y - 94;
 
 	RealMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
+
+	MinimapObject.MapName1->SetText("돋움", "레헬른", 13.0f, float4::WHITE, FW1_LEFT);
+	MinimapObject.MapName2->SetText("돋움", _MinimapTextName.data(), 13.0f, float4::WHITE, FW1_LEFT);
 }

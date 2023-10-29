@@ -244,6 +244,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 		CurMap->InitMapCollision("Collision_Lucid_Phase2.png");
+		CurMap->GetMapScale().X = 2050.0f;
 		CurMap->GetMapScale().Y = 1550.0f;
 	}
 
@@ -755,7 +756,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 
-	Minimap::CreateMinimap("Minimap_Lucid_Phase2.png");
+	Minimap::CreateMinimap("Minimap_Lucid_Phase2.png", "무너지는시계탑");
 }
 
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)

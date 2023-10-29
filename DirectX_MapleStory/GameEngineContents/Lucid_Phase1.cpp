@@ -210,7 +210,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		MapObjects.push_back(Flower);
 	}
 
-	Minimap::CreateMinimap("Minimap_Lucid_Phase1.png");
+	Minimap::CreateMinimap("Minimap_Lucid_Phase1.png", "몽환의 숲");
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)

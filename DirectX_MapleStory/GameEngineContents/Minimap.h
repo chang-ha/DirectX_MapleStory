@@ -14,6 +14,8 @@ class MinimapStruct
 	std::shared_ptr<GameEngineUIRenderer> RM = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> Minimap = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> MiniPlayer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> MapName1 = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> MapName2 = nullptr;
 };
 
 class Minimap : public GameEngineActor
@@ -29,10 +31,10 @@ public:
 	Minimap& operator=(const Minimap& _Other) = delete;
 	Minimap& operator=(Minimap&& _Other) noexcept = delete;
 	
-	static void CreateMinimap(std::string_view _MinimapName)
+	static void CreateMinimap(std::string_view _MinimapName, std::string_view _MinimapTextName)
 	{
 		std::shared_ptr<Minimap> CurMinimap = ContentLevel::CurContentLevel->CreateActor<Minimap>(UpdateOrder::UI);
-		CurMinimap->Init(_MinimapName);
+		CurMinimap->Init(_MinimapName, _MinimapTextName);
 	}
 
 protected:
@@ -46,6 +48,6 @@ private:
 	float4 PlayerPos = float4::ZERO;
 	float4 RealMapScale = float4::ZERO;
 	MinimapStruct MinimapObject;
-	void Init(std::string_view _MinimapName);
+	void Init(std::string_view _MinimapName, std::string_view _MinimapTextName);
 };
 
