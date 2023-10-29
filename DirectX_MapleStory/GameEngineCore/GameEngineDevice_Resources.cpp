@@ -67,19 +67,20 @@ void GameEngineDevice::ResourcesInit()
 
 		GameEngineVertex BaseVertexs[2];
 
-		BaseVertexs[0] = { { 0.0f, 0.0f, 0.0f, 1.0f } };
+		BaseVertexs[0] = { { 0.5f, 0.5f, 0.0f, 1.0f } };
 		BaseVertexs[1] = { { 0.0f, 0.0f, 0.0f, 1.0f } };
 
 		GameEngineVertexBuffer::Create("Line", Vertex);
 
 		std::vector<unsigned int> Index =
 		{
-			0, 1
+			0, 1, 1, 0
 		};
 		GameEngineIndexBuffer::Create("Line", Index);
 
 		std::shared_ptr<GameEngineMesh> LineMesh = GameEngineMesh::Create("Line");
 		LineMesh->SetTOPOLOGY(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		// LineMesh->SetTOPOLOGY(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	}
 
 	// Sphere 
@@ -379,5 +380,14 @@ void GameEngineDevice::ResourcesInit()
 		Mat->SetVertexShader("DebugColor_VS");
 		Mat->SetPixelShader("DebugColor_PS");
 		Mat->SetRasterizer("EngineWireRasterizer");
+	}
+
+	// Debug Line Material
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DDebugLine");
+		Mat->SetVertexShader("DebugLine_VS");
+		Mat->SetPixelShader("DebugLine_PS");
+		// Mat->SetRasterizer("EngineWireRasterizer");
+		Mat->SetRasterizer("EngineRasterizer");
 	}
 }

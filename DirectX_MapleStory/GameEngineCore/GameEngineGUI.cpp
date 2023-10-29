@@ -85,19 +85,16 @@ void GameEngineGUI::GUIRender(GameEngineLevel* _Level, float _DeltaTime)
 
     for (std::pair<const std::string, std::shared_ptr<GameEngineGUIWindow>> Pair : GUIWindows)
     {
+        if (false == Pair.second->IsUpdate())
+        {
+            continue;
+        }
+
         Pair.second->Begin();
         Pair.second->OnGUI(_Level, _DeltaTime);
         Pair.second->End();
 
-        //static bool show_another_window = true;
-        //if (true == show_another_window)
-        //{
-        //    ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-        //    ImGui::Text("Hello from another window!");
-        //    if (ImGui::Button("Close Me"))
-        //        show_another_window = false;
-        //    ImGui::End();
-        //}
+
     }
 
     ImGui::Render();

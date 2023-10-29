@@ -8,9 +8,14 @@
     <FxCompile Include="Transform.fx">
       <Filter>Header</Filter>
     </FxCompile>
-    <FxCompile Include="DebugColorShader.fx" />
     <FxCompile Include="TextureShader.fx">
       <Filter>2D</Filter>
+    </FxCompile>
+    <FxCompile Include="DebugColorShader.fx">
+      <Filter>Debug</Filter>
+    </FxCompile>
+    <FxCompile Include="DebugLineShader.fx">
+      <Filter>Debug</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -22,6 +27,9 @@
     </Filter>
     <Filter Include="2D">
       <UniqueIdentifier>{735b5086-e2a8-4984-9535-d80a0c3e595f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{d1abce6c-26d7-4d2d-b467-2280be86aba1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

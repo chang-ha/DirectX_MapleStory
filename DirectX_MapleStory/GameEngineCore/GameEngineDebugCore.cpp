@@ -79,3 +79,27 @@ void GameEngineDebug::DrawMesh(const std::string_view& _Mesh, float4 _Scale, flo
 	Value.Unit.ShaderResHelper.SetConstantBufferLink("TransformData", Value.Data);
 	Value.Unit.ShaderResHelper.SetConstantBufferLink("DebugColor", Value.Color);
 }
+
+void GameEngineDebug::DrawLine(float4 _Start, float4 _End, float4 _Color/* = float4::RED*/, class GameEngineCamera* _Camera/* = nullptr*/)
+{
+	if (nullptr == _Camera)
+	{
+		_Camera = GameEngineDebug::GameEngineDebugCore::CurLevel->GetMainCamera().get();
+	}
+
+	GameEngineDebugInfo& Value = DebugUnit.emplace_back();
+	Value.Camera = _Camera;
+	Value.Unit.SetMesh("Line");
+	Value.Unit.SetMaterial("2DDebugLine");
+
+	Value.Data.Position = _End;
+	Value.Data.Scale = _Start;
+
+	Value.Color = _Color;
+	Value.Data.ViewMatrix = _Camera->Transform.GetConstTransformDataRef().ViewMatrix;
+	Value.Data.ProjectionMatrix = _Camera->Transform.GetConstTransformDataRef().ProjectionMatrix;
+	Value.Data.WorldViewProjectionCalculation();
+
+	// Value.Unit.ShaderResHelper.SetConstantBufferLink("TransformData", Value.Data);
+	Value.Unit.ShaderResHelper.SetConstantBufferLink("DebugColor", Value.Color);
+}
