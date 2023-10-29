@@ -13,9 +13,10 @@ public:
 	// float Inter = 0.0f; // AnimationSpeed
 	bool Loop = true;
 	bool IsEnd = false;
-	unsigned int Start = -1;
-	unsigned int End = -1;
-	unsigned int CurIndex = 0;
+	int Start = -1;
+	int End = -1;
+	int InterIndex;
+	int CurIndex;
 	float CurTime = 0.0f; // CurAnimationTime
 	std::vector<int> Index;
 
