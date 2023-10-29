@@ -13,6 +13,7 @@ class MinimapStruct
 	std::shared_ptr<GameEngineUIRenderer> LM = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> RM = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> Minimap = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> MiniPlayer = nullptr;
 };
 
 class Minimap : public GameEngineActor
@@ -42,6 +43,8 @@ protected:
 private:
 	float4 MinimapScale = float4::ZERO;
 	float4 FullMinimapScale = float4::ZERO;
+	float4 PlayerPos = float4::ZERO;
+	float4 RealMapScale = float4::ZERO;
 	MinimapStruct MinimapObject;
 	void Init(std::string_view _MinimapName);
 };

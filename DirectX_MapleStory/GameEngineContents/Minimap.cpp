@@ -1,7 +1,8 @@
 ﻿#include "PreCompile.h"
 #include "Minimap.h"
 
-
+#include "Player.h"
+#include "ContentMap.h"
 Minimap::Minimap()
 {
 
@@ -24,7 +25,16 @@ void Minimap::Start()
 
 void Minimap::Update(float _Delta)
 {
-	
+	if (nullptr == Player::MainPlayer)
+	{
+		MinimapObject.MiniPlayer->Off();
+	}
+	else
+	{
+		PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+		PlayerPos = (PlayerPos * MinimapScale) / RealMapScale;
+		MinimapObject.MiniPlayer->Transform.SetLocalPosition(PlayerPos + float4{ 9, -61, RenderDepth::ui });
+	}
 }
 
 void Minimap::Release()
@@ -49,6 +59,9 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.LM = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MinimapObject.MB = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MinimapObject.MT = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+
+	MinimapObject.MiniPlayer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MinimapObject.MiniPlayer->AutoSpriteSizeOn();
 
 	
 	// Load MinimapFrame
@@ -91,6 +104,8 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.MB->SetSprite("Map_MB.png");
 	MinimapObject.MT->SetSprite("Map_MT.png");
 
+	MinimapObject.MiniPlayer->SetSprite("user.png");
+
 	MinimapObject.LT->Transform.SetLocalPosition({0, 0, RenderDepth::ui});
 	MinimapObject.RT->Transform.SetLocalPosition({ FullMinimapScale.X, 0, RenderDepth::ui});
 	MinimapObject.LB->Transform.SetLocalPosition({0, - FullMinimapScale.Y, RenderDepth::ui});
@@ -110,6 +125,7 @@ void Minimap::Init(std::string_view _MinimapName)
 	MinimapObject.RM->SetPivotType(PivotType::RightBottom);
 	MinimapObject.LM->SetPivotType(PivotType::LeftBottom);
 	MinimapObject.Minimap->SetPivotType(PivotType::LeftBottom);
+	MinimapObject.MiniPlayer->SetPivotType(PivotType::Bottom);
 
 	MinimapObject.MT->SetImageScale({ FullMinimapScale.X - 128 , 61});
 	MinimapObject.MT->RenderBaseInfoValue.VertexUVMul.X = FullMinimapScale.X - 128;
@@ -122,4 +138,6 @@ void Minimap::Init(std::string_view _MinimapName)
 
 	MinimapObject.RM->SetImageScale({ 9 , FullMinimapScale.Y - 94 });
 	MinimapObject.RM->RenderBaseInfoValue.VertexUVMul.Y = FullMinimapScale.Y - 94;
+
+	RealMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 }

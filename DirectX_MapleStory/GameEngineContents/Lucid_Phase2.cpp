@@ -12,6 +12,7 @@
 #include "Dragon.h"
 #include "Laser.h"
 #include "Golem_Phase2.h"
+#include "Minimap.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -753,6 +754,8 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	MapObjects.push_back(FallObject);
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
+
+	Minimap::CreateMinimap("Minimap_Lucid_Phase2.png");
 }
 
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
