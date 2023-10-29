@@ -13,6 +13,7 @@
 #include "Laser.h"
 #include "Golem_Phase2.h"
 #include "Minimap.h"
+#include "FadeObject.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -167,6 +168,8 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
+	FadeInObject->SetWhiteFade();
+
 	GetMainCamera()->SetZSort(RenderOrder::BACKGROUNDOBJECT);
 	GetMainCamera()->SetZSort(RenderOrder::MAP);
 
@@ -244,7 +247,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 		CurMap->InitMapCollision("Collision_Lucid_Phase2.png");
-		CurMap->GetMapScale().X = 2050.0f;
+		// CurMap->GetMapScale().X = 2050.0f;
 		CurMap->GetMapScale().Y = 1550.0f;
 	}
 

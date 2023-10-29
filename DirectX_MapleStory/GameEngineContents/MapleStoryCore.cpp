@@ -19,8 +19,6 @@ void LevelChangeGUI::Start()
 
 }
 
-float a = 0;
-
 void LevelChangeGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
 	std::map<std::string, std::shared_ptr<GameEngineLevel>>& AllLevels = GameEngineCore::GetAllLevel();
@@ -34,8 +32,6 @@ void LevelChangeGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 			// GameEngineCore::ChangeLevel(Pair.first);
 		}
 	}
-
-
 }
 
 MapleStoryCore::MapleStoryCore()
@@ -65,7 +61,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
-	GameEngineCore::ChangeLevel("4.Lucid_Phase1");
+	GameEngineCore::ChangeLevel("5.Lucid_Next");
 }
 
 void MapleStoryCore::Update(float _Delta)

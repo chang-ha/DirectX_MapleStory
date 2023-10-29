@@ -49,8 +49,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
-	FadeOutObject->SetWhiteFade();
-
 	if (nullptr == GameEngineSprite::Find("Water.png"))
 	{
 		GameEngineDirectory Dir;

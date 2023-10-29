@@ -19,9 +19,17 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
-	FadeInObject->SetWhiteFade();
+	FadeOutObject->SetWhiteFade();
 
 	FadeOutObject->SetChangeLevel("6.Lucid_Phase2");
+
+	if (nullptr == GameEngineSprite::Find("Render_Idle"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Character\\Idle");
+		GameEngineSprite::CreateFolder("Render_Idle", Dir.GetStringPath());
+	}
 
 	if (nullptr == CurMap)
 	{
@@ -35,7 +43,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 		Back->Init("BG_Lucid_Next.png");
 	}
 
-	GetMainCamera()->Transform.SetLocalPosition(float4(1000, -500));
+	GetMainCamera()->Transform.SetLocalPosition(float4(800, -500));
 
 	// Player Renderer
 	if (nullptr == PlayerRender)
@@ -43,7 +51,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 		PlayerRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		PlayerRender->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
 		PlayerRender->Renderer->Transform.SetLocalPosition({0, 0, RenderDepth::renderactor});
-		PlayerRender->Renderer->CreateAnimation("Idle", "Idle", 0.5f);
+		PlayerRender->Renderer->CreateAnimation("Idle", "Render_Idle", 0.5f);
 		PlayerRender->Renderer->ChangeAnimation("Idle");
 		PlayerRender->Renderer->AutoSpriteSizeOn();
 		PlayerRender->Renderer->LeftFlip();
