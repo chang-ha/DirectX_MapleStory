@@ -11,6 +11,7 @@
 #include "MushRoom.h"
 #include "Golem.h"
 #include "ButterFly.h"
+#include "BossHpBar.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -206,6 +207,9 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 			TeleportRenderer->Off();
 		}
 	);
+
+	std::shared_ptr<BossHpBar> _HpBar = GetLevel()->CreateActor<BossHpBar>(UpdateOrder::UI);
+	_HpBar->LinkBossHP(&HP);
 }
 
 void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)

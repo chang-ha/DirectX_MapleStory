@@ -3,12 +3,21 @@
 class BossHpBarStruct
 {
 	friend class BossHpBar;
+	// Frame
 	std::shared_ptr<GameEngineSpriteRenderer> BossFace = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> HpStart = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> HpMiddle = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> HpEnd = nullptr;
+	// DeathCount
 	std::shared_ptr<GameEngineSpriteRenderer> DeathCountBG = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> DeathCountNum = nullptr;
+	// HpRatio
+	std::shared_ptr<GameEngineSpriteRenderer> HpRatioBG = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> HpNum1 = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> HpNum2 = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> HpDot = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> HpNum3 = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> HpPercent = nullptr;
 };
 
 class BossHpBar : public GameEngineActor
@@ -24,7 +33,20 @@ public:
 	BossHpBar& operator=(const BossHpBar& _Other) = delete;
 	BossHpBar& operator=(BossHpBar&& _Other) noexcept = delete;
 
+	inline void LinkBossHP(int* _BossHP)
+	{
+		BossHP = _BossHP;
+		MaxBossHP = *_BossHP;
+		OneLifeValue = *_BossHP / 10;
+	}
+
 protected:
+	int MaxBossHP = 0;
+	int OneLifeValue = 0;
+	int PrevLifeCount = 0;
+	int LifeCount = 0;
+	int* BossHP = nullptr;
+
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;

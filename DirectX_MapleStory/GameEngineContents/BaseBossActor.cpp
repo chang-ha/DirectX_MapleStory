@@ -23,7 +23,7 @@ void BaseBossActor::LevelEnd(GameEngineLevel* _NextLevel)
 
 void BaseBossActor::Start()
 {
-	HP = 10000;
+	HP = 1000;
 	
 	if (nullptr == BossRenderer)
 	{
