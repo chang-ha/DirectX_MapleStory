@@ -236,6 +236,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="FairySpiral.cpp" />
+    <ClCompile Include="FireWork.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GlobalValue.cpp" />
     <ClCompile Include="Golem.cpp">
       <SubType>
@@ -398,6 +402,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="FairySpiral.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FireWork.h">
       <SubType>
       </SubType>
     </ClInclude>

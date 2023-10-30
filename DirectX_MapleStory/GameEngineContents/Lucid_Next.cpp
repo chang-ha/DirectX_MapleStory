@@ -4,6 +4,8 @@
 #include "ContentMap.h"
 #include "ContentBackGround.h"
 #include "FadeObject.h"
+#include "FireWork.h"
+#include "Minimap.h"
 
 Lucid_Next::Lucid_Next()
 {
@@ -111,6 +113,28 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 			}
 		);
 	}
+
+	std::shared_ptr<FireWork> _FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({200, -100});
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 300, -200 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 400, -300 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 500, -400 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork5);
+	_FireWork->Transform.SetLocalPosition({ 600, -500 });
+
+	Minimap::CreateMinimap("Minimap_Lucid_Next.png", "악몽의 시계탑");
 }
 
 void Lucid_Next::LevelEnd(GameEngineLevel* _NextLevel)
