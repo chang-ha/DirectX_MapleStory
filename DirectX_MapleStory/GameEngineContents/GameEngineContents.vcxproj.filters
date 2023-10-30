@@ -158,7 +158,10 @@
       <Filter>Level\Actor</Filter>
     </ClCompile>
     <ClCompile Include="WarningMent.cpp">
-      <Filter>Level\Actor</Filter>
+      <Filter>Actor\Monster\Boss\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHpBar.cpp">
+      <Filter>Actor\Monster\Boss\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,7 +322,10 @@
       <Filter>Level\Actor</Filter>
     </ClInclude>
     <ClInclude Include="WarningMent.h">
-      <Filter>Level\Actor</Filter>
+      <Filter>Actor\Monster\Boss\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BossHpBar.h">
+      <Filter>Actor\Monster\Boss\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -391,6 +397,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{8d0fa0bc-3f9f-43ee-983d-5793b934664f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Monster\Boss\UI">
+      <UniqueIdentifier>{6db693d2-697a-447b-a882-b6f5b4c8ea07}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

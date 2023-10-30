@@ -49,7 +49,7 @@ public:
 		SkillInit(NewSkill);
 	}
 
-	void HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot = true, PivotType _PivotType = PivotType::Bottom);
+	void HitPrint(std::string_view _HitSpriteName, int _HitCount, GameEngineObject* _Object, bool _RandomPivot = true, PivotType _PivotType = PivotType::Bottom);
 
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);

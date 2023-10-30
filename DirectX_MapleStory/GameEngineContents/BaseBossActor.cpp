@@ -23,6 +23,8 @@ void BaseBossActor::LevelEnd(GameEngineLevel* _NextLevel)
 
 void BaseBossActor::Start()
 {
+	HP = 10000;
+	
 	if (nullptr == BossRenderer)
 	{
 		BossRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::BOSSMONSTER);

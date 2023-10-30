@@ -184,6 +184,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BossHpBar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Boss_Lucid_Phase1.cpp">
       <SubType>
       </SubType>
@@ -350,6 +354,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="BaseWindActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossHpBar.h">
       <SubType>
       </SubType>
     </ClInclude>

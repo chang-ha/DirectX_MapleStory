@@ -1,4 +1,5 @@
 #pragma once
+#include "ContentActor.h"
 
 enum class MushState
 {
@@ -9,7 +10,7 @@ enum class MushState
 	Death,
 };
 
-class MushRoom : public GameEngineActor
+class MushRoom : public ContentBaseActor
 {
 public:
 	// constructer destructer

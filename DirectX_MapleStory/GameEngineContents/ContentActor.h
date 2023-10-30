@@ -1,5 +1,20 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+
+class ContentBaseActor : public GameEngineActor
+{
+public:
+	inline void AddHP(int _Value)
+	{
+		HP += _Value;
+		if (0 > HP)
+		{
+			HP = 0;
+		}
+	}
+
+protected:
+	int HP = 0;
+};
 
 #define MAX_GRAVITY_FORCE 1400.0f
 
@@ -8,7 +23,7 @@
 
 class GameEngineSpriteRenderer;
 class ContentLevel;
-class ContentActor : public GameEngineActor
+class ContentActor : public ContentBaseActor
 {
 public:
 	// constructer destructer

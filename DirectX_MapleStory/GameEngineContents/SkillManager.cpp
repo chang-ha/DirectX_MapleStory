@@ -14,6 +14,7 @@
 #include "PhalanxCharge.h"
 #include "MercilessWinds.h"
 #include "BaseWindActor.h"
+#include "ContentActor.h"
 
 void SkillManagerGUI::Start()
 {
@@ -41,7 +42,7 @@ SkillManager::~SkillManager()
 
 }
 
-void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, GameEngineObject* _Object, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
+void SkillManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, GameEngineObject* _Object, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
 {
 	GameEngineRandom RandomActor;
 	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
@@ -50,7 +51,7 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 	_Data->RandomPivot.resize(_HitCount);
 	// _Data.DamageAnimations.resize(_HitCount);
 
-	for (size_t i = 0; i < _HitCount; i++)
+	for (int i = 0; i < _HitCount; i++)
 	{
 		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::HITANI);
 
@@ -80,6 +81,13 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, size_t _HitCount, G
 		_Data->HitAnimations[i] = _HitAnimation;
 
 	}
+
+	ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
+	if (nullptr != _BaseActor)
+	{
+		_BaseActor->AddHP(-_HitCount);
+	}
+
 	BaseWindActor::CreateTriflingWind();
 
 	AllHitRenderers.push_back(_Data);

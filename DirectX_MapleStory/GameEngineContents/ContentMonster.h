@@ -1,6 +1,7 @@
 #pragma once
+#include "ContentActor.h"
 
-class ContentMonster : public GameEngineActor
+class ContentMonster : public ContentBaseActor
 {
 public:
 	ContentMonster();
@@ -18,7 +19,6 @@ protected:
 	void Release() override;
 
 private:
-	int HP = 0;
 	std::shared_ptr<GameEngineSpriteRenderer> MonsterRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> MonsterCollision = nullptr;
 };
