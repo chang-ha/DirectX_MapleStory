@@ -23,13 +23,18 @@ void BossHpBar::Start()
 	BossHpBarFrame.HpStart = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	BossHpBarFrame.HpMiddle = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	BossHpBarFrame.HpEnd = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	BossHpBarFrame.HpBack = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	BossHpBarFrame.HpFront = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	BossHpBarFrame.DeathCountBG = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	BossHpBarFrame.DeathCountNum = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+
 
 	BossHpBarFrame.BossFace->SetPivotType(PivotType::RightUp);
 	BossHpBarFrame.HpStart->SetPivotType(PivotType::Top);
 	BossHpBarFrame.HpMiddle->SetPivotType(PivotType::Top);
 	BossHpBarFrame.HpEnd->SetPivotType(PivotType::Top);
+	BossHpBarFrame.HpBack->SetPivotType(PivotType::Left);
+	BossHpBarFrame.HpFront->SetPivotType(PivotType::Left);
 	BossHpBarFrame.DeathCountBG->SetPivotType(PivotType::LeftTop);
 	BossHpBarFrame.DeathCountNum->SetPivotType(PivotType::Top);
 
@@ -59,6 +64,8 @@ void BossHpBar::Start()
 	BossHpBarFrame.HpMiddle->SetSprite("Boss_HpMiddle.png");
 	BossHpBarFrame.HpEnd->SetSprite("Boss_HpEnd.png");
 	BossHpBarFrame.DeathCountBG->SetSprite("Boss_DeathCount.png");
+	BossHpBarFrame.HpBack->SetSprite("Boss_BackHp.png");
+	BossHpBarFrame.HpFront->SetSprite("Boss_FrontHp.png");
 
 	BossHpBarFrame.BossFace->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 325, 0, RenderDepth::ui });
 	BossHpBarFrame.HpStart->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 325, 0, RenderDepth::ui });
@@ -69,6 +76,13 @@ void BossHpBar::Start()
 
 	BossHpBarFrame.HpMiddle->SetImageScale({ 650 , 20 });
 	BossHpBarFrame.HpMiddle->RenderBaseInfoValue.VertexUVMul.X = 650;
+
+	BossHpBarFrame.HpBack->SetImageScale({ 650 , 12 });
+	BossHpBarFrame.HpFront->SetImageScale({ 650 , 12 });
+	BossHpBarFrame.HpBack->RenderBaseInfoValue.VertexUVMul.X = 650;
+	BossHpBarFrame.HpFront->RenderBaseInfoValue.VertexUVMul.X = 650;
+	BossHpBarFrame.HpBack->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 325, -10, RenderDepth::ui });
+	BossHpBarFrame.HpFront->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 325, -10, RenderDepth::ui });
 
 	// Percent Number
 	BossHpBarFrame.HpRatioBG = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
@@ -150,5 +164,19 @@ void BossHpBar::CalueLifePercent()
 	int DotDigit = static_cast<int>(CurPercent * 10.0f) % 10;
 	BossHpBarFrame.HpNum3->SetSprite("Boss_HpRatioNum_" + std::to_string(DotDigit) + ".png");
 	BossHpBarFrame.HpNum3->SetImageScale({ 6, 8 });
+
+	if (true == BossHpBarFrame.HpFront->IsUpdate() && 0 == TenDigit)
+	{
+		BossHpBarFrame.HpFront->Off();
+	}
+
+	if (0 != TenDigit)
+	{
+		BossHpBarFrame.HpFront->SetImageScale({ 65.0f * (OneDigit + DotDigit * 0.1f), 12 });
+	}
+	else if (0 == TenDigit)
+	{
+		BossHpBarFrame.HpBack->SetImageScale({ 65.0f * (OneDigit + DotDigit * 0.1f), 12 });
+	}
 }
 

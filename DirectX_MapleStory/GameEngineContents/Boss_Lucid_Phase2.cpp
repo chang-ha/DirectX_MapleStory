@@ -8,6 +8,7 @@
 #include "Lucid_Phase2.h"
 #include "Lucid_BodySlam.h"
 #include "ButterFly.h"
+#include "BossHpBar.h"
 
 Boss_Lucid_Phase2::Boss_Lucid_Phase2()
 {
@@ -215,6 +216,9 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	_Animation = BossRenderer->FindAnimation("BodySlam");
 	_Animation->Inter[14] = 13.0f;
+
+	std::shared_ptr<BossHpBar> _HpBar = GetLevel()->CreateActor<BossHpBar>(UpdateOrder::UI);
+	_HpBar->LinkBossHP(&HP);
 }
 
 void Boss_Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)

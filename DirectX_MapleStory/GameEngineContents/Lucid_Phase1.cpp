@@ -77,23 +77,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder("Phase1_Hit", Dir.GetStringPath() + "\\Phase1_Hit");
 	}
 
-	//if (nullptr == GameEngineSprite::Find("Flower1"))
-	//{
-	//	GameEnginePath Path;
-	//	Path.SetCurrentPath();
-	//	Path.MoveParentToExistsChild("ContentResources");
-	//	Path.MoveChild("ContentResources\\Textures\\MapObject\\Lucid_Phase1\\");
-	//	GameEngineTexture::Load(Path.GetStringPath() + "Flower1.png");
-	//	GameEngineTexture::Load(Path.GetStringPath() + "Flower2.png");
-	//	GameEngineSprite::CreateSingle("Flower1.png");
-	//	GameEngineSprite::CreateSingle("Flower2.png");
-	//	//for (size_t i = 1; i < 5; i++)
-	//	//{
-	//	//	GameEngineTexture::Load(Path.GetStringPath() + "Flower" + std::to_string(i) + ".png");
-	//	//	GameEngineSprite::CreateSingle("Flower" + std::to_string(i) + ".png");
-	//	//}
-	//}
-
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);

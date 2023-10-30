@@ -8,6 +8,9 @@ class BossHpBarStruct
 	std::shared_ptr<GameEngineSpriteRenderer> HpStart = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> HpMiddle = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> HpEnd = nullptr;
+	// HpBar
+	std::shared_ptr<GameEngineSpriteRenderer> HpBack = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> HpFront = nullptr;
 	// DeathCount
 	std::shared_ptr<GameEngineSpriteRenderer> DeathCountBG = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> DeathCountNum = nullptr;
