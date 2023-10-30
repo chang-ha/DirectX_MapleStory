@@ -40,6 +40,9 @@ public:
 		OneLifeValue = *_BossHP / 10;
 	}
 
+	void CalcuLifeCount();
+	void CalueLifePercent();
+
 protected:
 	int MaxBossHP = 0;
 	int OneLifeValue = 0;
