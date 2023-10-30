@@ -122,6 +122,11 @@ void BossHpBar::Update(float _Delta)
 {
 	CalcuLifeCount();
 	CalueLifePercent();
+
+	if (0 >= *BossHP)
+	{
+		Death();
+	}
 }
 
 void BossHpBar::Release()
@@ -165,18 +170,11 @@ void BossHpBar::CalueLifePercent()
 	BossHpBarFrame.HpNum3->SetSprite("Boss_HpRatioNum_" + std::to_string(DotDigit) + ".png");
 	BossHpBarFrame.HpNum3->SetImageScale({ 6, 8 });
 
-	if (true == BossHpBarFrame.HpFront->IsUpdate() && 0 == TenDigit)
+	if (true == BossHpBarFrame.HpBack->IsUpdate() && 0 == TenDigit)
 	{
-		BossHpBarFrame.HpFront->Off();
+		BossHpBarFrame.HpBack->Off();
 	}
 
-	if (0 != TenDigit)
-	{
-		BossHpBarFrame.HpFront->SetImageScale({ 65.0f * (OneDigit + DotDigit * 0.1f), 12 });
-	}
-	else if (0 == TenDigit)
-	{
-		BossHpBarFrame.HpBack->SetImageScale({ 65.0f * (OneDigit + DotDigit * 0.1f), 12 });
-	}
+	BossHpBarFrame.HpFront->SetImageScale({ 65.0f * (OneDigit + DotDigit * 0.1f), 12 });
 }
 

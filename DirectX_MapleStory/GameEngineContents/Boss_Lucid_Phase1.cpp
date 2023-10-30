@@ -12,6 +12,7 @@
 #include "Golem.h"
 #include "ButterFly.h"
 #include "BossHpBar.h"
+#include "FadeObject.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -198,7 +199,7 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 
 	BossRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
-			GameEngineCore::ChangeLevel("5.Lucid_Next");
+			ContentLevel::CurContentLevel->FadeOutObject->FadeStart();
 		}
 	);
 
@@ -228,6 +229,11 @@ void Boss_Lucid_Phase1::Update(float _Delta)
 {
 	BaseBossActor::Update(_Delta);
 	StateUpdate(_Delta);
+
+	if (0 >= HP)
+	{
+		ChangeState(LucidState::Death);
+	}
 
 	// TestCode
 	if (true == GameEngineInput::IsDown('5', this))
