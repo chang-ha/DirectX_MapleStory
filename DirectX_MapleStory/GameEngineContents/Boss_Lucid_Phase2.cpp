@@ -445,6 +445,8 @@ void Boss_Lucid_Phase2::LaserStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	BossWarningMent->SetWarningMent("루시드가 강력한 공격을 사용하려 합니다!");
 }
 
 void Boss_Lucid_Phase2::BodySlamStart()
@@ -466,6 +468,8 @@ void Boss_Lucid_Phase2::BodySlamStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	BossWarningMent->SetWarningMent("루시드가 강력한 공격을 사용하려 합니다!");
 }
 
 void Boss_Lucid_Phase2::Summon_DragonStart()
@@ -487,6 +491,8 @@ void Boss_Lucid_Phase2::Summon_DragonStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	BossWarningMent->SetWarningMent("루시드가 강력한 소환수를 소환했습니다!");
 }
 
 void Boss_Lucid_Phase2::Summon_ButterFlyStart()

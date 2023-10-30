@@ -392,12 +392,18 @@ void Boss_Lucid_Phase1::PhantasmalWindStart()
 {
 	BossRenderer->SetPivotValue({ 0.433f, 0.677f });
 	BossRenderer->ChangeAnimation("PhantasmalWind");
+	if (false == OnceWarning)
+	{
+		BossWarningMent->SetWarningMent("저 바람을 맞으면 꿈이 더 강해질 겁니다!");
+		OnceWarning = true;
+	}
 }
 
 void Boss_Lucid_Phase1::Summon_DragonStart()
 {
 	BossRenderer->SetPivotValue({ 0.274f, 0.706f });
 	BossRenderer->ChangeAnimation("Summon_Dragon");
+	BossWarningMent->SetWarningMent("루시드가 강력한 소환수를 소환했습니다!");
 }
 
 void Boss_Lucid_Phase1::TeleportSkillStart()

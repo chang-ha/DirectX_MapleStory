@@ -13,7 +13,7 @@ BaseBossActor::~BaseBossActor()
 
 void BaseBossActor::LevelStart(GameEngineLevel* _PrevLevel)
 {
-
+	BossWarningMent = GetLevel()->CreateActor<WarningMent>(UpdateOrder::UI);
 }
 
 void BaseBossActor::LevelEnd(GameEngineLevel* _NextLevel)

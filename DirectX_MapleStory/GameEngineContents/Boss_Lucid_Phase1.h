@@ -60,6 +60,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	bool OnceWarning = false;
 	std::vector<Phase1_Boss_Skill_Info> SkillInfo;
 	std::shared_ptr<GameEngineSpriteRenderer> FlowerRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> TeleportRenderer = nullptr;

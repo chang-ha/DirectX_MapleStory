@@ -157,6 +157,9 @@
     <ClCompile Include="FireWork.cpp">
       <Filter>Level\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="WarningMent.cpp">
+      <Filter>Level\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -313,6 +316,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="FireWork.h">
+      <Filter>Level\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="WarningMent.h">
       <Filter>Level\Actor</Filter>
     </ClInclude>
   </ItemGroup>

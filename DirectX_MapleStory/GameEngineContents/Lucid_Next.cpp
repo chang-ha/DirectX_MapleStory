@@ -116,7 +116,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<FireWork> _FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
 	_FireWork->Init(FireWorkType::FireWork1);
-	_FireWork->Transform.SetLocalPosition({200, -100});
+	_FireWork->Transform.SetLocalPosition({ 200, -100 });
 
 	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
 	_FireWork->Init(FireWorkType::FireWork2);

@@ -1,4 +1,5 @@
 #pragma once
+#include "WarningMent.h"
 
 #define PhantasmalWind_Cooldown 4.0f
 #define Summon_Dragon_Cooldown 13.0f
@@ -20,6 +21,7 @@ public:
 protected:
 	std::shared_ptr<GameEngineSpriteRenderer> BossRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BossCollision = nullptr;
+	std::shared_ptr<WarningMent> BossWarningMent = nullptr;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
