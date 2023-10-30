@@ -18,7 +18,6 @@ public:
 	void Init() override;
 	void UseSkill() override;
 	void EndSkill() override;
-	void RenderEvent(GameEngineRenderer* _Renderer);
 	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
 
 protected:
@@ -27,8 +26,7 @@ protected:
 
 
 private:
-	bool FirstUse = false;
-	EventParameter SkillEvent;
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
+	std::set<GameEngineObject*> CollisionActor;
 };
 

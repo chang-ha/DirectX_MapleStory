@@ -122,6 +122,12 @@ void BaseWindActor::Update(float _Delta)
 			// 가장 먼저 충돌하는 녀석에게
 			std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[0];
 			MainSpriteRenderer->ChangeAnimation("Hit");
+
+			ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Other->GetParentObject());
+			if (nullptr != _BaseActor)
+			{
+				_BaseActor->AddHP(-1);
+			}
 		}
 	);
 

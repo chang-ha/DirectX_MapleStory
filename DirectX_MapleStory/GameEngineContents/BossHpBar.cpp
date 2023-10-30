@@ -148,7 +148,7 @@ void BossHpBar::CalueLifePercent()
 	BossHpBarFrame.HpNum2->SetImageScale({ 6, 8 });
 
 	int DotDigit = static_cast<int>(CurPercent * 10.0f) % 10;
-	BossHpBarFrame.HpNum3->SetSprite("Boss_HpRatioNum_" + std::to_string(OneDigit) + ".png");
+	BossHpBarFrame.HpNum3->SetSprite("Boss_HpRatioNum_" + std::to_string(DotDigit) + ".png");
 	BossHpBarFrame.HpNum3->SetImageScale({ 6, 8 });
 }
 

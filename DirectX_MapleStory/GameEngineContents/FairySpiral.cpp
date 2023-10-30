@@ -24,8 +24,9 @@ void FairySpiral::Init()
 
 void FairySpiral::UseSkill()
 {
+	CollisionActor.clear();
+
 	ContentSkill::UseSkill();
-	FirstUse = true;
 	On();
 	SkillRenderer1->On();
 
@@ -74,7 +75,19 @@ void FairySpiral::Start()
 
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);
 	SkillRenderer1->CreateAnimation("Hit", "FairySprial_Hit", 0.06f);
-	SkillRenderer1->SetFrameEvent("Attack", 1, std::bind(&FairySpiral::RenderEvent, this, std::placeholders::_1));
+
+	SkillRenderer1->SetFrameEvent("Attack", 2, [&](GameEngineRenderer* _Renderer)
+		{
+			SkillCollision->On();
+		}
+	);
+
+	SkillRenderer1->SetFrameEvent("Attack", 6, [&](GameEngineRenderer* _Renderer)
+		{
+			SkillCollision->Off();
+		}
+	);
+
 	SkillRenderer1->SetEndEvent("Attack", [&](GameEngineRenderer* _Renderer)
 		{
 			SkillRenderer1->Off();
@@ -84,21 +97,14 @@ void FairySpiral::Start()
 
 	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	SkillCollision->Transform.SetLocalScale({ XRANGE, YRANGE });
+	SkillCollision->Off();
 }
 
 void FairySpiral::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
-	if (true == FirstUse)
-	{
-		SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
-	}
-}
-
-void FairySpiral::RenderEvent(GameEngineRenderer* _Renderer)
-{
-	FirstUse = false;
+	SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
 }
 
 void FairySpiral::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
@@ -106,7 +112,13 @@ void FairySpiral::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision
 	for (size_t i = 0; i < _CollisionGroup.size(); i++)
 	{
 		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
-		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Other->GetParentObject());
+		GameEngineObject* _Object = _Other->GetParentObject();
+		if (true == CollisionActor.contains(_Object))
+		{
+			return;
+		}
+		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Object);
+		CollisionActor.insert(_Object);
 	}
 }
 

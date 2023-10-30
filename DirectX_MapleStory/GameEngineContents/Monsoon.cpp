@@ -16,6 +16,8 @@ Monsoon::~Monsoon()
 
 void Monsoon::UseSkill()
 {
+	CollisionActor.clear();
+
 	On();
 	ContentSkill::UseSkill();
 
@@ -92,15 +94,13 @@ void Monsoon::Start()
 
 	SceneRenderer->SetFrameEvent("Screen", 10, [&](GameEngineRenderer* _Renderer)
 		{
-			FirstUse = true;
 			SkillCollision->On();
 			SkillCollision->Transform.SetWorldPosition(ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition());
 		}
 	);
 
-	SceneRenderer->SetFrameEvent("Screen", 11, [&](GameEngineRenderer* _Renderer)
+	SceneRenderer->SetFrameEvent("Screen", 13, [&](GameEngineRenderer* _Renderer)
 		{
-			FirstUse = false;
 			SkillCollision->Off();
 		}
 	);
@@ -122,10 +122,7 @@ void Monsoon::Update(float _Delta)
 	float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();
 	CameraPos.Z = RenderDepth::skill;
 	SceneRenderer->Transform.SetWorldPosition(CameraPos);
-	if (true == FirstUse)
-	{
-		SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));
-	}
+	SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));
 }
 
 void Monsoon::Release()
@@ -148,6 +145,12 @@ void Monsoon::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& 
 	for (size_t i = 0; i < _CollisionGroup.size(); i++)
 	{
 		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
-		SkillManager::PlayerSkillManager->HitPrint("Monsoon_Hit", 12, _Other->GetParentObject());
+		GameEngineObject* _Object = _Other->GetParentObject();
+		if (true == CollisionActor.contains(_Object))
+		{
+			return;
+		}
+		SkillManager::PlayerSkillManager->HitPrint("Monsoon_Hit", 12, _Object);
+		CollisionActor.insert(_Object);
 	}
 }
