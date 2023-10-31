@@ -14,6 +14,7 @@
 #include "FadeObject.h"
 #include "Minimap.h"
 #include "BossTimer.h"
+#include "DeathCount.h"
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
@@ -197,6 +198,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	Minimap::CreateMinimap("Minimap_Lucid_Phase1.png", "몽환의 숲");
 	CreateActor<BossTimer>(UpdateOrder::UI);
 	BossTimer::TimeValue = 1800.0f;
+	CreateActor<DeathCount>(UpdateOrder::UI);
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)

@@ -15,6 +15,7 @@
 #include "Minimap.h"
 #include "FadeObject.h"
 #include "BossTimer.h"
+#include "DeathCount.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -763,6 +764,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	Minimap::CreateMinimap("Minimap_Lucid_Phase2.png", "무너지는시계탑");
 
 	CreateActor<BossTimer>(UpdateOrder::UI);
+	CreateActor<DeathCount>(UpdateOrder::UI);
 }
 
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)

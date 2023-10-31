@@ -166,6 +166,9 @@
     <ClCompile Include="BossTimer.cpp">
       <Filter>Actor\Monster\Boss\UI</Filter>
     </ClCompile>
+    <ClCompile Include="DeathCount.cpp">
+      <Filter>Actor\Monster\Boss\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -331,6 +334,9 @@
       <Filter>Actor\Monster\Boss\UI</Filter>
     </ClInclude>
     <ClInclude Include="BossTimer.h">
+      <Filter>Actor\Monster\Boss\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DeathCount.h">
       <Filter>Actor\Monster\Boss\UI</Filter>
     </ClInclude>
   </ItemGroup>
