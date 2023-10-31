@@ -5,7 +5,7 @@
 #include "Arrow.h"
 
 #define JUMP_HEIGHT 500.0f
-#define JUMP_DIS 200.0f
+#define JUMP_DIS 50.0f
 
 #define DOUBLE_JUMP_DIS 300.0f
 #define DOUBLE_JUMP_HEIGHT 120.0f
@@ -405,16 +405,16 @@ void Player::WalkUpdate(float _Delta)
 	/////////////
 
 	float4 MovePos = float4::ZERO;
-	float4 MoveDir = float4::ZERO;
+	float MoveDir = 0.0f;
 	GameEngineColor CheckColor = GROUND_COLOR;
 
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		MoveDir = float4::RIGHT;
+		MoveDir = 1.0f;
 		break;
 	case ActorDir::Left:
-		MoveDir = float4::LEFT;
+		MoveDir = -1.0f;
 		break;
 	case ActorDir::Null:
 	default:
@@ -424,53 +424,8 @@ void Player::WalkUpdate(float _Delta)
 
 	if ((GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this)))
 	{
-		MovePos += MoveDir * _Delta * Speed;
+		SetMoveVectorXForce(MoveDir * Speed);
 	}
-
-	// 올라가는 경사면
-	CheckColor = CheckGroundColor(MovePos + float4::UP);
-	if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-	{
-		float UpYPivot = 1.0f;
-		GameEngineColor PivotColor = GROUND_COLOR;
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
-		{
-			++UpYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
-		}
-
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		{
-			MovePos += float4::UP;
-			CheckColor = CheckGroundColor(MovePos + float4::UP);
-		}
-
-		//while (UP_PIXEL_LIMIT + 1 <= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		//{
-		//	MovePos -= MoveDir * 0.1f;
-		//	CheckColor = CheckGroundColor(MovePos + float4::UP);
-		//}
-	}
-
-	// 내려가는 경사면
-	CheckColor = CheckGroundColor(MovePos);
-	if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
-	{
-		float DownYPivot = 0.0f;
-		GameEngineColor PivotColor = LADDER_COLOR;
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
-		{
-			--DownYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
-		}
-
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
-		{
-			MovePos += float4::DOWN;
-			CheckColor = CheckGroundColor(MovePos);
-		}
-	}
-	Transform.AddLocalPosition(MovePos);
 
 	if (GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this))
 	{
@@ -567,10 +522,10 @@ void Player::JumpUpdate(float _Delta)
 		switch (GroundJump)
 		{
 		case true:
-			Transform.AddLocalPosition(MoveDir * _Delta * JumpAirSpeed);
+			MoveVectorForce += MoveDir * _Delta * JumpAirSpeed;
 			break;
 		case false:
-			Transform.AddLocalPosition(MoveDir * _Delta * AirSpeed);
+			MoveVectorForce += MoveDir * _Delta * AirSpeed;
 			break;
 		}
 	}
@@ -588,7 +543,7 @@ void Player::JumpUpdate(float _Delta)
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP, this))
 		{
-			PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 1.3f));
+			PlusMoveVectorForce(float4(0, JUMP_HEIGHT /** 1.3f*/));
 		}
 		else if (GameEngineInput::IsPress(VK_LEFT, this))
 		{
@@ -630,13 +585,6 @@ void Player::DownUpdate(float _Delta)
 		IsGround = false;
 		SkipGround = Transform.GetWorldPosition().Y - 3.0f;
 		ChangeState(PlayerState::Jump);
-		//if (false == CheckGround(float4(0, -3)))
-		//{
-		//	IsGround = false;
-		//	ChangeState(PlayerState::Jump);
-		//	Transform.AddLocalPosition(float4(0, -3));
-		//	return;
-		//}
 	}
 }
 
@@ -712,52 +660,10 @@ void Player::Attack2Update(float _Delta)
 
 void Player::WindWalkUpdate(float _Delta)
 {
-	float4 MovePos = GetMoveVectorForce().X * _Delta;
-	GameEngineColor CheckColor = GROUND_COLOR;
-
 	if (0.0f == GetMoveVectorForce().X)
 	{
 		ChangeToIdle();
 	}
-
-	// 올라가는 경사면
-	CheckColor = CheckGroundColor(MovePos + float4::UP);
-	if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-	{
-		float UpYPivot = 1.0f;
-		GameEngineColor PivotColor = GROUND_COLOR;
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
-		{
-			++UpYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
-		}
-
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		{
-			MovePos += float4::UP;
-			CheckColor = CheckGroundColor(MovePos + float4::UP);
-		}
-	}
-
-	// 내려가는 경사면
-	CheckColor = CheckGroundColor(MovePos);
-	if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
-	{
-		float DownYPivot = 0.0f;
-		GameEngineColor PivotColor = LADDER_COLOR;
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
-		{
-			--DownYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
-		}
-
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
-		{
-			MovePos += float4::DOWN;
-			CheckColor = CheckGroundColor(MovePos);
-		}
-	}
-	Transform.AddLocalPosition(MovePos);
 }
 
 void Player::ShootUpdate(float _Delta)

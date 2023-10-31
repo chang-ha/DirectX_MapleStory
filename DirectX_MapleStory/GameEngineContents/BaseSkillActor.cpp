@@ -76,67 +76,43 @@ void BaseSkillActor::Release()
 
 void BaseSkillActor::MoveUpdate(float _Delta)
 {
-	float4 MovePos = float4::ZERO;
-	float4 MoveDir = float4::ZERO;
-	GameEngineColor CheckColor = GROUND_COLOR;
+	float MoveDir = 0.0f;
 
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		MoveDir = float4::RIGHT;
+		MoveDir = 1.0f;
 		break;
 	case ActorDir::Left:
-		MoveDir = float4::LEFT;
+		MoveDir = -1.0f;
 		break;
 	case ActorDir::Null:
 	default:
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
-	MovePos += MoveDir * _Delta * Speed;
-
-	// 올라가는 경사면
-	CheckColor = CheckGroundColor(MovePos + float4::UP);
-	if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-	{
-		float UpYPivot = 1.0f;
-		GameEngineColor PivotColor = GROUND_COLOR;
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
-		{
-			++UpYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
-		}
-
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		{
-			MovePos += float4::UP;
-			CheckColor = CheckGroundColor(MovePos + float4::UP);
-		}
-	}
-
-	// 내려가는 경사면
-	CheckColor = CheckGroundColor(MovePos);
-	if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
-	{
-		float DownYPivot = 0.0f;
-		GameEngineColor PivotColor = LADDER_COLOR;
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
-		{
-			--DownYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
-		}
-
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
-		{
-			MovePos += float4::DOWN;
-			CheckColor = CheckGroundColor(MovePos);
-		}
-	}
-	Transform.AddLocalPosition(MovePos);
+	SetMoveVectorXForce(MoveDir * Speed);
 }
 
 void BaseSkillActor::BlockOutMap()
 {
+	if (true == IsWall)
+	{
+		switch (Dir)
+		{
+		case ActorDir::Right:
+			SetDir(ActorDir::Left);
+			break;
+		case ActorDir::Left:
+			SetDir(ActorDir::Right);
+			break;
+		case ActorDir::Null:
+		default:
+			MsgBoxAssert("존재하지 않는 방향입니다.");
+			break;
+		}
+	}
+
 	if (false == IsBlockOut)
 	{
 		return;

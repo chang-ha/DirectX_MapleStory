@@ -28,6 +28,7 @@ void VortexSphere_Actor::LevelEnd(GameEngineLevel* _NextLevel)
 void VortexSphere_Actor::Start()
 {
 	BaseSkillActor::Start();
+	WallCheckOff();
 	GravityOff();
 	IsBlockOut = false;
 	Speed = SPEED;

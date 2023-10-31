@@ -60,9 +60,19 @@ public:
 		ResistanceForce = 0.0f;
 	}
 
+	void WallCheckOff()
+	{
+		WallCheck = false;
+	}
+
 	void PlusMoveVectorForce(const float4& _Force)
 	{
 		MoveVectorForce += _Force;
+	}
+
+	void SetMoveVectorXForce(float _Force)
+	{
+		MoveVectorForce.X = _Force;
 	}
 
 	inline const float4 GetMoveVectorForce()
@@ -102,9 +112,12 @@ public:
 
 	void Gravity(float _Delta);
 	void AirResistance(float _Delta);
+	void CalcuMove(float _Delta);
 
 protected:
 	bool IsGround = true;
+	bool WallCheck = true;
+	bool IsWall = false;
 	ActorDir Dir = ActorDir::Null;
 	float GravityForce = 0.0f;
 	float MaxGraviry = 10.0f;

@@ -62,7 +62,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
-	GameEngineCore::ChangeLevel("4.Lucid_Phase1");
+	GameEngineCore::ChangeLevel("Boss_WaitingRoom");
 }
 
 void MapleStoryCore::Update(float _Delta)

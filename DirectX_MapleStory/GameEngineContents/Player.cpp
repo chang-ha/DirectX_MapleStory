@@ -123,7 +123,7 @@ void Player::Update(float _Delta)
 		ChangeState(PlayerState::Jump);
 	}
 
-	if (true == IsGround && 0.0f >= GetMoveVectorForce().Y && PlayerState::WindWalk != State)
+	if (true == IsGround && 0.0f >= GetMoveVectorForce().Y && (PlayerState::WindWalk != State && PlayerState::Walk != State))
 	{
 		MoveVectorForceReset();
 		GravityReset();
