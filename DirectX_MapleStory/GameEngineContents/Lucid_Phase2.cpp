@@ -14,6 +14,7 @@
 #include "Golem_Phase2.h"
 #include "Minimap.h"
 #include "FadeObject.h"
+#include "BossTimer.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -760,6 +761,8 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 
 	Minimap::CreateMinimap("Minimap_Lucid_Phase2.png", "무너지는시계탑");
+
+	CreateActor<BossTimer>(UpdateOrder::UI);
 }
 
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)

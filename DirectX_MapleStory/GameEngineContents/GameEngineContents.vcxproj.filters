@@ -163,6 +163,9 @@
     <ClCompile Include="BossHpBar.cpp">
       <Filter>Actor\Monster\Boss\UI</Filter>
     </ClCompile>
+    <ClCompile Include="BossTimer.cpp">
+      <Filter>Actor\Monster\Boss\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -325,6 +328,9 @@
       <Filter>Actor\Monster\Boss\UI</Filter>
     </ClInclude>
     <ClInclude Include="BossHpBar.h">
+      <Filter>Actor\Monster\Boss\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BossTimer.h">
       <Filter>Actor\Monster\Boss\UI</Filter>
     </ClInclude>
   </ItemGroup>
