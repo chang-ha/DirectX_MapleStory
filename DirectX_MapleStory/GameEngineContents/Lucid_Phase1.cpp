@@ -97,8 +97,8 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition(float4(100, -700));
-		GetMainCamera()->Transform.SetLocalPosition(float4(100, -700, -100000));
+		CurPlayer->Transform.SetLocalPosition(float4(100, -690));
+		GetMainCamera()->Transform.SetLocalPosition(float4(100, -690, -100000));
 	}
 
 	if (nullptr == SkillManagerActor)

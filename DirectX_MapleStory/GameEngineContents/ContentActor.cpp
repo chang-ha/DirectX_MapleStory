@@ -30,8 +30,8 @@ void ContentActor::Start()
 void ContentActor::Update(float _Delta)
 {
 	IsWall = false;
-	IsGround = CheckGround();
 	Gravity(_Delta); // AddLocalPosition for MoveVector.Y
+	IsGround = CheckGround();
 	AirResistance(_Delta);
 	CalcuMove(_Delta); // AddLocalPosition for MoveVector.X
 }
@@ -171,7 +171,15 @@ void ContentActor::CalcuMove(float _Delta)
 			CheckColor = CheckGroundColor(MovePos);
 		}
 	}
-	Transform.AddLocalPosition(MovePos);
+
+	if (true == IsGround)
+	{
+		Transform.AddLocalPosition(MovePos);
+	}
+	else if (false == IsGround)
+	{
+		Transform.AddLocalPosition(MovePos.X);
+	}
 }
 
 bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)

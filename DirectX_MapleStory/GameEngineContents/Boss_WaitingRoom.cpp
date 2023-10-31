@@ -4,6 +4,7 @@
 #include "ContentMap.h"
 #include "ContentBackGround.h"
 #include "SkillManager.h"
+#include "FireWork.h"
 
 Boss_WaitingRoom::Boss_WaitingRoom()
 {
@@ -43,11 +44,43 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		SkillManagerActor = CreateActor<SkillManager>();
 	}
+
+	std::shared_ptr<FireWork> _FireWork = CreateActor<FireWork>(UpdateOrder::Map);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({100, -100});
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::Map);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 350, -350 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::Map);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({ 300, -350 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::Map);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 300, -550 });	
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::Map);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 430, -150 });
 }
 
 void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+	
+	if (nullptr == CurMap)
+	{
+		CurMap->Death();
+		CurMap = nullptr;
+	}
+
+	if (nullptr == Back)
+	{
+		Back->Death();
+		Back = nullptr;
+	}
 
 	if (nullptr != CurPlayer)
 	{

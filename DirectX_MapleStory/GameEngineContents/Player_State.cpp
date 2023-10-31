@@ -581,6 +581,7 @@ void Player::DownUpdate(float _Delta)
 
 	else if ( FLOOR_COLOR == CheckGroundColor() && (GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this)))
 	{
+		MoveVectorForceReset();
 		PlusMoveVectorForce({0, 150.0f});
 		IsGround = false;
 		SkipGround = Transform.GetWorldPosition().Y - 3.0f;

@@ -25,6 +25,7 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		_CutsceneActor = CreateActor<CutsceneActor>(UpdateOrder::UI);
 		_CutsceneActor->Init("Lucid", "4.Lucid_Phase1");
+		_CutsceneActor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	}
 }
 
