@@ -12,8 +12,8 @@
 #include "Lucid_Next.h"
 #include "Lucid_Phase2.h"
 #include "ServerLevel.h"
+#include "Boss_WaitingRoom.h"
 #include "FadeObject.h"
-
 void LevelChangeGUI::Start()
 {
 
@@ -57,6 +57,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
 	// GameEngineCore::CreateLevel<PlayLevel>("2.PlayLevel");
 	GameEngineCore::CreateLevel<ServerLevel>("2.ServerLevel");
+	GameEngineCore::CreateLevel<Boss_WaitingRoom>("Boss_WaitingRoom");
 	GameEngineCore::CreateLevel<Lucid_Enter>("3.Lucid_Enter");
 	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");

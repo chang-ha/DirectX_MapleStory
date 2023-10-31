@@ -624,7 +624,7 @@ void Player::DownUpdate(float _Delta)
 		return;
 	}
 
-	else if (GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this))
+	else if ( FLOOR_COLOR == CheckGroundColor() && (GameEngineInput::IsDown('D', this) || GameEngineInput::IsPress('D', this)))
 	{
 		PlusMoveVectorForce({0, 150.0f});
 		IsGround = false;
