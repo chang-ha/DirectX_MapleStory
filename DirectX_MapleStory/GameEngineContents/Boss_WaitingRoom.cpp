@@ -6,7 +6,8 @@
 #include "SkillManager.h"
 #include "FireWork.h"
 #include "Portal.h"
-
+#include "Minimap.h"
+	
 Boss_WaitingRoom::Boss_WaitingRoom()
 {
 
@@ -69,6 +70,8 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({750, -772});
 	_Portal->SetMoveMap("3.Lucid_Enter");
+
+	Minimap::CreateMinimap("Minimap_Boss_WaitingRoom.png", "악몽의시계탑꼭대기");
 }
 
 void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)

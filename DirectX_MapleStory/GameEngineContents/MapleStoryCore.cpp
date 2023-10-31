@@ -14,6 +14,8 @@
 #include "ServerLevel.h"
 #include "Boss_WaitingRoom.h"
 #include "FadeObject.h"
+#include "ClockTowerOfNightMare_1th.h"
+
 void LevelChangeGUI::Start()
 {
 
@@ -62,7 +64,8 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
-	GameEngineCore::ChangeLevel("Boss_WaitingRoom");
+	GameEngineCore::CreateLevel<ClockTowerOfNightMare_1th>("ClockTowerOfNightMare_1th");
+	GameEngineCore::ChangeLevel("ClockTowerOfNightMare_1th");
 }
 
 void MapleStoryCore::Update(float _Delta)

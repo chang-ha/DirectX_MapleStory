@@ -212,6 +212,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ClockTowerBaseLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ClockTowerOfNightMare_1th.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentActor.cpp">
       <SubType>
       </SubType>
@@ -398,6 +406,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ButterFly_Ball.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ClockTowerBaseLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ClockTowerOfNightMare_1th.h">
       <SubType>
       </SubType>
     </ClInclude>

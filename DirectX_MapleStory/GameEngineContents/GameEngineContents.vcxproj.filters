@@ -175,6 +175,12 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Level\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="ClockTowerOfNightMare_1th.cpp">
+      <Filter>Level\HuntingField</Filter>
+    </ClCompile>
+    <ClCompile Include="ClockTowerBaseLevel.cpp">
+      <Filter>Level\HuntingField</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -351,6 +357,12 @@
     <ClInclude Include="Portal.h">
       <Filter>Level\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="ClockTowerOfNightMare_1th.h">
+      <Filter>Level\HuntingField</Filter>
+    </ClInclude>
+    <ClInclude Include="ClockTowerBaseLevel.h">
+      <Filter>Level\HuntingField</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -424,6 +436,9 @@
     </Filter>
     <Filter Include="Actor\Monster\Boss\UI">
       <UniqueIdentifier>{6db693d2-697a-447b-a882-b6f5b4c8ea07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\HuntingField">
+      <UniqueIdentifier>{697cd2ad-d9da-4a59-b2e8-936cb7d445a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
