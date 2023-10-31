@@ -168,6 +168,18 @@ void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int In
 	SetImageScale(CurSprite.GetScale());
 }
 
+void GameEngineSpriteRenderer::ChangeCurSprite(int _Index)
+{
+	CurFrameAnimations = nullptr;
+
+	if (nullptr == Sprite)
+	{
+		MsgBoxAssert("존재하지 않는 스프라이트를 사용하려고 했습니다.");
+	}
+
+	CurSprite = Sprite->GetSpriteData(_Index);
+}
+
 void GameEngineSpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, float _Inter /*= 0.1f*/, unsigned int _Start /*= -1*/, unsigned int _End /*= -1*/, bool _Loop /*= true*/)
 {
 	std::string SpriteName = GameEngineString::ToUpperReturn(_SpriteName);

@@ -74,6 +74,17 @@ public:
 		ZSortMap.insert(_SortOrder);
 	}
 
+	template<typename EnumType>
+	void SetYSort(EnumType _SortOrder)
+	{
+		YSortMap.insert(static_cast<int>(_SortOrder));
+	}
+
+	void SetYSort(int _SortOrder)
+	{
+		YSortMap.insert(_SortOrder);
+	}
+
 	float4 GetScreenMousePrevPos() { return ScreenMousePrevPos; }
 	float4 GetScreenMousePos() { return ScreenMousePos; }
 	float4 GetScreenMouseDir() { return ScreenMouseDir; }
@@ -112,6 +123,7 @@ private:
 	TransformData OriginData; // FreeCamera하기 전 Transform 저장
 
 	std::set<int> ZSortMap;
+	std::set<int> YSortMap;
 
 	void CameraUpdate(float _DeltaTime);
 };

@@ -158,6 +158,14 @@ void GameEngineCamera::Render(float _DeltaTime)
 				});
 		}
 
+		if (true == YSortMap.contains(RendererPair.first))
+		{
+			RendererList.sort([](std::shared_ptr<class GameEngineRenderer> _Left, std::shared_ptr<class GameEngineRenderer> _Right)
+				{
+					return _Left->Transform.GetWorldPosition().Y > _Right->Transform.GetWorldPosition().Y;
+				});
+		}
+
 		for (std::shared_ptr<class GameEngineRenderer> & Renderer : RendererList)
 		{
 			if (false == Renderer->IsUpdate())
