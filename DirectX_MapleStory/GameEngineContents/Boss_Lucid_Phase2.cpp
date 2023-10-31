@@ -9,7 +9,7 @@
 #include "Lucid_BodySlam.h"
 #include "ButterFly.h"
 #include "BossHpBar.h"
-
+#include "FadeObject.h"
 Boss_Lucid_Phase2::Boss_Lucid_Phase2()
 {
 
@@ -210,6 +210,12 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	);
 
+	BossRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
+		{
+			ContentLevel::CurContentLevel->FadeOutObject->FadeStart();
+		}
+	);
+
 	/// Animation Detail
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = BossRenderer->FindAnimation("Laser");
 	_Animation->Inter[30] = 15.0f;
@@ -235,6 +241,11 @@ void Boss_Lucid_Phase2::Start()
 
 void Boss_Lucid_Phase2::Update(float _Delta)
 {
+	if (0 >= HP)
+	{
+		ChangeState(LucidState::Death);
+	}
+
 	BaseBossActor::Update(_Delta);
 	StateUpdate(_Delta);
 

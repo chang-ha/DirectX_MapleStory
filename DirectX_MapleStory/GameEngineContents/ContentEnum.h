@@ -15,6 +15,7 @@ enum class UpdateOrder
 	Monster,
 	Skill,
 	RenderActor,
+	Portal,
 	UI,
 };
 
@@ -33,6 +34,7 @@ enum class RenderOrder
 	SKILL,
 	HITANI,
 	RENDERACTOR,
+	PORTAL,
 	UI,
 	FADEOBJECT,
 };
@@ -41,6 +43,7 @@ enum RenderDepth
 {
 	fadeobject = 1,
 	ui,
+	portal,
 	renderactor,
 	hitani,
 	skill,
@@ -62,4 +65,5 @@ enum class CollisionOrder
 	PlayerAttack,
 	Monster,
 	MonsterAttack,
+	Portal
 };

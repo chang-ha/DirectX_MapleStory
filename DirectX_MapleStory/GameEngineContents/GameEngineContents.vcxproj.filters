@@ -172,6 +172,9 @@
     <ClCompile Include="Boss_WaitingRoom.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Level\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -344,6 +347,9 @@
     </ClInclude>
     <ClInclude Include="Boss_WaitingRoom.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Level\Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

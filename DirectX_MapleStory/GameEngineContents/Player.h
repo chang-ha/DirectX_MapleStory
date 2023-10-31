@@ -92,13 +92,13 @@ private:
 	float LadderPivot = 0.0f;
 	float AlertTime = 0.0f;
 
-	// 추후 Set으로 개선
 	float SkipGround = 0.0f;
 	std::set<float> NotGround;
 
 	float4 CurMapScale = float4::ZERO;
 	float4 PlayerScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;
+	std::shared_ptr<GameEngineCollision> HitCollision = nullptr;
 
 	void ChangeToIdle();
 	//////////// State 

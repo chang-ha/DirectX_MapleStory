@@ -20,6 +20,7 @@ void Golem::LevelEnd(GameEngineLevel* _NextLevel)
 void Golem::Start()
 {
 	ContentActor::Start();
+	HP = 25;
 
 	if (nullptr == MainSpriteRenderer)
 	{
@@ -41,6 +42,11 @@ void Golem::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
 	StateUpdate(_Delta);
+
+	if (0 >= HP)
+	{
+		ChangeState(GolemState::Death);
+	}
 }
 
 void Golem::Release()
@@ -87,6 +93,18 @@ void Golem::Init(int _PhaseNumber)
 		{
 			GravityOn();
 			MoveVectorForce.Y -= 800.0f;
+		}
+	);
+
+	MainSpriteRenderer->SetStartEvent("Death", [&](GameEngineSpriteRenderer*)
+		{
+			GolemCollision->Off();
+		}
+	);
+
+	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer*)
+		{
+			Death();
 		}
 	);
 }
@@ -221,5 +239,4 @@ void Golem::AttackUpdate(float _Delta)
 
 void Golem::DeathUpdate(float _Delta)
 {
-
 }

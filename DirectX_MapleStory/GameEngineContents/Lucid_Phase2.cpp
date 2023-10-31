@@ -172,6 +172,8 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	FadeInObject->SetWhiteFade();
 
+	FadeOutObject->SetChangeLevel("Boss_WaitingRoom");
+
 	GetMainCamera()->SetZSort(RenderOrder::BACKGROUNDOBJECT);
 	GetMainCamera()->SetZSort(RenderOrder::MAP);
 

@@ -7,8 +7,8 @@
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 50.0f
 
-#define DOUBLE_JUMP_DIS 300.0f
-#define DOUBLE_JUMP_HEIGHT 120.0f
+#define DOUBLE_JUMP_DIS 230.0f
+#define DOUBLE_JUMP_HEIGHT 90.0f
 
 #define LADDER_JUMP_HEIGHT 300.0f
 
@@ -66,6 +66,8 @@ void Player::JumpStart()
 void Player::DownStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Down");
+	HitCollision->Transform.SetLocalScale({ 32, 40 });
+	HitCollision->Transform.SetLocalPosition({ 0, 20 });
 }
 
 void Player::LadderStart()
@@ -181,7 +183,8 @@ void Player::JumpEnd()
 
 void Player::DownEnd()
 {
-
+	HitCollision->Transform.SetLocalScale({ 32, 70 });
+	HitCollision->Transform.SetLocalPosition({ 0, 35 });
 }
 
 void Player::LadderEnd()

@@ -18,6 +18,8 @@ void MushRoom::LevelEnd(GameEngineLevel* _NextLevel)
 
 void MushRoom::Start()
 {
+	HP = 50;
+
 	MushRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
 	MushRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monster});
 	MushRenderer->AutoSpriteSizeOn();
@@ -64,6 +66,11 @@ void MushRoom::Start()
 void MushRoom::Update(float _Delta)
 {
 	StateUpdate(_Delta);
+
+	if (0 >= HP)
+	{
+		ChangeState(MushState::Death);
+	}
 }
 
 void MushRoom::Release()

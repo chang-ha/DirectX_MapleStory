@@ -5,6 +5,7 @@
 #include "ContentBackGround.h"
 #include "SkillManager.h"
 #include "FireWork.h"
+#include "Portal.h"
 
 Boss_WaitingRoom::Boss_WaitingRoom()
 {
@@ -36,8 +37,8 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition(float4(1000, -300));
-		GetMainCamera()->Transform.SetLocalPosition(float4(1000, -300, -100000));
+		CurPlayer->Transform.SetLocalPosition(float4(1000, -770));
+		GetMainCamera()->Transform.SetLocalPosition(float4(1000, -770, -100000));
 	}
 
 	if (nullptr == SkillManagerActor)
@@ -64,6 +65,10 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	_FireWork = CreateActor<FireWork>(UpdateOrder::Map);
 	_FireWork->Init(FireWorkType::FireWork3);
 	_FireWork->Transform.SetLocalPosition({ 430, -150 });
+
+	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
+	_Portal->Transform.SetLocalPosition({750, -772});
+	_Portal->SetMoveMap("3.Lucid_Enter");
 }
 
 void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)

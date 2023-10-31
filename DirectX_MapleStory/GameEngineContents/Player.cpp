@@ -107,6 +107,10 @@ void Player::Start()
 	_Animation = MainSpriteRenderer->FindAnimation("Monsoon");
 	_Animation->Inter[0] = 0.3f;
 	_Animation->Inter[2] = 0.8f;
+
+	HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Player);
+	HitCollision->Transform.SetLocalScale({32, 70});
+	HitCollision->Transform.SetLocalPosition({0, 35});
 }
 
 void Player::Update(float _Delta)
