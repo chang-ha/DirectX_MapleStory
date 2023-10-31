@@ -102,7 +102,7 @@ void BossHpBar::Start()
 	BossHpBarFrame.HpNum3->SetSprite("Boss_HpRatioNum_0.png");
 
 	BossHpBarFrame.HpRatioBG->AutoSpriteSizeOn();
-	BossHpBarFrame.HpNum1->SetImageScale({ 6, 8 });
+	BossHpBarFrame.HpNum1->SetImageScale({ 3, 8 });
 	BossHpBarFrame.HpNum2->SetImageScale({ 6, 8 });
 	BossHpBarFrame.HpDot->SetImageScale({ 1,1 });
 	BossHpBarFrame.HpNum3->SetImageScale({ 6, 8 });
@@ -160,15 +160,15 @@ void BossHpBar::CalueLifePercent()
 
 	int TenDigit = static_cast<int>(CurPercent / 10);
 	BossHpBarFrame.HpNum1->SetSprite("Boss_HpRatioNum_" + std::to_string(TenDigit) + ".png");
-	BossHpBarFrame.HpNum1->SetImageScale({ 6, 8 });
+	BossHpBarFrame.HpNum1->AddImageScale({ 1, 1 });
 
 	int OneDigit = static_cast<int>(CurPercent) % 10;
 	BossHpBarFrame.HpNum2->SetSprite("Boss_HpRatioNum_" + std::to_string(OneDigit) + ".png");
-	BossHpBarFrame.HpNum2->SetImageScale({ 6, 8 });
+	BossHpBarFrame.HpNum2->AddImageScale({ 1, 1 });
 
 	int DotDigit = static_cast<int>(CurPercent * 10.0f) % 10;
 	BossHpBarFrame.HpNum3->SetSprite("Boss_HpRatioNum_" + std::to_string(DotDigit) + ".png");
-	BossHpBarFrame.HpNum3->SetImageScale({ 6, 8 });
+	BossHpBarFrame.HpNum3->AddImageScale({ 1, 1 });
 
 	if (true == BossHpBarFrame.HpBack->IsUpdate() && 0 == TenDigit)
 	{
