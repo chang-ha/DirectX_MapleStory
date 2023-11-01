@@ -105,6 +105,8 @@ void Player::Attack2Start()
 
 void Player::WindWalkStart()
 {
+	MoveVectorForceReset();
+	GravityOff();
 	IsDirCheck = false;
 	SkillManager::PlayerSkillManager->UseSkill("WindWalk");
 	if (true == IsGround)
@@ -115,9 +117,9 @@ void Player::WindWalkStart()
 	{
 		MainSpriteRenderer->ChangeAnimation("Jump");
 		IsGroundCheck = false;
+		// 경사면 오차용
+		PlusMoveVectorForce({0, 0.001f});
 	}
-	MoveVectorForceReset();
-	GravityOff();
 	switch (Dir)
 	{
 	case ActorDir::Right:
@@ -487,7 +489,7 @@ void Player::JumpUpdate(float _Delta)
 	}
 	/////////////
 
-	if (true == IsGround /*&& 0 >= GetMoveVectorForce().Y*/)
+	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
 		ChangeToIdle();
 		//GravityReset();

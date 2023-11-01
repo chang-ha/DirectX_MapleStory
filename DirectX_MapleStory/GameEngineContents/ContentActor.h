@@ -114,7 +114,7 @@ public:
 
 	void Gravity(float _Delta);
 	void AirResistance(float _Delta);
-	void CalcuMove(float _Delta);
+	virtual void CalcuMove(float _Delta);
 
 protected:
 	bool IsGround = true;
