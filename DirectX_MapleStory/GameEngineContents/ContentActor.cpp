@@ -32,8 +32,8 @@ void ContentActor::Update(float _Delta)
 	IsWall = false;
 	AirResistance(_Delta);
 	Gravity(_Delta); // AddLocalPosition for MoveVector.Y
-	CalcuMove(_Delta); // AddLocalPosition for MoveVector.X
 	IsGround = CheckGround();
+	CalcuMove(_Delta); // AddLocalPosition for MoveVector.X
 }
 
 void ContentActor::Release()
@@ -65,9 +65,9 @@ void ContentActor::Gravity(float _Delta)
 
 	MoveVectorForce.Y -= GravityForce * _Delta;
 	float MoveVectorForceDelta = MoveVectorForce.Y * _Delta;
-	if (MaxGraviry <= MoveVectorForceDelta)
+	if (-MaxGraviry >= MoveVectorForceDelta)
 	{
-		MoveVectorForceDelta = MaxGraviry;
+		MoveVectorForceDelta = -MaxGraviry;
 	}
 
 	if (0.0f > MoveVectorForce.Y && -1.0f > MoveVectorForceDelta)
@@ -137,36 +137,59 @@ void ContentActor::CalcuMove(float _Delta)
 		return;
 	}
 
-	if (false == IsGround)
-	{
-		Transform.AddLocalPosition(MovePosDelta);
-		return;
-	}
-
 	float Count = 0.0f;
 	for (; abs(Count) < abs(MovePosDelta);)
 	{
+		// MOVE_CHECK_FLOAT씩 이동하면서 땅 체크
 		float4 MovePos = float4::ZERO;
+		GameEngineColor CheckColor = GameEngineColor(0, 0, 0, 0);
+
 		if (0.0f > MovePosDelta)
 		{
-			Count -= 0.1f;
-			MovePos = -0.1f;
+			Count -= MOVE_CHECK_FLOAT;
+			MovePos = -MOVE_CHECK_FLOAT;
+			if (Count < MovePosDelta)
+			{
+				MovePos = MovePosDelta - (Count + MOVE_CHECK_FLOAT);
+				Count = MovePosDelta;
+			}
 		}
 		else if (0.0f < MovePosDelta)
 		{
-			Count += 0.1f;
-			MovePos = 0.1f;
+			Count += MOVE_CHECK_FLOAT;
+			MovePos = MOVE_CHECK_FLOAT;
+			if (Count > MovePosDelta)
+			{
+				MovePos = MovePosDelta - (Count - MOVE_CHECK_FLOAT);
+				Count = MovePosDelta;
+			}
 		}
 		else if (0.0f == MovePosDelta)
 		{
 			return;
 		}
 
-		GameEngineColor CheckColor = GROUND_COLOR;
-
+		// 떨어질때의 X이동
+		if (false == IsGround && 0.0f > MoveVectorForce.Y)
+		{
+			//CheckColor = CheckGroundColor(MovePos);
+			//if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+			//{
+			//	return;
+			//}
+			Transform.AddLocalPosition(MovePos);
+			continue;
+		}
+		// 올라갈때의 X이동
+		else if (false == IsGround && 0.0f <= MoveVectorForce.Y)
+		{
+			Transform.AddLocalPosition(MovePos);
+			continue;
+		}
+		// 땅에서의 X이동(경사면 이동 포함)
 		// 올라가는 경사면
 		CheckColor = CheckGroundColor(MovePos + float4::UP);
-		if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		if (true == IsGround && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
 			float UpYPivot = 1.0f;
 			GameEngineColor PivotColor = GROUND_COLOR;
@@ -192,9 +215,9 @@ void ContentActor::CalcuMove(float _Delta)
 
 		// 내려가는 경사면
 		CheckColor = CheckGroundColor(MovePos);
-		if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+		if (true == IsGround && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
 		{
-			float DownYPivot = 0.0f;
+ 			float DownYPivot = 0.0f;
 			GameEngineColor PivotColor = LADDER_COLOR;
 			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
 			{

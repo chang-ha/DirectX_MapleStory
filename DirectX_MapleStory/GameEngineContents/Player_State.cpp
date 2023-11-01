@@ -561,7 +561,7 @@ void Player::JumpUpdate(float _Delta)
 			PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS , DOUBLE_JUMP_HEIGHT));
 		}
 
-		if (abs(DOUBLE_JUMP_MIN_DIS) > abs(MoveVectorForce.X))
+		if (false == GameEngineInput::IsPress(VK_UP, this) && abs(DOUBLE_JUMP_MIN_DIS) > abs(MoveVectorForce.X))
 		{
 			switch (Dir)
 			{

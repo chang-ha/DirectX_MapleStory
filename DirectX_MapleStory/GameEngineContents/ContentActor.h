@@ -21,6 +21,8 @@ protected:
 #define UP_PIXEL_LIMIT 4
 #define DOWN_PIXEL_LIMIT 4
 
+#define MOVE_CHECK_FLOAT 1.0f
+
 class GameEngineSpriteRenderer;
 class ContentLevel;
 class ContentActor : public ContentBaseActor
