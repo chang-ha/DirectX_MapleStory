@@ -9,6 +9,7 @@
 
 #define DOUBLE_JUMP_DIS 230.0f
 #define DOUBLE_JUMP_HEIGHT 100.0f
+#define DOUBLE_JUMP_MIN_DIS 450.0f
 
 #define LADDER_JUMP_DIS 200.0f
 #define LADDER_JUMP_HEIGHT 300.0f
@@ -557,17 +558,18 @@ void Player::JumpUpdate(float _Delta)
 		}
 		else if (GameEngineInput::IsPress(VK_RIGHT, this))
 		{
-			PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
+			PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS , DOUBLE_JUMP_HEIGHT));
 		}
-		else
+
+		if (abs(DOUBLE_JUMP_MIN_DIS) > abs(MoveVectorForce.X))
 		{
 			switch (Dir)
 			{
 			case ActorDir::Right:
-				PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS * 1.5f, DOUBLE_JUMP_HEIGHT));
+				MoveVectorForce.X = DOUBLE_JUMP_MIN_DIS;
 				break;
 			case ActorDir::Left:
-				PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS * 1.5f, DOUBLE_JUMP_HEIGHT));
+				MoveVectorForce.X = -DOUBLE_JUMP_MIN_DIS;
 				break;
 			case ActorDir::Null:
 			default:

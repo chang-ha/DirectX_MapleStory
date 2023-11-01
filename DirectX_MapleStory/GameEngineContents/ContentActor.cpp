@@ -30,10 +30,10 @@ void ContentActor::Start()
 void ContentActor::Update(float _Delta)
 {
 	IsWall = false;
-	Gravity(_Delta); // AddLocalPosition for MoveVector.Y
-	IsGround = CheckGround();
 	AirResistance(_Delta);
+	Gravity(_Delta); // AddLocalPosition for MoveVector.Y
 	CalcuMove(_Delta); // AddLocalPosition for MoveVector.X
+	IsGround = CheckGround();
 }
 
 void ContentActor::Release()
@@ -70,23 +70,29 @@ void ContentActor::Gravity(float _Delta)
 		MoveVectorForceDelta = MaxGraviry;
 	}
 
-	if (0.0f > MoveVectorForce.Y)
+	if (0.0f > MoveVectorForce.Y && -1.0f > MoveVectorForceDelta)
 	{
-		GameEngineColor GroundColor = CheckGroundColor();
+		// GameEngineColor GroundColor = CheckGroundColor();
 		float Count = 0.0f;
-		for (; Count <= static_cast<int>(-MoveVectorForceDelta); Count += 1.0f)
+		for (; ; Count -= 1.0f)
 		{
-			if (GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor)
+			if (Count <= MoveVectorForceDelta)
+			{
+				Count = MoveVectorForceDelta;
+				break;
+			}
+
+			if (true == CheckGround(float4(0, Count)))
 			{
 				break;
 			}
-			GroundColor = CheckGroundColor(-float4(0, 1.0f * Count));
+			//GroundColor = CheckGroundColor(float4(0, Count));
+			//if (GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor)
+			//{
+			//	break;
+			//}
 		}
-		if (0 != Count)
-		{
-			MoveVectorForceDelta = -1.0f * Count;
-		}
-		Transform.AddLocalPosition(float4(0, MoveVectorForceDelta));
+		Transform.AddLocalPosition(float4(0, Count));
 	}
 	else
 	{
@@ -128,6 +134,12 @@ void ContentActor::CalcuMove(float _Delta)
 	float MovePosDelta = MoveVectorForce.X * _Delta;
 	if (0.0f == MovePosDelta)
 	{
+		return;
+	}
+
+	if (false == IsGround)
+	{
+		Transform.AddLocalPosition(MovePosDelta);
 		return;
 	}
 
@@ -197,14 +209,7 @@ void ContentActor::CalcuMove(float _Delta)
 			}
 		}
 
-		if (true == IsGround)
-		{
-			Transform.AddLocalPosition(MovePos);
-		}
-		else if (false == IsGround)
-		{
-			Transform.AddLocalPosition(MovePos.X);
-		}
+		Transform.AddLocalPosition(MovePos);
 	}
 }
 
