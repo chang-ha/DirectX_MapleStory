@@ -32,8 +32,8 @@ void ContentActor::Update(float _Delta)
 	IsWall = false;
 	AirResistance(_Delta);
 	Gravity(_Delta); // AddLocalPosition for MoveVector.Y
-	IsGround = CheckGround();
 	CalcuMove(_Delta); // AddLocalPosition for MoveVector.X
+	IsGround = CheckGround();
 }
 
 void ContentActor::Release()
@@ -164,34 +164,12 @@ void ContentActor::CalcuMove(float _Delta)
 				Count = MovePosDelta;
 			}
 		}
-		else if (0.0f == MovePosDelta)
-		{
-			return;
-		}
 
-		// 떨어질때의 X이동
-		if (false == IsGround && 0.0f > MoveVectorForce.Y)
-		{
-			//CheckColor = CheckGroundColor(MovePos);
-			//if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-			//{
-			//	return;
-			//}
-			Transform.AddLocalPosition(MovePos);
-			continue;
-		}
-		// 올라갈때의 X이동
-		else if (false == IsGround && 0.0f <= MoveVectorForce.Y)
-		{
-			Transform.AddLocalPosition(MovePos);
-			continue;
-		}
-		// 땅에서의 X이동(경사면 이동 포함)
-		// 올라가는 경사면
 		CheckColor = CheckGroundColor(MovePos + float4::UP);
-		if (true == IsGround && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		float UpYPivot = 1.0f;
+		if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
-			float UpYPivot = 1.0f;
+			// 내 위에 땅이 몇 블록인지 체크
 			GameEngineColor PivotColor = GROUND_COLOR;
 			while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
 			{
@@ -199,25 +177,27 @@ void ContentActor::CalcuMove(float _Delta)
 				PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
 			}
 
-			while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+			// 올라가는 경사면 타는 중이면 1칸씩 올려줌
+			while (0.0f == MoveVectorForce.Y && UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 			{
 				MovePos += float4::UP;
 				CheckColor = CheckGroundColor(MovePos + float4::UP);
 			}
 
+			// 5칸이상이 땅이면 벽으로 인식
 			if (UP_PIXEL_LIMIT < UpYPivot && true == WallCheck)
 			{
 				MovePos = float4::ZERO;
 				MoveVectorForce.X = 0.0f;
 				IsWall = true;
+				break;
 			}
 		}
 
-		// 내려가는 경사면
 		CheckColor = CheckGroundColor(MovePos);
-		if (true == IsGround && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+		float DownYPivot = 0.0f;
+		if ( (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
 		{
- 			float DownYPivot = 0.0f;
 			GameEngineColor PivotColor = LADDER_COLOR;
 			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
 			{
@@ -225,11 +205,18 @@ void ContentActor::CalcuMove(float _Delta)
 				PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
 			}
 
-			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+			// 내려가는 경사면 타는 중이면 1칸씩 내려줌
+			while (0.0f == MoveVectorForce.Y && -DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
 			{
 				MovePos += float4::DOWN;
 				CheckColor = CheckGroundColor(MovePos);
 			}
+		}
+
+		if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		{
+			Transform.AddLocalPosition(MovePos);
+			break;
 		}
 
 		Transform.AddLocalPosition(MovePos);
@@ -238,10 +225,10 @@ void ContentActor::CalcuMove(float _Delta)
 
 bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 {
-	if (0.0 < MoveVectorForce.Y)
-	{
-		return false;
-	}
+	//if (0.0 < MoveVectorForce.Y)
+	//{
+	//	return false;
+	//}
 
 	bool Result = false;
 	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos/*, GameEngineColor(0, 0, 0, 255)*/);

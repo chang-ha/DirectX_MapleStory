@@ -487,7 +487,7 @@ void Player::JumpUpdate(float _Delta)
 	}
 	/////////////
 
-	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
+	if (true == IsGround /*&& 0 >= GetMoveVectorForce().Y*/)
 	{
 		ChangeToIdle();
 		//GravityReset();
