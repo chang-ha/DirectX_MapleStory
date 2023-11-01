@@ -108,6 +108,7 @@ void Player::WindWalkStart()
 	MoveVectorForceReset();
 	GravityOff();
 	IsDirCheck = false;
+	IsGroundVectorReset = false;
 	SkillManager::PlayerSkillManager->UseSkill("WindWalk");
 	if (true == IsGround)
 	{
@@ -224,6 +225,7 @@ void Player::WindWalkEnd()
 {
 	IsDirCheck = true;
 	IsGroundCheck = true;
+	IsGroundVectorReset = true;
 	MoveVectorForceReset();
 	GravityOn();
 	AirResisOff();

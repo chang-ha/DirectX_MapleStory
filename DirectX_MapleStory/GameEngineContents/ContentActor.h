@@ -114,12 +114,13 @@ public:
 
 	void Gravity(float _Delta);
 	void AirResistance(float _Delta);
-	virtual void CalcuMove(float _Delta);
+	void CalcuMove(float _Delta);
 
 protected:
 	bool IsGround = true;
 	bool WallCheck = true;
 	bool IsWall = false;
+	bool IsGroundVectorReset = true;
 	ActorDir Dir = ActorDir::Null;
 	float GravityForce = 0.0f;
 	float MaxGraviry = 10.0f;

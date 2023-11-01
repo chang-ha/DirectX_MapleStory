@@ -303,19 +303,6 @@ bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 	return ContentActor::CheckGround(PlusCheckPos);
 }
 
-void Player::CalcuMove(float _Delta)
-{
-	if (false == IsGroundCheck)
-	{
-		Transform.AddLocalPosition(MoveVectorForce * _Delta);
-	}
-	else
-	{
-		ContentActor::CalcuMove(_Delta);
-	}
-}
-
-
 void Player::ChangeToIdle()
 {
 	//GravityReset();

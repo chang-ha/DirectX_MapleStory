@@ -217,7 +217,10 @@ void ContentActor::CalcuMove(float _Delta)
 		if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
 			Transform.AddLocalPosition(MovePos);
-			MoveVectorForceReset();
+			if (true == IsGroundVectorReset)
+			{
+				MoveVectorForceReset();
+			}
 			break;
 		}
 

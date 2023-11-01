@@ -79,7 +79,6 @@ protected:
 	void BlockOutMap();
 	void LadderCheck();
 	bool CheckGround(float4 PlusCheckPos = float4::ZERO) override;
-	void CalcuMove(float _Delta) override;
 
 private:
 	bool IsLadder = false;
