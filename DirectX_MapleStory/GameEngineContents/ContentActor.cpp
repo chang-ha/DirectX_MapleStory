@@ -69,6 +69,7 @@ void ContentActor::Gravity(float _Delta)
 	{
 		MoveVectorForceDelta = MaxGraviry;
 	}
+
 	if (0.0f > MoveVectorForce.Y)
 	{
 		GameEngineColor GroundColor = CheckGroundColor();
@@ -124,66 +125,96 @@ void ContentActor::AirResistance(float _Delta)
 
 void ContentActor::CalcuMove(float _Delta)
 {
-	float4 MovePos = MoveVectorForce.X * _Delta;
-	GameEngineColor CheckColor = GROUND_COLOR;
-
-	// 올라가는 경사면
-	CheckColor = CheckGroundColor(MovePos + float4::UP);
-	if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+	float MovePosDelta = MoveVectorForce.X * _Delta;
+	if (0.0f == MovePosDelta)
 	{
-		float UpYPivot = 1.0f;
-		GameEngineColor PivotColor = GROUND_COLOR;
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
-		{
-			++UpYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
-		}
-
-		while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		{
-			MovePos += float4::UP;
-			CheckColor = CheckGroundColor(MovePos + float4::UP);
-		}
-
-		if (UP_PIXEL_LIMIT < UpYPivot && true == WallCheck)
-		{
-			MovePos = float4::ZERO;
-			MoveVectorForce.X = 0.0f;
-			IsWall = true;
-		}
+		return;
 	}
 
-	// 내려가는 경사면
-	CheckColor = CheckGroundColor(MovePos);
-	if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+	float Count = 0.0f;
+	for (; abs(Count) < abs(MovePosDelta);)
 	{
-		float DownYPivot = 0.0f;
-		GameEngineColor PivotColor = LADDER_COLOR;
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
+		float4 MovePos = float4::ZERO;
+		if (0.0f > MovePosDelta)
 		{
-			--DownYPivot;
-			PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
+			Count -= 0.1f;
+			MovePos = -0.1f;
+		}
+		else if (0.0f < MovePosDelta)
+		{
+			Count += 0.1f;
+			MovePos = 0.1f;
+		}
+		else if (0.0f == MovePosDelta)
+		{
+			return;
 		}
 
-		while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
-		{
-			MovePos += float4::DOWN;
-			CheckColor = CheckGroundColor(MovePos);
-		}
-	}
+		GameEngineColor CheckColor = GROUND_COLOR;
 
-	if (true == IsGround)
-	{
-		Transform.AddLocalPosition(MovePos);
-	}
-	else if (false == IsGround)
-	{
-		Transform.AddLocalPosition(MovePos.X);
+		// 올라가는 경사면
+		CheckColor = CheckGroundColor(MovePos + float4::UP);
+		if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		{
+			float UpYPivot = 1.0f;
+			GameEngineColor PivotColor = GROUND_COLOR;
+			while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
+			{
+				++UpYPivot;
+				PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
+			}
+
+			while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+			{
+				MovePos += float4::UP;
+				CheckColor = CheckGroundColor(MovePos + float4::UP);
+			}
+
+			if (UP_PIXEL_LIMIT < UpYPivot && true == WallCheck)
+			{
+				MovePos = float4::ZERO;
+				MoveVectorForce.X = 0.0f;
+				IsWall = true;
+			}
+		}
+
+		// 내려가는 경사면
+		CheckColor = CheckGroundColor(MovePos);
+		if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+		{
+			float DownYPivot = 0.0f;
+			GameEngineColor PivotColor = LADDER_COLOR;
+			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
+			{
+				--DownYPivot;
+				PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
+			}
+
+			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+			{
+				MovePos += float4::DOWN;
+				CheckColor = CheckGroundColor(MovePos);
+			}
+		}
+
+		if (true == IsGround)
+		{
+			Transform.AddLocalPosition(MovePos);
+		}
+		else if (false == IsGround)
+		{
+			Transform.AddLocalPosition(MovePos.X);
+		}
 	}
 }
 
 bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 {
+	if (0.0 < MoveVectorForce.Y)
+	{
+		return false;
+	}
+
 	bool Result = false;
 	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos/*, GameEngineColor(0, 0, 0, 255)*/);
 	if (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor)

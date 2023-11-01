@@ -8,8 +8,9 @@
 #define JUMP_DIS 50.0f
 
 #define DOUBLE_JUMP_DIS 230.0f
-#define DOUBLE_JUMP_HEIGHT 90.0f
+#define DOUBLE_JUMP_HEIGHT 100.0f
 
+#define LADDER_JUMP_DIS 200.0f
 #define LADDER_JUMP_HEIGHT 300.0f
 
 #define WINDWALK_XVECTOR 1000.0f
@@ -54,11 +55,11 @@ void Player::JumpStart()
 	{
 		if (/*ActorDir::Left == Dir &&*/ GameEngineInput::IsPress(VK_LEFT, this))
 		{
-			PlusMoveVectorForce(float4(-JUMP_DIS, LADDER_JUMP_HEIGHT));
+			PlusMoveVectorForce(float4(-LADDER_JUMP_DIS, LADDER_JUMP_HEIGHT));
 		}
 		else if (/*ActorDir::Right == Dir &&*/ GameEngineInput::IsPress(VK_RIGHT, this))
 		{
-			PlusMoveVectorForce(float4(JUMP_DIS, LADDER_JUMP_HEIGHT));
+			PlusMoveVectorForce(float4(LADDER_JUMP_DIS, LADDER_JUMP_HEIGHT));
 		}
 	}
 }
@@ -112,6 +113,7 @@ void Player::WindWalkStart()
 	else
 	{
 		MainSpriteRenderer->ChangeAnimation("Jump");
+		IsGroundCheck = false;
 	}
 	MoveVectorForceReset();
 	GravityOff();
@@ -218,6 +220,7 @@ void Player::Attack2End()
 void Player::WindWalkEnd()
 {
 	IsDirCheck = true;
+	IsGroundCheck = true;
 	MoveVectorForceReset();
 	GravityOn();
 	AirResisOff();

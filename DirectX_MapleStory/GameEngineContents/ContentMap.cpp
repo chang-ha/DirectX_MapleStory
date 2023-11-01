@@ -93,8 +93,8 @@ void ContentMap::InitMapCollision(std::string_view _MapName)
 
 	if (nullptr == MapCollisionRenderer)
 	{
-		MapCollisionRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::UI);
-		MapCollisionRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::ui });
+		MapCollisionRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
+		MapCollisionRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
 	}
 
 	MapCollisionRenderer->SetSprite(_MapName);
