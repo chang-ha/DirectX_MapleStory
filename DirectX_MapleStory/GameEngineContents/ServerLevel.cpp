@@ -3,6 +3,7 @@
 #include "FadeObject.h"
 #include "RenderActor.h"
 #include "ContentButton.h"
+#include "UIRenderActor.h"
 
 ServerLevel::ServerLevel()
 {
@@ -20,15 +21,25 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FadeInObject->SetWhiteFade();
 	FadeInObject->SetAlpha(0.0f);
 
-	FadeOutObject->SetChangeLevel("3.Lucid_Enter");
-	FadeOutObject->SetFadeSpeed(-1.0f);
+	FadeOutObject->SetChangeLevel("CharacterSelect");
+	FadeOutObject->SetFadeSpeed(-2.0f);
 
+	// Server Animation Logo
 	if (nullptr == GameEngineSprite::Find("ServerLogo"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
 		Dir.MoveChild("ContentResources\\Textures\\Login\\ServerLogo");
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+
+	if (nullptr == GameEngineSprite::Find("ServerButton_BG.png"))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\UI\\ServerButton_BG.png");
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
 	std::shared_ptr<RenderActor> _Actor = CreateActor<RenderActor>(UpdateOrder::RenderActor);
@@ -41,12 +52,25 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 
+	std::shared_ptr<UIRenderActor> _UIActor = CreateActor<UIRenderActor>(UpdateOrder::UI);
+	_UIActor->Init(RenderOrder::UI, RenderDepth::ui);
+	_UIActor->Renderer->SetSprite("ServerButton_BG.png");
+	_UIActor->Transform.SetLocalPosition({ 1260, -265 });
+
 	std::shared_ptr<ContentButton> _Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("GameEnd");
-	_Button->Transform.SetLocalPosition({40, -730});
+	_Button->Transform.SetLocalPosition({ _Button->GetButtonScale().hX(), -730});
 	_Button->SetButtonClickEndEvent([]()
 		{
 			GameEngineWindow::WindowLoopOff();
+		});
+
+	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
+	_Button->Init("WorldButton");
+	_Button->Transform.SetLocalPosition({ 1260, -50 });
+	_Button->SetButtonClickEndEvent([&]()
+		{
+			FadeOutObject->FadeStart();
 		});
 }
 

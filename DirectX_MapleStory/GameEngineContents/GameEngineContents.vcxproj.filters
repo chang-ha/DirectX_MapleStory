@@ -190,6 +190,9 @@
     <ClCompile Include="ContentMouse.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UIRenderActor.cpp">
+      <Filter>Actor\Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -380,6 +383,9 @@
     </ClInclude>
     <ClInclude Include="ContentMouse.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIRenderActor.h">
+      <Filter>Actor\Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

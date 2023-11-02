@@ -73,7 +73,7 @@ void ContentButton::Init(std::string_view _ButtonName)
 	ButtonRenderer->SetSprite(std::string(ButtonName) + "_Normal.png");
 
 	std::shared_ptr<GameEngineTexture> _Texture = GameEngineTexture::Find(std::string(ButtonName) + "_Normal.png");
-	float4 ButtonScale = _Texture->GetScale();
+	ButtonScale = _Texture->GetScale();
 	ButtonScale.Z = 1.0f;
 	ButtonCollision->Transform.SetLocalScale(ButtonScale);
 }
@@ -176,7 +176,7 @@ void ContentButton::ClickStart()
 
 void ContentButton::DisabledStart()
 {
-	ButtonRenderer->SetSprite(std::string(ButtonName) + "_Disabled.png");
+	// ButtonRenderer->SetSprite(std::string(ButtonName) + "_Disabled.png");
 }
 
 void ContentButton::NormalUpdate(float _Delta)
@@ -230,9 +230,7 @@ void ContentButton::ClickUpdate(float _Delta)
 			ChangeState(ButtonState::Normal);
 			return;
 		}
-
 	}
-
 }
 
 void ContentButton::DisabledUpdate(float _Delta)

@@ -29,6 +29,11 @@ public:
 	void SetButtonClickEndEvent(std::function<void()> _Function);
 	void SetButtonStayEvent(std::function<void()> _Function);
 
+	float4 GetButtonScale()
+	{
+		return ButtonScale;
+	}
+
 protected:
 	std::shared_ptr<GameEngineUIRenderer> ButtonRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> ButtonCollision = nullptr;
@@ -39,6 +44,7 @@ protected:
 	void Release() override;
 private:
 	ButtonState State = ButtonState::Normal;
+	float4 ButtonScale = float4::ZERO;
 	std::string ButtonName = "";
 	std::function<void()> ButtonClickEvent;
 	std::function<void()> ButtonClickEndEvent;

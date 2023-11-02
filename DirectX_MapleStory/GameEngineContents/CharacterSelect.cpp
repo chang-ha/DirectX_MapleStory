@@ -2,6 +2,7 @@
 #include "CharacterSelect.h"
 #include "ContentMap.h"
 #include "RenderActor.h"
+#include "FadeObject.h"
 
 CharacterSelect::CharacterSelect()
 {
@@ -16,6 +17,7 @@ CharacterSelect::~CharacterSelect()
 void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
+	FadeInObject->SetFadeSpeed(2.0f);
 
 	if (nullptr == GameEngineSprite::Find("CharacterSelect_BG.png"))
 	{

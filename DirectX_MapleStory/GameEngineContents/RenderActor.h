@@ -19,7 +19,7 @@ public:
 		Init(static_cast<int>(_Order), static_cast<float>(_Depth));
 	}
 
-	void Init(int _Order, float _Depth);
+	virtual void Init(int _Order, float _Depth);
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
 
 protected:
