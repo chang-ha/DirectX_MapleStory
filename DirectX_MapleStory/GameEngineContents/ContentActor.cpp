@@ -217,7 +217,13 @@ void ContentActor::CalcuMove(float _Delta)
 		if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
 			Transform.AddLocalPosition(MovePos);
-			if (true == IsGroundVectorReset)
+			GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
+			GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
+			if (false == IsGroundVectorReset)
+			{
+				break;
+			}
+			if ((GROUND_COLOR != RightPixel || FLOOR_COLOR != RightPixel) || (GROUND_COLOR != LeftPixel || FLOOR_COLOR != LeftPixel))
 			{
 				MoveVectorForceReset();
 			}
