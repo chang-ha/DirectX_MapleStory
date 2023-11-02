@@ -2,7 +2,7 @@
 #include "ContentLevel.h"
 #include "ContentMap.h"
 #include "FadeObject.h"
-
+#include "ContentMouse.h"
 void LevelDebug::Start()
 {
 	
@@ -63,6 +63,7 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	FadeInObject->FadeStart();
+	CreateActor<ContentMouse>(UpdateOrder::UI);
 }
 
 void ContentLevel::LevelEnd(GameEngineLevel* _NextLevel)

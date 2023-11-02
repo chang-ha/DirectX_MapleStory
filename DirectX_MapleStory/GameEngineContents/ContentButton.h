@@ -1,5 +1,13 @@
 #pragma once
 
+enum class ButtonState
+{
+	Normal,
+	MouseOver,
+	Click,
+	Disabled
+};
+
 class ContentButton : public GameEngineActor
 {
 public:
@@ -14,6 +22,8 @@ public:
 	ContentButton& operator=(ContentButton&& _Other) noexcept = delete;
 
 	void Init(std::string_view _ButtonTextureName);
+	void ChangeState(ButtonState _State);
+	void StateUpdate(float _Delta);
 
 	void SetButtonClickEvent(std::function<void()> _Function);
 	void SetButtonClickEndEvent(std::function<void()> _Function);
@@ -28,9 +38,25 @@ protected:
 	void Update(float _Delta) override;
 	void Release() override;
 private:
-	bool IsClick = false;
+	ButtonState State = ButtonState::Normal;
+	std::string ButtonName = "";
 	std::function<void()> ButtonClickEvent;
 	std::function<void()> ButtonClickEndEvent;
 	std::function<void()> ButtonStayEvent;
+
+	void NormalStart();
+	void MouseOverStart();
+	void ClickStart();
+	void DisabledStart();
+
+	void NormalUpdate(float _Delta);
+	void MouseOverUpdate(float _Delta);
+	void ClickUpdate(float _Delta);
+	void DisabledUpdate(float _Delta);
+
+	void NormalEnd();
+	void MouseOverEnd();
+	void ClickEnd();
+	void DisabledEnd();
 };
 

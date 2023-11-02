@@ -44,6 +44,10 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<ContentButton> _Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("GameEnd");
 	_Button->Transform.SetLocalPosition({40, -730});
+	_Button->SetButtonClickEndEvent([]()
+		{
+			GameEngineWindow::WindowLoopOff();
+		});
 }
 
 void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)

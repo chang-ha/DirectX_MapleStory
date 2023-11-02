@@ -187,6 +187,9 @@
     <ClCompile Include="ContentButton.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="ContentMouse.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -373,6 +376,9 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="ContentButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentMouse.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

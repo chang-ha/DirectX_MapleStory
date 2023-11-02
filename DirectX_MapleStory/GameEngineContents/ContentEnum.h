@@ -36,12 +36,14 @@ enum class RenderOrder
 	RENDERACTOR,
 	PORTAL,
 	UI,
+	MOUSE,
 	FADEOBJECT,
 };
 
 enum RenderDepth
 {
 	fadeobject = 1,
+	mouse,
 	ui,
 	portal,
 	renderactor,

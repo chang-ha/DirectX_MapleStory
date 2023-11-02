@@ -242,6 +242,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentMonster.cpp" />
+    <ClCompile Include="ContentMouse.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentResources.cpp">
       <SubType>
       </SubType>
@@ -448,6 +452,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentMonster.h" />
+    <ClInclude Include="ContentMouse.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentResources.h">
       <SubType>
       </SubType>
