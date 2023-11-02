@@ -35,6 +35,30 @@ void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+
+	if (nullptr == CurMap)
+	{
+		CurMap->Death();
+		CurMap = nullptr;
+	}
+
+	if (nullptr != CurPlayer)
+	{
+		CurPlayer->Death();
+		CurPlayer = nullptr;
+	}
+
+	if (nullptr != Back)
+	{
+		Back->Death();
+		Back = nullptr;
+	}
+
+	if (nullptr != SkillManagerActor)
+	{
+		SkillManagerActor->Death();
+		SkillManagerActor = nullptr;
+	}
 }
 
 void ClockTowerBaseLevel::Start()
@@ -46,9 +70,9 @@ void ClockTowerBaseLevel::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
 
-	if (Player::MainPlayer->Transform.GetWorldPosition().Y <= -CurMapScale.Y)
+	if (CurPlayer->Transform.GetWorldPosition().Y <= -CurMapScale.Y)
 	{
-		Player::MainPlayer->Transform.SetLocalPosition(StartPos);
-		Player::MainPlayer->MoveVectorForceReset();
+		CurPlayer->Transform.SetLocalPosition(StartPos);
+		CurPlayer->MoveVectorForceReset();
 	}
 }

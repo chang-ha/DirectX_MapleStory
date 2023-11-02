@@ -400,6 +400,7 @@ void Boss_Lucid_Phase2::IdleStart()
 void Boss_Lucid_Phase2::DeathStart()
 {
 	BossRenderer->ChangeAnimation("Death");
+	BossCollision->Off();
 
 	switch (Dir)
 	{

@@ -396,6 +396,7 @@ void Boss_Lucid_Phase1::DeathStart()
 	BossRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monster});
 	BossRenderer->ChangeAnimation("Death");
 	FlowerRenderer->Off();
+	BossCollision->Off();
 }
 
 void Boss_Lucid_Phase1::PhantasmalWindStart()

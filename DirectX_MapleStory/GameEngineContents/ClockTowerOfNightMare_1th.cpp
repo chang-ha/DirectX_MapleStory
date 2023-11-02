@@ -2,7 +2,8 @@
 #include "ClockTowerOfNightMare_1th.h"
 #include "ContentMap.h"
 #include "Player.h"
-
+#include "Minimap.h"
+#include "Portal.h"
 ClockTowerOfNightMare_1th::ClockTowerOfNightMare_1th()
 {
 
@@ -29,17 +30,23 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition(StartPos);
-		GetMainCamera()->Transform.SetLocalPosition(float4(500, -2800, -100000));
+		CurPlayer->Transform.SetLocalPosition({ 600, -300 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(600, -300, -100000));
 	}
 
+	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
+	_Portal->Transform.SetLocalPosition({ 600, -290 });
+	_Portal->SetMoveMap("Boss_WaitingRoom");
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
+	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_5th.png", "악몽의시계탑 5층");
 }
 
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ClockTowerBaseLevel::LevelEnd(_NextLevel);
+
+
 }
 
 void ClockTowerOfNightMare_1th::Start()

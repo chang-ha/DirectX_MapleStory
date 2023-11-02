@@ -826,10 +826,10 @@ void Lucid_Phase2::Update(float _Delta)
 	ContentLevel::Update(_Delta);
 	ObjectUpdate(_Delta);
 
-	if (Player::MainPlayer->Transform.GetWorldPosition().Y <= -CurMapScale.Y)
+	if (CurPlayer->Transform.GetWorldPosition().Y <= -CurMapScale.Y)
 	{
-		Player::MainPlayer->Transform.SetLocalPosition({ 1120, -800 });
-		Player::MainPlayer->MoveVectorForceReset();
+		CurPlayer->Transform.SetLocalPosition({ 1120, -800 });
+		CurPlayer->MoveVectorForceReset();
 	}
 
 	if (true == LaserPatternValue)

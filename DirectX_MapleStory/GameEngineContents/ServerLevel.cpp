@@ -37,10 +37,8 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Renderer->AutoSpriteSizeOff();
 	_Actor->Renderer->SetImageScale(GlobalValue::WinScale);
 
-	float4 WinScale = GlobalValue::WinScale;
-	WinScale.Y *= -1.0f;
-	_Actor->Transform.SetLocalPosition(WinScale.Half());
-	GetMainCamera()->Transform.SetLocalPosition(WinScale.Half());
+	_Actor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
+	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 }
 
 void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)

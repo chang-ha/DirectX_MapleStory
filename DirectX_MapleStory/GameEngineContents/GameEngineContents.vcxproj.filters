@@ -181,6 +181,9 @@
     <ClCompile Include="ClockTowerBaseLevel.cpp">
       <Filter>Level\HuntingField</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterSelect.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -362,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="ClockTowerBaseLevel.h">
       <Filter>Level\HuntingField</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSelect.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

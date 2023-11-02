@@ -212,6 +212,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CharacterSelect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ClockTowerBaseLevel.cpp">
       <SubType>
       </SubType>
@@ -406,6 +410,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ButterFly_Ball.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="CharacterSelect.h">
       <SubType>
       </SubType>
     </ClInclude>

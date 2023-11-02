@@ -44,7 +44,7 @@ void Portal::Start()
 
 void Portal::Update(float _Delta)
 {
-	if (true == PortalCollision->Collision(CollisionOrder::Player) && true == GameEngineInput::IsDown(VK_UP, this))
+	if (true == PortalCollision->Collision(CollisionOrder::Player) && true == GameEngineInput::IsPress(VK_UP, this))
 	{
 		std::shared_ptr<FadeObject> _FadeObject = ContentLevel::CurContentLevel->FadeOutObject;
 		_FadeObject->SetChangeLevel(MoveMap);
