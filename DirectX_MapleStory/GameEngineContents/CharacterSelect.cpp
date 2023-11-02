@@ -3,6 +3,8 @@
 #include "ContentMap.h"
 #include "RenderActor.h"
 #include "FadeObject.h"
+#include "UIRenderActor.h"
+#include "ContentButton.h"
 
 CharacterSelect::CharacterSelect()
 {
@@ -41,7 +43,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Renderer->SetImageScale(GlobalValue::WinScale);
 	_Actor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 
-	_Actor = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
 	_Actor->Renderer->SetSprite("CharacterSelect_Front.png");
 	_Actor->Renderer->AutoSpriteSizeOff();
@@ -49,6 +51,16 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 
 	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
+
+	std::shared_ptr<ContentButton> _Button = CreateActor<ContentButton>(UpdateOrder::UI);
+	_Button->Init("PrevButton");
+	_Button->Transform.SetLocalPosition({ _Button->GetButtonScale().hX(), -730 });
+	_Button->SetButtonClickEndEvent([&]()
+		{
+			FadeOutObject->SetFadeSpeed(-2.0f);
+			FadeOutObject->SetChangeLevel("2.ServerLevel");
+			FadeOutObject->FadeStart();
+		});
 }
 
 void CharacterSelect::LevelEnd(GameEngineLevel* _NextLevel)

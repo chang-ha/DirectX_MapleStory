@@ -193,6 +193,9 @@
     <ClCompile Include="UIRenderActor.cpp">
       <Filter>Actor\Global</Filter>
     </ClCompile>
+    <ClCompile Include="ButtonWarningMent.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -386,6 +389,9 @@
     </ClInclude>
     <ClInclude Include="UIRenderActor.h">
       <Filter>Actor\Global</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonWarningMent.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
