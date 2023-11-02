@@ -184,6 +184,9 @@
     <ClCompile Include="CharacterSelect.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="ContentButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -368,6 +371,9 @@
     </ClInclude>
     <ClInclude Include="CharacterSelect.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentButton.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

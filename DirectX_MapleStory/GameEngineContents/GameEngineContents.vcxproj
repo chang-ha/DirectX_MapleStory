@@ -229,6 +229,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentBackGround.cpp" />
+    <ClCompile Include="ContentButton.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentLevel.cpp">
       <SubType>
       </SubType>
@@ -430,6 +434,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentBackGround.h" />
+    <ClInclude Include="ContentButton.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentEnum.h" />
     <ClInclude Include="ContentLevel.h">
       <SubType>

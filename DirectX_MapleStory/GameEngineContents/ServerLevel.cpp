@@ -2,6 +2,7 @@
 #include "ServerLevel.h"
 #include "FadeObject.h"
 #include "RenderActor.h"
+#include "ContentButton.h"
 
 ServerLevel::ServerLevel()
 {
@@ -39,6 +40,10 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	_Actor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
+
+	std::shared_ptr<ContentButton> _Button = CreateActor<ContentButton>(UpdateOrder::UI);
+	_Button->Init("GameEnd");
+	_Button->Transform.SetLocalPosition({40, -730});
 }
 
 void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)
