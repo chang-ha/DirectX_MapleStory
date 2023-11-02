@@ -219,14 +219,18 @@ void ContentActor::CalcuMove(float _Delta)
 			Transform.AddLocalPosition(MovePos);
 			GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
 			GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
+
 			if (false == IsGroundVectorReset)
 			{
 				break;
 			}
-			if ((GROUND_COLOR != RightPixel || FLOOR_COLOR != RightPixel) || (GROUND_COLOR != LeftPixel || FLOOR_COLOR != LeftPixel))
+
+			if ((GROUND_COLOR == RightPixel || FLOOR_COLOR == RightPixel) && (GROUND_COLOR == LeftPixel || FLOOR_COLOR == LeftPixel))
 			{
-				MoveVectorForceReset();
+				break;
 			}
+
+			MoveVectorForceReset();
 			break;
 		}
 
