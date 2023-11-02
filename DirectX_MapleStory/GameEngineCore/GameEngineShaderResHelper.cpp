@@ -54,7 +54,20 @@ void GameEngineTextureSetter::Setting()
 
 void GameEngineTextureSetter::Reset()
 {
+	ShaderType Type = ParentShader->GetShaderType();
 
+	switch (Type)
+	{
+	case ShaderType::Vertex:
+		Res->VSReset(BindPoint);
+		break;
+	case ShaderType::Pixel:
+		Res->PSReset(BindPoint);
+		break;
+	default:
+		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
+		break;
+	}
 }
 
 void GameEngineSamplerSetter::Setting()
@@ -264,6 +277,45 @@ void GameEngineShaderResHelper::AllShaderResourcesSetting()
 
 		Pair.second.Setting();
 	}
+}
+
+
+void GameEngineShaderResHelper::AllShaderResourcesReset()
+{
+	//for (std::pair<const std::string, GameEngineConstantBufferSetter>& Pair : ConstantBufferSetters)
+	//{
+	//	if (nullptr == Pair.second.Res)
+	//	{
+	//		MsgBoxAssert(std::string(Pair.first) + "라는 샘플러가 세팅이 되지 않았습니다.");
+	//		return;
+	//	}
+
+	//	Pair.second.Reset();
+	//}
+
+	// 일단 텍스처만 Reset하는 기능이 필요
+	for (std::pair<const std::string, GameEngineTextureSetter>& Pair : TextureSetters)
+	{
+		if (nullptr == Pair.second.Res)
+		{
+			MsgBoxAssert(std::string(Pair.first) + "라는 샘플러가 세팅이 되지 않았습니다.");
+			return;
+		}
+
+		Pair.second.Reset();
+	}
+
+	//for (std::pair<const std::string, GameEngineSamplerSetter>& Pair : SamplerSetters)
+	//{
+	//	if (nullptr == Pair.second.Res)
+	//	{
+	//		MsgBoxAssert(std::string(Pair.first) + "라는 샘플러가 세팅이 되지 않았습니다.");
+	//		return;
+	//	}
+
+	//	Pair.second.Reset();
+	//}
+
 }
 
 void GameEngineShaderResHelper::SetConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size)

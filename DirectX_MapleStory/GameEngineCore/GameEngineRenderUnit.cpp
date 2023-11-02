@@ -37,6 +37,11 @@ void GameEngineRenderUnit::SetText(const std::string& _Font, const std::string& 
 
 void GameEngineRenderUnit::ResSetting()
 {
+	if (nullptr != Font)
+	{
+		return;
+	}
+
 	Mesh->InputAssembler1();
 	Material->VertexShader();
 	LayOut->Setting();
@@ -47,16 +52,6 @@ void GameEngineRenderUnit::ResSetting()
 	Material->DepthStencil();
 
 	ShaderResHelper.AllShaderResourcesSetting();
-
-	// 애는 솔직히 랜더 타겟이 가져가야 합니다.
-	D3D11_VIEWPORT ViewPort = {};
-	ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
-	ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
-	ViewPort.MinDepth = 0.0f;
-	ViewPort.MaxDepth = 1.0f;
-	ViewPort.TopLeftX = 0.0f;
-	ViewPort.TopLeftY = 0.0f;
-	GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
 }
 
 
@@ -84,6 +79,11 @@ void GameEngineRenderUnit::Draw()
 	Mesh->Draw();
 }
 
+void GameEngineRenderUnit::Render()
+{
+	ResSetting();
+	Draw();
+}
 
 void GameEngineRenderUnit::SetMesh(std::string_view _Name)
 {

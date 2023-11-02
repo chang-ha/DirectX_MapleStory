@@ -15,6 +15,7 @@
 #include "GameEngineMaterial.h"
 #include "GameEngineDepthStencil.h"
 #include "GameEngineFont.h"
+#include "GameEngineRenderTarget.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -207,10 +208,10 @@ void GameEngineDevice::ResourcesInit()
 		std::vector<GameEngineVertex> Vertex;
 		Vertex.resize(4);
 
-		Vertex[0] = { { -1.0f, 1.0f, 0.0f, 1.0f }, {0.0f, 0.0f} };
-		Vertex[1] = { { 1.0f, 1.0f, 0.0f, 1.0f },  {1.0f, 0.0f} };
-		Vertex[2] = { { 1.0f, -1.0f, 0.0f, 1.0f },   {1.0f, 1.0f} };
-		Vertex[3] = { { -1.0f, -1.0f, 0.0f, 1.0f },  {0.0f, 1.0f} };
+		Vertex[0] = { { -1.0f, 1.0f, 0.0f, 1.0f },  {0.0f, 0.0f} };
+		Vertex[1] = { { 1.0f, 1.0f, 0.0f, 1.0f } , {1.0f, 0.0f} };
+		Vertex[2] = { { 1.0f, -1.0f, 0.0f, 1.0f }  , {1.0f, 1.0f} };
+		Vertex[3] = { { -1.0f, -1.0f, 0.0f, 1.0f } , {0.0f, 1.0f} };
 
 		GameEngineVertexBuffer::Create("FullRect", Vertex);
 
@@ -221,6 +222,7 @@ void GameEngineDevice::ResourcesInit()
 		};
 
 		GameEngineIndexBuffer::Create("FullRect", Index);
+		GameEngineMesh::Create("FullRect");
 	}
 
 	{
@@ -310,6 +312,21 @@ void GameEngineDevice::ResourcesInit()
 		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("LINEAR", Desc);
 	}
 
+	{
+		D3D11_SAMPLER_DESC Desc = {};
+		Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		Desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		Desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		Desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+
+		Desc.MipLODBias = 0.0f;
+		Desc.MaxAnisotropy = 1;
+		Desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		Desc.MinLOD = -FLT_MAX;
+		Desc.MaxLOD = FLT_MAX;
+
+		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("POINT", Desc);
+	}
 
 	{
 		D3D11_SAMPLER_DESC Desc = {};
@@ -377,6 +394,7 @@ void GameEngineDevice::ResourcesInit()
 		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTextureWire");
 		Mat->SetVertexShader("DebugColor_VS");
 		Mat->SetPixelShader("DebugColor_PS");
+		Mat->SetDepthState("AlwaysDepth");
 		Mat->SetRasterizer("EngineWireRasterizer");
 	}
 
@@ -385,7 +403,17 @@ void GameEngineDevice::ResourcesInit()
 		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DDebugLine");
 		Mat->SetVertexShader("DebugLine_VS");
 		Mat->SetPixelShader("DebugLine_PS");
-		// Mat->SetRasterizer("EngineWireRasterizer");
+		Mat->SetDepthState("AlwaysDepth");
 		Mat->SetRasterizer("EngineRasterizer");
 	}
+
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("TargetMerge");
+		Mat->SetVertexShader("TargetMerge_VS");
+		Mat->SetPixelShader("TargetMerge_PS");
+		Mat->SetDepthState("AlwaysDepth");
+		Mat->SetRasterizer("EngineRasterizer");
+	}
+
+	GameEngineRenderTarget::MergeRenderUnitInit();
 }

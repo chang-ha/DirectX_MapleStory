@@ -84,6 +84,7 @@ void GameEngineCore::Release()
 {
 	CoreObject->Release();
 	GameEngineGUI::Release();
+	GameEngineSound::Release();
 }
 
 void GameEngineCore::EngineProcess(HINSTANCE _Inst, const std::string& _WindowName, float4 _Pos, float4 _Size)
