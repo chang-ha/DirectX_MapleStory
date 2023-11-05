@@ -20,12 +20,15 @@ public:
 
 	void SetWhiteFade()
 	{
-		FadeRenderer->GetColorData().PlusColor = { 1.0f, 1.0f, 1.0f };
+		FadeRenderer->RenderBaseInfoValue.BaseColorOnly = true;
+		FadeRenderer->RenderBaseInfoValue.BaseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 	}
 
 	void SetBlackFade()
 	{
-		FadeRenderer->GetColorData().PlusColor = { -1.0f, -1.0f, -1.0f };
+		FadeRenderer->RenderBaseInfoValue.BaseColorOnly = true;
+		FadeRenderer->RenderBaseInfoValue.BaseColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+
 	}
 
 	void SetFadeSpeed(float _FadeSpeed)

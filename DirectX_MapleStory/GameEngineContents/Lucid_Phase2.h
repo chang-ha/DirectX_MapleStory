@@ -80,6 +80,7 @@ protected:
 
 private:
 	bool LaserPatternValue = false;
+	bool OnceFadeAlphaSetting = true;
 	float LaserCooldown = Lase_Cooldown;
 	float GolemCooldown = Golem_Cooldown;
 	int PrevFootHold = -1;

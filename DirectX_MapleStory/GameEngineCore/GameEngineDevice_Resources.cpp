@@ -309,7 +309,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.MinLOD = -FLT_MAX;
 		Desc.MaxLOD = FLT_MAX;
 
-		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("LINEAR", Desc);
+		std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Create("LINEAR", Desc);
 	}
 
 	{
@@ -325,7 +325,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.MinLOD = -FLT_MAX;
 		Desc.MaxLOD = FLT_MAX;
 
-		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("POINT", Desc);
+		std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Create("POINT", Desc);
 	}
 
 	{
