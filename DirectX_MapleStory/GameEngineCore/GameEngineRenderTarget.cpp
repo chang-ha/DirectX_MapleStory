@@ -4,6 +4,14 @@
 
 bool GameEngineRenderTarget::IsDepth = true;
 
+GameEngineRenderUnit GameEngineRenderTarget::MergeUnit;
+
+void GameEngineRenderTarget::MergeRenderUnitInit()
+{
+	GameEngineRenderTarget::MergeUnit.SetMesh("FullRect");
+	GameEngineRenderTarget::MergeUnit.SetMaterial("TargetMerge");
+};
+
 GameEngineRenderTarget::GameEngineRenderTarget()
 {
 }
@@ -43,8 +51,50 @@ void GameEngineRenderTarget::Setting()
 	}
 
 	GameEngineCore::GetContext()->OMSetRenderTargets(static_cast<UINT>(RTV.size()), &RTV[0], DSV);
+	GameEngineCore::GetContext()->RSSetViewports(static_cast<UINT>(ViewPorts.size()), &ViewPorts[0]);
 }
 
+void GameEngineRenderTarget::AddNewTexture(DXGI_FORMAT _Format, const float4& _Scale, const float4& _ClearColor)
+{
+	D3D11_TEXTURE2D_DESC Desc = { 0 };
+	Desc.ArraySize = 1;
+	Desc.Width = _Scale.uiX();
+	Desc.Height = _Scale.uiY();
+	Desc.Format = _Format;
+	Desc.SampleDesc.Count = 1;
+	Desc.SampleDesc.Quality = 0;
+	Desc.MipLevels = 1;
+	// 디폴트
+	// 이 텍스처의 메모리를 그래픽카드가 가지게 해라.
+	Desc.Usage = D3D11_USAGE_DEFAULT;
+	Desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE;
+	// 용도 랜더타겟으로 사용하기 위해서 만든다.
+	// D3D11_BIND_SHADER_RESOURCE 텍스처로 쉐이더에 세팅할수 있게 하기 위해서 만든다.
+
+	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Create(Desc);
+	AddNewTexture(Tex, _ClearColor);
+}
+
+void GameEngineRenderTarget::AddNewTexture(std::shared_ptr<GameEngineTexture> _Texture, const float4& _ClearColor)
+{
+	std::shared_ptr<GameEngineTexture> Tex = _Texture;
+
+	Textures.push_back(Tex);
+
+	// 뷰포트도 생성
+	D3D11_VIEWPORT ViewPortData;
+	ViewPortData.TopLeftX = 0;
+	ViewPortData.TopLeftY = 0;
+	ViewPortData.Width = static_cast<float>(_Texture->GetScale().uiX());
+	ViewPortData.Height = static_cast<float>(_Texture->GetScale().uiY());
+	ViewPortData.MinDepth = 0.0f;
+	ViewPortData.MaxDepth = 1.0f;
+
+	RTV.push_back(Tex->GetRTV());
+	SRV.push_back(Tex->GetSRV());
+	ClearColor.push_back(_ClearColor);
+	ViewPorts.push_back(ViewPortData);
+}
 
 void GameEngineRenderTarget::CreateDepthTexture(int _Index /*= 0*/)
 {
@@ -70,4 +120,41 @@ void GameEngineRenderTarget::CreateDepthTexture(int _Index /*= 0*/)
 	Desc.CPUAccessFlags = 0;
 	Desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
 	DepthTexture = GameEngineTexture::Create(Desc);
+}
+
+void GameEngineRenderTarget::Copy(unsigned int ThisTarget, std::shared_ptr<GameEngineRenderTarget> _Target, unsigned int _CopyTarget)
+{
+	Clear();
+	Merge(ThisTarget, _Target, _CopyTarget);
+}
+
+void GameEngineRenderTarget::Merge(unsigned int ThisTarget, std::shared_ptr<GameEngineRenderTarget> _Target, unsigned int _CopyTarget)
+{
+	Setting();
+
+	MergeUnit.ShaderResHelper.SetTexture("DiffuseTex", _Target->Textures[_CopyTarget]);
+	MergeUnit.ShaderResHelper.SetSampler("DiffuseTexSampler", "POINT");
+	MergeUnit.Render();
+	MergeUnit.ShaderResHelper.AllShaderResourcesReset();
+}
+
+void GameEngineRenderTarget::PostEffect(float _DeltaTime)
+{
+	for (std::shared_ptr<Effect>& Effect : Effects)
+	{
+		if (false == Effect->IsUpdate())
+		{
+			continue;
+		}
+
+		Effect->RenderBaseInfoValue.DeltaTime = _DeltaTime;
+		Effect->RenderBaseInfoValue.AccDeltaTime += _DeltaTime;
+		Effect->EffectProcess(_DeltaTime);
+	}
+}
+
+void GameEngineRenderTarget::EffectInit(Effect* _Effect)
+{
+	_Effect->EffectTarget = this;
+	_Effect->Start();
 }

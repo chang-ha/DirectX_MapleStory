@@ -74,11 +74,11 @@ void BossHpBar::Start()
 	BossHpBarFrame.DeathCountBG->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 329, -20, RenderDepth::ui });
 	BossHpBarFrame.DeathCountNum->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 310, -22, RenderDepth::ui});
 
-	BossHpBarFrame.HpMiddle->SetImageScale({ 650 , 20 });
+	BossHpBarFrame.HpMiddle->SetImageScale({ 650 , 20, 1 });
 	BossHpBarFrame.HpMiddle->RenderBaseInfoValue.VertexUVMul.X = 650;
 
-	BossHpBarFrame.HpBack->SetImageScale({ 650 , 12 });
-	BossHpBarFrame.HpFront->SetImageScale({ 650 , 12 });
+	BossHpBarFrame.HpBack->SetImageScale({ 650 , 12, 1 });
+	BossHpBarFrame.HpFront->SetImageScale({ 650 , 12, 1 });
 	BossHpBarFrame.HpBack->RenderBaseInfoValue.VertexUVMul.X = 650;
 	BossHpBarFrame.HpFront->RenderBaseInfoValue.VertexUVMul.X = 650;
 	BossHpBarFrame.HpBack->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 325, -10, RenderDepth::ui });
@@ -102,11 +102,11 @@ void BossHpBar::Start()
 	BossHpBarFrame.HpNum3->SetSprite("Boss_HpRatioNum_0.png");
 
 	BossHpBarFrame.HpRatioBG->AutoSpriteSizeOn();
-	BossHpBarFrame.HpNum1->SetImageScale({ 3, 8 });
-	BossHpBarFrame.HpNum2->SetImageScale({ 6, 8 });
-	BossHpBarFrame.HpDot->SetImageScale({ 1,1 });
-	BossHpBarFrame.HpNum3->SetImageScale({ 6, 8 });
-	BossHpBarFrame.HpPercent->SetImageScale({8, 8});
+	BossHpBarFrame.HpNum1->SetImageScale({ 3, 8, 1 });
+	BossHpBarFrame.HpNum2->SetImageScale({ 6, 8, 1 });
+	BossHpBarFrame.HpDot->SetImageScale({ 1,1, 1 });
+	BossHpBarFrame.HpNum3->SetImageScale({ 6, 8, 1 });
+	BossHpBarFrame.HpPercent->SetImageScale({8, 8, 1});
 
 	BossHpBarFrame.HpRatioBG->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 325, -37, RenderDepth::ui });
 	BossHpBarFrame.HpNum1->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 356, -46, RenderDepth::ui });
@@ -175,6 +175,6 @@ void BossHpBar::CalueLifePercent()
 		BossHpBarFrame.HpBack->Off();
 	}
 
-	BossHpBarFrame.HpFront->SetImageScale({ 65.0f * (OneDigit + DotDigit * 0.1f), 12 });
+	BossHpBarFrame.HpFront->SetImageScale({ 65.0f * (OneDigit + DotDigit * 0.1f), 12, 1 });
 }
 

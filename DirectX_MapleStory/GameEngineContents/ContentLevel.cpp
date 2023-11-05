@@ -33,9 +33,6 @@ void ContentLevel::Start()
 
 	std::shared_ptr<GameEngineCamera> UICamera = GetCamera(static_cast<int>(ECAMERAORDER::UI));
 	UICamera->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
-	{
-		std::shared_ptr<GameEngineCamera> BackGroundCamera = CreateCamera(INT_MIN, ECAMERAORDER::MainPrev);
-	}
 }
 
 void ContentLevel::Update(float _Delta)
@@ -49,16 +46,14 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == FadeInObject)
 	{
 		FadeInObject = CreateActor<FadeObject>(UpdateOrder::UI);
-		FadeInObject->SetBlackFade();
-		FadeInObject->SetFadeSpeed(0.5f);
+		FadeInObject->SetFadeSpeed(1.0f);
 		FadeInObject->SetAlpha(1.0f);
 	}
 
 	if (nullptr == FadeOutObject)
 	{
 		FadeOutObject = CreateActor<FadeObject>(UpdateOrder::UI);
-		FadeOutObject->SetBlackFade();
-		FadeOutObject->SetFadeSpeed(-0.5f);
+		FadeOutObject->SetFadeSpeed(-1.0f);
 		FadeOutObject->SetAlpha(0.0f);
 	}
 

@@ -17,7 +17,6 @@ void ContentBackGround::Start()
 	{
 		BackGroundRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::BACKGROUND);
 		BackGroundRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::background });
-		BackGroundRenderer->SetCameraOrder(ECAMERAORDER::MainPrev);
 	}
 }
 
@@ -31,6 +30,7 @@ void ContentBackGround::Update(float _Delta)
 	{
 		BackGroundRenderer->On();
 	}
+	Transform.SetLocalPosition(GetLevel()->GetMainCamera()->Transform.GetWorldPosition());
 }
 
 void ContentBackGround::Release()

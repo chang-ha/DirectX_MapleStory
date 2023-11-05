@@ -105,3 +105,36 @@ void GameEngineObject::AllRelease()
 		}
 	}
 }
+
+void GameEngineObject::ChangeParent(GameEngineObject* _Parent, int _Order)
+{
+
+	if (nullptr == Parent)
+	{
+		SetParent(_Parent, _Order);
+		return;
+	}
+
+	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Parent->Childs)
+	{
+		std::list<std::shared_ptr<GameEngineObject>>& Group = _Pair.second;
+
+		std::list<std::shared_ptr<GameEngineObject>>::iterator Start = Group.begin();
+		std::list<std::shared_ptr<GameEngineObject>>::iterator End = Group.end();
+		for (; Start != End;)
+
+		{
+			if (shared_from_this() != *Start)
+			{
+				Start++;
+				continue;
+			}
+
+			Start->get()->SetParent(_Parent, _Order);
+			Group.erase(Start);
+
+			return;
+
+		}
+	}
+}

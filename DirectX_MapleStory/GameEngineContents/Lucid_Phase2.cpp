@@ -168,9 +168,11 @@ Lucid_Phase2::~Lucid_Phase2()
 
 void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	OnceFadeAlphaSetting = true;
 	ContentLevel::LevelStart(_PrevLevel);
 
 	FadeInObject->SetWhiteFade();
+	FadeInObject->SetFadeSpeed(1.0f);
 
 	FadeOutObject->SetChangeLevel("Boss_WaitingRoom");
 
@@ -823,6 +825,12 @@ void Lucid_Phase2::Start()
 
 void Lucid_Phase2::Update(float _Delta)
 {
+	//if (true == OnceFadeAlphaSetting)
+	//{
+	//	OnceFadeAlphaSetting = false;
+	//	FadeInObject->SetAlpha(1.0f);
+	//}
+
 	ContentLevel::Update(_Delta);
 	ObjectUpdate(_Delta);
 

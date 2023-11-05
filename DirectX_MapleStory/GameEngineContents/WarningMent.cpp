@@ -80,6 +80,6 @@ void WarningMent::SetWarningMent(std::string_view _Ment)
 	Frame.FrameEnd->Transform.SetLocalPosition({ GlobalValue::WinScale.Half().X + TextBoxSize / 2.0f, -200, RenderDepth::ui });
 	Frame.WarningMent->Transform.SetLocalPosition({ GlobalValue::WinScale.Half().X, -203, RenderDepth::ui });
 
-	Frame.FrameMiddle->SetImageScale({ TextBoxSize, 92 });
+	Frame.FrameMiddle->SetImageScale({ TextBoxSize, 92, 1 });
 	Frame.FrameMiddle->RenderBaseInfoValue.VertexUVMul.X = TextBoxSize;
 }

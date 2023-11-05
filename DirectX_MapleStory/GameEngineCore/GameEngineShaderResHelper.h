@@ -86,6 +86,7 @@ public:
 
 	void ShaderResCopy(class GameEngineShader* _Shader);
 
+	void AllShaderResourcesReset();
 	void AllShaderResourcesSetting();
 
 	// 여기에 값형만 들어갑니다.

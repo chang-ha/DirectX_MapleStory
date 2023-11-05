@@ -41,8 +41,9 @@ public:
 		if (nullptr != CurState && nullptr != CurState->Event.Start)
 		{
 			CurState->Event.Start(this);
-			StateTime = 0.0f;
 		}
+
+		StateTime = 0.0f;
 	}
 
 	template<typename EnumType>

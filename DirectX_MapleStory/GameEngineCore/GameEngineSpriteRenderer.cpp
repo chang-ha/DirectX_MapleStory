@@ -43,6 +43,9 @@ SpriteData GameEngineFrameAnimation::Update(float _Delta)
 	{
 		CurTime -= Inter[CurIndex];
 		++CurIndex;
+
+
+
 		EventCheck = true;
 
 		if (CurIndex > InterIndex)
@@ -61,6 +64,12 @@ SpriteData GameEngineFrameAnimation::Update(float _Delta)
 			else
 			{
 				--CurIndex;
+			}
+
+			if (nullptr != FrameChangeFunction)
+			{
+				SpriteData Data = Sprite->GetSpriteData(Index[CurIndex]);
+				FrameChangeFunction(Data, CurIndex);
 			}
 		}
 	}
@@ -168,18 +177,6 @@ void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int In
 	SetImageScale(CurSprite.GetScale());
 }
 
-void GameEngineSpriteRenderer::ChangeCurSprite(int _Index)
-{
-	CurFrameAnimations = nullptr;
-
-	if (nullptr == Sprite)
-	{
-		MsgBoxAssert("존재하지 않는 스프라이트를 사용하려고 했습니다.");
-	}
-
-	CurSprite = Sprite->GetSpriteData(_Index);
-}
-
 void GameEngineSpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, float _Inter /*= 0.1f*/, unsigned int _Start /*= -1*/, unsigned int _End /*= -1*/, bool _Loop /*= true*/)
 {
 	std::string SpriteName = GameEngineString::ToUpperReturn(_SpriteName);
@@ -276,6 +273,12 @@ void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, 
 	CurFrameAnimations->CurIndex = _FrameIndex;
 	Sprite = CurFrameAnimations->Sprite;
 	CurSprite = CurFrameAnimations->Sprite->GetSpriteData(CurFrameAnimations->CurIndex);
+
+	if (nullptr != CurFrameAnimations->FrameChangeFunction)
+	{
+		SpriteData Data = Sprite->GetSpriteData(CurFrameAnimations->Index[CurFrameAnimations->CurIndex]);
+		CurFrameAnimations->FrameChangeFunction(Data, CurFrameAnimations->CurIndex);
+	}
 }
 
 void GameEngineSpriteRenderer::AutoSpriteSizeOn()
@@ -356,6 +359,30 @@ void GameEngineSpriteRenderer::SetEndEvent(std::string_view _AnimationName, std:
 	Animation->EndEvent = _Function;
 }
 
+void GameEngineSpriteRenderer::SetFrameChangeFunction(std::string_view _AnimationName, std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function)
+{
+	std::string UpperName = GameEngineString::ToUpperReturn(_AnimationName);
+
+	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>>::iterator FindIter = FrameAnimations.find(UpperName);
+
+	std::shared_ptr<GameEngineFrameAnimation> Animation = FindIter->second;
+
+	if (nullptr == Animation)
+	{
+		MsgBoxAssert("존재하지 않는 애니메이션에 이벤트를 만들려고 했습니다.");
+	}
+
+	Animation->FrameChangeFunction = _Function;
+}
+
+void GameEngineSpriteRenderer::SetFrameChangeFunctionAll(std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function)
+{
+	for (std::pair<const std::string, std::shared_ptr<GameEngineFrameAnimation>>& _Pair : FrameAnimations)
+	{
+		_Pair.second->FrameChangeFunction = _Function;
+	}
+}
+
 void GameEngineSpriteRenderer::AnimationPauseSwitch()
 {
 	IsPause = !IsPause;
@@ -395,6 +422,19 @@ void GameEngineSpriteRenderer::SetText(const std::string& _Font, const std::stri
 {
 	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(0);
 	Unit->SetText(_Font, _Text, _Scale, Color, Flag);
+}
+
+
+void GameEngineSpriteRenderer::SetTextColor(const float4& _Color /*= float4::RED*/, unsigned int _Index /*= 0*/)
+{
+	std::weak_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit.lock()->SetTextColor(_Color);
+}
+
+void GameEngineSpriteRenderer::SetTextAlpha(float _AlphaValue /*= 1.0f*/, unsigned int _Index /*= 0*/)
+{
+	std::weak_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit.lock()->SetTextAlpha(_AlphaValue);
 }
 
 void GameEngineSpriteRenderer::SetSampler(std::string_view _Name)

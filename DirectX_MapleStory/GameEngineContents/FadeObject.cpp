@@ -21,10 +21,13 @@ void FadeObject::Start()
 	if (nullptr == FadeRenderer)
 	{
 		FadeRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::FADEOBJECT);
+		std::shared_ptr<GameEngineMaterial> _Mat = GameEngineResources<GameEngineMaterial>::Find("2DTexture");
+		_Mat->SetDepthState("LessEqualDepth");
+		_Mat->SetBlendState("AlphaBlend");
 		FadeRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::fadeobject});
 		FadeRenderer->SetImageScale(GlobalValue::WinScale);
 		// 기본으로 검은 FadeObject
-		FadeRenderer->GetColorData().PlusColor = { -1.0f, -1.0f, -1.0f };
+		SetBlackFade();
 
 		Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	}
@@ -42,11 +45,13 @@ void FadeObject::Update(float _Delta)
 		return;
 	}
 
+
 	float _Alpha = _Delta * FadeSpeed;
 	FadeRenderer->GetColorData().MulColor.A -= _Alpha;
-
-	float test = FadeRenderer->GetColorData().MulColor.A;
-
+	if (0.0f > FadeRenderer->GetColorData().MulColor.A)
+	{
+		FadeRenderer->GetColorData().MulColor.A = 0.0f;
+	}
 }
 
 void FadeObject::Release()

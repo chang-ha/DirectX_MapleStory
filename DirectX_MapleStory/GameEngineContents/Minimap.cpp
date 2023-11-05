@@ -124,23 +124,23 @@ void Minimap::Init(std::string_view _MinimapName, std::string_view _MinimapTextN
 	MinimapObject.RT->SetPivotType(PivotType::RightUp);
 	MinimapObject.LB->SetPivotType(PivotType::LeftBottom);
 	MinimapObject.RB->SetPivotType(PivotType::RightBottom);
-	MinimapObject.MT->SetPivotType(PivotType::LeftBottom);
+	MinimapObject.MT->SetPivotType(PivotType::LeftTop);
 	MinimapObject.MB->SetPivotType(PivotType::LeftBottom);
-	MinimapObject.RM->SetPivotType(PivotType::RightBottom);
-	MinimapObject.LM->SetPivotType(PivotType::LeftBottom);
+	MinimapObject.RM->SetPivotType(PivotType::RightUp);
+	MinimapObject.LM->SetPivotType(PivotType::LeftTop);
 	MinimapObject.Minimap->SetPivotType(PivotType::LeftBottom);
 	MinimapObject.MiniPlayer->SetPivotType(PivotType::Bottom);
 
-	MinimapObject.MT->SetImageScale({ FullMinimapScale.X - 128 , 61});
+	MinimapObject.MT->SetImageScale({ FullMinimapScale.X - 128 , 61, 1});
 	MinimapObject.MT->RenderBaseInfoValue.VertexUVMul.X = FullMinimapScale.X - 128;
 
-	MinimapObject.MB->SetImageScale({ FullMinimapScale.X - 128 , 9 });
+	MinimapObject.MB->SetImageScale({ FullMinimapScale.X - 128 , 9, 1 });
 	MinimapObject.MB->RenderBaseInfoValue.VertexUVMul.X = FullMinimapScale.X - 128;
 
-	MinimapObject.LM->SetImageScale({ 9 , FullMinimapScale.Y - 94 });
+	MinimapObject.LM->SetImageScale({ 9 , FullMinimapScale.Y - 94, 1 });
 	MinimapObject.LM->RenderBaseInfoValue.VertexUVMul.Y = FullMinimapScale.Y - 94;
 
-	MinimapObject.RM->SetImageScale({ 9 , FullMinimapScale.Y - 94 });
+	MinimapObject.RM->SetImageScale({ 9 , FullMinimapScale.Y - 94, 1 });
 	MinimapObject.RM->RenderBaseInfoValue.VertexUVMul.Y = FullMinimapScale.Y - 94;
 
 	RealMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();

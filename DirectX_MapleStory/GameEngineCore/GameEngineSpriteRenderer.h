@@ -27,6 +27,9 @@ public:
 
 	// FrameEvent
 	bool EventCheck = false;
+
+	std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> FrameChangeFunction;
+
 	std::map<int, std::function<void(GameEngineSpriteRenderer*)>> FrameEventFunction;
 	std::function<void(GameEngineSpriteRenderer*)> EndEvent;
 	void EventCall(int _Frame);
@@ -119,7 +122,6 @@ public:
 	}
 
 	void SetSprite(std::string_view _Name, unsigned int Index = 0);
-	void ChangeCurSprite(int _Index);
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, float _Inter = 0.1f, unsigned int _Start = -1, unsigned int _End = -1, bool _Loop = true);
 	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false, unsigned int _FrameIndex = 0);
 
@@ -171,7 +173,9 @@ public:
 	void SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function);
-	
+	void SetFrameChangeFunction(std::string_view _AnimationName, std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function);
+	void SetFrameChangeFunctionAll(std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function);
+
 	void AnimationPauseSwitch();
 	void AnimationPauseOn();
 	void AnimationPauseOff();
@@ -194,6 +198,8 @@ public:
 	void SetMaskTexture(std::string_view _Texture, MaskMode _Mask = MaskMode::StaticMask);
 
 	void SetText(const std::string& _Font, const std::string& _Text, float _Scale = 20.0f, const float4& Color = float4::RED, FW1_TEXT_FLAG Flag = FW1_LEFT);
+	void SetTextColor(const float4& _Color = float4::RED, unsigned int _Index = 0);
+	void SetTextAlpha(float _AlphaValue = 1.0f, unsigned int _Index = 0);
 
 protected:
 	void Start() override;
