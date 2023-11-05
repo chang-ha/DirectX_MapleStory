@@ -22,6 +22,8 @@ public:
 		return MapScale;
 	}
 
+	void CreateBaseColorMap(const float4& _Color);
+
 	void InitMap(std::string_view _MapName);
 	void InitMapCollision(std::string_view _MapName);
 	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = GROUND_COLOR);

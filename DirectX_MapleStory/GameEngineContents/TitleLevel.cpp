@@ -4,6 +4,7 @@
 #include "ContentBackGround.h"
 #include "RenderActor.h"
 #include "FadeObject.h"
+#include "ContentMap.h"
 
 TitleLevel::TitleLevel()
 {
@@ -62,6 +63,12 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	WinScale.Y *= -1.0f;
 	_Actor->Transform.SetLocalPosition(WinScale.Half() + float4(0, 70.0f));
 	GetMainCamera()->Transform.SetLocalPosition(WinScale.Half());
+
+	if (nullptr == CurMap)
+	{
+		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
+		CurMap->CreateBaseColorMap({1.0f, 1.0f, 1.0f, 1.0f});
+	}
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)

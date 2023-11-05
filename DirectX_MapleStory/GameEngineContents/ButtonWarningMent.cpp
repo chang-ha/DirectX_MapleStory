@@ -43,12 +43,12 @@ void ButtonWarningMent::Release()
 
 }
 
-std::shared_ptr<ButtonWarningMent> ButtonWarningMent::CreateOneButtonMent()
-{
-	
-}
-
-std::shared_ptr<ButtonWarningMent> ButtonWarningMent::CreateTwoButtonMent()
-{
-
-}
+//std::shared_ptr<ButtonWarningMent> ButtonWarningMent::CreateOneButtonMent()
+//{
+//	
+//}
+//
+//std::shared_ptr<ButtonWarningMent> ButtonWarningMent::CreateTwoButtonMent()
+//{
+//
+//}

@@ -51,7 +51,7 @@ void MapleStoryCore::Start()
 {
 	GameEngineGUI::CreateGUIWindow<LevelChangeGUI>("LevelChange");
 
-	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({1.0f, 1.0f, 1.0f});
+	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({1.0f, 1.0f, 1.0f, 1.0f});
 
 	ContentResources::ContentResourcesInit();
 	std::shared_ptr<GameEngineMaterial> _Mat = GameEngineResources<GameEngineMaterial>::Find("2DTexture");

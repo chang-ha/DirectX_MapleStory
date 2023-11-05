@@ -52,6 +52,16 @@ void ContentMap::Update(float _Delta)
 	}
 }
 
+void ContentMap::CreateBaseColorMap(const float4& _Color)
+{
+	MapRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MAP);
+	MapRenderer->RenderBaseInfoValue.BaseColorOnly = true;
+	MapRenderer->RenderBaseInfoValue.BaseColor = _Color;
+
+	float4 WindowScale = GlobalValue::WinScale;
+	MapRenderer->SetImageScale(WindowScale);
+	MapRenderer->Transform.SetLocalPosition({ WindowScale.hX(), -WindowScale.hY(), RenderDepth::map});
+}
 
 void ContentMap::InitMap(std::string_view _MapName)
 {

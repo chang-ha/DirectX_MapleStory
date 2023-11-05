@@ -22,8 +22,8 @@ public:
 	ButtonWarningMent& operator=(const ButtonWarningMent& _Other) = delete;
 	ButtonWarningMent& operator=(ButtonWarningMent&& _Other) noexcept = delete;
 
-	static std::shared_ptr<ButtonWarningMent> CreateOneButtonMent();
-	static std::shared_ptr<ButtonWarningMent> CreateTwoButtonMent();
+	// static std::shared_ptr<ButtonWarningMent> CreateOneButtonMent();
+	// static std::shared_ptr<ButtonWarningMent> CreateTwoButtonMent();
 
 protected:
 	ButtonWarningMentStruct MentObject;
