@@ -1019,6 +1019,7 @@ MIDL_INTERFACE("8004DB2B-B5F9-4420-A6A2-E17E15E4C336") IFW1Factory : public IUnk
 		virtual HRESULT STDMETHODCALLTYPE CreateFontWrapper(
 			__in ID3D11Device *pDevice,
 			__in LPCWSTR pszFontFamily,
+			__in D3D11_BLEND_DESC blendDesc,
 			__out IFW1FontWrapper **ppFontWrapper
 		) = 0;
 		
@@ -1031,6 +1032,7 @@ MIDL_INTERFACE("8004DB2B-B5F9-4420-A6A2-E17E15E4C336") IFW1Factory : public IUnk
 		virtual HRESULT STDMETHODCALLTYPE CreateFontWrapper(
 			__in ID3D11Device *pDevice,
 			__in IDWriteFactory *pDWriteFactory,
+			__in D3D11_BLEND_DESC blendDesc,
 			__in const FW1_FONTWRAPPERCREATEPARAMS *pCreateParams,
 			__out IFW1FontWrapper **ppFontWrapper
 		) = 0;
@@ -1079,6 +1081,7 @@ MIDL_INTERFACE("8004DB2B-B5F9-4420-A6A2-E17E15E4C336") IFW1Factory : public IUnk
 		/// <param name="ppGlyphRenderStates">Address of a pointer to a glyph render-states object (See IFW1GlyphRenderStates).</param>
 		virtual HRESULT STDMETHODCALLTYPE CreateGlyphRenderStates(
 			__in ID3D11Device *pDevice,
+			__in D3D11_BLEND_DESC blendDesc,
 			__in BOOL DisableGeometryShader,
 			__in BOOL AnisotropicFiltering,
 			__out IFW1GlyphRenderStates **ppGlyphRenderStates
