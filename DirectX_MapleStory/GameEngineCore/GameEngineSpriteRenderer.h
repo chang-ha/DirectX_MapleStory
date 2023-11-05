@@ -194,6 +194,8 @@ public:
 	void SetMaskTexture(std::string_view _Texture, MaskMode _Mask = MaskMode::StaticMask);
 
 	void SetText(const std::string& _Font, const std::string& _Text, float _Scale = 20.0f, const float4& Color = float4::RED, FW1_TEXT_FLAG Flag = FW1_LEFT);
+	void SetTextColor(const float4& _Color = float4::RED, unsigned int _Index = 0);
+	void SetTextAlpha(float _AlphaValue = 1.0f, unsigned int _Index = 0);
 
 protected:
 	void Start() override;
