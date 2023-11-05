@@ -1,6 +1,7 @@
 #pragma once
+#include <GameEngineCore\GameEngineRenderTarget.h>
 
-class FadeObject : public GameEngineActor
+class FadeObject : public Effect
 {
 public:
 	// constructer destructer
@@ -20,15 +21,10 @@ public:
 
 	void SetWhiteFade()
 	{
-		FadeRenderer->RenderBaseInfoValue.BaseColorOnly = true;
-		FadeRenderer->RenderBaseInfoValue.BaseColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 	}
 
 	void SetBlackFade()
 	{
-		FadeRenderer->RenderBaseInfoValue.BaseColorOnly = true;
-		FadeRenderer->RenderBaseInfoValue.BaseColor = { 0.0f, 0.0f, 0.0f, 1.0f };
-
 	}
 
 	void SetFadeSpeed(float _FadeSpeed)
@@ -38,30 +34,25 @@ public:
 
 	void SetAlpha(float _Alpha)
 	{
-		FadeRenderer->GetColorData().MulColor.A = _Alpha;
 	}
 
 	float GetCurAlpha()
 	{
-		return FadeRenderer->GetColorData().MulColor.A;
 	}
 
 	void FadeStart()
 	{
-		IsFadeOn = true;
+		On();
 	}
 
 protected:
+	void Start() override;
+	void EffectProcess(float _DeltaTime) override;
 
 private:
-	void LevelEnd(GameEngineLevel* _NextLevel) override;
-	void Start() override;
-	void Update(float _Delta) override;
-	void Release() override;
 
 	bool IsFadeOn = false;
 	float FadeSpeed = 0.0f;
 	std::string ChangeLevelName = "";
-	std::shared_ptr<GameEngineUIRenderer> FadeRenderer = nullptr;
 };
 

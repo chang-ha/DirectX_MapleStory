@@ -1,8 +1,10 @@
 ﻿#include "PreCompile.h"
+
 #include "ContentLevel.h"
 #include "ContentMap.h"
 #include "FadeObject.h"
 #include "ContentMouse.h"
+
 void LevelDebug::Start()
 {
 	
@@ -45,19 +47,19 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	if (nullptr == FadeInObject)
 	{
-		FadeInObject = CreateActor<FadeObject>(UpdateOrder::UI);
+		FadeInObject = GetLevelRenderTarget()->CreateEffect<FadeObject>();
 		FadeInObject->SetFadeSpeed(1.0f);
 		FadeInObject->SetAlpha(1.0f);
 	}
 
 	if (nullptr == FadeOutObject)
 	{
-		FadeOutObject = CreateActor<FadeObject>(UpdateOrder::UI);
+		FadeOutObject = GetLevelRenderTarget()->CreateEffect<FadeObject>();
 		FadeOutObject->SetFadeSpeed(-1.0f);
 		FadeOutObject->SetAlpha(0.0f);
 	}
 
-	FadeInObject->FadeStart();
+	// FadeInObject->FadeStart();
 	CreateActor<ContentMouse>(UpdateOrder::UI);
 }
 

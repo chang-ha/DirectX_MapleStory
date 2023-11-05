@@ -1,6 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "FadeObject.h"
 
+
 FadeObject::FadeObject()
 {
 
@@ -11,54 +12,42 @@ FadeObject::~FadeObject()
 
 }
 
-void FadeObject::LevelEnd(GameEngineLevel* _NextLevel)
-{
-	Death();
-}
-
 void FadeObject::Start()
 {
-	if (nullptr == FadeRenderer)
-	{
-		FadeRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::FADEOBJECT);
-		std::shared_ptr<GameEngineMaterial> _Mat = GameEngineResources<GameEngineMaterial>::Find("2DTexture");
-		_Mat->SetDepthState("LessEqualDepth");
-		_Mat->SetBlendState("AlphaBlend");
-		FadeRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::fadeobject});
-		FadeRenderer->SetImageScale(GlobalValue::WinScale);
-		// 기본으로 검은 FadeObject
-		SetBlackFade();
+	Off();
 
-		Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
-	}
+	EffectUnit.SetMesh("fullrect");
+	EffectUnit.SetMaterial("FadeObjectEffect");
+	EffectUnit.ShaderResHelper.SetConstantBufferLink("RenderBaseInfo", RenderBaseInfoValue);
+	EffectUnit.ShaderResHelper.SetSampler("FadeTexSampler", "POINT");
+	EffectUnit.ShaderResHelper.SetTexture("FadeTex", EffectTarget->GetTexture(0));
+
+	float4 WindowScale = GameEngineCore::MainWindow.GetScale();
+	ResultTarget = GameEngineRenderTarget::Create();
+	ResultTarget->AddNewTexture(DXGI_FORMAT_R32G32B32A32_FLOAT, WindowScale, float4::ZERONULL);
 }
 
-void FadeObject::Update(float _Delta)
+void FadeObject::EffectProcess(float _DeltaTime)
 {
-	if (1.0f <= FadeRenderer->GetColorData().MulColor.A && "" != ChangeLevelName)
-	{
-		GameEngineCore::ChangeLevel(ChangeLevelName);
-	}
+	ResultTarget->Setting();
+	EffectUnit.Render();
+	EffectUnit.ShaderResHelper.AllShaderResourcesReset();
 
-	if (false == IsFadeOn)
-	{
-		return;
-	}
-
-
-	float _Alpha = _Delta * FadeSpeed;
-	FadeRenderer->GetColorData().MulColor.A -= _Alpha;
-	if (0.0f > FadeRenderer->GetColorData().MulColor.A)
-	{
-		FadeRenderer->GetColorData().MulColor.A = 0.0f;
-	}
+	EffectTarget->Copy(0, ResultTarget, 0);
 }
 
-void FadeObject::Release()
-{
-	if (nullptr != FadeRenderer)
-	{
-		FadeRenderer->Death();
-		FadeRenderer = nullptr;
-	}
-}
+//void FadeObject::Update(float _Delta)
+//{
+//
+//	if (1.0f <= FadeRenderer->GetColorData().MulColor.A && "" != ChangeLevelName)
+//	{
+//		GameEngineCore::ChangeLevel(ChangeLevelName);
+//	}
+//
+//	float _Alpha = _Delta * FadeSpeed;
+//	FadeRenderer->GetColorData().MulColor.A -= _Alpha;
+//	if (0.0f > FadeRenderer->GetColorData().MulColor.A)
+//	{
+//		FadeRenderer->GetColorData().MulColor.A = 0.0f;
+//	}
+//}
