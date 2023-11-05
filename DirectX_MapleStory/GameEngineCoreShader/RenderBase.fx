@@ -11,4 +11,8 @@ cbuffer RenderBaseInfo : register(b11)
     float4 MaskPivot;
     float4 VertexUVPlus;
     float4 VertexUVMul;
+    float DeltaTime;
+    float AccDeltaTime;
+    float t1;
+    float t2;
 };

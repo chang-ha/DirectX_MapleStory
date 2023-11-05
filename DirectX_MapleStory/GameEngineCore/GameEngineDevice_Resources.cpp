@@ -415,5 +415,13 @@ void GameEngineDevice::ResourcesInit()
 		Mat->SetRasterizer("EngineRasterizer");
 	}
 
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("FadePostEffect");
+		Mat->SetVertexShader("FadePostEffect_VS");
+		Mat->SetPixelShader("FadePostEffect_PS");
+		Mat->SetDepthState("AlwaysDepth");
+		Mat->SetRasterizer("EngineRasterizer");
+	}
+
 	GameEngineRenderTarget::MergeRenderUnitInit();
 }

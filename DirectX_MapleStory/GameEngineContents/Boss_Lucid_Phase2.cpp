@@ -212,6 +212,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	BossRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
+			Death();
 			ContentLevel::CurContentLevel->FadeOutObject->FadeStart();
 		}
 	);

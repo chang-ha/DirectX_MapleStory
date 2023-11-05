@@ -76,6 +76,9 @@
     <Filter Include="PathFind">
       <UniqueIdentifier>{51f22b37-abb8-4092-8009-562a13f6192b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Rendering\PostEffect">
+      <UniqueIdentifier>{4a37c42a-2dfa-421b-a9f6-dcc08047910b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineActor.h">
@@ -235,6 +238,9 @@
     <ClInclude Include="AStartPathFinder.h">
       <Filter>PathFind</Filter>
     </ClInclude>
+    <ClInclude Include="FadePostEffect.h">
+      <Filter>Rendering\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -381,6 +387,9 @@
     </ClCompile>
     <ClCompile Include="AStartPathFinder.cpp">
       <Filter>PathFind</Filter>
+    </ClCompile>
+    <ClCompile Include="FadePostEffect.cpp">
+      <Filter>Rendering\PostEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

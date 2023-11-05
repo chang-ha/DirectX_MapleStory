@@ -89,6 +89,12 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	}
 }
 
+void GameEngineRenderer::Update(float _Delta)
+{
+	RenderBaseInfoValue.DeltaTime = _Delta;
+	RenderBaseInfoValue.AccDeltaTime += _Delta;
+}
+
 std::shared_ptr<GameEngineRenderUnit> GameEngineRenderer::CreateAndFindRenderUnit(int _Index)
 {
 	Units.resize(_Index + 1);

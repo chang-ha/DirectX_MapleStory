@@ -173,6 +173,10 @@
   <ItemGroup>
     <ClInclude Include="AStartPathFinder.h" />
     <ClInclude Include="EngineEnum.h" />
+    <ClInclude Include="FadePostEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineActor.h">
       <SubType>
       </SubType>
@@ -302,6 +306,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStartPathFinder.cpp" />
+    <ClCompile Include="FadePostEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineActor.cpp">
       <SubType>
       </SubType>

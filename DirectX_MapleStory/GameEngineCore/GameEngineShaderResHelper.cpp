@@ -386,7 +386,10 @@ void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::shared_p
 		{
 			// Texture가 세팅될 때 Sampler도 같이 세팅됨
 			std::shared_ptr<GameEngineSampler> Sampler = Setter.Res->GetBaseSampler();
-			SetSampler(SamplerName, Sampler);
+			if (nullptr != Sampler)
+			{
+				SetSampler(SamplerName, Sampler);
+			}
 		}
 	}
 }

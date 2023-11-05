@@ -18,6 +18,10 @@ struct RenderBaseInfo
 	float4 MaskPivot;
 	float4 VertexUVPlus;
 	float4 VertexUVMul = float4::ONE;
+	float DeltaTime = 0.0f;
+	float AccDeltaTime = 0.0f;
+	float t1;
+	float t2;
 };
 
 // 설명 : GameEngineRenderer에게 Order는 랜더링 되는 순서를 의미합니다.
@@ -83,6 +87,7 @@ protected:
 	std::vector<std::shared_ptr<GameEngineRenderUnit>> Units;
 
 	void Start();
+	void Update(float _Delta) override;
 	virtual void Render(class GameEngineCamera* _Camera, float _Delta);
 	virtual void SetMaterialEvent(std::string_view _Name, int _Index = 0);
 

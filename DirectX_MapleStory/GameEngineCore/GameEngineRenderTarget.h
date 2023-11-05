@@ -2,6 +2,24 @@
 #include "GameEngineTexture.h"
 #include "GameEngineRenderer.h"
 
+class Effect : public GameEngineObjectBase
+{
+	friend class GameEngineRenderTarget;
+
+public:
+	RenderBaseInfo RenderBaseInfoValue;
+
+	// 효과를 준것을 받을 타겟
+	GameEngineRenderUnit EffectUnit;
+
+	GameEngineRenderTarget* EffectTarget = nullptr;
+	std::shared_ptr<GameEngineRenderTarget> ResultTarget = nullptr;
+
+public:
+	virtual void Start() = 0;
+	virtual void EffectProcess(float _DeltaTime) = 0;
+};
+
 // 설명 :
 class GameEngineRenderTarget : public GameEngineResources<GameEngineRenderTarget>
 {
@@ -32,6 +50,11 @@ public:
 		return NewRes;
 	}
 
+	inline std::shared_ptr<GameEngineTexture> GetTexture(int _Index = 0)
+	{
+		return Textures[_Index];
+	}
+
 	void Clear();
 	void Setting();
 
@@ -42,13 +65,27 @@ public:
 
 	void CreateDepthTexture(int _Index = 0);
 
-	void AddNewTexture(DXGI_FORMAT _Format, float4 _Scale, float4 _Color);
+	void AddNewTexture(DXGI_FORMAT _Format, const float4& _Scale, const float4& _ClearColor);
 
-	void AddNewTexture(std::shared_ptr<GameEngineTexture> _Texture, float4 _Color);
+	void AddNewTexture(std::shared_ptr<GameEngineTexture> _Texture, const float4& _ClearColor);
 
 	void Copy(unsigned int ThisTarget, std::shared_ptr<GameEngineRenderTarget> _Target, unsigned int _CopyTarget = 0);
 
 	void Merge(unsigned int ThisTarget, std::shared_ptr<GameEngineRenderTarget> _Target, unsigned int _CopyTarget = 0);
+
+	void PostEffect(float _DeltaTime);
+
+	void EffectInit(Effect* _Effect);
+
+	template<typename EffectType>
+	std::shared_ptr<EffectType> CreateEffect()
+	{
+		std::shared_ptr<EffectType> NewEffect = std::make_shared<EffectType>();
+		EffectInit(NewEffect.get());
+
+		Effects.push_back(NewEffect);
+		return NewEffect;
+	}
 
 protected:
 
@@ -63,4 +100,6 @@ private:
 	std::vector<D3D11_VIEWPORT> ViewPorts;
 
 	std::shared_ptr<GameEngineTexture> DepthTexture;
+
+	std::list<std::shared_ptr<Effect>> Effects;
 };
