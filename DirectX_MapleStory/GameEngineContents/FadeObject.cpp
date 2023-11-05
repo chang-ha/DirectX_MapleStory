@@ -42,11 +42,13 @@ void FadeObject::Update(float _Delta)
 		return;
 	}
 
+
 	float _Alpha = _Delta * FadeSpeed;
 	FadeRenderer->GetColorData().MulColor.A -= _Alpha;
-
-	float test = FadeRenderer->GetColorData().MulColor.A;
-
+	if (0.0f > FadeRenderer->GetColorData().MulColor.A)
+	{
+		FadeRenderer->GetColorData().MulColor.A = 0.0f;
+	}
 }
 
 void FadeObject::Release()
