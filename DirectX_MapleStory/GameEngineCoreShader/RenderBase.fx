@@ -13,6 +13,12 @@ cbuffer RenderBaseInfo : register(b11)
     float4 VertexUVMul;
     float DeltaTime;
     float AccDeltaTime;
-    float t1;
-    float t2;
+    int Target0;
+    int Target1;
+    int Target2;
+    int Target3;
+    int Target4;
+    int Target5;
+    int Target6;
+    int Target7;
 };

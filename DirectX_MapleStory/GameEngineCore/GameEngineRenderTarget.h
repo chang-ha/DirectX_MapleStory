@@ -24,6 +24,7 @@ public:
 class GameEngineRenderTarget : public GameEngineResources<GameEngineRenderTarget>
 {
 public:
+	friend class GameEngineCoreWindow;
 	friend GameEngineDevice;
 	static bool IsDepth;
 

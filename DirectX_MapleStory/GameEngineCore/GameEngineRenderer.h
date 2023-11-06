@@ -20,8 +20,14 @@ struct RenderBaseInfo
 	float4 VertexUVMul = float4::ONE;
 	float DeltaTime = 0.0f;
 	float AccDeltaTime = 0.0f;
-	float t1;
-	float t2;
+	int Target0 = 1;
+	int Target1 = 0;
+	int Target2 = 0;
+	int Target3 = 0;
+	int Target4 = 0;
+	int Target5 = 0;
+	int Target6 = 0;
+	int Target7 = 0;
 };
 
 // 설명 : GameEngineRenderer에게 Order는 랜더링 되는 순서를 의미합니다.

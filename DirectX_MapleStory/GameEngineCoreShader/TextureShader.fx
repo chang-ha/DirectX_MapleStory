@@ -79,8 +79,21 @@ cbuffer ColorData : register(b1)
     float4 MulColor; // 최종색상에 곱한다.
 };
 
-float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
+struct PixelOut
 {
+    float4 Color0 : SV_Target0;
+    float4 Color1 : SV_Target1;
+    float4 Color2 : SV_Target1;
+    float4 Color3 : SV_Target1;
+    float4 Color4 : SV_Target1;
+    float4 Color5 : SV_Target1;
+    float4 Color6 : SV_Target1;
+    float4 Color7 : SV_Target1;
+};
+
+PixelOut TextureShader_PS(PixelOutPut _Input) : SV_Target0
+{
+    PixelOut Result = (PixelOut) 0.0f;
     // _Input == VertexShader에서 ViewPort까지 다 곱한 SV_POSITION을 _Input값으로 들어옴
     float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCOORD.xy);
     
@@ -117,5 +130,22 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     Color += PlusColor;
     Color *= MulColor;
     
-    return Color;
+    if (0 < Target0)
+    {
+        Result.Color0 = Color;
+    }
+    if (0 < Target1)
+    {
+        Result.Color1 = Color;
+    }
+    if (0 < Target2)
+    {
+        Result.Color2 = Color;
+    }
+    if (0 < Target3)
+    {
+        Result.Color3 = Color;
+    }
+    
+    return Result;
 }
