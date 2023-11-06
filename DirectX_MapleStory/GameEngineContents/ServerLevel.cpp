@@ -50,14 +50,12 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
-
 	std::shared_ptr<RenderActor> _Actor = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
 	_Actor->Renderer->CreateAnimation("ServerLogo", "ServerLogo");
 	_Actor->Renderer->ChangeAnimation("ServerLogo");
 	_Actor->Renderer->AutoSpriteSizeOff();
 	_Actor->Renderer->SetImageScale(GlobalValue::WinScale);
-
 
 	_Actor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
