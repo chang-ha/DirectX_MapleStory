@@ -122,6 +122,8 @@ public:
 	}
 
 	void SetSprite(std::string_view _Name, unsigned int Index = 0);
+	void ChangeCurSprite(int _Index = 0);
+
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, float _Inter = 0.1f, unsigned int _Start = -1, unsigned int _End = -1, bool _Loop = true);
 	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false, unsigned int _FrameIndex = 0);
 
