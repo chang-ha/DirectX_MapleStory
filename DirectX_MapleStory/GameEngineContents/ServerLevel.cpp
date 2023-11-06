@@ -32,6 +32,15 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 
+	// Server Recommend
+	if (nullptr == GameEngineSprite::Find("RecommendServer"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\UI\\RecommendServer");
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+
 	if (nullptr == GameEngineSprite::Find("ServerButton_BG.png"))
 	{
 		GameEngineFile File;
@@ -41,12 +50,14 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
+
 	std::shared_ptr<RenderActor> _Actor = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
 	_Actor->Renderer->CreateAnimation("ServerLogo", "ServerLogo");
 	_Actor->Renderer->ChangeAnimation("ServerLogo");
 	_Actor->Renderer->AutoSpriteSizeOff();
 	_Actor->Renderer->SetImageScale(GlobalValue::WinScale);
+
 
 	_Actor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
@@ -71,6 +82,12 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			FadeOutObject->FadeStart();
 		});
+
+	std::shared_ptr<UIRenderActor> _Actor2 = CreateActor<UIRenderActor>(UpdateOrder::UI);
+	_Actor2->Init(RenderOrder::UI, RenderDepth::ui);
+	_Actor2->Renderer->CreateAnimation("RecommendServer", "RecommendServer");
+	_Actor2->Renderer->ChangeAnimation("RecommendServer");
+	_Actor2->Transform.SetLocalPosition({ 1236, -50 });
 }
 
 void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)

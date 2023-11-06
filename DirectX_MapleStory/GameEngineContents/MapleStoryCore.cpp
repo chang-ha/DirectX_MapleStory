@@ -68,7 +68,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_1th>("ClockTowerOfNightMare_1th");
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
-	GameEngineCore::ChangeLevel("1.TitleLevel");
+	GameEngineCore::ChangeLevel("CharacterSelect");
 }
 
 void MapleStoryCore::Update(float _Delta)
