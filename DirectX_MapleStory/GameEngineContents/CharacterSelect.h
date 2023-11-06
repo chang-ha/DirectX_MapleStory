@@ -8,6 +8,21 @@ class SelectCharacterFrame
 	std::shared_ptr<class RenderActor> CharacterFootHold = nullptr;
 };
 
+class CharacterInfoFrame
+{
+	friend class CharacterSelect;
+	std::shared_ptr<class RenderActor> CharacterInfo_BG = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> CharacterName = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> JobName = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> STR = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> DEX = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> INT = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> LUK = nullptr;
+
+	void FrameOff();
+
+	void FrameOn();
+};
 class CharacterSelect : public ContentLevel
 {
 public:
@@ -25,8 +40,8 @@ protected:
 
 private:
 	bool IsCharacterSelect = false;
-	std::shared_ptr<class RenderActor> CharacterInfo_BG = nullptr;
 	std::shared_ptr<class GameEngineCollision> SelectCollision = nullptr;
+	CharacterInfoFrame InfoFrame;
 	std::vector<SelectCharacterFrame> AllCharacter;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;

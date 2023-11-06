@@ -6,6 +6,28 @@
 #include "UIRenderActor.h"
 #include "ContentButton.h"
 
+void CharacterInfoFrame::FrameOff()
+{
+	CharacterInfo_BG->Off();
+	CharacterName->Off();
+	JobName->Off();
+	STR->Off();
+	DEX->Off();
+	INT->Off();
+	LUK->Off();
+}
+
+void CharacterInfoFrame::FrameOn()
+{
+	CharacterInfo_BG->On();
+	CharacterName->On();
+	JobName->On();
+	STR->On();
+	DEX->On();
+	INT->On();
+	LUK->On();
+}
+
 CharacterSelect::CharacterSelect()
 {
 
@@ -99,14 +121,39 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Renderer->SetSprite("ServerName.png");
 	_Actor->Transform.SetLocalPosition({ 1205, -50 });
 
-	if (nullptr == CharacterInfo_BG)
+	if (nullptr == InfoFrame.CharacterInfo_BG)
 	{
-		CharacterInfo_BG = CreateActor<RenderActor>(UpdateOrder::RenderActor);
-		CharacterInfo_BG->Init(RenderOrder::UI, RenderDepth::ui);
-		CharacterInfo_BG->Renderer->SetSprite("ServerCharacterInfo_BG.png");
-		CharacterInfo_BG->Transform.SetLocalPosition({ 1200, -475 });
-		CharacterInfo_BG->Off();
+		InfoFrame.CharacterInfo_BG = CreateActor<RenderActor>(UpdateOrder::RenderActor);
+		InfoFrame.CharacterInfo_BG->Init(RenderOrder::UI, RenderDepth::ui);
+		InfoFrame.CharacterInfo_BG->Renderer->SetSprite("ServerCharacterInfo_BG.png");
+		InfoFrame.CharacterInfo_BG->Transform.SetLocalPosition({ 1200, -475 });
+
+		InfoFrame.CharacterName = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+		InfoFrame.CharacterName->SetText("메이플스토리", "윈드브레이커", 19.0f, float4::WHITE);
+		InfoFrame.CharacterName->Transform.SetLocalPosition({ -45, 75.0f });
+
+		InfoFrame.JobName = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+		InfoFrame.JobName->SetText("메이플스토리", "윈드브레이커", 15.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.JobName->Transform.SetLocalPosition({ 65, 43.0f });
+
+		InfoFrame.STR = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+		InfoFrame.STR->SetText("메이플스토리", "4", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.STR->Transform.SetLocalPosition({ -5, 17.0f });
+
+		InfoFrame.DEX = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+		InfoFrame.DEX->SetText("메이플스토리", "1300", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.DEX->Transform.SetLocalPosition({ -5, -7.0f });
+
+		InfoFrame.INT = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+		InfoFrame.INT->SetText("메이플스토리", "4", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.INT->Transform.SetLocalPosition({ 65, 17.0f });
+
+		InfoFrame.LUK = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+		InfoFrame.LUK->SetText("메이플스토리", "4", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.LUK->Transform.SetLocalPosition({ 65, -7.0f });
 	}
+
+	InfoFrame.FrameOff();
 
 	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
@@ -203,10 +250,28 @@ void CharacterSelect::LevelEnd(GameEngineLevel* _NextLevel)
 	AllCharacter.clear();
 	ContentLevel::LevelEnd(_NextLevel);
 
-	if (nullptr != CharacterInfo_BG)
+	if (nullptr != InfoFrame.CharacterInfo_BG)
 	{
-		CharacterInfo_BG->Death();
-		CharacterInfo_BG = nullptr;
+		InfoFrame.CharacterInfo_BG->Death();
+		InfoFrame.CharacterInfo_BG = nullptr;
+
+		InfoFrame.CharacterName->Death();
+		InfoFrame.CharacterName = nullptr;
+
+		InfoFrame.JobName->Death();
+		InfoFrame.JobName = nullptr;
+
+		InfoFrame.STR->Death();
+		InfoFrame.STR = nullptr;
+
+		InfoFrame.DEX->Death();
+		InfoFrame.DEX = nullptr;
+
+		InfoFrame.INT->Death();
+		InfoFrame.INT = nullptr;
+
+		InfoFrame.LUK->Death();
+		InfoFrame.LUK = nullptr;
 	}
 }
 
@@ -240,5 +305,5 @@ void CharacterSelect::SelectCharacter()
 {
 	IsCharacterSelect = true;
 	AllCharacter[0].CharacterRenderer->Renderer->ChangeAnimation("Walk");
-	CharacterInfo_BG->On();
+	InfoFrame.FrameOn();
 }

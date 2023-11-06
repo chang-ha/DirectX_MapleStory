@@ -49,6 +49,8 @@ MapleStoryCore::~MapleStoryCore()
 
 void MapleStoryCore::Start()
 {
+	GameEngineFont::Load("메이플스토리");
+
 	ContentResources::ContentResourcesInit();
 
 	GameEngineGUI::CreateGUIWindow<LevelChangeGUI>("LevelChange");
