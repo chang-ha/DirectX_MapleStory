@@ -132,10 +132,11 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		Frame.CharacterRenderer = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Frame.CharacterRenderer->Init(RenderOrder::UI, RenderDepth::ui);
 		Frame.CharacterRenderer->Renderer->CreateAnimation("Idle", "RenderCharacter_Idle", 0.5f);
-		Frame.CharacterRenderer->Renderer->CreateAnimation("Walk", "RenderCharacter_Walk", 0.5f);
+		Frame.CharacterRenderer->Renderer->CreateAnimation("Walk", "RenderCharacter_Walk", 0.15f);
 		Frame.CharacterRenderer->Renderer->ChangeAnimation("Idle");
 		Frame.CharacterRenderer->Transform.SetLocalPosition({ 175, -311 });
 		Frame.CharacterRenderer->Renderer->LeftFlip();
+
 
 		Frame.CharacterFootHold = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		Frame.CharacterFootHold->Init(RenderOrder::UI, RenderDepth::ui);
@@ -144,6 +145,9 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		Frame.CharacterFootHold->Transform.SetLocalPosition({ 175, -350 });
 
 		AllCharacter.push_back(Frame);
+
+		SelectCollision = Frame.CharacterRenderer->CreateComponent<GameEngineCollision>(CollisionOrder::UI);
+		SelectCollision->Transform.SetLocalScale({65, 78});
 	}
 
 	for (int i = 0; i < 6; i++)
@@ -209,9 +213,32 @@ void CharacterSelect::LevelEnd(GameEngineLevel* _NextLevel)
 void CharacterSelect::Start()
 {
 	ContentLevel::Start();
+	GameEngineInput::AddInputObject(this);
 }
 
 void CharacterSelect::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
+
+	if (true == IsCharacterSelect)
+	{
+		return;
+	}
+
+	if (true == SelectCollision->Collision(CollisionOrder::Mouse) && GameEngineInput::IsDown(VK_LBUTTON, this))
+	{
+		SelectCharacter();
+	}
+
+	if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
+	{
+		SelectCharacter();
+	}
+}
+
+void CharacterSelect::SelectCharacter()
+{
+	IsCharacterSelect = true;
+	AllCharacter[0].CharacterRenderer->Renderer->ChangeAnimation("Walk");
+	CharacterInfo_BG->On();
 }

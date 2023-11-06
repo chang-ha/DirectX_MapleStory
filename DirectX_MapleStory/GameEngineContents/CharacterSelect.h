@@ -24,7 +24,9 @@ public:
 protected:
 
 private:
+	bool IsCharacterSelect = false;
 	std::shared_ptr<class RenderActor> CharacterInfo_BG = nullptr;
+	std::shared_ptr<class GameEngineCollision> SelectCollision = nullptr;
 	std::vector<SelectCharacterFrame> AllCharacter;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -33,5 +35,6 @@ private:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	void SelectCharacter();
 };
 

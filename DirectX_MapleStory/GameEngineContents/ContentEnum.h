@@ -69,5 +69,6 @@ enum class CollisionOrder
 	MonsterAttack,
 	Portal,
 	Button,
+	UI,
 	Mouse,
 };
