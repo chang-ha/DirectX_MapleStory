@@ -1,4 +1,5 @@
 #include "..\\GameEngineCoreShader\\RenderBase.fx"
+#include "FadeObjectInfo.fx"
 
 struct GameEngineVertex2D
 {
@@ -25,15 +26,21 @@ PixelOutPut FadeObjectEffect_VS(GameEngineVertex2D _Input)
 Texture2D FadeTex : register(t0);
 SamplerState FadeTexSampler : register(s0);
 
-float4 FadeObjectEffect_PS(PixelOutPut _Input) : SV_Target0
+float4 FadeOutObjectEffect_PS(PixelOutPut _Input) : SV_Target0
 {
-    // return float4(1.0f, 0.0f, 0.0f, 1.0f);
-    
     float4 Color = FadeTex.Sample(FadeTexSampler, _Input.TEXCOORD.xy);
+    
+    float FadeColor = 0.0f;
+    FadeColor -= AccDeltaTime * FadeSpeed;
+    
+    if (0.0f < FadeColor)
+    {
+        // FadeColor = 0.0f;
+    }
     
     Color.w = 1.0f;
     
-    Color.xyz += AccDeltaTime;
+    Color.xyz += FadeColor;
     
     if (Color.r >= 1.0f)
     {
@@ -53,6 +60,26 @@ float4 FadeObjectEffect_PS(PixelOutPut _Input) : SV_Target0
     if (Color.a >= 1.0f)
     {
         Color.a = 1.0f;
+    }
+
+    if (Color.r <= 0.0f)
+    {
+        Color.r = 0.0f;
+    }
+    
+    if (Color.g <= 0.0f)
+    {
+        Color.g = 0.0f;
+    }
+    
+    if (Color.b <= 0.0f)
+    {
+        Color.b = 0.0f;
+    }
+    
+    if (Color.a <= 0.0f)
+    {
+        Color.a = 0.0f;
     }
     
     return Color;

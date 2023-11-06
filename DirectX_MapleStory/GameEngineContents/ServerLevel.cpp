@@ -22,7 +22,7 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FadeInObject->SetAlpha(0.0f);
 
 	FadeOutObject->SetChangeLevel("CharacterSelect");
-	FadeOutObject->SetFadeSpeed(-2.0f);
+	FadeOutObject->SetFadeSpeed(2.0f);
 
 	// Server Animation Logo
 	if (nullptr == GameEngineSprite::Find("ServerLogo"))

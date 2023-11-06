@@ -48,18 +48,19 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == FadeInObject)
 	{
 		FadeInObject = GetLevelRenderTarget()->CreateEffect<FadeObject>();
-		FadeInObject->SetFadeSpeed(1.0f);
+		FadeInObject->SetFadeIn();
+		FadeInObject->SetFadeSpeed(0.5f);
 		FadeInObject->SetAlpha(1.0f);
 	}
 
 	if (nullptr == FadeOutObject)
 	{
 		FadeOutObject = GetLevelRenderTarget()->CreateEffect<FadeObject>();
-		FadeOutObject->SetFadeSpeed(-1.0f);
+		FadeOutObject->SetFadeSpeed(0.0f);
 		FadeOutObject->SetAlpha(0.0f);
 	}
 
-	// FadeInObject->FadeStart();
+	FadeInObject->FadeStart();
 	CreateActor<ContentMouse>(UpdateOrder::UI);
 }
 
@@ -69,11 +70,13 @@ void ContentLevel::LevelEnd(GameEngineLevel* _NextLevel)
 
 	if (nullptr != FadeInObject)
 	{
+		FadeInObject->Death();
 		FadeInObject = nullptr;
 	}
 
 	if (nullptr != FadeOutObject)
 	{
+		FadeOutObject->Death();
 		FadeOutObject = nullptr;
 	}
 }

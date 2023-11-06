@@ -1,7 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "FadeObject.h"
 
-
 FadeObject::FadeObject()
 {
 
@@ -16,9 +15,10 @@ void FadeObject::Start()
 {
 	Off();
 
-	EffectUnit.SetMesh("fullrect");
-	EffectUnit.SetMaterial("FadeObjectEffect");
+	EffectUnit.SetMesh("FullRect");
+	EffectUnit.SetMaterial("FadeOutObjectEffect");
 	EffectUnit.ShaderResHelper.SetConstantBufferLink("RenderBaseInfo", RenderBaseInfoValue);
+	EffectUnit.ShaderResHelper.SetConstantBufferLink("FadeObjectInfo", FadeObjectInfoValue);
 	EffectUnit.ShaderResHelper.SetSampler("FadeTexSampler", "POINT");
 	EffectUnit.ShaderResHelper.SetTexture("FadeTex", EffectTarget->GetTexture(0));
 
@@ -33,21 +33,10 @@ void FadeObject::EffectProcess(float _DeltaTime)
 	EffectUnit.Render();
 	EffectUnit.ShaderResHelper.AllShaderResourcesReset();
 
+	if (1.0f <= RenderBaseInfoValue.AccDeltaTime * FadeObjectInfoValue.FadeSpeed && "" != ChangeLevelName)
+	{
+		GameEngineCore::ChangeLevel(ChangeLevelName);
+	}
+
 	EffectTarget->Copy(0, ResultTarget, 0);
 }
-
-//void FadeObject::Update(float _Delta)
-//{
-//
-//	if (1.0f <= FadeRenderer->GetColorData().MulColor.A && "" != ChangeLevelName)
-//	{
-//		GameEngineCore::ChangeLevel(ChangeLevelName);
-//	}
-//
-//	float _Alpha = _Delta * FadeSpeed;
-//	FadeRenderer->GetColorData().MulColor.A -= _Alpha;
-//	if (0.0f > FadeRenderer->GetColorData().MulColor.A)
-//	{
-//		FadeRenderer->GetColorData().MulColor.A = 0.0f;
-//	}
-//}

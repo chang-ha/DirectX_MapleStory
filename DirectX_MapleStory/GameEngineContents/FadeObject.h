@@ -1,6 +1,14 @@
 #pragma once
 #include <GameEngineCore\GameEngineRenderTarget.h>
 
+struct FadeObjectInfo
+{
+	int FadeIn = false;
+	int WhiteFade = false;
+	float StartColor = -1.0f;
+	float FadeSpeed = 1.0f;
+};
+
 class FadeObject : public Effect
 {
 public:
@@ -21,23 +29,33 @@ public:
 
 	void SetWhiteFade()
 	{
+		FadeObjectInfoValue.StartColor = 1.0f;
+		FadeObjectInfoValue.WhiteFade = true;
 	}
 
 	void SetBlackFade()
 	{
+		FadeObjectInfoValue.StartColor = -1.0f;
 	}
 
 	void SetFadeSpeed(float _FadeSpeed)
 	{
-		FadeSpeed = _FadeSpeed;
+		FadeObjectInfoValue.FadeSpeed = _FadeSpeed;
+	}
+
+	void SetFadeIn()
+	{
+		FadeObjectInfoValue.FadeIn = true;
+		EffectUnit.SetMaterial("FadeInObjectEffect");
+		EffectUnit.ShaderResHelper.SetConstantBufferLink("RenderBaseInfo", RenderBaseInfoValue);
+		EffectUnit.ShaderResHelper.SetConstantBufferLink("FadeObjectInfo", FadeObjectInfoValue);
+		EffectUnit.ShaderResHelper.SetSampler("FadeTexSampler", "POINT");
+		EffectUnit.ShaderResHelper.SetTexture("FadeTex", EffectTarget->GetTexture(0));
 	}
 
 	void SetAlpha(float _Alpha)
 	{
-	}
-
-	float GetCurAlpha()
-	{
+		// RenderBaseInfoValue.AccDeltaTime = _Alpha;
 	}
 
 	void FadeStart()
@@ -50,9 +68,8 @@ protected:
 	void EffectProcess(float _DeltaTime) override;
 
 private:
-
 	bool IsFadeOn = false;
-	float FadeSpeed = 0.0f;
+	FadeObjectInfo FadeObjectInfoValue;
 	std::string ChangeLevelName = "";
 };
 

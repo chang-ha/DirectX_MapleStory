@@ -46,7 +46,7 @@ void GameEngineCamera::Start()
 		AllRenderTarget->AddNewTexture(DXGI_FORMAT_R32G32B32A32_FLOAT, WindowScale, float4::ZERONULL);
 		AllRenderTarget->AddNewTexture(DXGI_FORMAT_R32G32B32A32_FLOAT, WindowScale, float4::ZERONULL);
 		AllRenderTarget->CreateDepthTexture();
-		AllRenderTarget->SetClearColor({0.0f, 1.0f, 0.0f, 0.0f});
+		// AllRenderTarget->SetClearColor({0.0f, 1.0f, 0.0f, 0.0f});
 	}
 
 	CameraTarget = GameEngineRenderTarget::Create();

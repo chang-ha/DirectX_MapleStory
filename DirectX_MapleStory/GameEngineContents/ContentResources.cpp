@@ -38,9 +38,17 @@ void ContentResources::ContentResourcesInit()
 	}
 
 	{
-		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("FadeObjectEffect");
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("FadeInObjectEffect");
 		Mat->SetVertexShader("FadeObjectEffect_VS");
-		Mat->SetPixelShader("FadeObjectEffect_PS");
+		Mat->SetPixelShader("FadeInObjectEffect_PS");
+		Mat->SetDepthState("AlwaysDepth");
+		Mat->SetRasterizer("EngineRasterizer");
+	}
+
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("FadeOutObjectEffect");
+		Mat->SetVertexShader("FadeObjectEffect_VS");
+		Mat->SetPixelShader("FadeOutObjectEffect_PS");
 		Mat->SetDepthState("AlwaysDepth");
 		Mat->SetRasterizer("EngineRasterizer");
 	}
