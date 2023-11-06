@@ -49,15 +49,11 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		FadeInObject = GetLevelRenderTarget()->CreateEffect<FadeObject>();
 		FadeInObject->SetFadeIn();
-		FadeInObject->SetFadeSpeed(0.5f);
-		FadeInObject->SetAlpha(1.0f);
 	}
 
 	if (nullptr == FadeOutObject)
 	{
 		FadeOutObject = GetLevelRenderTarget()->CreateEffect<FadeObject>();
-		FadeOutObject->SetFadeSpeed(0.0f);
-		FadeOutObject->SetAlpha(0.0f);
 	}
 
 	FadeInObject->FadeStart();

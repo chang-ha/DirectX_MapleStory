@@ -53,11 +53,6 @@ public:
 		EffectUnit.ShaderResHelper.SetTexture("FadeTex", EffectTarget->GetTexture(0));
 	}
 
-	void SetAlpha(float _Alpha)
-	{
-		// RenderBaseInfoValue.AccDeltaTime = _Alpha;
-	}
-
 	void FadeStart()
 	{
 		On();

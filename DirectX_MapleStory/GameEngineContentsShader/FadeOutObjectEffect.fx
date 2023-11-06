@@ -31,11 +31,22 @@ float4 FadeOutObjectEffect_PS(PixelOutPut _Input) : SV_Target0
     float4 Color = FadeTex.Sample(FadeTexSampler, _Input.TEXCOORD.xy);
     
     float FadeColor = 0.0f;
-    FadeColor -= AccDeltaTime * FadeSpeed;
     
-    if (0.0f < FadeColor)
+    if (true == WhiteFade)
     {
-        // FadeColor = 0.0f;
+        FadeColor += AccDeltaTime * FadeSpeed;
+        if (1.0f <= FadeColor)
+        {
+            FadeColor = 1.0f;
+        }
+    }
+    else if (false == WhiteFade)
+    {
+        FadeColor -= AccDeltaTime * FadeSpeed;
+        if (-1.0f >= FadeColor)
+        {
+            FadeColor = -1.0f;
+        }
     }
     
     Color.w = 1.0f;

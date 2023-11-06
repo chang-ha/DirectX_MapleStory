@@ -172,7 +172,6 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	ContentLevel::LevelStart(_PrevLevel);
 
 	FadeInObject->SetWhiteFade();
-	FadeInObject->SetFadeSpeed(0.01f);
 
 	FadeOutObject->SetChangeLevel("Boss_WaitingRoom");
 

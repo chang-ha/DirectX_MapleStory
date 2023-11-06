@@ -57,7 +57,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button->Transform.SetLocalPosition({ _Button->GetButtonScale().hX(), -730 });
 	_Button->SetButtonClickEndEvent([&]()
 		{
-			FadeOutObject->SetFadeSpeed(-2.0f);
+			FadeOutObject->SetFadeSpeed(2.0f);
 			FadeOutObject->SetChangeLevel("2.ServerLevel");
 			FadeOutObject->FadeStart();
 		});

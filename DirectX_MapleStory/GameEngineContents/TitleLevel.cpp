@@ -32,11 +32,10 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 	FadeInObject->SetWhiteFade();
-	FadeInObject->SetAlpha(1.0f);
+	FadeInObject->SetFadeSpeed(0.5f);
 
-	// FadeOutObject->SetWhiteFade();
+	FadeOutObject->SetWhiteFade();
 	FadeOutObject->SetChangeLevel("2.ServerLevel");
-	FadeOutObject->SetFadeSpeed(0.5f);
 
 	if (nullptr == GameEngineSprite::Find("Logo"))
 	{

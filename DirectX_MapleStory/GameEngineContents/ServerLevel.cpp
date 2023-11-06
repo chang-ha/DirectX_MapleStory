@@ -18,8 +18,7 @@ ServerLevel::~ServerLevel()
 void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
-	FadeInObject->SetWhiteFade();
-	FadeInObject->SetAlpha(0.0f);
+	FadeInObject->Off();
 
 	FadeOutObject->SetChangeLevel("CharacterSelect");
 	FadeOutObject->SetFadeSpeed(2.0f);
