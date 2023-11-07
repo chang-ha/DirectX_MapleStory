@@ -267,6 +267,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 			FadeOutObject->SetChangeLevel("2.ServerLevel");
 			FadeOutObject->FadeStart();
 		});
+	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("GoFirstLevel");
@@ -276,14 +277,17 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 			FadeOutObject->SetChangeLevel("1.TitleLevel");
 			FadeOutObject->FadeStart();
 		});
+	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("LeftButton");
 	_Button->Transform.SetLocalPosition({ 400, -700 });
+	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("CreateCharacter");
 	_Button->Transform.SetLocalPosition({ 525, -700 });
+	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("DeleteCharacter");
@@ -292,11 +296,14 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateOneButtonMent();
 			_Ment->Init("MentBG_Warning.png", "Ment_Normal.png");
+			AllButtonOff();
 		});
+	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("RightButton");
 	_Button->Transform.SetLocalPosition({ 800, -700 });
+	AllButton.push_back(_Button);
 
 	CharSelectEffect1 = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	CharSelectEffect1->Init(RenderOrder::UI, RenderDepth::ui);

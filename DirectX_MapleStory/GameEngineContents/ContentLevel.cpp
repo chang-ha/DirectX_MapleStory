@@ -4,6 +4,7 @@
 #include "ContentMap.h"
 #include "FadeObject.h"
 #include "ContentMouse.h"
+#include "ContentButton.h"
 
 void LevelDebug::Start()
 {
@@ -74,5 +75,21 @@ void ContentLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		FadeOutObject->Death();
 		FadeOutObject = nullptr;
+	}
+}
+
+void ContentLevel::AllButtonOn()
+{
+	for (size_t i = 0; i < AllButton.size(); i++)
+	{
+		AllButton[i]->CollisionOn();
+	}
+}
+
+void ContentLevel::AllButtonOff()
+{
+	for (size_t i = 0; i < AllButton.size(); i++)
+	{
+		AllButton[i]->CollisionOff();
 	}
 }

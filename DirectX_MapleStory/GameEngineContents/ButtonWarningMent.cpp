@@ -25,6 +25,7 @@ void OneButtonWarningMentStruct::StructStart(ButtonWarningMent* _Parent)
 		{
 			IsClickOff = true;
 			CancelButton->CollisionOff();
+			ContentLevel::CurContentLevel->AllButtonOn();
 		});
 
 	CancelButton->Transform.SetLocalPosition({ 0, -50 });

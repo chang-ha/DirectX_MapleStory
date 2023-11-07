@@ -24,6 +24,7 @@ class CharacterInfoFrame
 
 	void FrameOn();
 };
+
 class CharacterSelect : public ContentLevel
 {
 public:
@@ -37,6 +38,7 @@ public:
 	CharacterSelect& operator=(const CharacterSelect& _Other) = delete;
 	CharacterSelect& operator=(CharacterSelect&& _Other) noexcept = delete;
 
+
 protected:
 
 private:
@@ -46,7 +48,6 @@ private:
 	std::shared_ptr<class UIRenderActor> CharSelectEffect1 = nullptr;
 	CharacterInfoFrame InfoFrame;
 	std::vector<SelectCharacterFrame> AllCharacter;
-
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
