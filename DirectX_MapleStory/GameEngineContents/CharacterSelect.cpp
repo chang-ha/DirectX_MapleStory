@@ -290,7 +290,8 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button->Transform.SetLocalPosition({ 675, -700 });
 	_Button->SetButtonClickEndEvent([&]()
 		{
-			ButtonWarningMent::CreateOneButtonMent();
+			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateOneButtonMent();
+			_Ment->Init("MentBG_Warning.png", "Ment_Normal.png");
 		});
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);

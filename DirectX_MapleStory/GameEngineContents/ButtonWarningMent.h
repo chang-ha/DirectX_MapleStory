@@ -12,6 +12,7 @@ protected:
 	float AlphaSpeed = 5.0f;
 	ButtonWarningMent* Parent;
 	std::shared_ptr<GameEngineSpriteRenderer> MentBG = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> Ment = nullptr;
 	std::shared_ptr<class ContentButton> CancelButton = nullptr;
 
 	virtual void StructStart(ButtonWarningMent* _Parent);
@@ -43,6 +44,8 @@ public:
 	ButtonWarningMent(ButtonWarningMent&& _Ohter) noexcept = delete;
 	ButtonWarningMent& operator=(const ButtonWarningMent& _Other) = delete;
 	ButtonWarningMent& operator=(ButtonWarningMent&& _Other) noexcept = delete;
+
+	void Init(std::string_view _BGName, std::string_view _WarningMentName);
 
 	static std::shared_ptr<ButtonWarningMent> CreateOneButtonMent();
 	static std::shared_ptr<ButtonWarningMent> CreateTwoButtonMent();

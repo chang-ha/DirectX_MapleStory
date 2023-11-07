@@ -8,9 +8,12 @@ void OneButtonWarningMentStruct::StructStart(ButtonWarningMent* _Parent)
 	Parent = _Parent;
 
 	MentBG = Parent->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	MentBG->SetSprite("MentBG_0.png");
 	MentBG->Transform.SetLocalPosition({ 0, 0, RenderDepth::ui });
 	MentBG->GetColorData().MulColor.A = 0.0f;
+
+	Ment = Parent->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	Ment->Transform.SetLocalPosition({ 0, 15, RenderDepth::ui });
+	Ment->GetColorData().MulColor.A = 0.0f;
 
 	CancelButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
 	CancelButton->Init("CancelButton");
@@ -37,12 +40,14 @@ void OneButtonWarningMentStruct::AlphaUpdate(float _Delta)
 	if (1.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A  += _Delta * AlphaSpeed;
+		Ment->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 	}
 
 	if (1.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 1.0f;
+		Ment->GetColorData().MulColor.A = 1.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 1.0f;
 	}
 
@@ -63,12 +68,14 @@ void OneButtonWarningMentStruct::DeathUpdate(float _Delta)
 	if (0.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
+		Ment->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 	}
 
 	if (0.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 0.0f;
+		Ment->GetColorData().MulColor.A = 0.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 0.0f;
 	}
 
@@ -104,6 +111,7 @@ void TwoButtonWarningMentStruct::AlphaUpdate(float _Delta)
 	if (1.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A += _Delta * AlphaSpeed;
+		Ment->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 	}
@@ -111,6 +119,7 @@ void TwoButtonWarningMentStruct::AlphaUpdate(float _Delta)
 	if (1.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 1.0f;
+		Ment->GetColorData().MulColor.A = 1.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 1.0f;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A = 1.0f;
 	}
@@ -133,6 +142,7 @@ void TwoButtonWarningMentStruct::DeathUpdate(float _Delta)
 	if (0.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
+		Ment->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 	}
@@ -140,6 +150,7 @@ void TwoButtonWarningMentStruct::DeathUpdate(float _Delta)
 	if (0.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 0.0f;
+		Ment->GetColorData().MulColor.A = 0.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 0.0f;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A = 0.0f;
 	}
@@ -167,14 +178,7 @@ void ButtonWarningMent::LevelEnd(GameEngineLevel* _NextLevel)
 
 void ButtonWarningMent::Start()
 {
-	if (nullptr == GameEngineSprite::Find("MentBG_0.png"))
-	{
-		GameEngineFile File;
-		File.MoveParentToExistsChild("ContentResources");
-		File.MoveChild("ContentResources\\Textures\\UI\\Button\\MentBG_0.png");
-		GameEngineTexture::Load(File.GetStringPath());
-		GameEngineSprite::CreateSingle(File.GetFileName());
-	}
+
 }
 
 void ButtonWarningMent::Update(float _Delta)
@@ -214,6 +218,30 @@ void ButtonWarningMent::MoveUpdate(float _Delta)
 		}
 		Transform.AddLocalPosition(float4(0, -Move));
 	}
+}
+
+void ButtonWarningMent::Init(std::string_view _BGName, std::string_view _WarningMentName)
+{
+	if (nullptr == GameEngineSprite::Find(_BGName))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\UI\\ButtonWarningMent\\BG\\" + std::string(_BGName));
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(_BGName);
+	}
+
+	if (nullptr == GameEngineSprite::Find(_WarningMentName))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\UI\\ButtonWarningMent\\Ment\\" + std::string(_WarningMentName));
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(_WarningMentName);
+	}
+
+	MentObject->MentBG->SetSprite(_BGName);
+	MentObject->Ment->SetSprite(_WarningMentName);
 }
 
 std::shared_ptr<ButtonWarningMent> ButtonWarningMent::CreateOneButtonMent()
