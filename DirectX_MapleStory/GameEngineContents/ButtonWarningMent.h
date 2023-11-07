@@ -9,7 +9,7 @@ class OneButtonWarningMentStruct : public std::enable_shared_from_this<OneButton
 protected:
 	bool AlphaUpdateValue = true;
 	bool IsClickOff = false;
-	float AlphaSpeed = 5.0f;
+	float AlphaSpeed = 15.0f;
 	ButtonWarningMent* Parent;
 	std::shared_ptr<GameEngineSpriteRenderer> MentBG = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> Ment = nullptr;

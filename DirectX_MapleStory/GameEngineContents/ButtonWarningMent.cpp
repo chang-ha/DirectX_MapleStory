@@ -13,7 +13,7 @@ void OneButtonWarningMentStruct::StructStart(ButtonWarningMent* _Parent)
 
 	Ment = Parent->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	Ment->Transform.SetLocalPosition({ 1, 14, RenderDepth::ui });
-	Ment->GetColorData().MulColor.A = 0.0f;
+	Ment->Off();
 
 	CancelButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
 	CancelButton->Init("CancelButton");
@@ -24,6 +24,7 @@ void OneButtonWarningMentStruct::StructStart(ButtonWarningMent* _Parent)
 	CancelButton->SetButtonClickEndEvent([&]()
 		{
 			IsClickOff = true;
+			Ment->Off();
 			CancelButton->CollisionOff();
 			ContentLevel::CurContentLevel->AllButtonOn();
 		});
@@ -41,19 +42,18 @@ void OneButtonWarningMentStruct::AlphaUpdate(float _Delta)
 	if (1.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A  += _Delta * AlphaSpeed;
-		Ment->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 	}
 
 	if (1.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 1.0f;
-		Ment->GetColorData().MulColor.A = 1.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 1.0f;
 	}
 
 	if (1.0f == MentBG->GetColorData().MulColor.A)
 	{
+		Ment->On();
 		CancelButton->CollisionOn();
 		AlphaUpdateValue = false;
 	}
@@ -69,14 +69,12 @@ void OneButtonWarningMentStruct::DeathUpdate(float _Delta)
 	if (0.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
-		Ment->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 	}
 
 	if (0.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 0.0f;
-		Ment->GetColorData().MulColor.A = 0.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 0.0f;
 	}
 
@@ -112,7 +110,6 @@ void TwoButtonWarningMentStruct::AlphaUpdate(float _Delta)
 	if (1.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A += _Delta * AlphaSpeed;
-		Ment->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A += _Delta * AlphaSpeed;
 	}
@@ -120,13 +117,13 @@ void TwoButtonWarningMentStruct::AlphaUpdate(float _Delta)
 	if (1.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 1.0f;
-		Ment->GetColorData().MulColor.A = 1.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 1.0f;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A = 1.0f;
 	}
 
 	if (1.0f == MentBG->GetColorData().MulColor.A)
 	{
+		Ment->On();
 		CancelButton->CollisionOn();
 		OkButton->CollisionOn();
 		AlphaUpdateValue = false;
@@ -143,7 +140,6 @@ void TwoButtonWarningMentStruct::DeathUpdate(float _Delta)
 	if (0.0f < MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
-		Ment->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A -= _Delta * AlphaSpeed;
 	}
@@ -151,7 +147,6 @@ void TwoButtonWarningMentStruct::DeathUpdate(float _Delta)
 	if (0.0f > MentBG->GetColorData().MulColor.A)
 	{
 		MentBG->GetColorData().MulColor.A = 0.0f;
-		Ment->GetColorData().MulColor.A = 0.0f;
 		CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 0.0f;
 		OkButton->GetButtonRenderer()->GetColorData().MulColor.A = 0.0f;
 	}
