@@ -12,7 +12,7 @@ void OneButtonWarningMentStruct::StructStart(ButtonWarningMent* _Parent)
 	MentBG->GetColorData().MulColor.A = 0.0f;
 
 	Ment = Parent->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	Ment->Transform.SetLocalPosition({ 0, 15, RenderDepth::ui });
+	Ment->Transform.SetLocalPosition({ 1, 14, RenderDepth::ui });
 	Ment->GetColorData().MulColor.A = 0.0f;
 
 	CancelButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
@@ -179,7 +179,7 @@ void ButtonWarningMent::LevelEnd(GameEngineLevel* _NextLevel)
 
 void ButtonWarningMent::Start()
 {
-
+	ContentLevel::CurContentLevel->AllButtonOff();
 }
 
 void ButtonWarningMent::Update(float _Delta)
@@ -243,6 +243,18 @@ void ButtonWarningMent::Init(std::string_view _BGName, std::string_view _Warning
 
 	MentObject->MentBG->SetSprite(_BGName);
 	MentObject->Ment->SetSprite(_WarningMentName);
+}
+
+std::shared_ptr<class ContentButton> ButtonWarningMent::GetOkButton()
+{
+	std::shared_ptr<TwoButtonWarningMentStruct> ConvertPtr = std::dynamic_pointer_cast<TwoButtonWarningMentStruct>(MentObject);
+
+	if (nullptr == ConvertPtr)
+	{
+		MsgBoxAssert("Ok버튼이 존재하지 않는 경고문구 입니다.");
+	}
+
+	return ConvertPtr->OkButton;
 }
 
 std::shared_ptr<ButtonWarningMent> ButtonWarningMent::CreateOneButtonMent()

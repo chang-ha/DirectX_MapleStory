@@ -34,6 +34,11 @@ public:
 		return ButtonScale;
 	}
 
+	void SetButtonCollisionScale(const float4& _Scale)
+	{
+		ButtonCollision->Transform.SetLocalScale(_Scale);
+	}
+
 	std::shared_ptr<GameEngineUIRenderer> GetButtonRenderer()
 	{
 		return ButtonRenderer;

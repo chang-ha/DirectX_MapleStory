@@ -4,6 +4,7 @@
 #include "RenderActor.h"
 #include "ContentButton.h"
 #include "UIRenderActor.h"
+#include "ButtonWarningMent.h"
 
 ServerLevel::ServerLevel()
 {
@@ -70,16 +71,48 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button->Transform.SetLocalPosition({ _Button->GetButtonScale().hX(), -730});
 	_Button->SetButtonClickEndEvent([]()
 		{
-			GameEngineWindow::WindowLoopOff();
+			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateTwoButtonMent();
+			_Ment->Init("MentBG_Normal.png", "Ment_EndGame.png");
+
+			std::shared_ptr<ContentButton> _MentButton = _Ment->GetOkButton();
+			_MentButton->SetButtonClickEndEvent([]()
+				{
+					GameEngineWindow::WindowLoopOff();
+				});
 		});
+	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
-	_Button->Init("WorldButton");
+	_Button->Init("TestWorldButton");
 	_Button->Transform.SetLocalPosition({ 1260, -50 });
 	_Button->SetButtonClickEndEvent([&]()
 		{
 			FadeOutObject->FadeStart();
 		});
+	_Button->SetButtonCollisionScale({90, 15});
+	AllButton.push_back(_Button);
+
+	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
+	_Button->Init("TestWorld2Button");
+	_Button->Transform.SetLocalPosition({ 1260, -84 });
+	_Button->SetButtonClickEndEvent([&]()
+		{
+			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateOneButtonMent();
+			_Ment->Init("MentBG_Warning.png", "Ment_ServerFail.png");
+		});
+	_Button->SetButtonCollisionScale({ 90, 15 });
+	AllButton.push_back(_Button);
+
+	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
+	_Button->Init("TestWorld3Button");
+	_Button->Transform.SetLocalPosition({ 1260, -117 });
+	_Button->SetButtonClickEndEvent([&]()
+		{
+			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateOneButtonMent();
+			_Ment->Init("MentBG_Warning.png", "Ment_ServerFail.png");
+		});
+	_Button->SetButtonCollisionScale({ 90, 15 });
+	AllButton.push_back(_Button);
 
 	std::shared_ptr<UIRenderActor> _Actor2 = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor2->Init(RenderOrder::UI, RenderDepth::ui);

@@ -46,6 +46,7 @@ public:
 	ButtonWarningMent& operator=(ButtonWarningMent&& _Other) noexcept = delete;
 
 	void Init(std::string_view _BGName, std::string_view _WarningMentName);
+	std::shared_ptr<class ContentButton> GetOkButton();
 
 	static std::shared_ptr<ButtonWarningMent> CreateOneButtonMent();
 	static std::shared_ptr<ButtonWarningMent> CreateTwoButtonMent();

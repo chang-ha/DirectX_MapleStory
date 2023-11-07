@@ -201,6 +201,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 				FadeOutObject->SetChangeLevel("ClockTowerOfNightMare_1th");
 				FadeOutObject->FadeStart();
 			});
+		AllButton.push_back(InfoFrame.GameStartButton);
 
 		InfoFrame.CharacterName = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 		InfoFrame.CharacterName->SetText("메이플스토리", "윈드브레이커", 19.0f, float4::WHITE);
@@ -226,7 +227,6 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		InfoFrame.LUK->SetText("메이플스토리", "4", 12.0f, float4::WHITE, FW1_RIGHT);
 		InfoFrame.LUK->Transform.SetLocalPosition({ 65, -7.0f });
 	}
-
 	InfoFrame.FrameOff();
 
 	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
@@ -274,8 +274,15 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button->Transform.SetLocalPosition({ _Button->GetButtonScale().hX(), -680 });
 	_Button->SetButtonClickEndEvent([&]()
 		{
-			FadeOutObject->SetChangeLevel("1.TitleLevel");
-			FadeOutObject->FadeStart();
+			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateTwoButtonMent();
+			_Ment->Init("MentBG_Normal.png", "Ment_GoFirst.png");
+
+			std::shared_ptr<ContentButton> _MentButton = _Ment->GetOkButton();
+			_MentButton->SetButtonClickEndEvent([&]()
+				{
+					FadeOutObject->SetChangeLevel("1.TitleLevel");
+					FadeOutObject->FadeStart();
+				});
 		});
 	AllButton.push_back(_Button);
 
@@ -287,6 +294,11 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("CreateCharacter");
 	_Button->Transform.SetLocalPosition({ 525, -700 });
+	_Button->SetButtonClickEndEvent([&]()
+		{
+			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateOneButtonMent();
+			_Ment->Init("MentBG_Warning.png", "Ment_Normal.png");
+		});
 	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
@@ -295,8 +307,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button->SetButtonClickEndEvent([&]()
 		{
 			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateOneButtonMent();
-			_Ment->Init("MentBG_Warning.png", "Ment_Normal.png");
-			AllButtonOff();
+			_Ment->Init("MentBG_Warning.png", "Ment_DeleteFail.png");
 		});
 	AllButton.push_back(_Button);
 
