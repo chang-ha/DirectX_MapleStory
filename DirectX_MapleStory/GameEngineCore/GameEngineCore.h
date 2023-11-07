@@ -44,8 +44,11 @@ public:
 			return;
 		}
 
+		std::shared_ptr<GameEngineLevel> TempCurLevel = CurLevel;
 		std::shared_ptr<GameEngineLevel> NewLevel = std::make_shared<LevelType>();
+		CurLevel = NewLevel;
 		LevelInit(NewLevel, _Name);
+		CurLevel = TempCurLevel;
 		AllLevel.insert(std::make_pair(Upper, NewLevel));
 	}
 
@@ -83,6 +86,11 @@ public:
 	static std::map<std::string, std::shared_ptr<GameEngineLevel>>& GetAllLevel()
 	{
 		return AllLevel;
+	}
+
+	static std::shared_ptr<GameEngineLevel> GetCurLevel()
+	{
+		return CurLevel;
 	}
 
 protected:

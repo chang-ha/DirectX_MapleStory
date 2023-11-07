@@ -2,6 +2,8 @@
 #include "GameEngineTexture.h"
 #include "GameEngineRenderer.h"
 
+#define MAX_RENDER_TARGET_SETTING_COUNT 8
+
 class Effect : public GameEngineObjectBase
 {
 	friend class GameEngineRenderTarget;
@@ -27,6 +29,7 @@ public:
 	friend class GameEngineCoreWindow;
 	friend GameEngineDevice;
 	static bool IsDepth;
+	static void RenderTargetReset();
 
 	// constrcuter destructer
 	GameEngineRenderTarget();
@@ -87,6 +90,8 @@ public:
 		Effects.push_back(NewEffect);
 		return NewEffect;
 	}
+
+	std::shared_ptr<GameEngineRenderTarget> CreateChildRenderTarget(std::vector<int> _Index);
 
 protected:
 

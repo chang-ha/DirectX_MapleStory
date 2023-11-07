@@ -6,6 +6,14 @@ bool GameEngineRenderTarget::IsDepth = true;
 
 GameEngineRenderUnit GameEngineRenderTarget::MergeUnit;
 
+
+void GameEngineRenderTarget::RenderTargetReset()
+{
+	ID3D11RenderTargetView* ArrRenderTarget[MAX_RENDER_TARGET_SETTING_COUNT] = { nullptr, };
+
+	GameEngineCore::GetContext()->OMSetRenderTargets(MAX_RENDER_TARGET_SETTING_COUNT, ArrRenderTarget, nullptr);
+}
+
 void GameEngineRenderTarget::MergeRenderUnitInit()
 {
 	GameEngineRenderTarget::MergeUnit.SetMesh("FullRect");
@@ -140,6 +148,8 @@ void GameEngineRenderTarget::Merge(unsigned int ThisTarget, std::shared_ptr<Game
 
 void GameEngineRenderTarget::PostEffect(float _DeltaTime)
 {
+	RenderTargetReset();
+
 	for (std::shared_ptr<Effect>& Effect : Effects)
 	{
 		if (false == Effect->IsUpdate())
@@ -157,4 +167,19 @@ void GameEngineRenderTarget::EffectInit(Effect* _Effect)
 {
 	_Effect->EffectTarget = this;
 	_Effect->Start();
+}
+
+std::shared_ptr<GameEngineRenderTarget> GameEngineRenderTarget::CreateChildRenderTarget(std::vector<int> _Index)
+{
+	std::shared_ptr<GameEngineRenderTarget> NewRenderTarget = std::make_shared<GameEngineRenderTarget>();
+
+	for (size_t i = 0; i < _Index.size(); i++)
+	{
+		NewRenderTarget->RTV.push_back(RTV[_Index[i]]);
+		NewRenderTarget->SRV.push_back(SRV[_Index[i]]);
+		NewRenderTarget->ClearColor.push_back(ClearColor[_Index[i]]);
+		NewRenderTarget->ViewPorts.push_back(ViewPorts[_Index[i]]);
+	}
+
+	return NewRenderTarget;
 }
