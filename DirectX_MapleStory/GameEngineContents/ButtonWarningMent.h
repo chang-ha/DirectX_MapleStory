@@ -1,22 +1,24 @@
 #pragma once
 
+#define MOVEPOS_X 50.0f
+#define MOVEPOS_Y 50.0f
+
 class OneButtonWarningMentStruct : public std::enable_shared_from_this<OneButtonWarningMentStruct>
 {
 	friend class ButtonWarningMent;
-public:
-	GameEngineActor* GetParent()
-	{
-		return Parent;
-	}
-
 protected:
-	GameEngineActor* Parent;
+	bool AlphaUpdateValue = true;
+	bool IsClickOff = false;
+	float AlphaSpeed = 5.0f;
+	ButtonWarningMent* Parent;
 	std::shared_ptr<GameEngineSpriteRenderer> MentBG = nullptr;
 	std::shared_ptr<class ContentButton> CancelButton = nullptr;
 
-	virtual void StructStart(GameEngineActor* _Parent);
+	virtual void StructStart(ButtonWarningMent* _Parent);
+	virtual void AlphaUpdate(float _Delta);
+	virtual void DeathUpdate(float _Delta);
+private:
 };
-
 
 class TwoButtonWarningMentStruct : public OneButtonWarningMentStruct
 {
@@ -24,9 +26,10 @@ class TwoButtonWarningMentStruct : public OneButtonWarningMentStruct
 
 	std::shared_ptr<class ContentButton> OkButton = nullptr;
 
-	void StructStart(GameEngineActor* _Parent) override;
+	void StructStart(ButtonWarningMent* _Parent) override;
+	void DeathUpdate(float _Delta) override;
+	void AlphaUpdate(float _Delta) override;
 };
-
 
 class ButtonWarningMent : public GameEngineActor
 {
@@ -43,16 +46,18 @@ public:
 
 	static std::shared_ptr<ButtonWarningMent> CreateOneButtonMent();
 	static std::shared_ptr<ButtonWarningMent> CreateTwoButtonMent();
-
-	std::shared_ptr<OneButtonWarningMentStruct> MentObject;
-
+	
 protected:
+	float MoveSpeed = 200.0f;
+	float RemainMoveX = MOVEPOS_X;
+	float RemainMoveY = MOVEPOS_Y;
+	std::shared_ptr<OneButtonWarningMentStruct> MentObject;
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
 private:
-	
+	void MoveUpdate(float _Delta);
 };
 

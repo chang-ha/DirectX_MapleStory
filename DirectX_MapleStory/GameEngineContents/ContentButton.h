@@ -34,6 +34,21 @@ public:
 		return ButtonScale;
 	}
 
+	std::shared_ptr<GameEngineUIRenderer> GetButtonRenderer()
+	{
+		return ButtonRenderer;
+	}
+
+	void CollisionOff()
+	{
+		ButtonCollision->Off();
+	}
+
+	void CollisionOn()
+	{
+		ButtonCollision->On();
+	}
+
 protected:
 	std::shared_ptr<GameEngineUIRenderer> ButtonRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> ButtonCollision = nullptr;

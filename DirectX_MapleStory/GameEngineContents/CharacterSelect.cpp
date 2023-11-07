@@ -288,6 +288,10 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("DeleteCharacter");
 	_Button->Transform.SetLocalPosition({ 675, -700 });
+	_Button->SetButtonClickEndEvent([&]()
+		{
+			ButtonWarningMent::CreateOneButtonMent();
+		});
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("RightButton");
@@ -387,13 +391,6 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 
 		AllCharacter.push_back(Frame);
 	}
-
-	Ment = ButtonWarningMent::CreateOneButtonMent();
-	Ment->Transform.SetLocalPosition({500, -500});
-
-	std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateTwoButtonMent();
-	_Ment->Transform.SetLocalPosition({ 800, -500 });
-
 }
 
 void CharacterSelect::LevelEnd(GameEngineLevel* _NextLevel)
