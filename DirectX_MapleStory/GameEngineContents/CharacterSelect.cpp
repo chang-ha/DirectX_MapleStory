@@ -5,6 +5,7 @@
 #include "FadeObject.h"
 #include "UIRenderActor.h"
 #include "ContentButton.h"
+#include "ButtonWarningMent.h"
 
 void CharacterInfoFrame::FrameOff()
 {
@@ -386,6 +387,13 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 
 		AllCharacter.push_back(Frame);
 	}
+
+	Ment = ButtonWarningMent::CreateOneButtonMent();
+	Ment->Transform.SetLocalPosition({500, -500});
+
+	std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateTwoButtonMent();
+	_Ment->Transform.SetLocalPosition({ 800, -500 });
+
 }
 
 void CharacterSelect::LevelEnd(GameEngineLevel* _NextLevel)

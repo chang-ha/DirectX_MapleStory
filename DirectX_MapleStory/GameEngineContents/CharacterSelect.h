@@ -54,5 +54,7 @@ private:
 	void Update(float _Delta) override;
 
 	void SelectCharacter();
+
+	std::shared_ptr<class ButtonWarningMent> Ment = nullptr;
 };
 
