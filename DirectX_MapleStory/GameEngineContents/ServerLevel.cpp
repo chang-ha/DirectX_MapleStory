@@ -83,6 +83,23 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	AllButton.push_back(_Button);
 
 	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
+	_Button->Init("GoFirstLevel");
+	_Button->Transform.SetLocalPosition({ _Button->GetButtonScale().hX(), -680 });
+	_Button->SetButtonClickEndEvent([&]()
+		{
+			std::shared_ptr<ButtonWarningMent> _Ment = ButtonWarningMent::CreateTwoButtonMent();
+			_Ment->Init("MentBG_Normal.png", "Ment_GoFirst.png");
+
+			std::shared_ptr<ContentButton> _MentButton = _Ment->GetOkButton();
+			_MentButton->SetButtonClickEndEvent([&]()
+				{
+					FadeOutObject->SetChangeLevel("1.TitleLevel");
+					FadeOutObject->FadeStart();
+				});
+		});
+	AllButton.push_back(_Button);
+
+	_Button = CreateActor<ContentButton>(UpdateOrder::UI);
 	_Button->Init("TestWorldButton");
 	_Button->Transform.SetLocalPosition({ 1260, -50 });
 	_Button->SetButtonClickEndEvent([&]()
