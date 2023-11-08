@@ -52,4 +52,12 @@ void ContentResources::ContentResourcesInit()
 		Mat->SetDepthState("AlwaysDepth");
 		Mat->SetRasterizer("EngineRasterizer");
 	}
+
+	//{
+	//	std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("BackGroundActor");
+	//	Mat->SetVertexShader("BackGroundShader_VS");
+	//	Mat->SetPixelShader("BackGroundShader_PS");
+	//	// Mat->SetDepthState("AlwaysDepth");
+	//	// Mat->SetRasterizer("EngineRasterizer");
+	//}
 }

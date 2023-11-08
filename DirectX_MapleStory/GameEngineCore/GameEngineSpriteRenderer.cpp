@@ -418,6 +418,29 @@ void GameEngineSpriteRenderer::SetMaterialEvent(std::string_view _Name, int _Ind
 	GetShaderResHelper().SetConstantBufferLink("SpriteData", CurSprite.SpritePivot);
 	GetShaderResHelper().SetConstantBufferLink("SpriteRendererInfo", SpriteRendererInfoValue);
 	GetShaderResHelper().SetConstantBufferLink("ColorData", ColorDataValue);
+
+	//std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+
+	//if (Unit->ShaderResHelper.IsConstantBuffer("TransformData"))
+	//{
+	//	Unit->ShaderResHelper.SetConstantBufferLink("TransformData", Data);
+	//}
+
+	//if (Unit->ShaderResHelper.IsConstantBuffer("SpriteData"))
+	//{
+	//	Unit->ShaderResHelper.SetConstantBufferLink("SpriteData", CurSprite.SpritePivot);
+	//}
+
+	//if (Unit->ShaderResHelper.IsConstantBuffer("SpriteRendererInfo"))
+	//{
+	//	Unit->ShaderResHelper.SetConstantBufferLink("SpriteRendererInfo", SpriteRendererInfoValue);
+	//}
+
+	//if (Unit->ShaderResHelper.IsConstantBuffer("ColorData"))
+	//{
+	//	Unit->ShaderResHelper.SetConstantBufferLink("ColorData", ColorDataValue);
+	//}
+
 	SetSprite("NSet.Png");
 }
 

@@ -21,13 +21,14 @@ public:
 		return BackScale;
 	}
 
-	void Release() override;
 
 protected:
 	void Start() override;
 	void Update(float _Delta);
+	void Release() override;
 
 private:
+	std::string BackGroundName = "";
 	float4 BackScale = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> BackGroundRenderer = nullptr;
 };

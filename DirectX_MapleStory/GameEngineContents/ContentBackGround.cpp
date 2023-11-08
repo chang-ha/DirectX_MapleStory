@@ -44,17 +44,18 @@ void ContentBackGround::Release()
 
 void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _BackGroundScale)
 {
-	if (nullptr == GameEngineTexture::Find(_BackGroundName))
+	BackGroundName = _BackGroundName;
+	if (nullptr == GameEngineTexture::Find(BackGroundName))
 	{
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentResources");
 		FilePath.MoveChild("ContentResources\\Textures\\BackGround\\");
-		GameEngineTexture::Load(FilePath.GetStringPath() + std::string(_BackGroundName.data()));
-		GameEngineSprite::CreateSingle(_BackGroundName);
+		GameEngineTexture::Load(FilePath.GetStringPath() + std::string(BackGroundName.data()));
+		GameEngineSprite::CreateSingle(BackGroundName);
 	}
-	std::shared_ptr<GameEngineTexture> BackGroundTexture = GameEngineTexture::Find(std::string(_BackGroundName.data()));
-	BackGroundRenderer->SetSprite(_BackGroundName);
+	std::shared_ptr<GameEngineTexture> BackGroundTexture = GameEngineTexture::Find(std::string(BackGroundName.data()));
+	BackGroundRenderer->SetSprite(BackGroundName);
 	
 	if (float4::ZERO != _BackGroundScale)
 	{
@@ -65,8 +66,4 @@ void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _Ba
 		BackScale = BackGroundTexture->GetScale();
 	}
 	BackGroundRenderer->SetImageScale(BackScale);
-
-	//float4 HalfBackScale = BackScale.Half();
-	//HalfBackScale.Y *= -1.0f;
-	//Transform.SetLocalPosition(HalfBackScale);
 }

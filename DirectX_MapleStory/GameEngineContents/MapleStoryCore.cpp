@@ -16,6 +16,7 @@
 #include "FadeObject.h"
 #include "ClockTowerOfNightMare_1th.h"
 #include "CharacterSelect.h"
+#include "Lachlen.h"
 
 void LevelChangeGUI::Start()
 {
@@ -61,7 +62,7 @@ void MapleStoryCore::Start()
 	_Mat->SetDepthState("LessEqualDepth");
 
 	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
-	// GameEngineCore::CreateLevel<PlayLevel>("2.PlayLevel");
+	GameEngineCore::CreateLevel<PlayLevel>("2.PlayLevel");
 	GameEngineCore::CreateLevel<ServerLevel>("2.ServerLevel");
 	GameEngineCore::CreateLevel<Boss_WaitingRoom>("Boss_WaitingRoom");
 	GameEngineCore::CreateLevel<Lucid_Enter>("3.Lucid_Enter");
@@ -70,8 +71,11 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_1th>("ClockTowerOfNightMare_1th");
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
-	GameEngineCore::ChangeLevel("CharacterSelect");
+	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
+
+	GameEngineCore::ChangeLevel("Lachlen");
 }
+
 
 void MapleStoryCore::Update(float _Delta)
 {

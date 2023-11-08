@@ -172,6 +172,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="BackGroundActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BaseBossActor.cpp">
       <SubType>
       </SubType>
@@ -291,6 +295,10 @@
     </ClCompile>
     <ClCompile Include="HowlingGale.cpp" />
     <ClCompile Include="HowlingGale_Actor.cpp" />
+    <ClCompile Include="Lachlen.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Laser.cpp">
       <SubType>
       </SubType>
@@ -389,6 +397,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
+    <ClInclude Include="BackGroundActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BaseBossActor.h">
       <SubType>
       </SubType>
@@ -515,6 +527,10 @@
     </ClInclude>
     <ClInclude Include="HowlingGale.h" />
     <ClInclude Include="HowlingGale_Actor.h" />
+    <ClInclude Include="Lachlen.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Laser.h">
       <SubType>
       </SubType>

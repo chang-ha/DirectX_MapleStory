@@ -109,9 +109,6 @@
     <ClCompile Include="Laser.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
-    <ClCompile Include="RenderActor.cpp">
-      <Filter>Actor\Global</Filter>
-    </ClCompile>
     <ClCompile Include="MushRoom.cpp">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClCompile>
@@ -190,11 +187,20 @@
     <ClCompile Include="ContentMouse.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="ButtonWarningMent.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Lachlen.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderActor.cpp">
+      <Filter>Actor\Global</Filter>
+    </ClCompile>
     <ClCompile Include="UIRenderActor.cpp">
       <Filter>Actor\Global</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonWarningMent.cpp">
-      <Filter>UI</Filter>
+    <ClCompile Include="BackGroundActor.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,9 +312,6 @@
     <ClInclude Include="Laser.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
-    <ClInclude Include="RenderActor.h">
-      <Filter>Actor\Global</Filter>
-    </ClInclude>
     <ClInclude Include="MushRoom.h">
       <Filter>Actor\Monster\Boss\SummonActor</Filter>
     </ClInclude>
@@ -387,11 +390,20 @@
     <ClInclude Include="ContentMouse.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonWarningMent.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Lachlen.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderActor.h">
+      <Filter>Actor\Global</Filter>
+    </ClInclude>
     <ClInclude Include="UIRenderActor.h">
       <Filter>Actor\Global</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonWarningMent.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="BackGroundActor.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
