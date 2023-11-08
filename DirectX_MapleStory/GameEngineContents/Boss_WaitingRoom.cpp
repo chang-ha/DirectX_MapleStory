@@ -8,6 +8,7 @@
 #include "Portal.h"
 #include "Minimap.h"
 #include "ClockTowerOfNightMare_1th.h"
+#include "Lachlen.h"
 	
 Boss_WaitingRoom::Boss_WaitingRoom()
 {
@@ -39,7 +40,7 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		ClockTowerOfNightMare_1th* _Level = dynamic_cast<ClockTowerOfNightMare_1th*>(_PrevLevel);
+		Lachlen* _Level = dynamic_cast<Lachlen*>(_PrevLevel);
 		if (nullptr != _Level)
 		{
 			CurPlayer->Transform.SetLocalPosition(float4(750, -810));
@@ -79,7 +80,7 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({750, -772});
-	_Portal->SetMoveMap("ClockTowerOfNightMare_1th");
+	_Portal->SetMoveMap("Lachlen");
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({ 1300, -772 });
@@ -92,6 +93,11 @@ void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 	
+	//if (nullptr != GameEngineSprite::Find("BG_Lucid_Next.png"))
+	//{
+	//	GameEngineSprite::Release("BG_Lucid_Next.png");
+	//}
+
 	if (nullptr == CurMap)
 	{
 		CurMap->Death();

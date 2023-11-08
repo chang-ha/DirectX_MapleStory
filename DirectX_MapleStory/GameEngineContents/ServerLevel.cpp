@@ -146,6 +146,42 @@ void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		GameEngineSprite::Release("ServerLogo");
 	}
+
+	if (nullptr != GameEngineSprite::Find("RecommendServer"))
+	{
+		GameEngineSprite::Release("RecommendServer");
+	}
+
+	if (nullptr != GameEngineSprite::Find("ServerButton_BG.png"))
+	{
+		GameEngineSprite::Release("ServerButton_BG.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("MentBG_Normal.png"))
+	{
+		GameEngineSprite::Release("MentBG_Normal.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("MentBG_Warning.png"))
+	{
+		GameEngineSprite::Release("MentBG_Warning.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Ment_EndGame.png"))
+	{
+		GameEngineSprite::Release("Ment_EndGame.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Ment_GoFirst.png"))
+	{
+		GameEngineSprite::Release("Ment_GoFirst.png");
+	}
+
+	ContentButton::ReleaseButton("GameEnd");
+	ContentButton::ReleaseButton("GoFirstLevel");
+	ContentButton::ReleaseButton("TestWorldButton");
+	ContentButton::ReleaseButton("TestWorld2Button");
+	ContentButton::ReleaseButton("TestWorld3Button");
 }
 
 void ServerLevel::Start()

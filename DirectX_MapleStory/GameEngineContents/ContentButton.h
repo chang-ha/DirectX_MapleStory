@@ -22,6 +22,7 @@ public:
 	ContentButton& operator=(ContentButton&& _Other) noexcept = delete;
 
 	void Init(std::string_view _ButtonTextureName);
+	static void ReleaseButton(std::string_view _ButtonTextureName);
 	void ChangeState(ButtonState _State);
 	void StateUpdate(float _Delta);
 

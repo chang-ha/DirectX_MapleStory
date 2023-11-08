@@ -18,8 +18,6 @@ void BackGroundActor::LevelEnd(GameEngineLevel* _NextLevel)
 
 void BackGroundActor::Start()
 {
-
-
 	//BackGroundRenderer->SetMaterial("BackGroundActor");
 	//BackGroundRenderer->SetSampler("EngineBaseWRAPSampler");
 
@@ -70,5 +68,4 @@ void BackGroundActor::Init(std::string_view _BackGroundName, int LoopNumber_X, f
 		BackGroundRenderers[i]->SetPivotType(PivotType::Left);
 		BackGroundRenderers[i]->SetSprite(BackGroundName);
 	}
-
 }

@@ -1,18 +1,5 @@
 #pragma once
 #include "ContentLevel.h"
-#include "RenderActor.h"
-
-class FlowObject : public RenderActor
-{
-	friend class Lucid_Phase1;
-private:
-	void Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos);
-	void Update(float _Delta) override;
-
-	float ObjectSpeed = 0.0f;
-	float4 StartPos = 0.0f;
-	float4 EndPos = 0.0f;
-};
 
 class Lucid_Phase1 : public ContentLevel
 {

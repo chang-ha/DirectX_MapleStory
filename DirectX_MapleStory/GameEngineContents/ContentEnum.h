@@ -9,9 +9,9 @@ enum class ActorDir
 
 enum class UpdateOrder
 {
+	Play,
 	BackGround,
 	Map,
-	Play,
 	Monster,
 	Skill,
 	RenderActor,

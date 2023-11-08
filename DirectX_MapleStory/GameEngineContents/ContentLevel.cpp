@@ -5,6 +5,35 @@
 #include "FadeObject.h"
 #include "ContentMouse.h"
 #include "ContentButton.h"
+#include "RenderActor.h"
+
+void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
+{
+	if (nullptr == GameEngineSprite::Find(_SpriteName))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\MapObject\\FlowObject\\" + std::string(_SpriteName));
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
+	}
+
+	RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
+	Renderer->SetSprite(_SpriteName);
+	ObjectSpeed = _ObjectSpeed;
+	StartPos = _StartPos;
+	EndPos = _EndPos;
+}
+
+void FlowObject::Update(float _Delta)
+{
+	Transform.AddLocalPosition(float4::RIGHT * ObjectSpeed * _Delta);
+
+	if (EndPos.X <= Transform.GetWorldPosition().X)
+	{
+		Transform.SetLocalPosition(StartPos);
+	}
+}
 
 void LevelDebug::Start()
 {

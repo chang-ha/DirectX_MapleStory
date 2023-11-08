@@ -9,6 +9,8 @@
 #include "ContentLevel.h"
 #include "ContentMap.h"
 
+#define MIN_CAMERA_MOVE 15.0f
+
 Player* Player::MainPlayer = nullptr;
 
 Player::Player() 
@@ -186,6 +188,19 @@ void Player::ChasingCamera(float _Delta)
 	float4 StartPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
 	float4 EndPos = Transform.GetWorldPosition();
 	float4 MovePos = float4::LerpClamp(StartPos, EndPos, CameraSpeed * _Delta);
+
+	float4 Distance = EndPos - MovePos;
+
+	if ((MIN_CAMERA_MOVE > abs(Distance.X)))
+	{
+		MovePos.X = StartPos.X;
+	}
+	
+	if((MIN_CAMERA_MOVE > abs(Distance.Y)))
+	{
+		MovePos.Y = StartPos.Y;
+	}
+
 	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(MovePos);
 	float4 CameraPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
 	// Right Left

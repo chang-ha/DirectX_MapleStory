@@ -145,6 +145,6 @@ void Minimap::Init(std::string_view _MinimapName, std::string_view _MinimapTextN
 
 	RealMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 
-	MinimapObject.MapName1->SetText("돋움", "레헬른", 13.0f, float4::WHITE, FW1_LEFT);
-	MinimapObject.MapName2->SetText("돋움", _MinimapTextName.data(), 13.0f, float4::WHITE, FW1_LEFT);
+	MinimapObject.MapName1->SetText("메이플스토리", "레헬른", 13.0f, float4::WHITE, FW1_LEFT);
+	MinimapObject.MapName2->SetText("메이플스토리", _MinimapTextName.data(), 13.0f, float4::WHITE, FW1_LEFT);
 }

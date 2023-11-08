@@ -47,13 +47,21 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 
 	GetMainCamera()->Transform.SetLocalPosition(float4(800, -500));
 
+	if (nullptr == GameEngineSprite::Find("RenderCharacter_Idle"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\RenderCharacter\\Idle");
+		GameEngineSprite::CreateFolder("RenderCharacter_Idle", Dir.GetStringPath());
+	}
+
 	// Player Renderer
 	if (nullptr == PlayerRender)
 	{
 		PlayerRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		PlayerRender->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
 		PlayerRender->Renderer->Transform.SetLocalPosition({0, 0, RenderDepth::renderactor});
-		PlayerRender->Renderer->CreateAnimation("Idle", "Render_Idle", 0.5f);
+		PlayerRender->Renderer->CreateAnimation("Idle", "RenderCharacter_Idle", 0.5f);
 		PlayerRender->Renderer->ChangeAnimation("Idle");
 		PlayerRender->Renderer->AutoSpriteSizeOn();
 		PlayerRender->Renderer->LeftFlip();

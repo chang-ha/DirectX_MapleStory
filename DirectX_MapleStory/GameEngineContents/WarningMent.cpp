@@ -73,12 +73,12 @@ void WarningMent::SetWarningMent(std::string_view _Ment)
 
 	float TextBoxSize = static_cast<float>(_Ment.size()) * 11.0f;
 
-	Frame.WarningMent->SetText("돋움", _Ment.data() , 19.0f, float4::WHITE, FW1_CENTER);
+	Frame.WarningMent->SetText("메이플스토리", _Ment.data() , 19.0f, float4::WHITE, FW1_CENTER);
 
 	Frame.FrameStart->Transform.SetLocalPosition({ GlobalValue::WinScale.Half().X - TextBoxSize / 2.0f, -200, RenderDepth::ui });
 	Frame.FrameMiddle->Transform.SetLocalPosition({ GlobalValue::WinScale.Half().X, -200, RenderDepth::ui });
 	Frame.FrameEnd->Transform.SetLocalPosition({ GlobalValue::WinScale.Half().X + TextBoxSize / 2.0f, -200, RenderDepth::ui });
-	Frame.WarningMent->Transform.SetLocalPosition({ GlobalValue::WinScale.Half().X, -203, RenderDepth::ui });
+	Frame.WarningMent->Transform.SetLocalPosition({ GlobalValue::WinScale.Half().X, -208, RenderDepth::ui });
 
 	Frame.FrameMiddle->SetImageScale({ TextBoxSize, 92, 1 });
 	Frame.FrameMiddle->RenderBaseInfoValue.VertexUVMul.X = TextBoxSize;

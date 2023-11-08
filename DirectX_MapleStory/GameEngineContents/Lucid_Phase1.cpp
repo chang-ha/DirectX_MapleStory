@@ -16,25 +16,6 @@
 #include "BossTimer.h"
 #include "DeathCount.h"
 
-void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
-{
-	RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
-	Renderer->SetSprite(_SpriteName);
-	ObjectSpeed = _ObjectSpeed;
-	StartPos = _StartPos;
-	EndPos = _EndPos;
-}
-
-void FlowObject::Update(float _Delta)
-{
-	Transform.AddLocalPosition(float4::RIGHT * ObjectSpeed * _Delta);
-
-	if (EndPos.X <= Transform.GetWorldPosition().X)
-	{
-		Transform.SetLocalPosition(StartPos);
-	}
-}
-
 #define Lase_Cooldown 8.0f
 
 Lucid_Phase1::Lucid_Phase1()
