@@ -110,10 +110,8 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		else
 		{
-			CurPlayer->Transform.SetLocalPosition(float4(1500, -800));
-			GetMainCamera()->Transform.SetLocalPosition(float4(1500, -800, -100000));
-			// CurPlayer->Transform.SetLocalPosition(float4(3000, -800));
-			// GetMainCamera()->Transform.SetLocalPosition(float4(3000, -800, -100000));
+			CurPlayer->Transform.SetLocalPosition(float4(3000, -800));
+			GetMainCamera()->Transform.SetLocalPosition(float4(3000, -800, -100000));
 		}
 	}
 

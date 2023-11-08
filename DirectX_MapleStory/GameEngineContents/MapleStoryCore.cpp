@@ -73,7 +73,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
 	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
 
-	GameEngineCore::ChangeLevel("Lachlen");
+	GameEngineCore::ChangeLevel("1.TitleLevel");
 }
 
 

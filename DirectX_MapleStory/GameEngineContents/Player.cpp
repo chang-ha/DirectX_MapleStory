@@ -60,6 +60,15 @@ void Player::Start()
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("PlayerNameTag.png"))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\Character\\PlayerNameTag.png");
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
+	}
+
 	// Create Animation
 	{
 		MainSpriteRenderer->CreateAnimation("Idle", "Idle", IDLE_ANI_SPEED);
@@ -113,6 +122,20 @@ void Player::Start()
 	HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Player);
 	HitCollision->Transform.SetLocalScale({32, 70});
 	HitCollision->Transform.SetLocalPosition({0, 35});
+
+	if (nullptr == NameBGRenderer)
+	{
+		NameBGRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
+		NameBGRenderer->Transform.SetLocalPosition({ -6, -10, RenderDepth::play });
+		NameBGRenderer->SetSprite("PlayerNameTag.png");
+	}
+
+	if (nullptr == NameRenderer)
+	{
+		NameRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
+		NameRenderer->Transform.SetLocalPosition({ 0, -4, RenderDepth::play });
+		NameRenderer->SetText("메이플스토리", "윈드브레이커", 12.0f, {1.0f, 1.0f, 0.0f}, FW1_CENTER);
+	}
 }
 
 void Player::Update(float _Delta)

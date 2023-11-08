@@ -173,6 +173,15 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
+	if (nullptr == GameEngineSprite::Find("NameTag.png"))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\UI\\NameTag.png");
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
+	}
+
 	std::shared_ptr<UIRenderActor> _Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor->Init(RenderOrder::MAP, RenderDepth::map);
 	_Actor->Renderer->SetSprite("CharacterSelect_BG.png");
@@ -198,7 +207,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		InfoFrame.GameStartButton->SetButtonClickEndEvent([&]()
 			{
 				FadeOutObject->SetFadeSpeed(1.0f);
-				FadeOutObject->SetChangeLevel("ClockTowerOfNightMare_1th");
+				FadeOutObject->SetChangeLevel("Lachlen");
 				FadeOutObject->FadeStart();
 			});
 		AllButton.push_back(InfoFrame.GameStartButton);
@@ -255,6 +264,16 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
 	_Actor->Renderer->SetSprite("PageNumber.png");
 	_Actor->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 90, -645});
+
+	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
+	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
+	_Actor->Renderer->SetSprite("NameTag.png");
+	_Actor->Transform.SetLocalPosition({ 180, -368 });
+
+	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
+	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
+	_Actor->Renderer->SetText("메이플스토리", "윈드브레이커", 14.0f, float4::WHITE, FW1_CENTER);
+	_Actor->Transform.SetLocalPosition({ 180, -362 });
 
 	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 

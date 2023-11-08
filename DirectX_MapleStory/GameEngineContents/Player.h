@@ -100,6 +100,8 @@ private:
 	float4 PlayerScale = float4::ZERO;
 	PlayerState State = PlayerState::Null;
 	std::shared_ptr<GameEngineCollision> HitCollision = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> NameRenderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> NameBGRenderer = nullptr;
 
 	void ChangeToIdle();
 	//////////// State 
