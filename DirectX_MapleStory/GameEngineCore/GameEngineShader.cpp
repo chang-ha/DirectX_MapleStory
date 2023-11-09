@@ -51,6 +51,13 @@ void GameEngineShader::CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _
 bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 {
 	_File.Open(FileOpenType::Read, FileDataType::Text);
+
+	uintmax_t size = _File.GetFileSize();
+	if (0 == size)
+	{
+		return false;
+	}
+
 	GameEngineSerializer Ser;
 	_File.DataAllRead(Ser);
 

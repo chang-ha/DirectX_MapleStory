@@ -45,6 +45,8 @@ void GameEngineRenderTarget::Clear()
 
 void GameEngineRenderTarget::Setting()
 {
+	RenderTargetReset();
+
 	ID3D11DepthStencilView* DSV = DepthTexture != nullptr ? DepthTexture->GetDSV() : nullptr;
 
 	if (0 >= RTV.size())

@@ -86,6 +86,16 @@ public:
 		YSortMap.insert(_SortOrder);
 	}
 
+	void SetFar(float _Far)
+	{
+		Far = _Far;
+	}
+
+	void SetNear(float _Near)
+	{
+		Near = _Near;
+	}
+
 	float4 GetScreenMousePrevPos() { return ScreenMousePrevPos; }
 	float4 GetScreenMousePos() { return ScreenMousePos; }
 	float4 GetScreenMouseDir() { return ScreenMouseDir; }

@@ -1,5 +1,6 @@
 cbuffer RenderBaseInfo : register(b11)
 {
+    float4 ScreenSize;
     float4 BaseColor;
     int IsMask;
     int BaseColorOnly;

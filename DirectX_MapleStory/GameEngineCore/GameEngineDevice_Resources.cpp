@@ -308,7 +308,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 		Desc.MinLOD = -FLT_MAX;
 		Desc.MaxLOD = FLT_MAX;
-
+		
 		std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Create("LINEAR", Desc);
 	}
 
@@ -419,6 +419,14 @@ void GameEngineDevice::ResourcesInit()
 		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("FadePostEffect");
 		Mat->SetVertexShader("FadePostEffect_VS");
 		Mat->SetPixelShader("FadePostEffect_PS");
+		Mat->SetDepthState("AlwaysDepth");
+		Mat->SetRasterizer("EngineRasterizer");
+	}
+
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("BlurPostEffect");
+		Mat->SetVertexShader("BlurPostEffect_VS");
+		Mat->SetPixelShader("BlurPostEffect_PS");
 		Mat->SetDepthState("AlwaysDepth");
 		Mat->SetRasterizer("EngineRasterizer");
 	}

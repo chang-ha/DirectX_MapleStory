@@ -172,6 +172,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AStartPathFinder.h" />
+    <ClInclude Include="BlurPostEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="EngineEnum.h" />
     <ClInclude Include="FadePostEffect.h">
       <SubType>
@@ -310,6 +314,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AStartPathFinder.cpp" />
+    <ClCompile Include="BlurPostEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FadePostEffect.cpp">
       <SubType>
       </SubType>

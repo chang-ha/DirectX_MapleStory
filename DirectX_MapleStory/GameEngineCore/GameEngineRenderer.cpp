@@ -19,6 +19,7 @@
 
 GameEngineRenderer::GameEngineRenderer()
 {
+	RenderBaseInfoValue.ScreenSize = GameEngineCore::MainWindow.GetScale();
 }
 
 GameEngineRenderer::~GameEngineRenderer()

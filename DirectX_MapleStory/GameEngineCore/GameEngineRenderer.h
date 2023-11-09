@@ -7,6 +7,7 @@
 
 struct RenderBaseInfo
 {
+	float4 ScreenSize;
 	float4 BaseColor;
 	int IsMask = 0;
 	int BaseColorOnly = 0;
