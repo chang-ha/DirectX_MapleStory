@@ -190,6 +190,22 @@ void SkillManager::Start()
 	CreateSkill<VortexSphere>("VortexSphere");
 	CreateSkill<PhalanxCharge>("PhalanxCharge");
 	CreateSkill<MercilessWinds>("MercilessWinds");	
+
+	if (nullptr == GameEngineSprite::Find("QuickSlot.png"))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\UI\\QuickSlot.png");
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
+	}
+
+	QuickSlot = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	QuickSlot->SetPivotType(PivotType::RightBottom);
+	QuickSlot->SetSprite("QuickSlot.png");
+	QuickSlot->AutoSpriteSizeOn();
+	QuickSlot->Transform.SetLocalPosition({GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui});
+	QuickSlot->SetAutoScaleRatio(1.1f);
 }
 
 void SkillManager::Update(float _Delta)

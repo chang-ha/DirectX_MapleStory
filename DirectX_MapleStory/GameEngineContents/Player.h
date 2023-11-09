@@ -102,6 +102,7 @@ private:
 	std::shared_ptr<GameEngineCollision> HitCollision = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> NameRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> NameBGRenderer = nullptr;
+	std::shared_ptr<class PlayerUIManager> UIManager;
 
 	void ChangeToIdle();
 	//////////// State 

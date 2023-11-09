@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "ContentLevel.h"
 #include "ContentMap.h"
+#include "PlayerUIManager.h"
 
 #define MIN_CAMERA_MOVE 15.0f
 
@@ -134,8 +135,10 @@ void Player::Start()
 	{
 		NameRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
 		NameRenderer->Transform.SetLocalPosition({ 0, -4, RenderDepth::play });
-		NameRenderer->SetText("메이플스토리", "윈드브레이커", 12.0f, {1.0f, 1.0f, 0.0f}, FW1_CENTER);
+		NameRenderer->SetText("메이플스토리", "윈드브레이커", 12.0f, {1.0f, 1.0f, 0.6f}, FW1_CENTER);
 	}
+
+	UIManager = GetLevel()->CreateActor<PlayerUIManager>(UpdateOrder::UI);
 }
 
 void Player::Update(float _Delta)
@@ -152,6 +155,12 @@ void Player::Update(float _Delta)
 		ChangeState(PlayerState::Jump);
 	}
 
+	//if (true == IsGround && (PlayerState::Idle == State || PlayerState::Alert == State))
+	//{
+	//	MoveVectorForceReset();
+	//	GravityReset();
+	//}
+	 
 	if (true == IsGround && (PlayerState::Jump != State && PlayerState::WindWalk != State && PlayerState::Walk != State))
 	{
 		MoveVectorForceReset();

@@ -63,6 +63,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	std::shared_ptr<GameEngineUIRenderer> QuickSlot;
 	std::map<std::string, std::shared_ptr<class ContentSkill>> AllSkills;
 	std::list<std::shared_ptr<HitRenderData>> AllHitRenderers;
  
