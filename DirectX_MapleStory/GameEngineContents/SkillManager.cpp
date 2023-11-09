@@ -15,6 +15,7 @@
 #include "MercilessWinds.h"
 #include "BaseWindActor.h"
 #include "ContentActor.h"
+#include "Player.h"
 
 void SkillManagerGUI::Start()
 {
@@ -42,7 +43,7 @@ SkillManager::~SkillManager()
 
 }
 
-void SkillManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, GameEngineObject* _Object, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
+void SkillManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, GameEngineObject* _Object, int _Damage, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
 {
 	GameEngineRandom RandomActor;
 	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
@@ -85,10 +86,21 @@ void SkillManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, Game
 	ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
 	if (nullptr != _BaseActor)
 	{
-		_BaseActor->AddHP(-_HitCount);
+		if (-1 == _Damage)
+		{
+			_BaseActor->AddHP(-_HitCount);
+		}
+		else
+		{
+			_BaseActor->AddHP(-_Damage);
+		}
 	}
 
-	BaseWindActor::CreateTriflingWind();
+	Player* _Player = dynamic_cast<Player*>(_Object);
+	if (nullptr == _Player)
+	{
+		BaseWindActor::CreateTriflingWind();
+	}
 
 	AllHitRenderers.push_back(_Data);
 }

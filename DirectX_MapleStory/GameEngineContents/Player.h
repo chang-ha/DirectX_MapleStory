@@ -36,8 +36,10 @@ enum class PlayerState
 
 class Player : public ContentActor
 {
+	friend class PlayerUIManager;
 public:
 	static Player* MainPlayer;
+	static int PlayerHP;
 public:
 	// constrcuter destructer
 	Player();

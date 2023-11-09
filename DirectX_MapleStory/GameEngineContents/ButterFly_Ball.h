@@ -1,5 +1,7 @@
 #pragma once
 
+#define HIT_TIME 0.2f
+
 enum class ButterFly_Ball_Phase
 {
 	Phase1 = 1,
@@ -37,10 +39,10 @@ protected:
 	void Release() override;
 
 private:
+	std::string PhaseNumber = "";
 	float Speed = 150.0f;
 	float4 DirVector = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> BallRenderer = nullptr;
-	std::shared_ptr<GameEngineCollision> BallCollision = nullptr;
 
 	void Init(int _Phase);
 

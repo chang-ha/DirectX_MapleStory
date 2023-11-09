@@ -13,6 +13,7 @@
 #define MIN_CAMERA_MOVE 15.0f
 
 Player* Player::MainPlayer = nullptr;
+int Player::PlayerHP = 100;
 
 Player::Player() 
 {
@@ -33,12 +34,15 @@ void Player::LevelStart(GameEngineLevel* _PrevLevel)
 void Player::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	IsTempInputValue = true;
+	PlayerHP = HP;
 	ContentActor::LevelEnd(_NextLevel);
 	Death();
 }
 
 void Player::Start()
 {
+	HP = PlayerHP;
+
 	ContentActor::Start();
 	GameEngineInput::AddInputObject(this);
 	if (nullptr == MainSpriteRenderer)

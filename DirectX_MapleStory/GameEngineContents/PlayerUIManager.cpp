@@ -1,5 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "PlayerUIManager.h"
+#include "Player.h"
 
 PlayerUIManager::PlayerUIManager()
 {
@@ -72,13 +73,13 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	HP_Bar_BG->SetImageScale({ 173, 32 });
 
 	HP = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	HP->SetPivotType(PivotType::Bottom);
-	HP->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 9.0f, -GlobalValue::WinScale.Y + 37.0f, RenderDepth::ui });
+	HP->SetPivotType(PivotType::LeftBottom);
+	HP->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 76.0f, -GlobalValue::WinScale.Y + 37.0f, RenderDepth::ui });
 	HP->SetSprite("HP.png");
 
 	MP = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	MP->SetPivotType(PivotType::Bottom);
-	MP->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 9.0f, -GlobalValue::WinScale.Y + 21.0f, RenderDepth::ui });
+	MP->SetPivotType(PivotType::LeftBottom);
+	MP->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 76.0f, -GlobalValue::WinScale.Y + 21.0f, RenderDepth::ui });
 	MP->SetSprite("MP.png");
 
 	HP_Bar = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
@@ -103,5 +104,10 @@ void PlayerUIManager::Start()
 
 void PlayerUIManager::Update(float _Delta)
 {
+	if (0 > Player::MainPlayer->HP)
+	{
+		Player::MainPlayer->HP = 0;
+	}
 
+	HP->SetImageScale({ 171.0f * (Player::MainPlayer->HP * 0.01f), 13, 1 });
 }
