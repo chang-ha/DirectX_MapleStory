@@ -349,6 +349,8 @@ void Lachlen::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		SkillManagerActor = nullptr;
 	}
+
+	MapObjects.clear();
 }
 
 void Lachlen::Start()

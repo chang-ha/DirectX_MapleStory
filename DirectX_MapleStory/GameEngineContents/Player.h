@@ -68,6 +68,13 @@ public:
 		NotGround.erase(_Value);
 	}
 
+	void PopInput()
+	{
+		ChangeState(PlayerState::Idle);
+		MoveVectorForceReset();
+		IsTempInputValue = false;
+	}
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -81,6 +88,7 @@ protected:
 	bool CheckGround(float4 PlusCheckPos = float4::ZERO) override;
 
 private:
+	bool IsTempInputValue = true;
 	bool IsLadder = false;
 	bool IsDirCheck = true;
 	bool IsGroundCheck = true;

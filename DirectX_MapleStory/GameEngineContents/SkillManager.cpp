@@ -205,7 +205,7 @@ void SkillManager::Start()
 	QuickSlot->SetSprite("QuickSlot.png");
 	QuickSlot->AutoSpriteSizeOn();
 	QuickSlot->Transform.SetLocalPosition({GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui});
-	QuickSlot->SetAutoScaleRatio(1.1f);
+	// QuickSlot->SetAutoScaleRatio(1.1f);
 }
 
 void SkillManager::Update(float _Delta)

@@ -2,6 +2,7 @@
 #include "Portal.h"
 #include "ContentLevel.h"
 #include "FadeObject.h"
+#include "Player.h"
 
 Portal::Portal()
 {
@@ -49,6 +50,8 @@ void Portal::Update(float _Delta)
 		std::shared_ptr<FadeObject> _FadeObject = ContentLevel::CurContentLevel->FadeOutObject;
 		_FadeObject->SetChangeLevel(MoveMap);
 		_FadeObject->FadeStart();
+
+		Player::MainPlayer->PopInput();
 	}
 }
 

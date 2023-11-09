@@ -28,12 +28,12 @@ public:
 		return UpperString;
 	}
 
-	template <typename... _Types>
-	static std::string Format(const std::format_string<_Types...> _Fmt, _Types... _Args)
-	{
-		// std::format
-		return std::vformat(_Fmt.get(), _STD make_format_args(_Args...));
-	}
+	//template <typename... _Types>
+	//static std::string Format(const std::format_string<_Types...> _Fmt, _Types... _Args)
+	//{
+	//	// std::format
+	//	return std::vformat(_Fmt.get(), _STD make_format_args(_Args...));
+	//}
 
 	// Ansi는 멀티바이트 인코딩의 다른이름
 	static std::wstring AnsiToUnicode(std::string_view _Text);

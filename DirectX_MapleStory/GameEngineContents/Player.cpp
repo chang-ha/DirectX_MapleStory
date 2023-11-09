@@ -32,6 +32,7 @@ void Player::LevelStart(GameEngineLevel* _PrevLevel)
 
 void Player::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	IsTempInputValue = true;
 	ContentActor::LevelEnd(_NextLevel);
 	Death();
 }
@@ -134,8 +135,8 @@ void Player::Start()
 	if (nullptr == NameRenderer)
 	{
 		NameRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
-		NameRenderer->Transform.SetLocalPosition({ 0, -4, RenderDepth::play });
-		NameRenderer->SetText("메이플스토리", "윈드브레이커", 12.0f, {1.0f, 1.0f, 0.6f}, FW1_CENTER);
+		NameRenderer->Transform.SetLocalPosition({ 0, -3.5f, RenderDepth::play });
+		NameRenderer->SetText("돋움", "윈드브레이커", 11.0f, {1.0f, 1.0f, 0.6f}, FW1_CENTER);
 	}
 
 	UIManager = GetLevel()->CreateActor<PlayerUIManager>(UpdateOrder::UI);
@@ -144,9 +145,15 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 	ContentActor::Update(_Delta);
-	DirCheck();
 	ChasingCamera(_Delta);
 	BlockOutMap();
+
+	if (false == IsTempInputValue)
+	{
+		return;
+	}
+
+	DirCheck();
 	LadderCheck();
 	StateUpdate(_Delta);
 
