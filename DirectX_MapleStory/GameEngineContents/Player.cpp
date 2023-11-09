@@ -162,7 +162,7 @@ void Player::Update(float _Delta)
 		ChangeState(PlayerState::Jump);
 	}
 
-	//if (true == IsGround && (PlayerState::Idle == State || PlayerState::Alert == State))
+	//if (true == IsGround && (PlayerState::Idle == State || PlayerState::Alert == State || PlayerState::Down == State))
 	//{
 	//	MoveVectorForceReset();
 	//	GravityReset();
