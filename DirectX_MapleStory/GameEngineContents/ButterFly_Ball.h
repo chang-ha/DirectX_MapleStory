@@ -1,4 +1,5 @@
 #pragma once
+#include "AttackFunction.h"
 
 #define HIT_TIME 0.2f
 
@@ -44,8 +45,8 @@ private:
 	float4 DirVector = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> BallRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BallCollision = nullptr;
+	OneHitAttackFunction AttackFunction;
 
 	void Init(int _Phase);
-
 };
 

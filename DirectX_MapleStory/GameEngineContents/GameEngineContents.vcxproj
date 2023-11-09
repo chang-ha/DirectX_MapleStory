@@ -172,6 +172,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="AttackFunction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BackGroundActor.cpp">
       <SubType>
       </SubType>
@@ -405,6 +409,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
+    <ClInclude Include="AttackFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BackGroundActor.h">
       <SubType>
       </SubType>

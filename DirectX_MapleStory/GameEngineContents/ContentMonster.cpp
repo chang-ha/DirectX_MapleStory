@@ -1,25 +1,5 @@
 #include "PreCompile.h"
 #include "ContentMonster.h"
-#include "HitRenderManager.h"
-
-void MonsterAttackFunction::AttackUpdate(std::shared_ptr<GameEngineCollision> _AttackCollision, std::string_view _HitAniName, int _Damage)
-{
-	_AttackCollision->Collision(CollisionOrder::Player, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
-		{
-			for (size_t i = 0; i < _CollisionGroup.size(); i++)
-			{
-				GameEngineCollision* _Other = _CollisionGroup[i];
-				GameEngineObject* _Object = _Other->GetParentObject();
-				if (true == CollisionActor.contains(_Object))
-				{
-					return;
-				}
-				HitRenderManager::MainHitRenderManager->HitPrint(_HitAniName, 1, _Object, _Damage, false);
-				CollisionActor.insert(_Object);
-			}
-		}
-	);
-}
 
 ContentMonster::ContentMonster()
 {

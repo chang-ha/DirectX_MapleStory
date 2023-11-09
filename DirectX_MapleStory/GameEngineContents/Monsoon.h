@@ -1,5 +1,6 @@
 #pragma once
 #include "ContentSkill.h"
+#include "AttackFunction.h"
 
 class Monsoon : public ContentSkill
 {
@@ -28,5 +29,6 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> SceneRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
 	std::set<GameEngineObject*> CollisionActor;
+	OneHitAttackFunction AttackFunction;
 };
 

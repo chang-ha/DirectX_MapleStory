@@ -1,6 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "ButterFly_Ball.h"
 #include "SkillManager.h"
+#include "AttackFunction.h"
 
 ButterFly_Ball::ButterFly_Ball()
 {
@@ -31,6 +32,7 @@ void ButterFly_Ball::Start()
 void ButterFly_Ball::Update(float _Delta)
 {
 	Transform.AddLocalPosition(DirVector * Speed * _Delta);
+	AttackFunction.AttackUpdate(BallCollision, CollisionOrder::Player, "Phase" + PhaseNumber + "_ButterFly_Ball_Hit", 1, 5, false);
 }
 
 void ButterFly_Ball::Release()

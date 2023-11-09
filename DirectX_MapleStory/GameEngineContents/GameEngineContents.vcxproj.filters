@@ -208,6 +208,9 @@
     <ClCompile Include="HitRenderManager.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="AttackFunction.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -416,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="HitRenderManager.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackFunction.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

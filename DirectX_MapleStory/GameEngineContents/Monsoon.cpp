@@ -3,7 +3,6 @@
 #include "ContentLevel.h"
 #include "HitRenderManager.h"
 #include "BaseWindActor.h"
-
 Monsoon::Monsoon()
 {
 	
@@ -122,6 +121,8 @@ void Monsoon::Update(float _Delta)
 	float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();
 	CameraPos.Z = RenderDepth::skill;
 	SceneRenderer->Transform.SetWorldPosition(CameraPos);
+	// AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster ,"Monsoon_Hit", 12, -1, false);
+
 	SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));
 }
 

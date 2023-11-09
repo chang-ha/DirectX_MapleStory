@@ -1,13 +1,6 @@
 #pragma once
 #include "ContentActor.h"
-
-struct MonsterAttackFunction
-{
-	std::set<GameEngineObject*> CollisionActor;
-
-	void AttackUpdate(std::shared_ptr<GameEngineCollision> _AttackCollision, std::string_view _HitAniName, int _Damage);
-};
-
+#include "AttackFunction.h"
 
 class ContentMonster : public ContentBaseActor
 {
@@ -29,6 +22,6 @@ protected:
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> MonsterRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> MonsterCollision = nullptr;
-	MonsterAttackFunction AttackFunction;
+	OneHitAttackFunction AttackFunction;
 };
 
