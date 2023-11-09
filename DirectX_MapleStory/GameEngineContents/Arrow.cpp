@@ -2,7 +2,7 @@
 #include "Arrow.h"
 #include "Player.h"
 #include "ContentMonster.h"
-#include "SkillManager.h"
+#include "HitRenderManager.h"
 
 Arrow::Arrow()
 {
@@ -140,5 +140,5 @@ void Arrow::Release()
 void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
 	++CollisionCount;
-	SkillManager::PlayerSkillManager->HitPrint("SongOfHeaven_Actor_Arrow_Hit", 1, _Other->GetParentObject(), false);
+	HitRenderManager::MainHitRenderManager->HitPrint("SongOfHeaven_Actor_Arrow_Hit", 1, _Other->GetParentObject(), false);
 }

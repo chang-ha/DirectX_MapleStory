@@ -7,20 +7,6 @@ public:
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 };
 
-struct HitRenderData
-{
-	friend class SkillManager;
-private:
-	bool AniEnd = false;
-	int CurIndex = 0;
-	float DelayTime = 0.0f;
-	GameEngineObject* Object = nullptr;
-	std::vector<float4> RandomPivot;
-	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> HitAnimations;
-	// std::vector<std::shared_ptr<GameEngineSpriteRenderer>> DamageAnimations;
-	// Sound 추후 추가
-};
-
 class SkillManager : public GameEngineActor
 {
 public:
@@ -49,7 +35,6 @@ public:
 		SkillInit(NewSkill);
 	}
 
-	void HitPrint(std::string_view _HitSpriteName, int _HitCount, GameEngineObject* _Object, int _Damage = -1, bool _RandomPivot = true, PivotType _PivotType = PivotType::Bottom);
 
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);
@@ -64,10 +49,9 @@ protected:
 
 private:
 	std::shared_ptr<GameEngineUIRenderer> QuickSlot;
+	std::shared_ptr<class HitRenderManager> HitManager;
 	std::map<std::string, std::shared_ptr<class ContentSkill>> AllSkills;
-	std::list<std::shared_ptr<HitRenderData>> AllHitRenderers;
  
 	void SkillInit(std::shared_ptr<class ContentSkill> _Skill);
-	void HitPrintUpdate(float _Delta);
 };
 

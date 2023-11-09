@@ -205,6 +205,9 @@
     <ClCompile Include="PlayerUIManager.cpp">
       <Filter>Actor\Global\Player</Filter>
     </ClCompile>
+    <ClCompile Include="HitRenderManager.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -410,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="PlayerUIManager.h">
       <Filter>Actor\Global\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="HitRenderManager.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "FairySpiral.h"
 #include "Player.h"
-#include "SkillManager.h"
+#include "HitRenderManager.h"
 #include "BaseWindActor.h"
 
 #define XRANGE 380.0f
@@ -117,7 +117,7 @@ void FairySpiral::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGr
 		{
 			return;
 		}
-		SkillManager::PlayerSkillManager->HitPrint("FairySprial_Hit", 6, _Object);
+		HitRenderManager::MainHitRenderManager->HitPrint("FairySprial_Hit", 6, _Object);
 		CollisionActor.insert(_Object);
 	}
 }

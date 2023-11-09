@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "Monsoon.h"
 #include "ContentLevel.h"
-#include "SkillManager.h"
+#include "HitRenderManager.h"
 #include "BaseWindActor.h"
 
 Monsoon::Monsoon()
@@ -150,7 +150,7 @@ void Monsoon::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
 			return;
 		}
-		SkillManager::PlayerSkillManager->HitPrint("Monsoon_Hit", 12, _Object);
+		HitRenderManager::MainHitRenderManager->HitPrint("Monsoon_Hit", 12, _Object);
 		CollisionActor.insert(_Object);
 	}
 }

@@ -293,6 +293,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HitRenderManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HowlingGale.cpp" />
     <ClCompile Include="HowlingGale_Actor.cpp" />
     <ClCompile Include="Lachlen.cpp">
@@ -526,6 +530,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Golem_Phase2.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="HitRenderManager.h">
       <SubType>
       </SubType>
     </ClInclude>

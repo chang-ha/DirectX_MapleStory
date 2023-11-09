@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "PhalanxCharge_Actor.h"
-#include "SkillManager.h"
+#include "HitRenderManager.h"
 #include "BaseWindActor.h"
 
 PhalanxCharge_Actor* PhalanxCharge_Actor::Main_PhalanxCharge = nullptr;
@@ -120,7 +120,7 @@ void PhalanxCharge_Actor::Update(float _Delta)
 				if (0.0f >= CollisionTime[_Other])
 				{
 					HitCount += 1;
-					SkillManager::PlayerSkillManager->HitPrint("PhalanxCharge_Hit", 1, _Other->GetParentObject());
+					HitRenderManager::MainHitRenderManager->HitPrint("PhalanxCharge_Hit", 1, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
 				}
 			}

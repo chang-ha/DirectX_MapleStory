@@ -1,6 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "VortexSphere_Actor.h"
-#include "SkillManager.h"
+#include "HitRenderManager.h"
 #include "BaseWindActor.h"
 
 #define SPEED 150.0f
@@ -68,7 +68,7 @@ void VortexSphere_Actor::Update(float _Delta)
 
 				if (0.0f >= CollisionTime[_Other])
 				{
-					SkillManager::PlayerSkillManager->HitPrint("VortexSphere_Hit", 6, _Other->GetParentObject());
+					HitRenderManager::MainHitRenderManager->HitPrint("VortexSphere_Hit", 6, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
 				}
 			}

@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "HowlingGale_Actor.h"
 #include "Player.h"
-#include "SkillManager.h"
+#include "HitRenderManager.h"
 #include "BaseWindActor.h"
 
 #define SPEED 150.0f
@@ -110,7 +110,7 @@ void HowlingGale_Actor::Update(float _Delta)
 
 				if (0.0f >= CollisionTime[_Other])
 				{
-					SkillManager::PlayerSkillManager->HitPrint("HowlingGale_Hit", 3, _Other->GetParentObject());
+					HitRenderManager::MainHitRenderManager->HitPrint("HowlingGale_Hit", 3, _Other->GetParentObject());
 					CollisionTime[_Other] = HIT_TIME;
 				}
 			}
