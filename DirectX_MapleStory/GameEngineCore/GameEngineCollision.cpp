@@ -80,7 +80,7 @@ bool GameEngineCollision::Collision(int _Order, const float4& _NextPos)
 	return OtherGroup->Collision(GetDynamic_Cast_This<GameEngineCollision>(), _NextPos);
 }
 
-bool GameEngineCollision::Collision(int _Order, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function)
+bool GameEngineCollision::Collision(int _Order, std::function<void(std::vector<GameEngineCollision*>& _Collisions)> _Function)
 {
 	if (false == GetLevel()->CollisionGroups.contains(_Order))
 	{
@@ -90,7 +90,7 @@ bool GameEngineCollision::Collision(int _Order, std::function<void(std::vector<s
 	return OtherGroup->Collision(GetDynamic_Cast_This<GameEngineCollision>(), _Function);
 }
 
-bool GameEngineCollision::Collision(int _Order, const float4& _NextPos, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function)
+bool GameEngineCollision::Collision(int _Order, const float4& _NextPos, std::function<void(std::vector<GameEngineCollision*>& _Collisions)> _Function)
 {
 	if (false == GetLevel()->CollisionGroups.contains(_Order))
 	{
@@ -109,12 +109,12 @@ bool GameEngineCollision::CollisionEvent(int _Order, const EventParameter& _Even
 
 	std::shared_ptr<GameEngineCollisionGroup> OtherGroup = GetLevel()->CollisionGroups[_Order];
 
-	std::set<std::shared_ptr<GameEngineCollision>>::iterator Start = Others.begin();
-	std::set<std::shared_ptr<GameEngineCollision>>::iterator End = Others.end();
+	std::set<GameEngineCollision*>::iterator Start = Others.begin();
+	std::set<GameEngineCollision*>::iterator End = Others.end();
 
 	for (; Start != End; )
 	{
-		std::shared_ptr<GameEngineCollision> OtherCol = *Start;
+		GameEngineCollision* OtherCol = *Start;
 
 		// 여기서 터질것이다.
 		if (false == OtherCol->IsDeath())
@@ -137,12 +137,12 @@ bool GameEngineCollision::CollisionLineEvent(int _Order, float4 _EndLine, const 
 	}
 	std::shared_ptr<GameEngineCollisionGroup> OtherGroup = GetLevel()->CollisionGroups[_Order];
 
-	std::set<std::shared_ptr<GameEngineCollision>>::iterator Start = Others.begin();
-	std::set<std::shared_ptr<GameEngineCollision>>::iterator End = Others.end();
+	std::set<GameEngineCollision*>::iterator Start = Others.begin();
+	std::set<GameEngineCollision*>::iterator End = Others.end();
 
 	for (; Start != End; )
 	{
-		std::shared_ptr<GameEngineCollision> OtherCol = *Start;
+		GameEngineCollision* OtherCol = *Start;
 
 		if (false == OtherCol->IsDeath())
 		{

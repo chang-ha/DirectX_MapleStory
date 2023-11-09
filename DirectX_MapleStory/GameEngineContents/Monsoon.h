@@ -21,7 +21,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
-	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
+	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 
 
 private:

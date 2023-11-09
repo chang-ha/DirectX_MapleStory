@@ -117,10 +117,10 @@ void BaseWindActor::Update(float _Delta)
 	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
 	HitCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
 
-	HitCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+	HitCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
 			// 가장 먼저 충돌하는 녀석에게
-			std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[0];
+			GameEngineCollision* _Other = _CollisionGroup[0];
 			MainSpriteRenderer->ChangeAnimation("Hit");
 
 			ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Other->GetParentObject());
@@ -131,7 +131,7 @@ void BaseWindActor::Update(float _Delta)
 		}
 	);
 
-	DetectCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+	DetectCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
 			// Targeting
 			float4 MostCloseTargetPos = float4::ZERO;
@@ -139,7 +139,7 @@ void BaseWindActor::Update(float _Delta)
 
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)
 			{
-				std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+				GameEngineCollision* _Other = _CollisionGroup[i];
 				float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
 
 				if ((MostCloseTargetPos - CurPos).Size() > (OtherPos - CurPos).Size() || MostCloseTargetPos == float4::ZERO)

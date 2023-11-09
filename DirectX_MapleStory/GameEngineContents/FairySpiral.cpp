@@ -107,11 +107,11 @@ void FairySpiral::Update(float _Delta)
 	SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
 }
 
-void FairySpiral::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+void FairySpiral::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
 	for (size_t i = 0; i < _CollisionGroup.size(); i++)
 	{
-		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+		GameEngineCollision* _Other = _CollisionGroup[i];
 		GameEngineObject* _Object = _Other->GetParentObject();
 		if (true == CollisionActor.contains(_Object))
 		{

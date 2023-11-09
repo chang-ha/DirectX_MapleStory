@@ -18,7 +18,7 @@ public:
 	void Init() override;
 	void UseSkill() override;
 	void EndSkill() override;
-	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
+	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 
 protected:
 	void Start() override;

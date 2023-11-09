@@ -41,19 +41,19 @@ public:
 	bool Collision(int _Order, const float4& _NextPos);
 
 	template<typename EnumType>
-	bool Collision(EnumType _Order, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function)
+	bool Collision(EnumType _Order, std::function<void(std::vector<GameEngineCollision*>& _Collisions)> _Function)
 	{
 		return Collision(static_cast<int>(_Order), _Function);
 	}
 
-	bool Collision(int _Order, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function);
+	bool Collision(int _Order, std::function<void(std::vector<GameEngineCollision*>& _Collisions)> _Function);
 
 	template<typename EnumType>
-	bool Collision(EnumType _Order, const float4& _NextPos, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function)
+	bool Collision(EnumType _Order, const float4& _NextPos, std::function<void(std::vector<GameEngineCollision*>& _Collisions)> _Function)
 	{
 		return Collision(static_cast<int>(_Order), _NextPos, _Function);
 	}
-	bool Collision(int _Order, const float4& _NextPos, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function);
+	bool Collision(int _Order, const float4& _NextPos, std::function<void(std::vector<GameEngineCollision*>& _Collisions)> _Function);
 
 	template<typename EnumType>
 	bool CollisionEvent(EnumType _Order, const EventParameter& _Event)
@@ -89,6 +89,6 @@ protected:
 
 private:
 	ColType CollisionType = ColType::AABBBOX2D;
-	std::set<std::shared_ptr<GameEngineCollision>> Others;
+	std::set<GameEngineCollision*> Others;
 };
 

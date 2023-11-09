@@ -140,11 +140,11 @@ void Monsoon::Release()
 	}
 }
 
-void Monsoon::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+void Monsoon::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
 	for (size_t i = 0; i < _CollisionGroup.size(); i++)
 	{
-		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+		GameEngineCollision* _Other = _CollisionGroup[i];
 		GameEngineObject* _Object = _Other->GetParentObject();
 		if (true == CollisionActor.contains(_Object))
 		{

@@ -56,11 +56,11 @@ void VortexSphere_Actor::Update(float _Delta)
 		Speed = SPEED;
 	}
 
-	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)
 			{
-				std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+				std::shared_ptr<GameEngineCollision> _Other = std::dynamic_pointer_cast<GameEngineCollision>(_CollisionGroup[i]->shared_from_this());
 				if (false == CollisionTime.contains(_Other))
 				{
 					CollisionTime[_Other] = 0.0f;

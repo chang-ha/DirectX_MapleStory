@@ -281,6 +281,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineStructuredBuffer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameEngineTexture.h">
       <SubType>
       </SubType>
@@ -417,6 +421,10 @@
     <ClCompile Include="GameEngineSprite.cpp" />
     <ClCompile Include="GameEngineSpriteRenderer.cpp" />
     <ClCompile Include="GameEngineState.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameEngineStructuredBuffer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
