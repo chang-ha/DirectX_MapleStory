@@ -211,6 +211,9 @@
     <ClCompile Include="AttackFunction.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="FieldMonster.cpp">
+      <Filter>Actor\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -422,6 +425,9 @@
     </ClInclude>
     <ClInclude Include="AttackFunction.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldMonster.h">
+      <Filter>Actor\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "Minimap.h"
 #include "Portal.h"
+#include "FieldMonster.h"
+
 ClockTowerOfNightMare_1th::ClockTowerOfNightMare_1th()
 {
 
@@ -30,7 +32,7 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition({ 600, -300 });
+		CurPlayer->Transform.SetLocalPosition({ 600, -340 });
 		GetMainCamera()->Transform.SetLocalPosition(float4(600, -300, -100000));
 	}
 
@@ -40,6 +42,10 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_5th.png", "악몽의시계탑 5층");
+
+	std::shared_ptr<FieldMonster> _FieldMonster = CreateActor<FieldMonster>(UpdateOrder::Monster);
+	_FieldMonster->Init("Monster2");
+	_FieldMonster->Transform.SetLocalPosition({ 1000, -500 });
 }
 
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)

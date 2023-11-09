@@ -284,6 +284,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="FairySpiral.cpp" />
+    <ClCompile Include="FieldMonster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FireWork.cpp">
       <SubType>
       </SubType>
@@ -522,6 +526,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="FairySpiral.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FieldMonster.h">
       <SubType>
       </SubType>
     </ClInclude>

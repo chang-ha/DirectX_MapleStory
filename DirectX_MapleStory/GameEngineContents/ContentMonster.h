@@ -14,14 +14,14 @@ public:
 	ContentMonster& operator=(ContentMonster&& _Other) noexcept = delete;
 
 protected:
+	std::shared_ptr<GameEngineSpriteRenderer> MonsterRenderer = nullptr;
+	std::shared_ptr<GameEngineCollision> MonsterCollision = nullptr;
+	OneHitAttackFunction AttackFunction;
+
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
-
 private:
-	std::shared_ptr<GameEngineSpriteRenderer> MonsterRenderer = nullptr;
-	std::shared_ptr<GameEngineCollision> MonsterCollision = nullptr;
-	OneHitAttackFunction AttackFunction;
 };
 
