@@ -96,6 +96,7 @@ private:
 	bool IsGroundCheck = true;
 	bool DoubleJump = false;
 	bool GroundJump = false;
+	int MP = 100;
 	float Speed = 200.0f;
 	float AirSpeed = 200.0f;
 	float JumpAirSpeed = 30.0f;

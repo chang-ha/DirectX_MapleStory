@@ -152,6 +152,11 @@ void Player::Update(float _Delta)
 	ChasingCamera(_Delta);
 	BlockOutMap();
 
+	if (true == GameEngineInput::IsDown('Q', this))
+	{
+		HP = PLAYER_MAX_HP;
+	}
+
 	if (0 == HP && true == HitCollision->IsUpdate())
 	{
 		HitCollision->Off();

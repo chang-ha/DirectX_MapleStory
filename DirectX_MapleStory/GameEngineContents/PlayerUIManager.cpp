@@ -90,6 +90,9 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	Bar_Name = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	Bar_Name->SetText("돋움", "윈드브레이커", 13.0f, float4::WHITE, FW1_CENTER);
 	Bar_Name->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 15.0f, -GlobalValue::WinScale.Y + 74.0f, RenderDepth::ui });
+
+	CurHPScale = Player::MainPlayer->HP;
+	CurMPScale = Player::MainPlayer->MP;
 }
 
 void PlayerUIManager::LevelEnd(class GameEngineLevel* _NextLevel)
@@ -109,5 +112,33 @@ void PlayerUIManager::Update(float _Delta)
 		Player::MainPlayer->HP = 0;
 	}
 
-	HP->SetImageScale({ 171.0f * (Player::MainPlayer->HP * 0.01f), 13, 1 });
+	if (0 > Player::MainPlayer->MP)
+	{
+		Player::MainPlayer->MP = 0;
+	}
+
+	PlayerStatusUpdate(_Delta);
+}
+
+void PlayerUIManager::PlayerStatusUpdate(float _Delta)
+{
+	Delay -= _Delta;
+	if (0.0f < Delay)
+	{
+		return;
+	}
+
+	int PlayerHP = Player::MainPlayer->HP;
+	if (PlayerHP < CurHPScale)
+	{
+		--CurHPScale;
+		HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
+		Delay = DELAY;
+	}
+	else if (PlayerHP > CurHPScale)
+	{
+		++CurHPScale;
+		HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
+		Delay = DELAY;
+	}
 }
