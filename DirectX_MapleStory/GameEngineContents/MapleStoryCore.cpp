@@ -62,7 +62,6 @@ void MapleStoryCore::Start()
 	_Mat->SetDepthState("LessEqualDepth");
 
 	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
-	// GameEngineCore::CreateLevel<PlayLevel>("2.PlayLevel");
 	GameEngineCore::CreateLevel<ServerLevel>("2.ServerLevel");
 	GameEngineCore::CreateLevel<Boss_WaitingRoom>("Boss_WaitingRoom");
 	GameEngineCore::CreateLevel<Lucid_Enter>("3.Lucid_Enter");
@@ -73,7 +72,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
 	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
 
-	GameEngineCore::ChangeLevel("1.TitleLevel");
+	GameEngineCore::ChangeLevel("4.Lucid_Phase1");
 }
 
 

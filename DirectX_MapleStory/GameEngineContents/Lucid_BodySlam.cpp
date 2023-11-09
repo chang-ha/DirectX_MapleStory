@@ -75,8 +75,8 @@ void Lucid_BodySlam::Start()
 
 void Lucid_BodySlam::Update(float _Delta)
 {
-	GameEngineInput::AddInputObject(this);
 	StateUpdate(_Delta);
+	AttackFunction.AttackUpdate(BodySlamCollision, CollisionOrder::Player, "", 1.0f, 1, 50, false);
 }
 
 void Lucid_BodySlam::Release()

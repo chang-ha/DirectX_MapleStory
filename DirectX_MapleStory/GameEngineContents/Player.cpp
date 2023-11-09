@@ -13,7 +13,7 @@
 #define MIN_CAMERA_MOVE 15.0f
 
 Player* Player::MainPlayer = nullptr;
-int Player::PlayerHP = 100;
+int Player::PlayerHP = PLAYER_MAX_HP;
 
 Player::Player() 
 {
@@ -151,6 +151,15 @@ void Player::Update(float _Delta)
 	ContentActor::Update(_Delta);
 	ChasingCamera(_Delta);
 	BlockOutMap();
+
+	if (0 == HP && true == HitCollision->IsUpdate())
+	{
+		HitCollision->Off();
+	}
+	else if (0 != HP && false == HitCollision->IsUpdate())
+	{
+		HitCollision->On();
+	}
 
 	if (false == IsTempInputValue)
 	{

@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseSkillActor.h"
 
+#define HIT_TIME 0.2f
+
 class PhalanxCharge_Actor : public BaseSkillActor
 {
 	friend class PhalanxCharge;
@@ -23,11 +25,13 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
+	std::map<std::shared_ptr<GameEngineCollision>, float> CollisionTime;
 
 private:
 	int HitCount = 0;
 	float4 MoveDir = float4::ZERO;
 
 	void SwitchDir();
+	void CollisionTimeUpdate(float _Delta);
 };
 

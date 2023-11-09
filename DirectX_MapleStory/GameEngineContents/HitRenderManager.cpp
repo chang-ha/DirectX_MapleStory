@@ -45,6 +45,23 @@ void HitRenderManager::Update(float _Delta)
 
 void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, GameEngineObject* _Object, int _Damage, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
 {
+	if ("" == _HitSpriteName)
+	{
+		ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
+		if (nullptr != _BaseActor)
+		{
+			if (-1 == _Damage)
+			{
+				_BaseActor->AddHP(-_HitCount);
+			}
+			else
+			{
+				_BaseActor->AddHP(-_Damage);
+			}
+		}
+		return;
+	}
+
 	GameEngineRandom RandomActor;
 	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
 	_Data->Object = _Object;

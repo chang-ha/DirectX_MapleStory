@@ -1,7 +1,6 @@
 #pragma once
 #include "ContentActor.h"
-
-#define HIT_TIME 0.2f
+#include "AttackFunction.h"
 
 class BaseSkillActor : public ContentActor
 {
@@ -24,7 +23,8 @@ protected:
 	float4 Scale = float4::ZERO;
 	float4 CurMapScale = float4::ZERO;
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
-	std::map<std::shared_ptr<GameEngineCollision>, float> CollisionTime;
+	// std::map<std::shared_ptr<GameEngineCollision>, float> CollisionTime;
+	HitTimeAttackFunction AttackFunction;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -34,7 +34,7 @@ protected:
 
 	virtual void MoveUpdate(float _Delta);
 	void BlockOutMap();
-	void CollisionTimeUpdate(float _Delta);
+	// void CollisionTimeUpdate(float _Delta);
 
 	virtual void SetDir(ActorDir _Dir)
 	{

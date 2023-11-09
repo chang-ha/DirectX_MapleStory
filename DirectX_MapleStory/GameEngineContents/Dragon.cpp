@@ -114,6 +114,7 @@ void Dragon::Start()
 void Dragon::Update(float _Delta)
 {
 	StateUpdate(_Delta);
+	AttackFunction.AttackUpdate(BreathCollision, CollisionOrder::Player, "Lucid_Phase1_Dragon_Attack_Hit", 0.2f, 1, PLAYER_MAX_HP, false, PivotType::Center);
 }
 
 void Dragon::Release()

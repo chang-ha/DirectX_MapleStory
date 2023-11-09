@@ -37,7 +37,7 @@ void Arrow::Start()
 		ArrowCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 	}
 
-	if (nullptr == GameEngineSprite::Find("TestArrow"))
+	if (nullptr == GameEngineSprite::Find("SongOfHeaven_Actor_Arrow"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");

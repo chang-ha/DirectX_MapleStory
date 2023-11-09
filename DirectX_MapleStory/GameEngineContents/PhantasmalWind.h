@@ -34,6 +34,6 @@ private:
 	float4 MoveVector = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> PhantasmaCollision = nullptr;
-	OneHitAttackFunction AttackFunction;
+	HitTimeAttackFunction AttackFunction;
 };
 

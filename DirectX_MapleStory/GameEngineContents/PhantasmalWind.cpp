@@ -71,7 +71,8 @@ void PhantasmalWind::Update(float _Delta)
 	}
 
 	Transform.AddLocalPosition( MoveVector * Speed * _Delta);
-	AttackFunction.AttackUpdate(PhantasmaCollision, CollisionOrder::Player, "Lucid_Phase1_PhantasmalWind_Hit", 1, 10, false);
+	AttackFunction.AttackUpdate(PhantasmaCollision, CollisionOrder::Player, "Lucid_Phase1_PhantasmalWind_Hit", 1.0f, 1, 10, false, PivotType::Center);
+	AttackFunction.CollisionTimeUpdate(_Delta);
 }
 
 void PhantasmalWind::Release()

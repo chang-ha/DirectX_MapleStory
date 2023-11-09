@@ -1,4 +1,5 @@
 #pragma once
+#include "AttackFunction.h"
 
 class Laser : public GameEngineActor
 {
@@ -26,6 +27,6 @@ protected:
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> LaserRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> LaserCollision = nullptr;
-
+	OneHitAttackFunction AttackFunction;
 };
 

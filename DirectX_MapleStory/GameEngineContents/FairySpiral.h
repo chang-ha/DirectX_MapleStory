@@ -1,5 +1,6 @@
 #pragma once
 #include "ContentSkill.h"
+#include "AttackFunction.h"
 
 // Ό³Έν :
 class FairySpiral : public ContentSkill
@@ -28,5 +29,6 @@ protected:
 private:
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
 	std::set<GameEngineObject*> CollisionActor;
+	OneHitAttackFunction AttackFunction;
 };
 

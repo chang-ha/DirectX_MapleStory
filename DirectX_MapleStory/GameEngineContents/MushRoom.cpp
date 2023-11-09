@@ -29,6 +29,11 @@ void MushRoom::Start()
 	MushCollision->Transform.SetLocalPosition({0, 100});
 	MushCollision->Off();
 
+	AttackCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+	AttackCollision->Transform.SetLocalScale({ 80, 80 });
+	AttackCollision->Transform.SetLocalPosition({ -10, 80 });
+	AttackCollision->Off();
+
 	if (nullptr == GameEngineSprite::Find("Lucid_Phase1_MushRoom_Move"))
 	{
 		GameEngineDirectory Dir;
@@ -71,6 +76,8 @@ void MushRoom::Update(float _Delta)
 	{
 		ChangeState(MushState::Death);
 	}
+
+	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, "", 1.0f, 1, 10, false);
 }
 
 void MushRoom::Release()
@@ -85,6 +92,12 @@ void MushRoom::Release()
 	{
 		MushCollision->Death();
 		MushCollision = nullptr;
+	}
+
+	if (nullptr != AttackCollision)
+	{
+		AttackCollision->Death();
+		AttackCollision = nullptr;
 	}
 }
 
@@ -155,6 +168,7 @@ void MushRoom::StateUpdate(float _Delta)
 void MushRoom::IdleStart()
 {
 	MushCollision->On();
+	AttackCollision->On();
 	MushRenderer->ChangeAnimation("Idle");
 	MushRenderer->SetPivotType(PivotType::Bottom);
 }

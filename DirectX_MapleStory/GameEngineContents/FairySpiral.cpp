@@ -24,7 +24,8 @@ void FairySpiral::Init()
 
 void FairySpiral::UseSkill()
 {
-	CollisionActor.clear();
+	AttackFunction.CollisionActor.clear();
+	// CollisionActor.clear();
 
 	ContentSkill::UseSkill();
 	On();
@@ -104,7 +105,8 @@ void FairySpiral::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
-	SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
+	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "FairySprial_Hit", 6);
+	// SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
 }
 
 void FairySpiral::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)

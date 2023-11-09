@@ -96,6 +96,7 @@ void PhalanxCharge_Actor::Update(float _Delta)
 	}
 
 	BaseSkillActor::Update(_Delta);
+	CollisionTimeUpdate(_Delta);
 
 	if (SPEED == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{
@@ -111,7 +112,6 @@ void PhalanxCharge_Actor::Update(float _Delta)
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)
 			{
 				std::shared_ptr<GameEngineCollision> _Other = std::dynamic_pointer_cast<GameEngineCollision>(_CollisionGroup[i]->shared_from_this());
-				// GameEngineCollision* _Other = _CollisionGroup[i];
 				if (false == CollisionTime.contains(_Other))
 				{
 					CollisionTime[_Other] = 0.0f;
@@ -147,5 +147,13 @@ void PhalanxCharge_Actor::SwitchDir()
 	default:
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
+	}
+}
+
+void PhalanxCharge_Actor::CollisionTimeUpdate(float _Delta)
+{
+	for (std::pair<const std::shared_ptr<GameEngineCollision>, float>& _Pair : CollisionTime)
+	{
+		_Pair.second -= _Delta;
 	}
 }

@@ -34,7 +34,7 @@ void Laser::Start()
 
 void Laser::Update(float _Delta)
 {
-
+	AttackFunction.AttackUpdate(LaserCollision, CollisionOrder::Player, "Phase1_Hit", 1, 8, false, PivotType::Center);
 }
 
 void Laser::Release()

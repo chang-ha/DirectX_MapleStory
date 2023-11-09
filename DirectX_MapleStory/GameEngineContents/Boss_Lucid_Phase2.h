@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseBossActor.h"
+#include "AttackFunction.h"
 
 #define Laser_Pattern_Cooldown 10.0f
 #define BodySlam_Pattern_Cooldown 10.0f

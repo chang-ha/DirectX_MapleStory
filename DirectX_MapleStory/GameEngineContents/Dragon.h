@@ -1,4 +1,5 @@
 #pragma once
+#include "AttackFunction.h"
 
 enum class DragonState
 {
@@ -66,6 +67,7 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> DragonRenderer = nullptr;
 	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> BreathRenderers;
 	std::shared_ptr<GameEngineCollision> BreathCollision = nullptr;
+	HitTimeAttackFunction AttackFunction;
 
 	///// State
 	// Start

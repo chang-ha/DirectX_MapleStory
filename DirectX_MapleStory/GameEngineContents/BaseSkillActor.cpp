@@ -54,7 +54,8 @@ void BaseSkillActor::Update(float _Delta)
 	ContentActor::Update(_Delta);
 	BlockOutMap();
 	MoveUpdate(_Delta);
-	CollisionTimeUpdate(_Delta);
+	// CollisionTimeUpdate(_Delta);
+	AttackFunction.CollisionTimeUpdate(_Delta);
 }
 
 void BaseSkillActor::Release()
@@ -71,7 +72,8 @@ void BaseSkillActor::Release()
 		SkillCollision = nullptr;
 	}
 
-	 CollisionTime.clear();
+	AttackFunction.CollisionTime.clear();
+	// CollisionTime.clear();
 }
 
 void BaseSkillActor::MoveUpdate(float _Delta)
@@ -131,10 +133,10 @@ void BaseSkillActor::BlockOutMap()
 	}
 }
 
-void BaseSkillActor::CollisionTimeUpdate(float _Delta)
-{
-	for (std::pair<const std::shared_ptr<GameEngineCollision>, float>& _Pair : CollisionTime)
-	{
-		_Pair.second -= _Delta;
-	}
-}
+//void BaseSkillActor::CollisionTimeUpdate(float _Delta)
+//{
+//	for (std::pair<const std::shared_ptr<GameEngineCollision>, float>& _Pair : CollisionTime)
+//	{
+//		_Pair.second -= _Delta;
+//	}
+//}

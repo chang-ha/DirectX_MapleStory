@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ContentActor.h"
+#include "AttackFunction.h"
 
 enum class GolemState
 {
@@ -31,12 +32,9 @@ public:
 	Golem& operator=(const Golem& _Other) = delete;
 	Golem& operator=(Golem&& _Other) noexcept = delete;
 
-	/// <summary>
-	/// Init 1 or 2
-	/// </summary>
-	/// <param name="_PhaseNumber"> == CurPhaseNumber</param>
 	void Init(Golem_Phase _Phase)
 	{
+		Phase = _Phase;
 		Init(static_cast<int>(_Phase));
 	}
 	
@@ -61,10 +59,13 @@ protected:
 	void AttackUpdate(float _Delta);
 	void DeathUpdate(float _Delta);
 
+	Golem_Phase Phase = Golem_Phase::Phase1;
 	GolemState State = GolemState::Ready;
 	std::shared_ptr<GameEngineCollision> GolemCollision = nullptr;
 
 	void Init(int _PhaseNumber);
 private:
+	std::shared_ptr<GameEngineCollision> TakeDownCollision = nullptr;
+	OneHitAttackFunction AttackFunction;
 };
 

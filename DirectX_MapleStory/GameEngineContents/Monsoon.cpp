@@ -15,7 +15,8 @@ Monsoon::~Monsoon()
 
 void Monsoon::UseSkill()
 {
-	CollisionActor.clear();
+	AttackFunction.CollisionActor.clear();
+	// CollisionActor.clear();
 
 	On();
 	ContentSkill::UseSkill();
@@ -121,9 +122,9 @@ void Monsoon::Update(float _Delta)
 	float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();
 	CameraPos.Z = RenderDepth::skill;
 	SceneRenderer->Transform.SetWorldPosition(CameraPos);
-	// AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster ,"Monsoon_Hit", 12, -1, false);
+	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster ,"Monsoon_Hit", 12, -1, true);
 
-	SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));
+	// SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));
 }
 
 void Monsoon::Release()

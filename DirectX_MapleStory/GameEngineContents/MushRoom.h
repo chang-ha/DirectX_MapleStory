@@ -1,5 +1,6 @@
 #pragma once
 #include "ContentActor.h"
+#include "AttackFunction.h"
 
 enum class MushState
 {
@@ -41,6 +42,8 @@ private:
 	MushState State = MushState::Ready;
 	std::shared_ptr<GameEngineSpriteRenderer> MushRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> MushCollision = nullptr;
+	std::shared_ptr<GameEngineCollision> AttackCollision = nullptr;
+	HitTimeAttackFunction AttackFunction;
 
 	void IdleStart();
 	void MoveStart();

@@ -1,4 +1,5 @@
 #pragma once
+#include "AttackFunction.h"
 
 class BodySlamData
 {
@@ -55,6 +56,7 @@ private:
 	std::vector<BodySlamData> MoveLocation;
 	std::shared_ptr<GameEngineSpriteRenderer> BodySlamRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BodySlamCollision = nullptr;
+	HitTimeAttackFunction AttackFunction;
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;

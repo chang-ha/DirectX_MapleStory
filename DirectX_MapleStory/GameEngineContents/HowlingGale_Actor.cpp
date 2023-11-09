@@ -4,7 +4,7 @@
 #include "HitRenderManager.h"
 #include "BaseWindActor.h"
 
-#define SPEED 150.0f
+#define SPEED 130.0f
 
 HowlingGale_Actor* HowlingGale_Actor::MainHowlingGale = nullptr;
 
@@ -90,31 +90,13 @@ void HowlingGale_Actor::Update(float _Delta)
 
 	if (SPEED == Speed && true == SkillCollision->Collision(CollisionOrder::Monster))
 	{
-		Speed = SPEED / 2;
+		Speed = SPEED / 4;
 	}
-	else if (SPEED / 2 == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
+	else if (SPEED / 4 == Speed && false == SkillCollision->Collision(CollisionOrder::Monster))
 	{
 		Speed = SPEED;
 	}
 
-	SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
-		{
-			for (size_t i = 0; i < _CollisionGroup.size(); i++)
-			{
-				std::shared_ptr<GameEngineCollision> _Other = std::dynamic_pointer_cast<GameEngineCollision>(_CollisionGroup[i]->shared_from_this());
-				// GameEngineCollision* _Other = _CollisionGroup[i];
-				if (false == CollisionTime.contains(_Other))
-				{
-					CollisionTime[_Other] = 0.0f;
-				}
-
-				if (0.0f >= CollisionTime[_Other])
-				{
-					HitRenderManager::MainHitRenderManager->HitPrint("HowlingGale_Hit", 3, _Other->GetParentObject());
-					CollisionTime[_Other] = HIT_TIME;
-				}
-			}
-		}
-	);
+	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "HowlingGale_Hit", 0.1f, 3);
 }
 

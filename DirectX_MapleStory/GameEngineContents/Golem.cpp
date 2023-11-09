@@ -36,6 +36,14 @@ void Golem::Start()
 		GolemCollision->Transform.SetLocalPosition({ 0, 100 });
 		GolemCollision->Off();
 	}
+
+	if (nullptr == TakeDownCollision)
+	{
+		TakeDownCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+		TakeDownCollision->Transform.SetLocalScale({ 30, 30 });
+		TakeDownCollision->Transform.SetLocalPosition({ 0, 30 });
+		TakeDownCollision->Off();
+	}
 }
 
 void Golem::Update(float _Delta)
@@ -46,6 +54,11 @@ void Golem::Update(float _Delta)
 	if (0 >= HP)
 	{
 		ChangeState(GolemState::Death);
+	}
+
+	if (Golem_Phase::Phase1 == Phase)
+	{
+		AttackFunction.AttackUpdate(TakeDownCollision, CollisionOrder::Player, "Lucid_Phase1_Golem_TakeDown_Hit", 1, 33, false);
 	}
 }
 
@@ -93,6 +106,12 @@ void Golem::Init(int _PhaseNumber)
 		{
 			GravityOn();
 			MoveVectorForce.Y -= 800.0f;
+		}
+	);
+
+	MainSpriteRenderer->SetFrameEvent("Revive", 2, [&](GameEngineSpriteRenderer*)
+		{
+			TakeDownCollision->Off();
 		}
 	);
 
@@ -184,6 +203,7 @@ void Golem::ReadyUpdate(float _Delta)
 {
 	if (true == IsGround)
 	{
+		TakeDownCollision->On();
 		ChangeState(GolemState::Revive);
 	}
 }
