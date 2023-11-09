@@ -49,7 +49,7 @@ protected:
 
 private:
 	std::shared_ptr<GameEngineUIRenderer> QuickSlot;
-	std::shared_ptr<class HitRenderManager> HitManager;
+	std::shared_ptr<class HitRenderManager> HitPrintManager;
 	std::map<std::string, std::shared_ptr<class ContentSkill>> AllSkills;
  
 	void SkillInit(std::shared_ptr<class ContentSkill> _Skill);

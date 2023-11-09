@@ -10,6 +10,8 @@
 #include "ButterFly.h"
 #include "BossHpBar.h"
 #include "FadeObject.h"
+#include "Player.h"
+
 Boss_Lucid_Phase2::Boss_Lucid_Phase2()
 {
 
@@ -402,6 +404,7 @@ void Boss_Lucid_Phase2::DeathStart()
 {
 	BossRenderer->ChangeAnimation("Death");
 	BossCollision->Off();
+	Player::MainPlayer->PlayerCollisionOff();
 
 	switch (Dir)
 	{

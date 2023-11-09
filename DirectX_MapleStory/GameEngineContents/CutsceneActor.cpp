@@ -63,7 +63,6 @@ void CutsceneActor::Release()
 
 	if (nullptr != GameEngineSprite::Find(std::string(BossName) + "_Cutscene"))
 	{
-		GameEngineTexture::Release(std::string(BossName) + "_Cutscene");
 		GameEngineSprite::Release(std::string(BossName) + "_Cutscene");
 	}
 }

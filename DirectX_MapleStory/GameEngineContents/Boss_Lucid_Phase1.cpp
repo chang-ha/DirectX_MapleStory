@@ -397,6 +397,7 @@ void Boss_Lucid_Phase1::DeathStart()
 	BossRenderer->ChangeAnimation("Death");
 	FlowerRenderer->Off();
 	BossCollision->Off();
+	Player::MainPlayer->PlayerCollisionOff();
 }
 
 void Boss_Lucid_Phase1::PhantasmalWindStart()

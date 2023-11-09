@@ -77,6 +77,16 @@ public:
 		IsTempInputValue = false;
 	}
 
+	void PlayerCollisionOn()
+	{
+		HitCollision->On();
+	}
+
+	void PlayerCollisionOff()
+	{
+		HitCollision->Off();
+	}
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;

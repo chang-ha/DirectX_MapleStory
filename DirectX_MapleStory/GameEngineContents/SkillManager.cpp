@@ -109,7 +109,7 @@ void SkillManager::Start()
 	{
 		GameEngineFile File;
 		File.MoveParentToExistsChild("ContentResources");
-		File.MoveChild("ContentResources\\Textures\\UI\\QuickSlot.png");
+		File.MoveChild("ContentResources\\Textures\\UI\\QuickSlot\\QuickSlot.png");
 		GameEngineTexture::Load(File.GetStringPath());
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
@@ -121,7 +121,7 @@ void SkillManager::Start()
 	QuickSlot->Transform.SetLocalPosition({GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui});
 	// QuickSlot->SetAutoScaleRatio(1.1f);
 
-	HitManager = GetLevel()->CreateActor<HitRenderManager>(UpdateOrder::Skill);
+	HitPrintManager = GetLevel()->CreateActor<HitRenderManager>(UpdateOrder::Skill);
 }
 
 void SkillManager::Update(float _Delta)
