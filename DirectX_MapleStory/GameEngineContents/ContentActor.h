@@ -124,8 +124,8 @@ protected:
 	ActorDir Dir = ActorDir::Null;
 	float GravityForce = 0.0f;
 	float MaxGraviry = 10.0f;
-	float UpYPivot = 1.0f;
-	float DownYPivot = 0.0f;
+	int UpYPivot = 1;
+	int DownYPivot = 0;
 	float4 MoveVectorForce = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
 

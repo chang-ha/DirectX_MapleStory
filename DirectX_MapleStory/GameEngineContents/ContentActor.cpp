@@ -166,7 +166,7 @@ void ContentActor::CalcuMove(float _Delta)
 		}
 
 		CheckColor = CheckGroundColor(MovePos + float4::UP);
-		UpYPivot = 1.0f;
+		UpYPivot = 1;
 		if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
 			// 내 위에 땅이 몇 블록인지 체크
@@ -174,7 +174,7 @@ void ContentActor::CalcuMove(float _Delta)
 			while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
 			{
 				++UpYPivot;
-				PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
+				PivotColor = CheckGroundColor(MovePos + float4(0, static_cast<float>(UpYPivot)));
 			}
 
 			// 올라가는 경사면 타는 중이면 1칸씩 올려줌
@@ -195,14 +195,14 @@ void ContentActor::CalcuMove(float _Delta)
 		}
 
 		CheckColor = CheckGroundColor(MovePos);
-		DownYPivot = 0.0f;
+		DownYPivot = 0;
 		if ( (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
 		{
 			GameEngineColor PivotColor = LADDER_COLOR;
 			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
 			{
 				--DownYPivot;
-				PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
+				PivotColor = CheckGroundColor(MovePos + float4(0, static_cast<float>(DownYPivot)));
 			}
 
 			// 내려가는 경사면 타는 중이면 1칸씩 내려줌
@@ -216,7 +216,7 @@ void ContentActor::CalcuMove(float _Delta)
 		// 이동중 땅을 만나면 멈춤
 		if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
-			Transform.AddLocalPosition(MovePos);
+			// Transform.AddLocalPosition(MovePos);
 			GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
 			GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
 
@@ -231,7 +231,7 @@ void ContentActor::CalcuMove(float _Delta)
 			}
 
 			MoveVectorForceReset();
-			break;
+			// break;
 		}
 
 		Transform.AddLocalPosition(MovePos);

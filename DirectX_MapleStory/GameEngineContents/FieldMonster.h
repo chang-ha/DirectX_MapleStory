@@ -2,7 +2,7 @@
 #include "ContentActor.h"
 #include "AttackFunction.h"
 
-#define ATTACK_COOLDOWN 1.5f
+// #define ATTACK_COOLDOWN 1.5f
 
 enum class FieldMonsterState
 {
@@ -28,17 +28,22 @@ public:
 
 	void ChangeState(FieldMonsterState _State);
 	void StateUpdate(float _Delta);
-	void Init(std::string_view _MonsterName);
 
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
-	void ChangeDir();
 
-	float Speed = 100.0f;
-	float AttackCoolDown = ATTACK_COOLDOWN;
+	void Init(std::string_view _MonsterName);
+	void ChangeDir();
+	void RandomChangeDir();
+	void RandomChangeDirTime(float _MinTime, float _MaxTime);
+
+	float Speed = 80.0f;
+	float MoveDelay = 2.0f;
+	float ChangeDirTime = 3.0f;
+	// float AttackCoolDown = ATTACK_COOLDOWN;
 	std::string MonsterName = "";
 	ActorDir Dir = ActorDir::Null;
 	FieldMonsterState State = FieldMonsterState::Ready;
@@ -47,7 +52,6 @@ protected:
 	std::shared_ptr<GameEngineCollision> AttackCollision = nullptr;
 	OneHitAttackFunction AttackFunction;
 
-private:
 	// Start
 	virtual void ReadyStart();
 	virtual void IdleStart();
@@ -55,6 +59,7 @@ private:
 	virtual void AttackStart();
 	virtual void DeathStart();
 
+private:
 	void ReadyUpdate(float _Delta);
 	void IdleUpdate(float _Delta);
 	void MoveUpdate(float _Delta);

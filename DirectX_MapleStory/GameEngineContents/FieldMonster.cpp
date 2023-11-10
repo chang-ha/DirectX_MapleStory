@@ -43,6 +43,7 @@ void FieldMonster::Start()
 
 	// AttackFunction;
 	GameEngineInput::AddInputObject(this);
+	IsGroundVectorReset = false;
 }
 
 void FieldMonster::Update(float _Delta)
@@ -77,7 +78,7 @@ void FieldMonster::Update(float _Delta)
 		ChangeDir();
 	}
 
-	AttackCoolDown -= _Delta;
+	// AttackCoolDown -= _Delta;
 	ContentActor::Gravity(_Delta);
 	IsGround = ContentActor::CheckGround();
 	//if (true == IsGround)
@@ -92,7 +93,7 @@ void FieldMonster::Update(float _Delta)
 		ChangeState(FieldMonsterState::Death);
 	}
 
-	if (0.0f >= AttackCoolDown && true == DetectCollision->Collision(CollisionOrder::Player))
+	if (/*0.0f >= AttackCoolDown &&*/ true == DetectCollision->Collision(CollisionOrder::Player))
 	{
 		ChangeState(FieldMonsterState::Attack);
 	}
@@ -193,31 +194,6 @@ void FieldMonster::Init(std::string_view _MonsterName)
 		}
 	}
 
-	if (nullptr != GameEngineSprite::Find(std::string(MonsterName) + "_Ready"))
-	{
-		MainSpriteRenderer->CreateAnimation("Ready", std::string(MonsterName) + "_Ready", 0.12f, -1, -1, false);
-	}
-
-	MainSpriteRenderer->CreateAnimation("Idle", std::string(MonsterName) + "_Idle", 0.18f);
-	MainSpriteRenderer->CreateAnimation("Move", std::string(MonsterName) + "_Move", 0.15f);
-	MainSpriteRenderer->CreateAnimation("Attack", std::string(MonsterName) + "_Attack");
-	MainSpriteRenderer->CreateAnimation("Death", std::string(MonsterName) + "_Death");
-
-	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer* _Renderer)
-		{
-			Death();
-		});
-
-	MainSpriteRenderer->SetFrameEvent("Attack", 8, [&](GameEngineSpriteRenderer* _Renderer)
-		{
-			AttackCollision->On();
-		});
-
-	MonsterCollision->Transform.SetLocalScale({ 1, 1 });
-	AttackCollision->Transform.SetLocalScale({ 250, 150 });
-
-	IsGroundVectorReset = false;
-	ReadyStart();
 }
 
 void FieldMonster::ChangeDir()
@@ -241,18 +217,34 @@ void FieldMonster::ChangeDir()
 	}
 }
 
+void FieldMonster::RandomChangeDir()
+{
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr));
+	int RandomInt = Random.RandomInt(0, 1);
+	if (0 == RandomInt)
+	{
+		ChangeDir();
+	}
+
+	return;
+}
+
+void FieldMonster::RandomChangeDirTime(float _MinTime, float _MaxTime)
+{
+	GameEngineRandom Random;
+	Random.SetSeed(time(nullptr));
+	ChangeDirTime = Random.RandomFloat(_MinTime, _MaxTime);
+}
 
 void FieldMonster::ReadyStart()
 {
 	Dir = ActorDir::Left;
 	MainSpriteRenderer->RightFlip();
-	MainSpriteRenderer->SetPivotValue({ 0.5f, 0.9f });
-	MainSpriteRenderer->ChangeAnimation("Ready");
 }
 
 void FieldMonster::IdleStart()
 {
-
 	switch (Dir)
 	{
 	case ActorDir::Right:
@@ -265,28 +257,10 @@ void FieldMonster::IdleStart()
 	default:
 		break;
 	}
-
-	MainSpriteRenderer->SetPivotValue({ 0.5f, 0.97f });
-	MainSpriteRenderer->ChangeAnimation("Idle");
 }
 
 void FieldMonster::MoveStart()
 {
-	MoveVectorForce.Y = 0.0f;
-	GameEngineRandom Random;
-	Random.SetSeed(reinterpret_cast<long long>(this));
-	int RandomInt = Random.RandomInt(0, 1);
-	if (0 == RandomInt)
-	{
-		Dir = ActorDir::Left;
-	}
-	else
-	{
-		Dir = ActorDir::Right;
-	}
-
-	MainSpriteRenderer->SetPivotValue({ 0.5f, 0.96f });
-	MainSpriteRenderer->ChangeAnimation("Move");
 	switch (Dir)
 	{
 		break;
@@ -303,6 +277,8 @@ void FieldMonster::MoveStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	MainSpriteRenderer->ChangeAnimation("Move");
 }
 
 void FieldMonster::AttackStart()
@@ -323,14 +299,20 @@ void FieldMonster::AttackStart()
 	{
 		break;
 	case ActorDir::Right:
-		MainSpriteRenderer->SetPivotValue({ 0.662f, 0.858f });
 		MainSpriteRenderer->LeftFlip();
-		AttackCollision->Transform.SetLocalPosition({ 175, 50});
+		if (0.0f > MoveVectorForce.X)
+		{
+			MoveVectorForce.X *= -1.0f;
+			RandomChangeDirTime(4.0f, 5.0f);
+		}
 		break;
 	case ActorDir::Left:
-		MainSpriteRenderer->SetPivotValue({ 0.338f, 0.858f });
 		MainSpriteRenderer->RightFlip();
-		AttackCollision->Transform.SetLocalPosition({ -175, 50 });
+		if (0.0f < MoveVectorForce.X)
+		{
+			MoveVectorForce.X *= -1.0f;
+			RandomChangeDirTime(4.0f, 5.0f);
+		}
 		break;
 	case ActorDir::Null:
 	default:
@@ -346,12 +328,10 @@ void FieldMonster::DeathStart()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		MainSpriteRenderer->SetPivotValue({ 0.465f, 0.94f });
-		MainSpriteRenderer->LeftFlip();
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Left:
-		MainSpriteRenderer->SetPivotValue({ 0.535f, 0.94f });
-		MainSpriteRenderer->RightFlip();
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -374,11 +354,23 @@ void FieldMonster::ReadyUpdate(float _Delta)
 
 void FieldMonster::IdleUpdate(float _Delta)
 {
+	MoveDelay -= _Delta;
 
+	if (0.0f >= MoveDelay)
+	{
+		ChangeState(FieldMonsterState::Move);
+	}
 }
 
 void FieldMonster::MoveUpdate(float _Delta)
 {
+	ChangeDirTime -= _Delta;
+	if (0.0f >= ChangeDirTime)
+	{
+		RandomChangeDirTime(3.0f, 6.0f);
+		RandomChangeDir();
+	}
+
 	float MovePosDelta = MoveVectorForce.X * _Delta;
 	if (0.0f == MovePosDelta)
 	{
@@ -414,7 +406,7 @@ void FieldMonster::MoveUpdate(float _Delta)
 		}
 
 		CheckColor = CheckGroundColor(MovePos + float4::UP);
-		UpYPivot = 1.0f;
+		UpYPivot = 1;
 		if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
 			// 내 위에 땅이 몇 블록인지 체크
@@ -422,7 +414,7 @@ void FieldMonster::MoveUpdate(float _Delta)
 			while (UP_PIXEL_LIMIT >= UpYPivot && (GROUND_COLOR == PivotColor || FLOOR_COLOR == PivotColor))
 			{
 				++UpYPivot;
-				PivotColor = CheckGroundColor(MovePos + float4(0, UpYPivot));
+				PivotColor = CheckGroundColor(MovePos + float4(0, static_cast<float>(UpYPivot)));
 			}
 
 			// 올라가는 경사면 타는 중이면 1칸씩 올려줌
@@ -437,20 +429,21 @@ void FieldMonster::MoveUpdate(float _Delta)
 			{
 				MovePos = float4::ZERO;
 				ChangeDir();
+				RandomChangeDirTime(2.0f, 4.0f);
 				// IsWall = true;
 				break;
 			}
 		}
 
 		CheckColor = CheckGroundColor(MovePos);
-		DownYPivot = 0.0f;
+		DownYPivot = 0;
 		if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
 		{
 			GameEngineColor PivotColor = LADDER_COLOR;
 			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
 			{
 				--DownYPivot;
-				PivotColor = CheckGroundColor(MovePos + float4(0, DownYPivot));
+				PivotColor = CheckGroundColor(MovePos + float4(0, static_cast<float>(DownYPivot)));
 			}
 
 			// 내려가는 경사면 타는 중이면 1칸씩 내려줌
@@ -465,6 +458,7 @@ void FieldMonster::MoveUpdate(float _Delta)
 			{
 				MovePos = float4::ZERO;
 				ChangeDir();
+				RandomChangeDirTime(2.0f, 4.0f);
 				break;
 			}
 		}
@@ -477,10 +471,10 @@ void FieldMonster::AttackUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
-		ChangeState(FieldMonsterState::Idle);
+		ChangeState(FieldMonsterState::Move);
 	}
 
-	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, MonsterName + "_Attack_Hit", 1, 5, false);
+	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, MonsterName + "_Attack_Hit", 1, 3, false);
 }
 
 void FieldMonster::DeathUpdate(float _Delta)
@@ -496,17 +490,28 @@ void FieldMonster::ReadyEnd()
 
 void FieldMonster::IdleEnd()
 {
-
+	MoveVectorForce.Y = 0.0f;
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr));
+	int RandomInt = Random.RandomInt(0, 1);
+	if (0 == RandomInt)
+	{
+		Dir = ActorDir::Left;
+	}
+	else
+	{
+		Dir = ActorDir::Right;
+	}
 }
 
 void FieldMonster::MoveEnd()
 {
-
+	// ChangeDirTime = 0.0f;
 }
 
 void FieldMonster::AttackEnd()
 {
-	AttackCoolDown = ATTACK_COOLDOWN;
+	// AttackCoolDown = ATTACK_COOLDOWN;
 	AttackCollision->Off();
 	AttackFunction.CollisionActor.clear();
 }

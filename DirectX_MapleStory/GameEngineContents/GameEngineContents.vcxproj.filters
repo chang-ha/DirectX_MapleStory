@@ -212,7 +212,13 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="FieldMonster.cpp">
-      <Filter>Actor\Monster</Filter>
+      <Filter>Actor\Monster\FieldMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="BlueEyed_Gargoyle.cpp">
+      <Filter>Actor\Monster\FieldMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="RedEyed_Gargoyle.cpp">
+      <Filter>Actor\Monster\FieldMonster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -427,7 +433,13 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="FieldMonster.h">
-      <Filter>Actor\Monster</Filter>
+      <Filter>Actor\Monster\FieldMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="BlueEyed_Gargoyle.h">
+      <Filter>Actor\Monster\FieldMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="RedEyed_Gargoyle.h">
+      <Filter>Actor\Monster\FieldMonster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +517,9 @@
     </Filter>
     <Filter Include="Level\HuntingField">
       <UniqueIdentifier>{697cd2ad-d9da-4a59-b2e8-936cb7d445a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Monster\FieldMonster">
+      <UniqueIdentifier>{8e90c388-1daf-4a8c-a14b-1937a3947193}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
