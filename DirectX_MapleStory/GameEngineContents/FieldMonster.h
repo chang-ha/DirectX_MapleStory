@@ -1,5 +1,8 @@
 #pragma once
-#include "ContentMonster.h"
+#include "ContentActor.h"
+#include "AttackFunction.h"
+
+#define ATTACK_COOLDOWN 1.5f
 
 enum class FieldMonsterState
 {
@@ -35,9 +38,15 @@ protected:
 	void ChangeDir();
 
 	float Speed = 100.0f;
+	float AttackCoolDown = ATTACK_COOLDOWN;
+	std::string MonsterName = "";
 	ActorDir Dir = ActorDir::Null;
 	FieldMonsterState State = FieldMonsterState::Ready;
 	std::shared_ptr<GameEngineCollision> MonsterCollision = nullptr;
+	std::shared_ptr<GameEngineCollision> DetectCollision = nullptr;
+	std::shared_ptr<GameEngineCollision> AttackCollision = nullptr;
+	OneHitAttackFunction AttackFunction;
+
 private:
 	// Start
 	virtual void ReadyStart();

@@ -67,6 +67,7 @@ enum class CollisionOrder
 	PlayerAttack,
 	Monster,
 	MonsterAttack,
+	Detect,
 	Portal,
 	Button,
 	UI,

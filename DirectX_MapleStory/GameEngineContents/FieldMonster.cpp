@@ -3,6 +3,7 @@
 #include <GameEngineBase\GameEngineRandom.h>
 
 #include "FieldMonster.h"
+#include "Player.h"
 
 FieldMonster::FieldMonster()
 {
@@ -30,7 +31,16 @@ void FieldMonster::Start()
 	MainSpriteRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
 
 	MonsterCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
-	MonsterCollision->Transform.SetLocalScale({ 1, 1 });
+	MonsterCollision->Off();
+
+	DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Detect);
+	DetectCollision->Transform.SetLocalPosition({ 0, 50 });
+	DetectCollision->Transform.SetLocalScale({ 300, 50 });
+	DetectCollision->Off();
+
+	AttackCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+	AttackCollision->Off();
+
 	// AttackFunction;
 	GameEngineInput::AddInputObject(this);
 }
@@ -67,6 +77,7 @@ void FieldMonster::Update(float _Delta)
 		ChangeDir();
 	}
 
+	AttackCoolDown -= _Delta;
 	ContentActor::Gravity(_Delta);
 	IsGround = ContentActor::CheckGround();
 	//if (true == IsGround)
@@ -75,6 +86,16 @@ void FieldMonster::Update(float _Delta)
 	//	GravityReset();
 	//}
 	StateUpdate(_Delta);
+
+	if (0 >= HP)
+	{
+		ChangeState(FieldMonsterState::Death);
+	}
+
+	if (0.0f >= AttackCoolDown && true == DetectCollision->Collision(CollisionOrder::Player))
+	{
+		ChangeState(FieldMonsterState::Attack);
+	}
 }
 
 void FieldMonster::Release()
@@ -157,29 +178,43 @@ void FieldMonster::StateUpdate(float _Delta)
 
 void FieldMonster::Init(std::string_view _MonsterName)
 {
-	if (nullptr == GameEngineSprite::Find(std::string(_MonsterName) + "_Death"))
+	MonsterName = _MonsterName;
+	if (nullptr == GameEngineSprite::Find(std::string(MonsterName) + "_Death"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Monster\\" + std::string(_MonsterName));
+		Dir.MoveChild("ContentResources\\Textures\\Monster\\" + std::string(MonsterName));
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
 		for (size_t i = 0; i < Directorys.size(); i++)
 		{
 			GameEngineDirectory& Childs = Directorys[i];
-			GameEngineSprite::CreateFolder(std::string(_MonsterName) + "_" + Childs.GetFileName(), Childs.GetStringPath());
+			GameEngineSprite::CreateFolder(std::string(MonsterName) + "_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
 	}
 
-	if (nullptr != GameEngineSprite::Find(std::string(_MonsterName) + "_Ready"))
+	if (nullptr != GameEngineSprite::Find(std::string(MonsterName) + "_Ready"))
 	{
-		MainSpriteRenderer->CreateAnimation("Ready", std::string(_MonsterName) + "_Ready", 0.12f, -1, -1, false);
+		MainSpriteRenderer->CreateAnimation("Ready", std::string(MonsterName) + "_Ready", 0.12f, -1, -1, false);
 	}
 
-	MainSpriteRenderer->CreateAnimation("Idle", std::string(_MonsterName) + "_Idle", 0.18f);
-	MainSpriteRenderer->CreateAnimation("Move", std::string(_MonsterName) + "_Move", 0.15f);
-	MainSpriteRenderer->CreateAnimation("Attack", std::string(_MonsterName) + "_Attack");
-	MainSpriteRenderer->CreateAnimation("Death", std::string(_MonsterName) + "_Death");
+	MainSpriteRenderer->CreateAnimation("Idle", std::string(MonsterName) + "_Idle", 0.18f);
+	MainSpriteRenderer->CreateAnimation("Move", std::string(MonsterName) + "_Move", 0.15f);
+	MainSpriteRenderer->CreateAnimation("Attack", std::string(MonsterName) + "_Attack");
+	MainSpriteRenderer->CreateAnimation("Death", std::string(MonsterName) + "_Death");
+
+	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer* _Renderer)
+		{
+			Death();
+		});
+
+	MainSpriteRenderer->SetFrameEvent("Attack", 8, [&](GameEngineSpriteRenderer* _Renderer)
+		{
+			AttackCollision->On();
+		});
+
+	MonsterCollision->Transform.SetLocalScale({ 1, 1 });
+	AttackCollision->Transform.SetLocalScale({ 250, 150 });
 
 	IsGroundVectorReset = false;
 	ReadyStart();
@@ -209,25 +244,15 @@ void FieldMonster::ChangeDir()
 
 void FieldMonster::ReadyStart()
 {
-	switch (Dir)
-	{
-	case ActorDir::Right:
-		MainSpriteRenderer->LeftFlip();
-		break;
-	case ActorDir::Left:
-		MainSpriteRenderer->RightFlip();
-		break;
-	case ActorDir::Null:
-	default:
-		break;
-	}
-
+	Dir = ActorDir::Left;
+	MainSpriteRenderer->RightFlip();
 	MainSpriteRenderer->SetPivotValue({ 0.5f, 0.9f });
 	MainSpriteRenderer->ChangeAnimation("Ready");
 }
 
 void FieldMonster::IdleStart()
 {
+
 	switch (Dir)
 	{
 	case ActorDir::Right:
@@ -282,16 +307,30 @@ void FieldMonster::MoveStart()
 
 void FieldMonster::AttackStart()
 {
+	float PlayerPos_X = Player::MainPlayer->Transform.GetWorldPosition().X;
+	float CurPos_X = Transform.GetWorldPosition().X;
+
+	if (0 < CurPos_X - PlayerPos_X)
+	{
+		Dir = ActorDir::Left;
+	}
+	else
+	{
+		Dir = ActorDir::Right;
+	}
+
 	switch (Dir)
 	{
 		break;
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.662f, 0.858f });
 		MainSpriteRenderer->LeftFlip();
+		AttackCollision->Transform.SetLocalPosition({ 175, 50});
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.338f, 0.858f });
 		MainSpriteRenderer->RightFlip();
+		AttackCollision->Transform.SetLocalPosition({ -175, 50 });
 		break;
 	case ActorDir::Null:
 	default:
@@ -320,6 +359,9 @@ void FieldMonster::DeathStart()
 	}
 
 	MainSpriteRenderer->ChangeAnimation("Death");
+	MonsterCollision->Off();
+	DetectCollision->Off();
+	AttackCollision->Off();
 }
 
 void FieldMonster::ReadyUpdate(float _Delta)
@@ -395,7 +437,7 @@ void FieldMonster::MoveUpdate(float _Delta)
 			{
 				MovePos = float4::ZERO;
 				ChangeDir();
-				IsWall = true;
+				// IsWall = true;
 				break;
 			}
 		}
@@ -433,7 +475,12 @@ void FieldMonster::MoveUpdate(float _Delta)
 
 void FieldMonster::AttackUpdate(float _Delta)
 {
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(FieldMonsterState::Idle);
+	}
 
+	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, MonsterName + "_Attack_Hit", 1, 5, false);
 }
 
 void FieldMonster::DeathUpdate(float _Delta)
@@ -443,7 +490,8 @@ void FieldMonster::DeathUpdate(float _Delta)
 
 void FieldMonster::ReadyEnd()
 {
-
+	MonsterCollision->On();
+	DetectCollision->On();
 }
 
 void FieldMonster::IdleEnd()
@@ -458,7 +506,9 @@ void FieldMonster::MoveEnd()
 
 void FieldMonster::AttackEnd()
 {
-
+	AttackCoolDown = ATTACK_COOLDOWN;
+	AttackCollision->Off();
+	AttackFunction.CollisionActor.clear();
 }
 
 void FieldMonster::DeathEnd()

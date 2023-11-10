@@ -96,7 +96,7 @@ void BaseWindActor::Start()
 	if (nullptr == DetectCollision)
 	{
 		// DetectCollision의 CollisionOrder 추후 변경 필요?
-		DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+		DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Detect);
 	}
 }
 
