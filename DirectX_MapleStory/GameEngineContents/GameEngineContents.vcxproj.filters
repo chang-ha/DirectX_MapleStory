@@ -220,6 +220,9 @@
     <ClCompile Include="RedEyed_Gargoyle.cpp">
       <Filter>Actor\Monster\FieldMonster</Filter>
     </ClCompile>
+    <ClCompile Include="Dreamkeeper.cpp">
+      <Filter>Actor\Monster\FieldMonster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -439,6 +442,9 @@
       <Filter>Actor\Monster\FieldMonster</Filter>
     </ClInclude>
     <ClInclude Include="RedEyed_Gargoyle.h">
+      <Filter>Actor\Monster\FieldMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="Dreamkeeper.h">
       <Filter>Actor\Monster\FieldMonster</Filter>
     </ClInclude>
   </ItemGroup>

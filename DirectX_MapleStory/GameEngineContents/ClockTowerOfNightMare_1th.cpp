@@ -7,6 +7,7 @@
 #include "FieldMonster.h"
 #include "BlueEyed_Gargoyle.h"
 #include "RedEyed_Gargoyle.h"
+#include "Dreamkeeper.h"
 
 ClockTowerOfNightMare_1th::ClockTowerOfNightMare_1th()
 {
@@ -45,11 +46,11 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_5th.png", "악몽의시계탑 5층");
 
-	std::shared_ptr<BlueEyed_Gargoyle> _FieldMonster = CreateActor<BlueEyed_Gargoyle>(UpdateOrder::Monster);
+	std::shared_ptr<Dreamkeeper> _FieldMonster = CreateActor<Dreamkeeper>(UpdateOrder::Monster);
 	_FieldMonster->Transform.SetLocalPosition({ 1000, -480 });
 
-	std::shared_ptr<RedEyed_Gargoyle> _FieldMonster2 = CreateActor<RedEyed_Gargoyle>(UpdateOrder::Monster);
-	_FieldMonster2->Transform.SetLocalPosition({ 1200, -480 });
+	//std::shared_ptr<RedEyed_Gargoyle> _FieldMonster2 = CreateActor<RedEyed_Gargoyle>(UpdateOrder::Monster);
+	//_FieldMonster2->Transform.SetLocalPosition({ 1200, -480 });
 }
 
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)

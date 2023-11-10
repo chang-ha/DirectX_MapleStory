@@ -474,7 +474,7 @@ void FieldMonster::AttackUpdate(float _Delta)
 		ChangeState(FieldMonsterState::Move);
 	}
 
-	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, MonsterName + "_Attack_Hit", 1, 3, false);
+	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, MonsterName + "_Attack_Hit", 1, 3, false, PivotType::Center);
 }
 
 void FieldMonster::DeathUpdate(float _Delta)

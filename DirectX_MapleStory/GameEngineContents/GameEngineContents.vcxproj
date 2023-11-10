@@ -283,6 +283,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Dreamkeeper.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FadeObject.cpp">
       <SubType>
       </SubType>
@@ -527,6 +531,10 @@
     </ClInclude>
     <ClInclude Include="DoubleJump.h" />
     <ClInclude Include="Dragon.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Dreamkeeper.h">
       <SubType>
       </SubType>
     </ClInclude>
