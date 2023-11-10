@@ -45,7 +45,7 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<FieldMonster> _FieldMonster = CreateActor<FieldMonster>(UpdateOrder::Monster);
 	_FieldMonster->Init("Monster2");
-	_FieldMonster->Transform.SetLocalPosition({ 1000, -500 });
+	_FieldMonster->Transform.SetLocalPosition({ 1000, -480 });
 }
 
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)

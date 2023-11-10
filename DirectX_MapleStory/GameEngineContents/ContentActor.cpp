@@ -166,7 +166,7 @@ void ContentActor::CalcuMove(float _Delta)
 		}
 
 		CheckColor = CheckGroundColor(MovePos + float4::UP);
-		float UpYPivot = 1.0f;
+		UpYPivot = 1.0f;
 		if ((GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
 			// 내 위에 땅이 몇 블록인지 체크
@@ -195,7 +195,7 @@ void ContentActor::CalcuMove(float _Delta)
 		}
 
 		CheckColor = CheckGroundColor(MovePos);
-		float DownYPivot = 0.0f;
+		DownYPivot = 0.0f;
 		if ( (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
 		{
 			GameEngineColor PivotColor = LADDER_COLOR;

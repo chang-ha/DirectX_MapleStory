@@ -32,7 +32,10 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
+	void ChangeDir();
 
+	float Speed = 100.0f;
+	ActorDir Dir = ActorDir::Null;
 	FieldMonsterState State = FieldMonsterState::Ready;
 	std::shared_ptr<GameEngineCollision> MonsterCollision = nullptr;
 private:
