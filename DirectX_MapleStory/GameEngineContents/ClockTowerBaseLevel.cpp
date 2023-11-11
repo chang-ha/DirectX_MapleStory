@@ -25,11 +25,6 @@ void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Back->Init("BG_Lucid_Next.png");
 	}
 
-	if (nullptr == SkillManagerActor)
-	{
-		SkillManagerActor = CreateActor<SkillManager>();
-	}
-
 }
 
 void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)
@@ -54,11 +49,6 @@ void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		Back = nullptr;
 	}
 
-	if (nullptr != SkillManagerActor)
-	{
-		SkillManagerActor->Death();
-		SkillManagerActor = nullptr;
-	}
 }
 
 void ClockTowerBaseLevel::Start()

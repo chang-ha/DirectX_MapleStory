@@ -23,7 +23,6 @@ protected:
 private:
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
-	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
 	std::vector<std::shared_ptr<FlowObject>> MapObjects;
 };
 

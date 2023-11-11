@@ -20,7 +20,6 @@ protected:
 
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
-	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;

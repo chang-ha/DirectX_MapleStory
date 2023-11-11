@@ -90,7 +90,6 @@ private:
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
 	std::shared_ptr<class Boss_Lucid_Phase2> Boss = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
-	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
 
 	// Map Detail
 	void ObjectUpdate(float _Delta);

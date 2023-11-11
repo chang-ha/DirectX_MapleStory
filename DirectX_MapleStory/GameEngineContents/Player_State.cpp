@@ -91,7 +91,7 @@ void Player::ShootingStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Shooting");
-	SkillManager::PlayerSkillManager->UseSkill("SongOfHeaven");
+	SkillManagerActor->UseSkill("SongOfHeaven");
 	AlertTime = ALERT_TIME;
 }
 
@@ -99,7 +99,7 @@ void Player::Attack2Start()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("FairySpiral");
-	SkillManager::PlayerSkillManager->UseSkill("FairySpiral");
+	SkillManagerActor->UseSkill("FairySpiral");
 	AlertTime = ALERT_TIME;
 }
 
@@ -109,7 +109,7 @@ void Player::WindWalkStart()
 	GravityOff();
 	IsDirCheck = false;
 	IsGroundVectorReset = false;
-	SkillManager::PlayerSkillManager->UseSkill("WindWalk");
+	SkillManagerActor->UseSkill("WindWalk");
 	if (true == IsGround)
 	{
 		MainSpriteRenderer->ChangeAnimation("WindWalk");
@@ -141,7 +141,7 @@ void Player::ShootStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Shoot");
-	SkillManager::PlayerSkillManager->UseSkill("HowlingGale");
+	SkillManagerActor->UseSkill("HowlingGale");
 	AlertTime = ALERT_TIME;
 }
 
@@ -149,7 +149,7 @@ void Player::VortexSphereStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("VortexSphere");
-	SkillManager::PlayerSkillManager->UseSkill("VortexSphere");
+	SkillManagerActor->UseSkill("VortexSphere");
 	AlertTime = ALERT_TIME;
 }
 
@@ -157,14 +157,14 @@ void Player::MercilessWindsStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("MercilessWinds");
-	SkillManager::PlayerSkillManager->UseSkill("MercilessWinds");
+	SkillManagerActor->UseSkill("MercilessWinds");
 	AlertTime = ALERT_TIME;
 }
 
 void Player::MonsoonStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Monsoon");
-	SkillManager::PlayerSkillManager->UseSkill("Monsoon");
+	SkillManagerActor->UseSkill("Monsoon");
 	AlertTime = ALERT_TIME;
 }
 
@@ -294,7 +294,7 @@ void Player::IdleUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('E', this))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
+		SkillManagerActor->UseSkill("PhalanxCharge");
 		AlertTime = ALERT_TIME;
 		return;
 	}
@@ -391,7 +391,7 @@ void Player::WalkUpdate(float _Delta)
 
 	if (true == GameEngineInput::IsDown('E', this))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("PhalanxCharge");
+		SkillManagerActor->UseSkill("PhalanxCharge");
 		AlertTime = ALERT_TIME;
 		return;
 	}
@@ -550,7 +550,7 @@ void Player::JumpUpdate(float _Delta)
 	if (GameEngineInput::IsDown('D', this))
 	{
 		GravityReset();
-		SkillManager::PlayerSkillManager->UseSkill("DoubleJump");
+		SkillManagerActor->UseSkill("DoubleJump");
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP, this))
 		{
@@ -651,7 +651,7 @@ void Player::ShootingUpdate(float _Delta)
 {
 	if (true == GameEngineInput::IsFree('A', this))
 	{
-		SkillManager::PlayerSkillManager->EndSkill("SongOfHeaven");
+		SkillManagerActor->EndSkill("SongOfHeaven");
 		ChangeToIdle();
 	}
 }

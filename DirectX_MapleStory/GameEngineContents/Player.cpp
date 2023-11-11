@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "ContentLevel.h"
 #include "ContentMap.h"
+#include "SkillManager.h"
 #include "PlayerUIManager.h"
 
 #define MIN_CAMERA_MOVE 15.0f
@@ -143,6 +144,7 @@ void Player::Start()
 		NameRenderer->SetText("돋움", "윈드브레이커", 11.0f, {1.0f, 1.0f, 0.6f}, FW1_CENTER);
 	}
 
+	SkillManagerActor = GetLevel()->CreateActor<SkillManager>(UpdateOrder::Skill);
 	UIManager = GetLevel()->CreateActor<PlayerUIManager>(UpdateOrder::UI);
 }
 
@@ -161,7 +163,7 @@ void Player::Update(float _Delta)
 	{
 		HitCollision->Off();
 	}
-	else if (0 != HP && false == HitCollision->IsUpdate())
+	else if (0 != HP && false == HitCollision->IsUpdate() && false == Invincibility)
 	{
 		HitCollision->On();
 	}
@@ -199,6 +201,30 @@ void Player::Release()
 	{
 		MainSpriteRenderer->Death();
 		MainSpriteRenderer = nullptr;
+	}
+
+	if (nullptr != HitCollision)
+	{
+		HitCollision->Death();
+		HitCollision = nullptr;
+	}
+
+	if (nullptr != NameRenderer)
+	{
+		NameRenderer->Death();
+		NameRenderer = nullptr;
+	}
+
+	if (nullptr != SkillManagerActor)
+	{
+		SkillManagerActor->Death();
+		SkillManagerActor = nullptr;
+	}
+
+	if (nullptr != UIManager)
+	{
+		UIManager->Death();
+		UIManager = nullptr;
 	}
 }
 

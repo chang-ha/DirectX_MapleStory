@@ -1,6 +1,6 @@
 #pragma once
 
-#define DELAY 0.025f
+#define DELAY 0.02f
 
 class PlayerUIManager : public GameEngineActor
 {

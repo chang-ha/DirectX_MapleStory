@@ -404,7 +404,7 @@ void Boss_Lucid_Phase2::DeathStart()
 {
 	BossRenderer->ChangeAnimation("Death");
 	BossCollision->Off();
-	Player::MainPlayer->PlayerCollisionOff();
+	Player::MainPlayer->InvincibilityOn();
 
 	switch (Dir)
 	{

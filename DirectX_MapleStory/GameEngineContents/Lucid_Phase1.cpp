@@ -82,11 +82,6 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		GetMainCamera()->Transform.SetLocalPosition(float4(100, -690, -100000));
 	}
 
-	if (nullptr == SkillManagerActor)
-	{
-		SkillManagerActor = CreateActor<SkillManager>();
-	}
-
 	if (nullptr == Boss)
 	{
 		Boss = CreateActor<Boss_Lucid_Phase1>(UpdateOrder::Monster);
@@ -199,11 +194,6 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 	if (nullptr != CurPlayer)
 	{
 		CurPlayer = nullptr;
-	}
-
-	if (nullptr != SkillManagerActor)
-	{
-		SkillManagerActor = nullptr;
 	}
 
 	if (nullptr != Boss)

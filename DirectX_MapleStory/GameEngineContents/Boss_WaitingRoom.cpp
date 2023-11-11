@@ -53,11 +53,6 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
-	if (nullptr == SkillManagerActor)
-	{
-		SkillManagerActor = CreateActor<SkillManager>();
-	}
-
 	std::shared_ptr<FireWork> _FireWork = CreateActor<FireWork>(UpdateOrder::Map);
 	_FireWork->Init(FireWorkType::FireWork4);
 	_FireWork->Transform.SetLocalPosition({100, -100});
@@ -113,11 +108,6 @@ void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)
 	if (nullptr != CurPlayer)
 	{
 		CurPlayer = nullptr;
-	}
-
-	if (nullptr != SkillManagerActor)
-	{
-		SkillManagerActor = nullptr;
 	}
 }
 

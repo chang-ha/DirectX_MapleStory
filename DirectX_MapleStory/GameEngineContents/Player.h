@@ -1,4 +1,5 @@
 #pragma once
+
 // Ani Speed
 #define IDLE_ANI_SPEED 0.5f
 #define WALK_ANI_SPEED 0.1f
@@ -87,6 +88,18 @@ public:
 		HitCollision->Off();
 	}
 
+	void InvincibilityOn()
+	{
+		Invincibility = true;
+		HitCollision->Off();
+	}
+
+	void InvincibilityOff()
+	{
+		Invincibility = false;
+		HitCollision->On();
+	}
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -100,6 +113,7 @@ protected:
 	bool CheckGround(float4 PlusCheckPos = float4::ZERO) override;
 
 private:
+	bool Invincibility = false;
 	bool IsTempInputValue = true;
 	bool IsLadder = false;
 	bool IsDirCheck = true;
@@ -123,6 +137,7 @@ private:
 	std::shared_ptr<GameEngineCollision> HitCollision = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> NameRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> NameBGRenderer = nullptr;
+	std::shared_ptr<class SkillManager> SkillManagerActor;
 	std::shared_ptr<class PlayerUIManager> UIManager;
 
 	void ChangeToIdle();

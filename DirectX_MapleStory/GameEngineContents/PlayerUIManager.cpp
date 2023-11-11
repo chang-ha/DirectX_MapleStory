@@ -92,7 +92,9 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	Bar_Name->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 15.0f, -GlobalValue::WinScale.Y + 74.0f, RenderDepth::ui });
 
 	CurHPScale = Player::MainPlayer->HP;
+	HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
 	CurMPScale = Player::MainPlayer->MP;
+	MP->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
 }
 
 void PlayerUIManager::LevelEnd(class GameEngineLevel* _NextLevel)
@@ -132,13 +134,11 @@ void PlayerUIManager::PlayerStatusUpdate(float _Delta)
 	if (PlayerHP < CurHPScale)
 	{
 		--CurHPScale;
-		HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
-		Delay = DELAY;
 	}
 	else if (PlayerHP > CurHPScale)
 	{
 		++CurHPScale;
-		HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
-		Delay = DELAY;
 	}
+	HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
+	Delay = DELAY;
 }

@@ -28,8 +28,6 @@ void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
 }
 
-SkillManager* SkillManager::PlayerSkillManager = nullptr;
-
 SkillManager::SkillManager()
 {
 
@@ -83,7 +81,7 @@ bool SkillManager::IsSkillUsing(std::string_view _SkillName)
 
 void SkillManager::LevelStart(class GameEngineLevel* _PrevLevel)
 {
-	PlayerSkillManager = this;
+
 }
 
 void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)

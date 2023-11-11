@@ -10,8 +10,6 @@ public:
 class SkillManager : public GameEngineActor
 {
 public:
-	static SkillManager* PlayerSkillManager;
-public:
 	// constructer destructer
 	SkillManager();
 	~SkillManager();

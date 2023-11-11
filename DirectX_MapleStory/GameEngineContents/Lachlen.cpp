@@ -115,11 +115,6 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
-	if (nullptr == SkillManagerActor)
-	{
-		SkillManagerActor = CreateActor<SkillManager>();
-	}
-
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = nullptr;
 	std::shared_ptr<RenderActor> _Actor = nullptr;
 
@@ -343,11 +338,6 @@ void Lachlen::LevelEnd(GameEngineLevel* _NextLevel)
 	if (nullptr != CurPlayer)
 	{
 		CurPlayer = nullptr;
-	}
-
-	if (nullptr != SkillManagerActor)
-	{
-		SkillManagerActor = nullptr;
 	}
 
 	MapObjects.clear();
