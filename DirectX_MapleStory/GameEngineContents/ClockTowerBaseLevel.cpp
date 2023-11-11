@@ -18,6 +18,8 @@ ClockTowerBaseLevel::~ClockTowerBaseLevel()
 
 void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	AllMonster.clear();
+
 	ContentLevel::LevelStart(_PrevLevel);
 
 	if (nullptr == Back)
@@ -80,7 +82,7 @@ void ClockTowerBaseLevel::RespawnMonster(float _Delta)
 
 	for (size_t i = 0; i < AllMonster.size(); i++)
 	{
-		if (false == AllMonster[i].Monster->IsUpdate())
+		if (false == AllMonster[i].Monster->IsUpdate() || FieldMonsterState::Death == AllMonster[i].Monster->GetState())
 		{
 			AllMonster[i].Monster->Respawn();
 			AllMonster[i].Monster->Transform.SetLocalPosition(AllMonster[i].RespawnPos);

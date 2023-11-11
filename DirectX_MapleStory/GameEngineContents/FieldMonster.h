@@ -29,6 +29,10 @@ public:
 	void ChangeState(FieldMonsterState _State);
 	void StateUpdate(float _Delta);
 	void Respawn();
+	FieldMonsterState GetState()
+	{
+		return State;
+	}
 
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
