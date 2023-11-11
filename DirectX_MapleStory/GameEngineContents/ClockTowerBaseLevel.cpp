@@ -61,12 +61,33 @@ void ClockTowerBaseLevel::Start()
 void ClockTowerBaseLevel::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
+	RespawnMonster(_Delta);
 
 	if (CurPlayer->Transform.GetWorldPosition().Y <= -CurMapScale.Y)
 	{
 		CurPlayer->Transform.SetLocalPosition(StartPos);
 		CurPlayer->MoveVectorForceReset();
 	}
+}
+
+void ClockTowerBaseLevel::RespawnMonster(float _Delta)
+{
+	RespawnTime -= _Delta;
+	if (0.0f < RespawnTime)
+	{
+		return;
+	}
+
+	for (size_t i = 0; i < AllMonster.size(); i++)
+	{
+		if (false == AllMonster[i].Monster->IsUpdate())
+		{
+			AllMonster[i].Monster->Respawn();
+			AllMonster[i].Monster->Transform.SetLocalPosition(AllMonster[i].RespawnPos);
+		}
+	}
+
+	RespawnTime = RESPAWN_TIME;
 }
 
 void ClockTowerBaseLevel::PlaceMonster(std::shared_ptr<class FieldMonster> _Monster, float4 _RespawnPos)

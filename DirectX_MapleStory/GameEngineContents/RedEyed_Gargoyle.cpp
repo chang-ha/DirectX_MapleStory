@@ -25,12 +25,6 @@ void RedEyed_Gargoyle::Start()
 	MainSpriteRenderer->CreateAnimation("Idle", std::string(MonsterName) + "_Idle", 0.15f);
 	MainSpriteRenderer->CreateAnimation("Move", std::string(MonsterName) + "_Move", 0.15f);
 	MainSpriteRenderer->CreateAnimation("Attack", std::string(MonsterName) + "_Attack");
-	MainSpriteRenderer->CreateAnimation("Death", std::string(MonsterName) + "_Death");
-
-	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer* _Renderer)
-		{
-			Death();
-		});
 
 	MainSpriteRenderer->SetFrameEvent("Attack", 8, [&](GameEngineSpriteRenderer* _Renderer)
 		{

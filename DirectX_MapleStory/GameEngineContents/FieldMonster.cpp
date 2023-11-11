@@ -22,8 +22,8 @@ void FieldMonster::LevelEnd(GameEngineLevel* _NextLevel)
 
 void FieldMonster::Start()
 {
-	Speed = 0.0f;
-	GravityOff();
+	// Speed = 0.0f;
+	// GravityOff();
 
 	HP = 1;
 
@@ -44,43 +44,11 @@ void FieldMonster::Start()
 	AttackCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
 	AttackCollision->Off();
 
-	// AttackFunction;
-	GameEngineInput::AddInputObject(this);
 	IsGroundVectorReset = false;
 }
 
 void FieldMonster::Update(float _Delta)
 {
-	if (true == GameEngineInput::IsDown('1', this))
-	{
-		ChangeState(FieldMonsterState::Ready);
-	}
-
-	if (true == GameEngineInput::IsDown('2', this))
-	{
-		ChangeState(FieldMonsterState::Idle);
-	}
-
-	if (true == GameEngineInput::IsDown('3', this))
-	{
-		ChangeState(FieldMonsterState::Move);
-	}
-
-	if (true == GameEngineInput::IsDown('4', this))
-	{
-		ChangeState(FieldMonsterState::Attack);
-	}
-
-	if (true == GameEngineInput::IsDown('5', this))
-	{
-		ChangeState(FieldMonsterState::Death);
-	}
-
-	if (true == GameEngineInput::IsDown('6', this))
-	{
-		ChangeDir();
-	}
-
 	// AttackCoolDown -= _Delta;
 	ContentActor::Gravity(_Delta);
 	IsGround = ContentActor::CheckGround();
@@ -180,6 +148,14 @@ void FieldMonster::StateUpdate(float _Delta)
 	}
 }
 
+void FieldMonster::Respawn()
+{
+	On();
+	HP = 1;
+	ChangeState(FieldMonsterState::Ready);
+	// MainSpriteRenderer->On();
+}
+
 void FieldMonster::Init(std::string_view _MonsterName)
 {
 	MonsterName = _MonsterName;
@@ -197,6 +173,15 @@ void FieldMonster::Init(std::string_view _MonsterName)
 		}
 	}
 
+	MainSpriteRenderer->CreateAnimation("Death", std::string(MonsterName) + "_Death");
+	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer* _Renderer)
+		{
+			Off();
+			// MainSpriteRenderer->Off();
+			// MonsterCollision->Off();
+			// DetectCollision->Off();
+			// AttackCollision->Off();
+		});
 }
 
 void FieldMonster::ChangeDir()

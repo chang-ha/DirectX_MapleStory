@@ -25,12 +25,7 @@ void Dreamkeeper::Start()
 	MainSpriteRenderer->CreateAnimation("Idle", std::string(MonsterName) + "_Idle", 0.15f);
 	MainSpriteRenderer->CreateAnimation("Move", std::string(MonsterName) + "_Move", 0.15f);
 	MainSpriteRenderer->CreateAnimation("Attack", std::string(MonsterName) + "_Attack");
-	MainSpriteRenderer->CreateAnimation("Death", std::string(MonsterName) + "_Death");
 
-	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer* _Renderer)
-		{
-			Death();
-		});
 
 	MainSpriteRenderer->SetFrameEvent("Attack", 8, [&](GameEngineSpriteRenderer* _Renderer)
 		{
@@ -54,6 +49,7 @@ void Dreamkeeper::Update(float _Delta)
 		if (1.0f < MainSpriteRenderer->GetColorData().MulColor.A)
 		{
 			MainSpriteRenderer->GetColorData().MulColor.A = 1.0f;
+			ChangeState(FieldMonsterState::Idle);
 		}
 	}
 }
@@ -68,7 +64,6 @@ void Dreamkeeper::ReadyStart()
 	FieldMonster::ReadyStart();
 	MainSpriteRenderer->ChangeAnimation("Idle");
 	MainSpriteRenderer->GetColorData().MulColor.A = 0.0f;
-	ChangeState(FieldMonsterState::Idle);
 	MainSpriteRenderer->SetPivotValue({ 0.5f, 1.0f });
 }
 

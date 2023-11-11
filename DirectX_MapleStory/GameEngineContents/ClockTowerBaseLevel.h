@@ -1,6 +1,8 @@
 #pragma once
 #include "ContentLevel.h"
 
+#define RESPAWN_TIME 6.0f
+
 class FieldMonsterInfo
 {
 public:
@@ -36,6 +38,7 @@ public:
 	}
 
 protected:
+	float RespawnTime = RESPAWN_TIME;
 	float4 CurMapScale = float4::ZERO;
 	float4 StartPos = float4::ZERO;
 
@@ -49,6 +52,7 @@ protected:
 	void Update(float _Delta) override;
 
 private:
+	void RespawnMonster(float _Delta);
 	void PlaceMonster(std::shared_ptr<class FieldMonster> _Monster, float4 _RespawnPos);
 };
 
