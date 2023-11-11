@@ -223,6 +223,9 @@
     <ClCompile Include="Dreamkeeper.cpp">
       <Filter>Actor\Monster\FieldMonster</Filter>
     </ClCompile>
+    <ClCompile Include="ClockTowerOfNightMare_5th.cpp">
+      <Filter>Level\HuntingField</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -446,6 +449,9 @@
     </ClInclude>
     <ClInclude Include="Dreamkeeper.h">
       <Filter>Actor\Monster\FieldMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="ClockTowerOfNightMare_5th.h">
+      <Filter>Level\HuntingField</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

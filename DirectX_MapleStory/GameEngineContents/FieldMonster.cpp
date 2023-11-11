@@ -22,6 +22,9 @@ void FieldMonster::LevelEnd(GameEngineLevel* _NextLevel)
 
 void FieldMonster::Start()
 {
+	Speed = 0.0f;
+	GravityOff();
+
 	HP = 1;
 
 	ContentActor::Start();

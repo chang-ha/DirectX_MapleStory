@@ -4,6 +4,7 @@
 #include "SkillManager.h"
 #include "ContentMap.h"
 #include "Player.h"
+#include "FieldMonster.h"
 
 ClockTowerBaseLevel::ClockTowerBaseLevel()
 {
@@ -54,6 +55,7 @@ void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)
 void ClockTowerBaseLevel::Start()
 {
 	ContentLevel::Start();
+	AllMonster.reserve(27);
 }
 
 void ClockTowerBaseLevel::Update(float _Delta)
@@ -65,4 +67,9 @@ void ClockTowerBaseLevel::Update(float _Delta)
 		CurPlayer->Transform.SetLocalPosition(StartPos);
 		CurPlayer->MoveVectorForceReset();
 	}
+}
+
+void ClockTowerBaseLevel::PlaceMonster(std::shared_ptr<class FieldMonster> _Monster, float4 _RespawnPos)
+{
+	_Monster->Transform.SetLocalPosition(_RespawnPos);
 }

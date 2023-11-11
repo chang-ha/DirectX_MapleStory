@@ -26,8 +26,8 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
-		CurMap->InitMap("Lachlen_Tower_5th.png");
-		CurMap->InitMapCollision("Collision_Lachlen_Tower_5th.png");
+		CurMap->InitMap("Lachlen_Tower_1th.png");
+		CurMap->InitMapCollision("Collision_Lachlen_Tower_1th.png");
 	}
 
 	StartPos = float4(500, -2800);
@@ -39,18 +39,10 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 		GetMainCamera()->Transform.SetLocalPosition(float4(600, -300, -100000));
 	}
 
-	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 600, -290 });
-	_Portal->SetMoveMap("Boss_WaitingRoom");
-
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
-	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_5th.png", "악몽의시계탑 5층");
+	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_1th.png", "악몽의시계탑 1층");
 
-	std::shared_ptr<Dreamkeeper> _FieldMonster = CreateActor<Dreamkeeper>(UpdateOrder::Monster);
-	_FieldMonster->Transform.SetLocalPosition({ 1000, -480 });
-
-	//std::shared_ptr<RedEyed_Gargoyle> _FieldMonster2 = CreateActor<RedEyed_Gargoyle>(UpdateOrder::Monster);
-	//_FieldMonster2->Transform.SetLocalPosition({ 1200, -480 });
+	CreateMonster<Dreamkeeper>({ 1000, -480 });
 }
 
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)

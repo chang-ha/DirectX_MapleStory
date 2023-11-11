@@ -216,7 +216,7 @@ void ContentActor::CalcuMove(float _Delta)
 		// 이동중 땅을 만나면 멈춤
 		if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
 		{
-			// Transform.AddLocalPosition(MovePos);
+			Transform.AddLocalPosition(MovePos);
 			GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
 			GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
 
@@ -231,7 +231,7 @@ void ContentActor::CalcuMove(float _Delta)
 			}
 
 			MoveVectorForceReset();
-			// break;
+			break;
 		}
 
 		Transform.AddLocalPosition(MovePos);

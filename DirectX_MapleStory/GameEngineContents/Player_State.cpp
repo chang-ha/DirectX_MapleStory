@@ -616,6 +616,7 @@ void Player::LadderUpdate(float _Delta)
 	}
 	else if (GameEngineInput::IsPress(VK_RIGHT, this) || GameEngineInput::IsPress(VK_LEFT, this))
 	{
+		MainSpriteRenderer->AnimationPauseOn();
 		if (GameEngineInput::IsDown('D', this))
 		{
 			DirCheck();
