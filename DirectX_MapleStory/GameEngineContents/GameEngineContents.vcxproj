@@ -323,6 +323,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Lamp.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Laser.cpp">
       <SubType>
       </SubType>
@@ -581,6 +585,10 @@
     <ClInclude Include="HowlingGale.h" />
     <ClInclude Include="HowlingGale_Actor.h" />
     <ClInclude Include="Lachlen.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Lamp.h">
       <SubType>
       </SubType>
     </ClInclude>
