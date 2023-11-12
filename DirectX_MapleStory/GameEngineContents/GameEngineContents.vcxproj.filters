@@ -229,6 +229,9 @@
     <ClCompile Include="Lamp.cpp">
       <Filter>Level\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="TowerWall.cpp">
+      <Filter>Level\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -457,6 +460,9 @@
       <Filter>Level\HuntingField</Filter>
     </ClInclude>
     <ClInclude Include="Lamp.h">
+      <Filter>Level\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerWall.h">
       <Filter>Level\Actor</Filter>
     </ClInclude>
   </ItemGroup>

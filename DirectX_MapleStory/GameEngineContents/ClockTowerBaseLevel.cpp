@@ -5,6 +5,7 @@
 #include "ContentMap.h"
 #include "Player.h"
 #include "FieldMonster.h"
+#include "TowerWall.h"
 
 ClockTowerBaseLevel::ClockTowerBaseLevel()
 {
@@ -28,6 +29,11 @@ void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Back->Init("BG_Lucid_Next.png");
 	}
 
+	LeftWall = CreateActor<TowerWall>(UpdateOrder::Map);
+	LeftWall->Transform.SetLocalPosition({290, 3});
+	LeftWall->WallRenderer->LeftFlip();
+	RightWall = CreateActor<TowerWall>(UpdateOrder::Map);
+	RightWall->Transform.SetLocalPosition({ 1593, 3 });
 }
 
 void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)

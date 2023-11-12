@@ -43,6 +43,8 @@ protected:
 	float4 StartPos = float4::ZERO;
 
 	std::vector<FieldMonsterInfo> AllMonster;
+	std::shared_ptr<class TowerWall> LeftWall = nullptr;
+	std::shared_ptr<class TowerWall> RightWall = nullptr;
 	std::shared_ptr<class ContentBackGround> Back = nullptr;
 	std::shared_ptr<class Player> CurPlayer = nullptr;
 
