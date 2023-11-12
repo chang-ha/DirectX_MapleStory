@@ -99,34 +99,78 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<FireWork> _FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
 	_FireWork->Init(FireWorkType::FireWork4);
-	_FireWork->Transform.SetLocalPosition({ 1500, -418 });
+	_FireWork->Transform.SetLocalPosition({ 1700, -250 });
 
-	// CreateMonster<Dreamkeeper>({ 900, -480 });
-	// CreateMonster<Dreamkeeper>({ 1200, -480 });
-	// CreateMonster<Dreamkeeper>({ 550, -480 });
-	// CreateMonster<Dreamkeeper>({ 1000, -700 });
-	// CreateMonster<Dreamkeeper>({ 810, -775 });
-	// CreateMonster<Dreamkeeper>({ 750, -1050 });
-	// CreateMonster<Dreamkeeper>({ 1100, -1050 });
-	// CreateMonster<Dreamkeeper>({ 910, -1125 });
-	// CreateMonster<Dreamkeeper>({ 800, -1320 });
-	// CreateMonster<Dreamkeeper>({ 950, -1400 });
-	// CreateMonster<Dreamkeeper>({ 550, -1630 });
-	// CreateMonster<Dreamkeeper>({ 900, -1630 });
-	// CreateMonster<Dreamkeeper>({ 1300, -1630 });
-	// CreateMonster<Dreamkeeper>({ 1050, -1865 });
-	// CreateMonster<Dreamkeeper>({ 1300, -1865 });
-	// CreateMonster<Dreamkeeper>({ 700, -1940 });
-	// CreateMonster<Dreamkeeper>({ 550, -2168 });
-	// CreateMonster<Dreamkeeper>({ 750, -2242 });
-	// CreateMonster<Dreamkeeper>({ 1300, -2245 });
-	// CreateMonster<Dreamkeeper>({ 1100, -2320 });
-	// CreateMonster<Dreamkeeper>({ 930, -2395 });
-	// CreateMonster<Dreamkeeper>({ 570, -2547 });
-	// CreateMonster<Dreamkeeper>({ 820, -2735 });
-	// CreateMonster<Dreamkeeper>({ 1000, -2660 });
-	// CreateMonster<Dreamkeeper>({ 1070, -2965 });
-	// CreateMonster<Dreamkeeper>({ 1300, -2865});
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 900, -950 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 170, -700 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 150, -1050 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 70, -1650 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 120, -2150 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({ 50, -2000 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 90, -2550 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 900, -2200 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 1750, -2100 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 1680, -2000 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({ 1780, -1880 });
+
+	CreateMonster<Dreamkeeper>({ 900, -480 });
+	CreateMonster<Dreamkeeper>({ 1200, -480 });
+	CreateMonster<Dreamkeeper>({ 550, -480 });
+	CreateMonster<Dreamkeeper>({ 1000, -700 });
+	CreateMonster<Dreamkeeper>({ 810, -775 });
+	CreateMonster<Dreamkeeper>({ 750, -1050 });
+	CreateMonster<Dreamkeeper>({ 1100, -1050 });
+	CreateMonster<Dreamkeeper>({ 910, -1125 });
+	CreateMonster<Dreamkeeper>({ 800, -1320 });
+	CreateMonster<Dreamkeeper>({ 950, -1400 });
+	CreateMonster<Dreamkeeper>({ 550, -1630 });
+	CreateMonster<Dreamkeeper>({ 900, -1630 });
+	CreateMonster<Dreamkeeper>({ 1300, -1630 });
+	CreateMonster<Dreamkeeper>({ 1050, -1865 });
+	CreateMonster<Dreamkeeper>({ 1300, -1865 });
+	CreateMonster<Dreamkeeper>({ 700, -1940 });
+	CreateMonster<Dreamkeeper>({ 550, -2168 });
+	CreateMonster<Dreamkeeper>({ 750, -2242 });
+	CreateMonster<Dreamkeeper>({ 1300, -2245 });
+	CreateMonster<Dreamkeeper>({ 1100, -2320 });
+	CreateMonster<Dreamkeeper>({ 930, -2395 });
+	CreateMonster<Dreamkeeper>({ 570, -2547 });
+	CreateMonster<Dreamkeeper>({ 820, -2735 });
+	CreateMonster<Dreamkeeper>({ 1000, -2660 });
+	CreateMonster<Dreamkeeper>({ 1070, -2965 });
+	CreateMonster<Dreamkeeper>({ 1300, -2865});
 }
 
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)

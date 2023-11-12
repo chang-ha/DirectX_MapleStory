@@ -17,6 +17,7 @@
 #include "CharacterSelect.h"
 #include "Lachlen.h"
 #include "ClockTowerOfNightMare_1th.h"
+#include "ClockTowerOfNightMare_3th.h"
 #include "ClockTowerOfNightMare_5th.h"
 
 void LevelChangeGUI::Start()
@@ -70,11 +71,12 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_1th>("ClockTowerOfNightMare_1th");
+	GameEngineCore::CreateLevel<ClockTowerOfNightMare_3th>("ClockTowerOfNightMare_3th");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_5th>("ClockTowerOfNightMare_5th");
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
 	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
 
-	GameEngineCore::ChangeLevel("ClockTowerOfNightMare_1th");
+	GameEngineCore::ChangeLevel("ClockTowerOfNightMare_3th");
 }
 
 
