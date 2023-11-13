@@ -1,7 +1,7 @@
 #pragma once
 #include "ContentLevel.h"
 
-#define RESPAWN_TIME 7.0f
+#define RESPAWN_TIME 6.0f
 
 class FieldMonsterInfo
 {
