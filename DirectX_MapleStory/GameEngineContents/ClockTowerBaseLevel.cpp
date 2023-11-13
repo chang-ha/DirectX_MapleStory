@@ -172,6 +172,11 @@ void ClockTowerBaseLevel::Update(float _Delta)
 	}
 }
 
+void ClockTowerBaseLevel::ResourcesRelease()
+{
+
+}
+
 void ClockTowerBaseLevel::RespawnMonster(float _Delta)
 {
 	RespawnTime -= _Delta;

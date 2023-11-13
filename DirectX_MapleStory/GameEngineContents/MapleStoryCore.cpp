@@ -6,7 +6,6 @@
 #include "MapleStoryCore.h"
 #include "ContentResources.h"
 #include "TitleLevel.h"
-#include "PlayLevel.h"
 #include "Lucid_Enter.h"
 #include "Lucid_Phase1.h"
 #include "Lucid_Next.h"
@@ -80,7 +79,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
 	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
 
-	GameEngineCore::ChangeLevel("Lachlen");
+	GameEngineCore::ChangeLevel("1.TitleLevel");
 }
 
 

@@ -6,6 +6,7 @@
 #include "UIRenderActor.h"
 #include "ContentButton.h"
 #include "ButtonWarningMent.h"
+#include "ReleaseFunction.h"
 
 void CharacterInfoFrame::FrameOff()
 {
@@ -50,17 +51,20 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 
 	if (nullptr == GameEngineSprite::Find("CharacterSelect_BG.png"))
 	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Login\\CharacterSelect");
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\Login\\CharacterSelect\\CharacterSelect_BG.png");
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
+	}
 
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineFile& Childs = Files[i];
-			GameEngineTexture::Load(Childs.GetStringPath());
-			GameEngineSprite::CreateSingle(Childs.GetFileName());
-		}
+	if (nullptr == GameEngineSprite::Find("CharacterSelect_Front.png"))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\Login\\CharacterSelect\\CharacterSelect_Front.png");
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
 	if (nullptr == GameEngineSprite::Find("ServerName.png"))
@@ -107,18 +111,20 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 
-	if (nullptr == GameEngineSprite::Find("RenderCharacter_Idle"))
+	if (nullptr == GameEngineSprite::Find("Render_Idle"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\RenderCharacter");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+		Dir.MoveChild("ContentResources\\Textures\\Character\\Idle");
+		GameEngineSprite::CreateFolder("Render_Idle", Dir.GetStringPath());
+	}
 
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Childs = Directorys[i];
-			GameEngineSprite::CreateFolder("RenderCharacter_" + Childs.GetFileName(), Childs.GetStringPath());
-		}
+	if (nullptr == GameEngineSprite::Find("Render_Walk"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Character\\Walk");
+		GameEngineSprite::CreateFolder("Render_Walk", Dir.GetStringPath());
 	}
 
 	if (nullptr == GameEngineSprite::Find("CharSelectEffect0"))
@@ -364,8 +370,8 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		SelectCharacterFrame Frame;
 		Frame.CharacterRenderer = CreateActor<UIRenderActor>(UpdateOrder::UI);
 		Frame.CharacterRenderer->Init(RenderOrder::UI, RenderDepth::ui);
-		Frame.CharacterRenderer->Renderer->CreateAnimation("Idle", "RenderCharacter_Idle", 0.5f);
-		Frame.CharacterRenderer->Renderer->CreateAnimation("Walk", "RenderCharacter_Walk", 0.15f);
+		Frame.CharacterRenderer->Renderer->CreateAnimation("Idle", "Render_Idle", 0.5f);
+		Frame.CharacterRenderer->Renderer->CreateAnimation("Walk", "Render_Walk", 0.15f);
 		Frame.CharacterRenderer->Renderer->ChangeAnimation("Idle");
 		Frame.CharacterRenderer->Transform.SetLocalPosition({ 175, -311 });
 		Frame.CharacterRenderer->Renderer->LeftFlip();
@@ -509,4 +515,60 @@ void CharacterSelect::SelectCharacter()
 	InfoFrame.FrameOn();
 	CharSelectEffect0->On();
 	CharSelectEffect1->On();
+}
+
+void CharacterSelect::ResourcesRelease()
+{
+	ContentLevel::ResourcesRelease();
+
+	if (nullptr != GameEngineSprite::Find("CharacterSelect_BG.png"))
+	{
+		GameEngineTexture::Release("CharacterSelect_BG.png");
+		GameEngineSprite::Release("CharacterSelect_BG.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("CharacterSelect_Front.png"))
+	{
+		GameEngineTexture::Release("CharacterSelect_Front.png");
+		GameEngineSprite::Release("CharacterSelect_Front.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("ServerName.png"))
+	{
+		GameEngineTexture::Release("ServerName.png");
+		GameEngineSprite::Release("ServerName.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("ServerCharacterInfo_BG.png"))
+	{
+		GameEngineTexture::Release("ServerCharacterInfo_BG.png");
+		GameEngineSprite::Release("ServerCharacterInfo_BG.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Character_Empty.png"))
+	{
+		GameEngineTexture::Release("Character_Empty.png");
+		GameEngineSprite::Release("Character_Empty.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Character_Job.png"))
+	{
+		GameEngineTexture::Release("Character_Job.png");
+		GameEngineSprite::Release("Character_Job.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Character_FootHold"))
+	{
+		ReleaseFunction::FolderRelease("Character_FootHold", "Character_FootHold");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Render_Idle"))
+	{
+		GameEngineSprite::Release("Render_Idle");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Render_Walk"))
+	{
+		GameEngineSprite::Release("Render_Walk");
+	}
 }

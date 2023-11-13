@@ -399,7 +399,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Player_State.cpp" />
-    <ClCompile Include="PlayLevel.cpp" />
     <ClCompile Include="Portal.cpp">
       <SubType>
       </SubType>
@@ -415,6 +414,10 @@
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)Bin\$(Platform)\$(Configuration)\$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="RedEyed_Gargoyle.cpp" />
+    <ClCompile Include="ReleaseFunction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="RenderActor.cpp">
       <SubType>
       </SubType>
@@ -683,13 +686,16 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayLevel.h" />
     <ClInclude Include="Portal.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="RedEyed_Gargoyle.h" />
+    <ClInclude Include="ReleaseFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="RenderActor.h">
       <SubType>
       </SubType>

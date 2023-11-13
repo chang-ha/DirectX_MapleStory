@@ -348,5 +348,9 @@ void Lachlen::Start()
 void Lachlen::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
+}
+
+void Lachlen::ResourcesRelease()
+{
 
 }

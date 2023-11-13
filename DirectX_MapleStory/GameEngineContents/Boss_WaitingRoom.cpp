@@ -121,3 +121,8 @@ void Boss_WaitingRoom::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
 }
+
+void Boss_WaitingRoom::ResourcesRelease()
+{
+
+}

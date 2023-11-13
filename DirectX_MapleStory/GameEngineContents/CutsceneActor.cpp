@@ -2,6 +2,7 @@
 #include "CutsceneActor.h"
 #include "ContentLevel.h"
 #include "FadeObject.h"
+#include "ReleaseFunction.h"
 
 CutsceneActor::CutsceneActor()
 {
@@ -63,6 +64,25 @@ void CutsceneActor::Release()
 
 	if (nullptr != GameEngineSprite::Find(std::string(BossName) + "_Cutscene"))
 	{
-		GameEngineSprite::Release(std::string(BossName) + "_Cutscene");
+		ReleaseFunction::FolderRelease(std::string(BossName) + "_Cutscene", "Cutscene_");
+
+		//std::shared_ptr<GameEngineSprite> _Sprite = GameEngineSprite::Find(std::string(BossName) + "_Cutscene");
+		//int SpriteSize = _Sprite->GetSpriteCount();
+		//for (size_t i = 1; i <= SpriteSize; i++)
+		//{
+		//	if (10 > i)
+		//	{
+		//		GameEngineTexture::Release("Cutscene_00" + std::to_string(i) + ".png");
+		//	}
+		//	else if (100 > i)
+		//	{
+		//		GameEngineTexture::Release("Cutscene_0" + std::to_string(i) + ".png");
+		//	}
+		//	else
+		//	{
+		//		GameEngineTexture::Release("Cutscene_" + std::to_string(i) + ".png");
+		//	}
+		//}
+		//GameEngineSprite::Release(std::string(BossName) + "_Cutscene");
 	}
 }

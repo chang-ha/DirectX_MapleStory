@@ -7,9 +7,6 @@
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="PlayLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="MapleStoryCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -244,15 +241,15 @@
     <ClCompile Include="LinkPortal.cpp">
       <Filter>Level\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="ReleaseFunction.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="ContentEnum.h">
@@ -488,6 +485,9 @@
     </ClInclude>
     <ClInclude Include="LinkPortal.h">
       <Filter>Level\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ReleaseFunction.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

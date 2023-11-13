@@ -860,6 +860,11 @@ void Lucid_Phase2::Update(float _Delta)
 	}
 }
 
+void Lucid_Phase2::ResourcesRelease()
+{
+
+}
+
 void Lucid_Phase2::ObjectUpdate(float _Delta)
 {
 	for (size_t i = 0; i < MapObjects.size(); i++)

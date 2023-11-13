@@ -51,9 +51,6 @@ void ClockTowerOfNightMare_5th::LevelStart(GameEngineLevel* _PrevLevel)
 		GetMainCamera()->Transform.SetLocalPosition(float4(500, -2878, -100000));
 	}
 
-	CurPlayer->Transform.SetLocalPosition({ 600, -350 });
-	GetMainCamera()->Transform.SetLocalPosition(float4(600, -350, -100000));
-
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({ 600, -360 });
 	_Portal->SetMoveMap("Boss_WaitingRoom");

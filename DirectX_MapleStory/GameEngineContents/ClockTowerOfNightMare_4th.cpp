@@ -50,9 +50,6 @@ void ClockTowerOfNightMare_4th::LevelStart(GameEngineLevel* _PrevLevel)
 		GetMainCamera()->Transform.SetLocalPosition(float4(750, -2893, -100000));
 	}
 
-	CurPlayer->Transform.SetLocalPosition({ 1250, -525 });
-	GetMainCamera()->Transform.SetLocalPosition(float4(1250, -525, -100000));
-
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_4th.png", "악몽의시계탑 4층");
 

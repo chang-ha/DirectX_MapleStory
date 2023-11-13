@@ -52,6 +52,7 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
+	void ResourcesRelease() override;
 
 private:
 	void RespawnMonster(float _Delta);

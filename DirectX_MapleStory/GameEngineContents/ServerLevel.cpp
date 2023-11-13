@@ -5,6 +5,7 @@
 #include "ContentButton.h"
 #include "UIRenderActor.h"
 #include "ButtonWarningMent.h"
+#include "ReleaseFunction.h"
 
 ServerLevel::ServerLevel()
 {
@@ -142,14 +143,31 @@ void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 
+
+}
+
+void ServerLevel::Start()
+{
+	ContentLevel::Start();
+}
+
+void ServerLevel::Update(float _Delta)
+{
+	ContentLevel::Update(_Delta);
+}
+
+void ServerLevel::ResourcesRelease()
+{
+	ContentLevel::ResourcesRelease();
+
 	if (nullptr != GameEngineSprite::Find("ServerLogo"))
 	{
-		GameEngineSprite::Release("ServerLogo");
+		ReleaseFunction::FolderRelease("ServerLogo", "ServerLogo_");
 	}
 
 	if (nullptr != GameEngineSprite::Find("RecommendServer"))
 	{
-		GameEngineSprite::Release("RecommendServer");
+		ReleaseFunction::FolderRelease("RecommendServer", "RecommendServer_");
 	}
 
 	if (nullptr != GameEngineSprite::Find("ServerButton_BG.png"))
@@ -184,12 +202,3 @@ void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	ContentButton::ReleaseButton("TestWorld3Button");
 }
 
-void ServerLevel::Start()
-{
-	ContentLevel::Start();
-}
-
-void ServerLevel::Update(float _Delta)
-{
-	ContentLevel::Update(_Delta);
-}

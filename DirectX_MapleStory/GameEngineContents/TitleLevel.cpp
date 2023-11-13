@@ -5,6 +5,7 @@
 #include "RenderActor.h"
 #include "FadeObject.h"
 #include "ContentMap.h"
+#include "ReleaseFunction.h"
 
 TitleLevel::TitleLevel()
 {
@@ -14,18 +15,6 @@ TitleLevel::TitleLevel()
 TitleLevel::~TitleLevel()
 {
 
-}
-
-
-void TitleLevel::Start()
-{
-	ContentLevel::Start();
-	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
-}
-
-void TitleLevel::Update(float _Delta)
-{
-	ContentLevel::Update(_Delta);
 }
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -50,7 +39,7 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor->Renderer->CreateAnimation("Logo", "Logo", 0.12f, -1, -1, false);
 	_Actor->Renderer->ChangeAnimation("Logo");
 
-	_Actor->Renderer->SetFrameEvent("Logo", 36 ,[&](GameEngineSpriteRenderer*)
+	_Actor->Renderer->SetFrameEvent("Logo", 36, [&](GameEngineSpriteRenderer*)
 		{
 			FadeOutObject->FadeStart();
 		}
@@ -66,16 +55,32 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
-		CurMap->CreateBaseColorMap({1.0f, 1.0f, 1.0f, 1.0f});
+		CurMap->CreateBaseColorMap({ 1.0f, 1.0f, 1.0f, 1.0f });
 	}
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+}
+
+void TitleLevel::Start()
+{
+	ContentLevel::Start();
+	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
+}
+
+void TitleLevel::Update(float _Delta)
+{
+	ContentLevel::Update(_Delta);
+}
+
+void TitleLevel::ResourcesRelease()
+{
+	ContentLevel::ResourcesRelease();
 
 	if (nullptr != GameEngineSprite::Find("Logo"))
 	{
-		GameEngineSprite::Release("Logo");
+		ReleaseFunction::FolderRelease("Logo", "Logo_");
 	}
 }

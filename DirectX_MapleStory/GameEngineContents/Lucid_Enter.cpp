@@ -46,3 +46,8 @@ void Lucid_Enter::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
 }
+
+void Lucid_Enter::ResourcesRelease()
+{
+
+}

@@ -6,6 +6,7 @@
 #include "FadeObject.h"
 #include "FireWork.h"
 #include "Minimap.h"
+#include "ReleaseFunction.h"
 
 Lucid_Next::Lucid_Next()
 {
@@ -47,21 +48,13 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 
 	GetMainCamera()->Transform.SetLocalPosition(float4(800, -500));
 
-	if (nullptr == GameEngineSprite::Find("RenderCharacter_Idle"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\RenderCharacter\\Idle");
-		GameEngineSprite::CreateFolder("RenderCharacter_Idle", Dir.GetStringPath());
-	}
-
 	// Player Renderer
 	if (nullptr == PlayerRender)
 	{
 		PlayerRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		PlayerRender->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
 		PlayerRender->Renderer->Transform.SetLocalPosition({0, 0, RenderDepth::renderactor});
-		PlayerRender->Renderer->CreateAnimation("Idle", "RenderCharacter_Idle", 0.5f);
+		PlayerRender->Renderer->CreateAnimation("Idle", "Render_Idle", 0.5f);
 		PlayerRender->Renderer->ChangeAnimation("Idle");
 		PlayerRender->Renderer->AutoSpriteSizeOn();
 		PlayerRender->Renderer->LeftFlip();
@@ -69,7 +62,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	// Clock Renderer
-	if (nullptr == GameEngineSprite::Find("Clock"))
+	if (nullptr == GameEngineSprite::Find("Clock.png"))
 	{
 		GameEnginePath Path;
 		Path.SetCurrentPath();
@@ -176,4 +169,23 @@ void Lucid_Next::Start()
 void Lucid_Next::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
+}
+
+void Lucid_Next::ResourcesRelease()
+{
+	if (nullptr != GameEngineSprite::Find("Render_Idle"))
+	{
+		GameEngineSprite::Release("Render_Idle");
+	}
+	
+	if (nullptr != GameEngineSprite::Find("Clock.png"))
+	{
+		GameEngineTexture::Release("Clock.png");
+		GameEngineSprite::Release("Clock.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_PhaseChange"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_PhaseChange", "PhaseChange_");
+	}
 }

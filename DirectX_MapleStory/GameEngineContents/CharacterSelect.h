@@ -38,7 +38,6 @@ public:
 	CharacterSelect& operator=(const CharacterSelect& _Other) = delete;
 	CharacterSelect& operator=(CharacterSelect&& _Other) noexcept = delete;
 
-
 protected:
 
 private:
@@ -53,6 +52,7 @@ private:
 
 	void Start() override;
 	void Update(float _Delta) override;
+	void ResourcesRelease() override;
 
 	void SelectCharacter();
 };
