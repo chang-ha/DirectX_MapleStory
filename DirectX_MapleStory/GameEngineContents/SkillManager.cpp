@@ -86,6 +86,7 @@ void SkillManager::LevelStart(class GameEngineLevel* _PrevLevel)
 
 void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 {
+	Release();
 	Death();
 }
 
@@ -140,6 +141,8 @@ void SkillManager::Release()
 			_Pair.second = nullptr;
 		}
 	}
+
+	AllSkills.clear();
 }
 
 void SkillManager::SkillInit(std::shared_ptr<ContentSkill> _Skill)

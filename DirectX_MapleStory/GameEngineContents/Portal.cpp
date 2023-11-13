@@ -31,16 +31,22 @@ void Portal::Start()
 		GameEngineSprite::CreateFolder("NormalPortal", Dir.GetStringPath());
 	}
 
-	PortalRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PORTAL);
+	if (nullptr == PortalRenderer)
+	{
+		PortalRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PORTAL);
+	}
 	PortalRenderer->CreateAnimation("Idle", "NormalPortal");
 	PortalRenderer->ChangeAnimation("Idle");
 	PortalRenderer->AutoSpriteSizeOn();
 
 	PortalRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::portal});
 
-	PortalCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Portal);
-	PortalCollision->Transform.SetLocalScale({28, 80});
-	PortalCollision->Transform.SetLocalPosition({0, -25});
+	if (nullptr == PortalCollision)
+	{
+		PortalCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Portal);
+		PortalCollision->Transform.SetLocalScale({ 28, 80 });
+		PortalCollision->Transform.SetLocalPosition({ 0, -25 });
+	}
 }
 
 void Portal::Update(float _Delta)
@@ -57,5 +63,15 @@ void Portal::Update(float _Delta)
 
 void Portal::Release()
 {
+	if (nullptr != PortalRenderer)
+	{
+		PortalRenderer->Death();
+		PortalRenderer = nullptr;
+	}
 
+	if (nullptr != PortalCollision)
+	{
+		PortalCollision->Death();
+		PortalCollision = nullptr;
+	}
 }

@@ -71,6 +71,14 @@ void Golem::Release()
 		GolemCollision->Death();
 		GolemCollision = nullptr;
 	}
+
+	if (nullptr != TakeDownCollision)
+	{
+		TakeDownCollision->Death();
+		TakeDownCollision = nullptr;
+	}
+
+	AttackFunction.CollisionActor.clear();
 }
 
 void Golem::Init(int _PhaseNumber)

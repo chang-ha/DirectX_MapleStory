@@ -65,7 +65,7 @@ enum RenderDepth
 
 enum class CollisionOrder
 {
-	Player,
+	Player = 1,
 	PlayerAttack,
 	Monster,
 	MonsterAttack,

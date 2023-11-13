@@ -74,7 +74,7 @@ public:
 	void PopInput()
 	{
 		ChangeState(PlayerState::Idle);
-		MoveVectorForceReset();
+		MoveVectorForceXReset();
 		IsTempInputValue = false;
 	}
 

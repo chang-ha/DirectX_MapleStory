@@ -90,10 +90,6 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		Back->Init("BG_Lachlen.png");
 	}
 
-	//std::shared_ptr<BackGroundActor> _Sky = CreateActor<BackGroundActor>(UpdateOrder::Map);
-	//_Sky->Transform.SetLocalPosition({ -100, -440 });
-	//_Sky->Init("BG_Lachlen_Sky.png", 13, 4440, 0.65f);
-
 	std::shared_ptr<BackGroundActor> _Water = CreateActor<BackGroundActor>(UpdateOrder::Map);
 	_Water->Transform.SetLocalPosition({-100, -1006});
 	_Water->Init("BG_Lachlen_Water.png", 8, 4440, 0.8f);
@@ -235,8 +231,8 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 3820, -710 });
-	_Portal->SetMoveMap("Boss_WaitingRoom");
+	_Portal->Transform.SetLocalPosition({ 3770, -755 });
+	_Portal->SetMoveMap("ClockTowerOfNightMare_1th");
 
 	for (size_t i = 0; i < 8; i++)
 	{

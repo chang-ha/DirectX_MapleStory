@@ -140,6 +140,8 @@ void Dragon::Release()
 		BreathCollision->Death();
 		BreathCollision = nullptr;
 	}
+
+	AttackFunction.CollisionTime.clear();
 }
 
 void Dragon::SetDir(ActorDir _Dir)

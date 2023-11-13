@@ -100,3 +100,8 @@ void HowlingGale_Actor::Update(float _Delta)
 	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "HowlingGale_Hit", 0.1f, 3);
 }
 
+void HowlingGale_Actor::Release()
+{
+	BaseSkillActor::Release();
+	AttackFunction.CollisionTime.clear();
+}

@@ -31,7 +31,11 @@ void Lamp::Update(float _Delta)
 
 void Lamp::Release()
 {
-
+	if (nullptr != LampRenderer)
+	{
+		LampRenderer->Death();
+		LampRenderer = nullptr;
+	}
 }
 
 void Lamp::Init(int _Type)

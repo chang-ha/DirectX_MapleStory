@@ -29,20 +29,32 @@ void FieldMonster::Start()
 
 	ContentActor::Start();
 
-	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
-	MainSpriteRenderer->AutoSpriteSizeOn();
-	MainSpriteRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
+	if (nullptr == MainSpriteRenderer)
+	{
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
+		MainSpriteRenderer->AutoSpriteSizeOn();
+		MainSpriteRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monster });
+	}
 
-	MonsterCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
-	MonsterCollision->Off();
+	if (nullptr == MonsterCollision)
+	{
+		MonsterCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
+		MonsterCollision->Off();
+	}
 
-	DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Detect);
-	DetectCollision->Transform.SetLocalPosition({ 0, 50 });
-	DetectCollision->Transform.SetLocalScale({ 300, 50 });
-	DetectCollision->Off();
+	if (nullptr == DetectCollision)
+	{
+		DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Detect);
+		DetectCollision->Transform.SetLocalPosition({ 0, 50 });
+		DetectCollision->Transform.SetLocalScale({ 300, 50 });
+		DetectCollision->Off();
+	}
 
-	AttackCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
-	AttackCollision->Off();
+	if (nullptr == AttackCollision)
+	{
+		AttackCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+		AttackCollision->Off();
+	}
 
 	IsGroundVectorReset = false;
 }
@@ -73,6 +85,26 @@ void FieldMonster::Update(float _Delta)
 void FieldMonster::Release()
 {
 	ContentActor::Release();
+
+	if (nullptr != MonsterCollision)
+	{
+		MonsterCollision->Death();
+		MonsterCollision = nullptr;
+	}
+
+	if (nullptr != DetectCollision)
+	{
+		DetectCollision->Death();
+		DetectCollision = nullptr;
+	}
+
+	if (nullptr != AttackCollision)
+	{
+		AttackCollision->Death();
+		AttackCollision = nullptr;
+	}
+
+	AttackFunction.CollisionActor.clear();
 }
 
 void FieldMonster::ChangeState(FieldMonsterState _State)

@@ -126,9 +126,13 @@ void Player::Start()
 	_Animation->Inter[0] = 0.3f;
 	_Animation->Inter[2] = 0.8f;
 
-	HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Player);
-	HitCollision->Transform.SetLocalScale({32, 70});
-	HitCollision->Transform.SetLocalPosition({0, 35});
+	if (nullptr == HitCollision)
+	{
+		HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Player);
+		HitCollision->Transform.SetLocalScale({ 32, 70 });
+		HitCollision->Transform.SetLocalPosition({ 0, 35 });
+	}
+
 
 	if (nullptr == NameBGRenderer)
 	{
@@ -144,8 +148,15 @@ void Player::Start()
 		NameRenderer->SetText("돋움", "윈드브레이커", 11.0f, {1.0f, 1.0f, 0.6f}, FW1_CENTER);
 	}
 
-	SkillManagerActor = GetLevel()->CreateActor<SkillManager>(UpdateOrder::Skill);
-	UIManager = GetLevel()->CreateActor<PlayerUIManager>(UpdateOrder::UI);
+	if (nullptr == SkillManagerActor)
+	{
+		SkillManagerActor = GetLevel()->CreateActor<SkillManager>(UpdateOrder::Skill);
+	}
+
+	if (nullptr == UIManager)
+	{
+		UIManager = GetLevel()->CreateActor<PlayerUIManager>(UpdateOrder::UI);
+	}
 }
 
 void Player::Update(float _Delta)
@@ -153,6 +164,11 @@ void Player::Update(float _Delta)
 	ContentActor::Update(_Delta);
 	ChasingCamera(_Delta);
 	BlockOutMap();
+
+	if (false == IsTempInputValue)
+	{
+		return;
+	}
 
 	if (true == GameEngineInput::IsDown('Q', this))
 	{
@@ -168,10 +184,7 @@ void Player::Update(float _Delta)
 		HitCollision->On();
 	}
 
-	if (false == IsTempInputValue)
-	{
-		return;
-	}
+
 
 	DirCheck();
 	LadderCheck();
@@ -213,6 +226,12 @@ void Player::Release()
 	{
 		NameRenderer->Death();
 		NameRenderer = nullptr;
+	}
+
+	if (nullptr != NameBGRenderer)
+	{
+		NameBGRenderer->Death();
+		NameBGRenderer = nullptr;
 	}
 
 	if (nullptr != SkillManagerActor)

@@ -63,7 +63,6 @@ void Monsoon::Start()
 
 	if (nullptr == SkillCollision)
 	{
-		// 추후 UICollision로 개선
 		SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
 		SkillCollision->Transform.SetLocalScale({900, 600});
 		SkillCollision->Off();
@@ -140,6 +139,8 @@ void Monsoon::Release()
 		SkillCollision->Death();
 		SkillCollision = nullptr;
 	}
+
+	AttackFunction.CollisionActor.clear();
 }
 
 void Monsoon::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)

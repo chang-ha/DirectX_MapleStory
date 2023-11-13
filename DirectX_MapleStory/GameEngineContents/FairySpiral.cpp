@@ -96,9 +96,12 @@ void FairySpiral::Start()
 		}
 	);
 
-	SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
-	SkillCollision->Transform.SetLocalScale({ XRANGE, YRANGE });
-	SkillCollision->Off();
+	if (nullptr == SkillCollision)
+	{
+		SkillCollision = CreateComponent<GameEngineCollision>(CollisionOrder::PlayerAttack);
+		SkillCollision->Transform.SetLocalScale({ XRANGE, YRANGE });
+		SkillCollision->Off();
+	}
 }
 
 void FairySpiral::Update(float _Delta)
@@ -107,6 +110,19 @@ void FairySpiral::Update(float _Delta)
 	Transform.SetLocalPosition(PlayerPos);
 	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "FairySprial_Hit", 6);
 	// SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
+}
+
+void FairySpiral::Release()
+{
+	ContentSkill::Release();
+
+	if (nullptr != SkillCollision)
+	{
+		SkillCollision->Death();
+		SkillCollision = nullptr;
+	}
+
+	AttackFunction.CollisionActor.clear();
 }
 
 void FairySpiral::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)

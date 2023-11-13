@@ -7,17 +7,31 @@ void OneHitAttackFunction::AttackUpdate(std::shared_ptr<GameEngineCollision> _At
 	std::string_view _HitAniName, 
 	int _HitCount /*= 1*/, int _Damage /*= -1*/, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
 {
+	std::set<std::shared_ptr<GameEngineObject>>::iterator StartIter = CollisionActor.begin();
+	std::set<std::shared_ptr<GameEngineObject>>::iterator EndIter = CollisionActor.end();
+
+	for (; StartIter != EndIter;)
+	{
+		if (false == (*StartIter)->IsDeath())
+		{
+			++StartIter;
+			continue;
+		}
+
+		StartIter = CollisionActor.erase(StartIter);
+	}
+
 	_AttackCollision->Collision(_Order, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)
 			{
 				GameEngineCollision* _Other = _CollisionGroup[i];
-				GameEngineObject* _Object = _Other->GetParentObject();
+				std::shared_ptr<GameEngineObject> _Object = _Other->GetParentObject()->shared_from_this();
 				if (true == CollisionActor.contains(_Object))
 				{
 					return;
 				}
-				HitRenderManager::MainHitRenderManager->HitPrint(_HitAniName, _HitCount, _Object, _Damage, _RandomPivot, _PivotType);
+				HitRenderManager::MainHitRenderManager->HitPrint(_HitAniName, _HitCount, _Object.get(), _Damage, _RandomPivot, _PivotType);
 				CollisionActor.insert(_Object);
 			}
 		}
@@ -37,6 +51,20 @@ void HitTimeAttackFunction::AttackUpdate(std::shared_ptr<GameEngineCollision> _A
 	std::string_view _HitAniName, 
 	float _Hit_Time /*= 0.2f*/, int _HitCount /*= 1*/, int _Damage /*= -1*/, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
 {
+	std::map<std::shared_ptr<GameEngineCollision>, float>::iterator StartIter = CollisionTime.begin();
+	std::map<std::shared_ptr<GameEngineCollision>, float>::iterator EndIter = CollisionTime.end();
+
+	for (; StartIter != EndIter;)
+	{
+		if (false == (*StartIter).first->IsDeath())
+		{
+			++StartIter;
+			continue;
+		}
+
+		StartIter = CollisionTime.erase(StartIter);
+	}
+
 	_AttackCollision->Collision(_Order, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)

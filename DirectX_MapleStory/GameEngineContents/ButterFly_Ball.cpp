@@ -20,13 +20,19 @@ void ButterFly_Ball::LevelEnd(GameEngineLevel* _NextLevel)
 
 void ButterFly_Ball::Start()
 {
-	BallRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTERATTACK);
-	BallRenderer->AutoSpriteSizeOn();
-	BallRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monsterattack});
+	if (nullptr == BallRenderer)
+	{
+		BallRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTERATTACK);
+		BallRenderer->AutoSpriteSizeOn();
+		BallRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::monsterattack });
+	}
 
-	BallCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
-	BallCollision->SetCollisionType(ColType::SPHERE2D);
-	BallCollision->Transform.SetLocalScale({21, 21});
+	if (nullptr == BallCollision)
+	{
+		BallCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+		BallCollision->SetCollisionType(ColType::SPHERE2D);
+		BallCollision->Transform.SetLocalScale({ 21, 21 });
+	}
 }
 
 void ButterFly_Ball::Update(float _Delta)
@@ -37,7 +43,19 @@ void ButterFly_Ball::Update(float _Delta)
 
 void ButterFly_Ball::Release()
 {
+	if (nullptr != BallRenderer)
+	{
+		BallRenderer->Death();
+		BallRenderer = nullptr;
+	}
 
+	if (nullptr != BallCollision)
+	{
+		BallCollision->Death();
+		BallCollision = nullptr;
+	}
+
+	AttackFunction.CollisionActor.clear();
 }
 
 void ButterFly_Ball::Init(int _Phase)

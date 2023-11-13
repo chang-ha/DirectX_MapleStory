@@ -20,7 +20,7 @@ void ContentMouse::LevelStart(GameEngineLevel* _PrevLevel)
 
 void ContentMouse::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void ContentMouse::Start()
@@ -100,5 +100,15 @@ void ContentMouse::Update(float _Delta)
 
 void ContentMouse::Release()
 {
+	if (nullptr != MouseRenderer)
+	{
+		MouseRenderer->Death();
+		MouseRenderer = nullptr;
+	}
 
+	if (nullptr != MouseCollision)
+	{
+		MouseCollision->Death();
+		MouseCollision = nullptr;
+	}
 }

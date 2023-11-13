@@ -10,6 +10,8 @@
 #include "Dreamkeeper.h"
 #include "Lamp.h"
 #include "FireWork.h"
+#include "ClockTowerOfNightMare_2th.h"
+
 
 ClockTowerOfNightMare_1th::ClockTowerOfNightMare_1th()
 {
@@ -33,13 +35,23 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitFootHold("ClockOfTower_1th_FootHold.png");
 	}
 
-	TeleportPos = float4(500, -2800);
+	TeleportPos = float4(1300, -2800);
 
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition({ 550, -200 });
-		GetMainCamera()->Transform.SetLocalPosition(float4(550, -200, -100000));
+	}
+
+	ClockTowerOfNightMare_2th* PrevLevel = dynamic_cast<ClockTowerOfNightMare_2th*>(_PrevLevel);
+	if (nullptr != PrevLevel)
+	{
+		CurPlayer->Transform.SetLocalPosition({ 1350, -480 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(1350, -480, -100000));
+	}
+	else
+	{
+		CurPlayer->Transform.SetLocalPosition({ 455, -2860 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(455, -2860, -100000));
 	}
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
