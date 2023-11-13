@@ -118,11 +118,9 @@ void Dreamkeeper::DeathStart()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		MainSpriteRenderer->LeftFlip();
 		MainSpriteRenderer->SetPivotValue({ 0.465f, 0.94f });
 		break;
 	case ActorDir::Left:
-		MainSpriteRenderer->RightFlip();
 		MainSpriteRenderer->SetPivotValue({ 0.42f, 0.84f });
 		break;
 	case ActorDir::Null:

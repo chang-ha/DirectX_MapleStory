@@ -96,9 +96,11 @@ void BlueEyed_Gargoyle::DeathStart()
 	switch (Dir)
 	{
 	case ActorDir::Right:
+		MainSpriteRenderer->LeftFlip();
 		MainSpriteRenderer->SetPivotValue({ 0.465f, 0.94f });
 		break;
 	case ActorDir::Left:
+		MainSpriteRenderer->RightFlip();
 		MainSpriteRenderer->SetPivotValue({ 0.535f, 0.94f });
 		break;
 	case ActorDir::Null:

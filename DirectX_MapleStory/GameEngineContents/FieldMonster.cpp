@@ -316,10 +316,10 @@ void FieldMonster::DeathStart()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		MainSpriteRenderer->RightFlip();
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
-		MainSpriteRenderer->LeftFlip();
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
