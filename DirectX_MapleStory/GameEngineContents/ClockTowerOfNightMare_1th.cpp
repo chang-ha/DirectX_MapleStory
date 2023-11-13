@@ -11,7 +11,7 @@
 #include "Lamp.h"
 #include "FireWork.h"
 #include "ClockTowerOfNightMare_2th.h"
-
+#include "LinkPortal.h"
 
 ClockTowerOfNightMare_1th::ClockTowerOfNightMare_1th()
 {
@@ -58,12 +58,19 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_1th.png", "악몽의시계탑 1층");
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 1350, -418 });
-	_Portal->SetMoveMap("ClockTowerOfNightMare_3th");
+	_Portal->Transform.SetLocalPosition({ 1350, -490 });
+	_Portal->SetMoveMap("ClockTowerOfNightMare_2th");
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 450, -2805 });
+	_Portal->Transform.SetLocalPosition({ 450, -2875 });
 	_Portal->SetMoveMap("Lachlen");
+
+	std::shared_ptr<LinkPortal> _LinkPortal1 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal1->Transform.SetLocalPosition({ 1300, -2870 });
+
+	std::shared_ptr<LinkPortal> _LinkPortal2 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal2->Transform.SetLocalPosition({ 650, -483 });
+	_LinkPortal2->DoubleLinkPortal(_LinkPortal1.get());
 
 	std::shared_ptr<Lamp> _Lamp = CreateActor<Lamp>(UpdateOrder::Map);
 	_Lamp->Init(LampType::Lamp9);

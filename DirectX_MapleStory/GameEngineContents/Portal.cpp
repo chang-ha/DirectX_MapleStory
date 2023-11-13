@@ -37,6 +37,7 @@ void Portal::Start()
 	}
 	PortalRenderer->CreateAnimation("Idle", "NormalPortal");
 	PortalRenderer->ChangeAnimation("Idle");
+	PortalRenderer->SetPivotType(PivotType::Bottom);
 	PortalRenderer->AutoSpriteSizeOn();
 
 	PortalRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::portal});
@@ -44,8 +45,8 @@ void Portal::Start()
 	if (nullptr == PortalCollision)
 	{
 		PortalCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Portal);
-		PortalCollision->Transform.SetLocalScale({ 28, 80 });
-		PortalCollision->Transform.SetLocalPosition({ 0, -25 });
+		PortalCollision->Transform.SetLocalScale({ 4, 4 });
+		PortalCollision->Transform.SetLocalPosition({ 0, 10 });
 	}
 }
 

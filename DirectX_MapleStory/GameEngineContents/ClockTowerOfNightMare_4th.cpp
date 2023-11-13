@@ -6,6 +6,8 @@
 #include "RedEyed_Gargoyle.h"
 #include "Portal.h"
 #include "Lamp.h"
+#include "ClockTowerOfNightMare_5th.h"
+#include "LinkPortal.h"
 
 ClockTowerOfNightMare_4th::ClockTowerOfNightMare_4th()
 {
@@ -29,25 +31,45 @@ void ClockTowerOfNightMare_4th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitFootHold("ClockOfTower_4th_FootHold.png");
 	}
 
-	// TeleportPos = float4(500, -2800);
+	TeleportPos = float4(920, -2900);
 
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition({ 600, -460 });
-		GetMainCamera()->Transform.SetLocalPosition(float4(600, -460, -100000));
 	}
+
+	ClockTowerOfNightMare_5th* PrevLevel = dynamic_cast<ClockTowerOfNightMare_5th*>(_PrevLevel);
+	if (nullptr != PrevLevel)
+	{
+		CurPlayer->Transform.SetLocalPosition({ 1250, -528 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(1250, -528, -100000));
+	}
+	else
+	{
+		CurPlayer->Transform.SetLocalPosition({ 750, -2893 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(750, -2893, -100000));
+	}
+
+	CurPlayer->Transform.SetLocalPosition({ 1250, -525 });
+	GetMainCamera()->Transform.SetLocalPosition(float4(1250, -525, -100000));
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_4th.png", "악몽의시계탑 4층");
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 1250, -464 });
+	_Portal->Transform.SetLocalPosition({ 1250, -532 });
 	_Portal->SetMoveMap("ClockTowerOfNightMare_5th");
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 750, -2833 });
+	_Portal->Transform.SetLocalPosition({ 750, -2900 });
 	_Portal->SetMoveMap("ClockTowerOfNightMare_3th");
+
+	std::shared_ptr<LinkPortal> _LinkPortal1 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal1->Transform.SetLocalPosition({ 920, -2970 });
+
+	std::shared_ptr<LinkPortal> _LinkPortal2 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal2->Transform.SetLocalPosition({ 790, -452 });
+	_LinkPortal2->DoubleLinkPortal(_LinkPortal1.get());
 
 	std::shared_ptr<Lamp> _Lamp = CreateActor<Lamp>(UpdateOrder::Map);
 	_Lamp->Init(LampType::Lamp9);

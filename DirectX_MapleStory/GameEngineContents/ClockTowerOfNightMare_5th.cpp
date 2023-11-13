@@ -6,6 +6,8 @@
 #include "Minimap.h"
 #include "BlueEyed_Gargoyle.h"
 #include "RedEyed_Gargoyle.h"
+#include "LinkPortal.h"
+#include "Boss_WaitingRoom.h"
 
 ClockTowerOfNightMare_5th::ClockTowerOfNightMare_5th()
 {
@@ -30,22 +32,42 @@ void ClockTowerOfNightMare_5th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitFootHold("ClockOfTower_5th_FootHold.png");
 	}
 
-	TeleportPos = float4(500, -2800);
+	TeleportPos = float4(1150, -2780);
 
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition({ 600, -2750 });
-		GetMainCamera()->Transform.SetLocalPosition(float4(600, -2750, -100000));
 	}
 
+	Boss_WaitingRoom* PrevLevel = dynamic_cast<Boss_WaitingRoom*>(_PrevLevel);
+	if (nullptr != PrevLevel)
+	{
+		CurPlayer->Transform.SetLocalPosition({ 600, -350 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(600, -350, -100000));
+	}
+	else
+	{
+		CurPlayer->Transform.SetLocalPosition({ 500, -2878 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(500, -2878, -100000));
+	}
+
+	CurPlayer->Transform.SetLocalPosition({ 600, -350 });
+	GetMainCamera()->Transform.SetLocalPosition(float4(600, -350, -100000));
+
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 600, -290 });
+	_Portal->Transform.SetLocalPosition({ 600, -360 });
 	_Portal->SetMoveMap("Boss_WaitingRoom");
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 500, -2815 });
+	_Portal->Transform.SetLocalPosition({ 500, -2885 });
 	_Portal->SetMoveMap("ClockTowerOfNightMare_4th");
+
+	std::shared_ptr<LinkPortal> _LinkPortal1 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal1->Transform.SetLocalPosition({ 1150, -2845 });
+
+	std::shared_ptr<LinkPortal> _LinkPortal2 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal2->Transform.SetLocalPosition({ 1350, -530 });
+	_LinkPortal2->DoubleLinkPortal(_LinkPortal1.get());
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_5th.png", "악몽의시계탑 5층");

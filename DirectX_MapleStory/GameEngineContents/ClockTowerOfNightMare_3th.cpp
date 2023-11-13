@@ -6,6 +6,8 @@
 #include "Lamp.h"
 #include "BlueEyed_Gargoyle.h"
 #include "Portal.h"
+#include "LinkPortal.h"
+#include "ClockTowerOfNightMare_4th.h"
 
 ClockTowerOfNightMare_3th::ClockTowerOfNightMare_3th()
 {
@@ -29,22 +31,39 @@ void ClockTowerOfNightMare_3th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitFootHold("ClockOfTower_3th_FootHold.png");
 	}
 
-	// TeleportPos = float4(500, -2800);
+	TeleportPos = float4(1115, -2860);
 
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition({ 1350, -426 });
-		GetMainCamera()->Transform.SetLocalPosition(float4(1350, -426, -100000));
+	}
+
+	ClockTowerOfNightMare_4th* PrevLevel = dynamic_cast<ClockTowerOfNightMare_4th*>(_PrevLevel);
+	if (nullptr != PrevLevel)
+	{
+		CurPlayer->Transform.SetLocalPosition({ 1350, -488 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(1350, -488, -100000));
+	}
+	else
+	{
+		CurPlayer->Transform.SetLocalPosition({ 500, -2998 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(500, -2998, -100000));
 	}
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 1350, -426 });
-	_Portal->SetMoveMap("ClockTowerOfNightMare_1th");
+	_Portal->Transform.SetLocalPosition({ 500, -3005 });
+	_Portal->SetMoveMap("ClockTowerOfNightMare_2th");
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 500, -2937});
+	_Portal->Transform.SetLocalPosition({ 1350, -496 });
 	_Portal->SetMoveMap("ClockTowerOfNightMare_4th");
+
+	std::shared_ptr<LinkPortal> _LinkPortal1 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal1->Transform.SetLocalPosition({ 1115, -2925 });
+
+	std::shared_ptr<LinkPortal> _LinkPortal2 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal2->Transform.SetLocalPosition({ 600, -470 });
+	_LinkPortal2->DoubleLinkPortal(_LinkPortal1.get());
 
 	std::shared_ptr<Lamp> _Lamp = CreateActor<Lamp>(UpdateOrder::Map);
 	_Lamp->Init(LampType::Lamp10);

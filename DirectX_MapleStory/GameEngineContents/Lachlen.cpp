@@ -101,13 +101,13 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		ClockTowerOfNightMare_1th* _Level = dynamic_cast<ClockTowerOfNightMare_1th*>(_PrevLevel);
 		if (nullptr != _Level)
 		{
-			CurPlayer->Transform.SetLocalPosition(float4(3770, -810));
-			GetMainCamera()->Transform.SetLocalPosition(float4(3770, -810, -100000));
+			CurPlayer->Transform.SetLocalPosition(float4(3770, -817));
+			GetMainCamera()->Transform.SetLocalPosition(float4(3770, -817, -100000));
 		}
 		else
 		{
-			CurPlayer->Transform.SetLocalPosition(float4(3500, -800));
-			GetMainCamera()->Transform.SetLocalPosition(float4(3500, -800, -100000));
+			CurPlayer->Transform.SetLocalPosition(float4(3500, -817));
+			GetMainCamera()->Transform.SetLocalPosition(float4(3500, -817, -100000));
 		}
 	}
 
@@ -231,7 +231,7 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 3770, -755 });
+	_Portal->Transform.SetLocalPosition({ 3770, -825 });
 	_Portal->SetMoveMap("ClockTowerOfNightMare_1th");
 
 	for (size_t i = 0; i < 8; i++)

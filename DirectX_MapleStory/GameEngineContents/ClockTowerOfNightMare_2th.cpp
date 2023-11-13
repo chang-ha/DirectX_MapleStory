@@ -6,6 +6,8 @@
 #include "Portal.h"
 #include "Lamp.h"
 #include "Dreamkeeper.h"
+#include "ClockTowerOfNightMare_3th.h"
+#include "LinkPortal.h"
 
 ClockTowerOfNightMare_2th::ClockTowerOfNightMare_2th()
 {
@@ -30,25 +32,42 @@ void ClockTowerOfNightMare_2th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitFootHold("ClockOfTower_2th_FootHold.png");
 	}
 
-	// TeleportPos = float4(500, -2800);
+	TeleportPos = float4(1115, -2800);
 
 	if (nullptr == CurPlayer)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
-		CurPlayer->Transform.SetLocalPosition({ 600, -2300 });
-		GetMainCamera()->Transform.SetLocalPosition(float4(600, -2300, -100000));
+	}
+
+	ClockTowerOfNightMare_3th* PrevLevel = dynamic_cast<ClockTowerOfNightMare_3th*>(_PrevLevel);
+	if (nullptr != PrevLevel)
+	{
+		CurPlayer->Transform.SetLocalPosition({ 1350, -489 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(1350, -489, -100000));
+	}
+	else
+	{
+		CurPlayer->Transform.SetLocalPosition({ 510, -2965 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(510, -2965, -100000));
 	}
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_2th.png", "악몽의시계탑 2층");
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 1350, -426 });
+	_Portal->Transform.SetLocalPosition({ 1350, -496 });
 	_Portal->SetMoveMap("ClockTowerOfNightMare_3th");
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 510, -2901 });
+	_Portal->Transform.SetLocalPosition({ 510, -2972 });
 	_Portal->SetMoveMap("ClockTowerOfNightMare_1th");
+
+	std::shared_ptr<LinkPortal> _LinkPortal1 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal1->Transform.SetLocalPosition({ 1115, -2855 });
+
+	std::shared_ptr<LinkPortal> _LinkPortal2 = CreateActor<LinkPortal>(UpdateOrder::Portal);
+	_LinkPortal2->Transform.SetLocalPosition({ 600, -470 });
+	_LinkPortal2->DoubleLinkPortal(_LinkPortal1.get());
 
 	std::shared_ptr<Lamp> _Lamp = CreateActor<Lamp>(UpdateOrder::Map);
 	_Lamp->Init(LampType::Lamp10);
