@@ -46,7 +46,7 @@ protected:
 	void RandomChangeDirTime(float _MinTime, float _MaxTime);
 
 	float Speed = 80.0f;
-	float MoveDelay = 2.0f;
+	float MoveDelay = 1.5f;
 	float ChangeDirTime = 3.0f;
 	// float AttackCoolDown = ATTACK_COOLDOWN;
 	std::string MonsterName = "";

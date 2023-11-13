@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "FieldMonster.h"
 #include "TowerWall.h"
+#include "Lamp.h"
+#include "FireWork.h"
 
 ClockTowerBaseLevel::ClockTowerBaseLevel()
 {
@@ -28,6 +30,98 @@ void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
 		Back->Init("BG_Lucid_Next.png");
 	}
+
+	std::shared_ptr<Lamp> _Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 600, -64 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 1172, -64 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 600, -684 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 1172, -684 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 600, -1304 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 1172, -1304 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 600, -1919 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 1172, -1919 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 600, -2539 });
+
+	_Lamp = CreateActor<Lamp>(UpdateOrder::Map);
+	_Lamp->Init(LampType::Lamp7);
+	_Lamp->Transform.SetLocalPosition({ 1172, -2539 });
+
+	std::shared_ptr<FireWork> _FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 1700, -250 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 800, -250 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 900, -950 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 170, -700 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 150, -1050 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 70, -1650 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 120, -2150 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({ 50, -2000 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 90, -2550 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 900, -2200 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 1750, -2100 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 1680, -2000 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({ 1780, -1880 });
 
 	LeftWall = CreateActor<TowerWall>(UpdateOrder::Map);
 	LeftWall->Transform.SetLocalPosition({290, 3});
