@@ -1,7 +1,7 @@
 #pragma once
 #include "ContentLevel.h"
 
-#define RESPAWN_TIME 6.0f
+#define RESPAWN_TIME 7.0f
 
 class FieldMonsterInfo
 {
@@ -40,7 +40,7 @@ public:
 protected:
 	float RespawnTime = RESPAWN_TIME;
 	float4 CurMapScale = float4::ZERO;
-	float4 StartPos = float4::ZERO;
+	float4 TeleportPos = float4::ZERO;
 
 	std::vector<FieldMonsterInfo> AllMonster;
 	std::shared_ptr<class TowerWall> LeftWall = nullptr;

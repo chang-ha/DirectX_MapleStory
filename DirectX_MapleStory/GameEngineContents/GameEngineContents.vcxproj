@@ -244,6 +244,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ClockTowerOfNightMare_4th.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ClockTowerOfNightMare_5th.cpp">
       <SubType>
       </SubType>
@@ -507,6 +511,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ClockTowerOfNightMare_3th.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ClockTowerOfNightMare_4th.h">
       <SubType>
       </SubType>
     </ClInclude>

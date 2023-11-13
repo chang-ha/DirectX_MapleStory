@@ -157,7 +157,7 @@ void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)
 void ClockTowerBaseLevel::Start()
 {
 	ContentLevel::Start();
-	AllMonster.reserve(27);
+	AllMonster.reserve(29);
 }
 
 void ClockTowerBaseLevel::Update(float _Delta)
@@ -167,7 +167,7 @@ void ClockTowerBaseLevel::Update(float _Delta)
 
 	if (CurPlayer->Transform.GetWorldPosition().Y <= -CurMapScale.Y)
 	{
-		CurPlayer->Transform.SetLocalPosition(StartPos);
+		CurPlayer->Transform.SetLocalPosition(TeleportPos);
 		CurPlayer->MoveVectorForceReset();
 	}
 }
@@ -182,7 +182,7 @@ void ClockTowerBaseLevel::RespawnMonster(float _Delta)
 
 	for (size_t i = 0; i < AllMonster.size(); i++)
 	{
-		if (false == AllMonster[i].Monster->IsUpdate() || FieldMonsterState::Death == AllMonster[i].Monster->GetState())
+		if (false == AllMonster[i].Monster->IsUpdate() /*|| FieldMonsterState::Death == AllMonster[i].Monster->GetState()*/)
 		{
 			AllMonster[i].Monster->Respawn();
 			AllMonster[i].Monster->Transform.SetLocalPosition(AllMonster[i].RespawnPos);

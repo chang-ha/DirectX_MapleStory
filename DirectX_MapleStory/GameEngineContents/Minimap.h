@@ -35,6 +35,7 @@ public:
 	{
 		std::shared_ptr<Minimap> CurMinimap = ContentLevel::CurContentLevel->CreateActor<Minimap>(UpdateOrder::UI);
 		CurMinimap->Init(_MinimapName, _MinimapTextName);
+		CurMinimap->Transform.SetWorldPosition({0, 0, 1});
 	}
 
 protected:

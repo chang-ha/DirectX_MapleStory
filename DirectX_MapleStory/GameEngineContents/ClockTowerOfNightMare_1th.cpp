@@ -33,7 +33,7 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitFootHold("ClockOfTower_1th_FootHold.png");
 	}
 
-	StartPos = float4(500, -2800);
+	TeleportPos = float4(500, -2800);
 
 	if (nullptr == CurPlayer)
 	{

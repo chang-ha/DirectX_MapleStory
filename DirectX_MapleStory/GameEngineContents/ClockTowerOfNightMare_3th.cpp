@@ -29,7 +29,7 @@ void ClockTowerOfNightMare_3th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitFootHold("ClockOfTower_3th_FootHold.png");
 	}
 
-	// StartPos = float4(500, -2800);
+	// TeleportPos = float4(500, -2800);
 
 	if (nullptr == CurPlayer)
 	{
@@ -44,7 +44,7 @@ void ClockTowerOfNightMare_3th::LevelStart(GameEngineLevel* _PrevLevel)
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({ 500, -2937});
-	_Portal->SetMoveMap("Boss_WaitingRoom");
+	_Portal->SetMoveMap("ClockTowerOfNightMare_4th");
 
 	std::shared_ptr<Lamp> _Lamp = CreateActor<Lamp>(UpdateOrder::Map);
 	_Lamp->Init(LampType::Lamp10);

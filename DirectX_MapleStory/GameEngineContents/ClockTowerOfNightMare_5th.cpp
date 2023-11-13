@@ -28,7 +28,7 @@ void ClockTowerOfNightMare_5th::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap->InitMapCollision("Collision_Lachlen_Tower_5th.png");
 	}
 
-	StartPos = float4(500, -2800);
+	TeleportPos = float4(500, -2800);
 
 	if (nullptr == CurPlayer)
 	{

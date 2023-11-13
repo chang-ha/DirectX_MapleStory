@@ -235,6 +235,9 @@
     <ClCompile Include="ClockTowerOfNightMare_3th.cpp">
       <Filter>Level\HuntingField</Filter>
     </ClCompile>
+    <ClCompile Include="ClockTowerOfNightMare_4th.cpp">
+      <Filter>Level\HuntingField</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -469,6 +472,9 @@
       <Filter>Level\Actor</Filter>
     </ClInclude>
     <ClInclude Include="ClockTowerOfNightMare_3th.h">
+      <Filter>Level\HuntingField</Filter>
+    </ClInclude>
+    <ClInclude Include="ClockTowerOfNightMare_4th.h">
       <Filter>Level\HuntingField</Filter>
     </ClInclude>
   </ItemGroup>
