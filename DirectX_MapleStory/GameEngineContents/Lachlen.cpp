@@ -8,7 +8,7 @@
 #include "BackGroundActor.h"
 #include "Portal.h"
 #include "Minimap.h"
-#include "Boss_WaitingRoom.h"
+#include "ClockTowerOfNightMare_1th.h"
 #include "FireWork.h"
 
 Lachlen::Lachlen()
@@ -98,11 +98,11 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		CurPlayer = CreateActor<Player>(UpdateOrder::Play);
 
-		Boss_WaitingRoom* _Level = dynamic_cast<Boss_WaitingRoom*>(_PrevLevel);
+		ClockTowerOfNightMare_1th* _Level = dynamic_cast<ClockTowerOfNightMare_1th*>(_PrevLevel);
 		if (nullptr != _Level)
 		{
-			CurPlayer->Transform.SetLocalPosition(float4(3820, -750));
-			GetMainCamera()->Transform.SetLocalPosition(float4(3820, -750, -100000));
+			CurPlayer->Transform.SetLocalPosition(float4(3770, -810));
+			GetMainCamera()->Transform.SetLocalPosition(float4(3770, -810, -100000));
 		}
 		else
 		{
