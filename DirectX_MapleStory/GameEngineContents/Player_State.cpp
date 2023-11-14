@@ -91,7 +91,6 @@ void Player::ShootingStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Shooting");
-	SkillManagerActor->UseSkill("SongOfHeaven");
 	AlertTime = ALERT_TIME;
 }
 
@@ -99,7 +98,6 @@ void Player::Attack2Start()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("FairySpiral");
-	SkillManagerActor->UseSkill("FairySpiral");
 	AlertTime = ALERT_TIME;
 }
 
@@ -109,7 +107,6 @@ void Player::WindWalkStart()
 	GravityOff();
 	IsDirCheck = false;
 	IsGroundVectorReset = false;
-	SkillManagerActor->UseSkill("WindWalk");
 	if (true == IsGround)
 	{
 		MainSpriteRenderer->ChangeAnimation("WindWalk");
@@ -119,7 +116,7 @@ void Player::WindWalkStart()
 		MainSpriteRenderer->ChangeAnimation("Jump");
 		IsGroundCheck = false;
 		// 경사면 오차용
-		PlusMoveVectorForce({0, 0.001f});
+		PlusMoveVectorForce({0, 0.000001f});
 	}
 	switch (Dir)
 	{
@@ -141,7 +138,6 @@ void Player::ShootStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Shoot");
-	SkillManagerActor->UseSkill("HowlingGale");
 	AlertTime = ALERT_TIME;
 }
 
@@ -149,7 +145,6 @@ void Player::VortexSphereStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("VortexSphere");
-	SkillManagerActor->UseSkill("VortexSphere");
 	AlertTime = ALERT_TIME;
 }
 
@@ -157,14 +152,12 @@ void Player::MercilessWindsStart()
 {
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("MercilessWinds");
-	SkillManagerActor->UseSkill("MercilessWinds");
 	AlertTime = ALERT_TIME;
 }
 
 void Player::MonsoonStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Monsoon");
-	SkillManagerActor->UseSkill("Monsoon");
 	AlertTime = ALERT_TIME;
 }
 
@@ -254,68 +247,18 @@ void Player::MonsoonEnd()
 
 void Player::IdleUpdate(float _Delta)
 {
-	if (State == PlayerState::Idle && 0.0f < AlertTime)
+	if ((State == PlayerState::Idle) && (0.0f < AlertTime))
 	{
 		ChangeState(PlayerState::Alert);
 		return;
 	}
 
 	///////////// Skill Code
-	if (GameEngineInput::IsDown(VK_SPACE, this))
-	{
-		ChangeState(PlayerState::WindWalk);
-		return;
-	}
-
-	if (GameEngineInput::IsPress('A', this))
-	{
-		ChangeState(PlayerState::Shooting);
-		return;
-	}
-
-	if (GameEngineInput::IsDown('F', this))
-	{
-		ChangeState(PlayerState::Shoot);
-		return;
-	}
-
-
-	if (GameEngineInput::IsDown(VK_SHIFT, this) || GameEngineInput::IsPress(VK_SHIFT, this))
-	{
-		ChangeState(PlayerState::Attack2);
-		return;
-	}
-
-	if (true == GameEngineInput::IsPress('S', this))
-	{
-		ChangeState(PlayerState::VortexSphere);
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('E', this))
-	{
-		SkillManagerActor->UseSkill("PhalanxCharge");
-		AlertTime = ALERT_TIME;
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('R', this))
-	{
-		ChangeState(PlayerState::MercilessWinds);
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('W', this))
-	{
-		ChangeState(PlayerState::Monsoon);
-		return;
-	}
-
-	if (true == GameEngineInput::IsPress(VK_CONTROL, this))
-	{
-		ChangeState(PlayerState::Attack);
-		return;
-	}
+	//if (true == GameEngineInput::IsPress(VK_CONTROL, this))
+	//{
+	//	ChangeState(PlayerState::Attack);
+	//	return;
+	//}
 	/////////////
 
 	if (GameEngineInput::IsPress(VK_DOWN, this))
@@ -358,61 +301,11 @@ void Player::AlertUpdate(float _Delta)
 void Player::WalkUpdate(float _Delta)
 {
 	///////////// Skill Code
-	if (GameEngineInput::IsDown(VK_SPACE, this))
-	{
-		ChangeState(PlayerState::WindWalk);
-		return;
-	}
-
-	if (GameEngineInput::IsPress('A', this))
-	{
-		ChangeState(PlayerState::Shooting);
-		return;
-	}
-
-	if (GameEngineInput::IsDown('F', this))
-	{
-		ChangeState(PlayerState::Shoot);
-		return;
-	}
-
-
-	if (GameEngineInput::IsDown(VK_SHIFT, this) || GameEngineInput::IsPress(VK_SHIFT, this))
-	{
-		ChangeState(PlayerState::Attack2);
-		return;
-	}
-
-	if (true == GameEngineInput::IsPress('S', this))
-	{
-		ChangeState(PlayerState::VortexSphere);
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('E', this))
-	{
-		SkillManagerActor->UseSkill("PhalanxCharge");
-		AlertTime = ALERT_TIME;
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('R', this))
-	{
-		ChangeState(PlayerState::MercilessWinds);
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('W', this))
-	{
-		ChangeState(PlayerState::Monsoon);
-		return;
-	}
-
-	if (true == GameEngineInput::IsPress(VK_CONTROL, this))
-	{
-		ChangeState(PlayerState::Attack);
-		return;
-	}
+	//if (true == GameEngineInput::IsPress(VK_CONTROL, this))
+	//{
+	//	ChangeState(PlayerState::Attack);
+	//	return;
+	//}
 	/////////////
 
 	float4 MovePos = float4::ZERO;
@@ -459,38 +352,6 @@ void Player::WalkUpdate(float _Delta)
 
 void Player::JumpUpdate(float _Delta)
 {
-	///////////// Skill Code
-	if (GameEngineInput::IsDown(VK_SPACE, this))
-	{
-		ChangeState(PlayerState::WindWalk);
-		return;
-	}
-
-	if (GameEngineInput::IsDown(VK_SHIFT, this) || GameEngineInput::IsPress(VK_SHIFT, this))
-	{
-		ChangeState(PlayerState::Attack2);
-		return;
-	}
-
-	if (true == GameEngineInput::IsPress('S', this))
-	{
-		ChangeState(PlayerState::VortexSphere);
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('R', this))
-	{
-		ChangeState(PlayerState::MercilessWinds);
-		return;
-	}
-
-	if (true == GameEngineInput::IsDown('W', this))
-	{
-		ChangeState(PlayerState::Monsoon);
-		return;
-	}
-	/////////////
-
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
 		ChangeToIdle();
@@ -550,7 +411,7 @@ void Player::JumpUpdate(float _Delta)
 	if (GameEngineInput::IsDown('D', this))
 	{
 		GravityReset();
-		SkillManagerActor->UseSkill("DoubleJump");
+		// SkillManagerActor->UseSkill("DoubleJump");
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP, this))
 		{

@@ -108,3 +108,12 @@ void VortexSphere::Update(float _Delta)
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
 }
+
+void VortexSphere::Init()
+{
+	Key = 'S';
+	InputTypeValue = InputType::IsPress | InputType::IsDown;
+	SkillCoolDown = 30.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
+	ChangeState = PlayerState::VortexSphere;
+}

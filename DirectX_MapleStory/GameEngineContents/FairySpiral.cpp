@@ -17,11 +17,6 @@ FairySpiral::~FairySpiral()
 
 }
 
-void FairySpiral::Init()
-{
-	
-}
-
 void FairySpiral::UseSkill()
 {
 	AttackFunction.CollisionActor.clear();
@@ -140,3 +135,11 @@ void FairySpiral::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGr
 	}
 }
 
+void FairySpiral::Init()
+{
+	Key = VK_SHIFT;
+	InputTypeValue = InputType::IsPress | InputType::IsDown;
+	SkillCoolDown = 0.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
+	ChangeState = PlayerState::Attack2;
+}

@@ -126,6 +126,15 @@ void Monsoon::Update(float _Delta)
 	// SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));
 }
 
+void Monsoon::Init()
+{
+	Key = 'W';
+	InputTypeValue = InputType::IsDown;
+	SkillCoolDown = 30.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
+	ChangeState = PlayerState::Monsoon;
+}
+
 void Monsoon::Release()
 {
 	if (nullptr != SceneRenderer)

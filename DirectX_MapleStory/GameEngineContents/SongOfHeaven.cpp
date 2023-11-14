@@ -135,3 +135,12 @@ void SongOfHeaven::Update(float _Delta)
 		SkillRenderer1->Transform.SetLocalPosition(Pos);
 	}
 }
+
+void SongOfHeaven::Init()
+{
+	Key = 'A';
+	InputTypeValue = InputType::IsPress;
+	SkillCoolDown = 0.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk;
+	ChangeState = PlayerState::Shooting;
+}

@@ -21,8 +21,6 @@ ClockTowerBaseLevel::~ClockTowerBaseLevel()
 
 void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	AllMonster.clear();
-
 	ContentLevel::LevelStart(_PrevLevel);
 
 	if (nullptr == Back)
@@ -152,12 +150,13 @@ void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		Back = nullptr;
 	}
 
+	AllMonster.clear();
 }
 
 void ClockTowerBaseLevel::Start()
 {
 	ContentLevel::Start();
-	AllMonster.reserve(29);
+	AllMonster.reserve(33);
 }
 
 void ClockTowerBaseLevel::Update(float _Delta)

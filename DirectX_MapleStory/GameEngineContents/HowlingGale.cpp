@@ -112,3 +112,12 @@ void HowlingGale::Update(float _Delta)
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
 }
+
+void HowlingGale::Init()
+{
+	Key = 'F';
+	InputTypeValue = InputType::IsDown;
+	SkillCoolDown = 0.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk;
+	ChangeState = PlayerState::Shoot;
+}

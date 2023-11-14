@@ -81,6 +81,7 @@ void WindWalk::Start()
 			this->Off();
 		}
 	);
+
 }
 
 void WindWalk::Update(float _Delta)
@@ -89,4 +90,13 @@ void WindWalk::Update(float _Delta)
 	PlayerPos.Z = RenderDepth::skill;
 	SkillRenderer1->Transform.SetLocalPosition(PlayerPos);
 
+}
+
+void WindWalk::Init()
+{
+	Key = VK_SPACE;
+	InputTypeValue = InputType::IsDown;
+	SkillCoolDown = 0.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
+	ChangeState = PlayerState::WindWalk;
 }

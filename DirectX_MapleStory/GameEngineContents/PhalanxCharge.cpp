@@ -101,3 +101,12 @@ void PhalanxCharge::Update(float _Delta)
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
 }
+
+void PhalanxCharge::Init()
+{
+	Key = 'E';
+	InputTypeValue = InputType::IsDown;
+	SkillCoolDown = 0.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk;
+	ChangeState = PlayerState::Alert;
+}

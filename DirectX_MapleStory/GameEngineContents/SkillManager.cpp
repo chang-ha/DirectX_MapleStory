@@ -28,6 +28,11 @@ void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
 }
 
+void SkillInfo::SkillInfoUpdate(float _Delta)
+{
+	Skill->SkillCurCoolDown -= _Delta;
+}
+
 SkillManager::SkillManager()
 {
 
@@ -47,8 +52,26 @@ void SkillManager::UseSkill(std::string_view _SkillName)
 		return;
 	}
 
-	std::shared_ptr<ContentSkill> Skill = AllSkills[UpperName.data()];
+	if (0.0f < AllSkills[UpperName.data()]->Skill->SkillCurCoolDown)
+	{
+		return;
+	}
+
+	int UseState = AllSkills[UpperName.data()]->Skill->UseState;
+	if (0 == (Player::MainPlayer->GetState() & UseState))
+	{
+		return;
+	}
+
+	std::shared_ptr<ContentSkill> Skill = AllSkills[UpperName.data()]->Skill;
+
 	Skill->On();
+
+	if (PlayerState::Null != AllSkills[UpperName.data()]->Skill->ChangeState)
+	{
+		Player::MainPlayer->ChangeState(AllSkills[UpperName.data()]->Skill->ChangeState);
+	}
+
 	Skill->UseSkill();
 }
 
@@ -61,7 +84,7 @@ void SkillManager::EndSkill(std::string_view _SkillName)
 		return;
 	}
 
-	std::shared_ptr<ContentSkill> Skill = AllSkills[UpperName.data()];
+	std::shared_ptr<ContentSkill> Skill = AllSkills[UpperName.data()]->Skill;
 	Skill->EndSkill();
 }
 
@@ -74,7 +97,7 @@ bool SkillManager::IsSkillUsing(std::string_view _SkillName)
 		return false;
 	}
 
-	std::shared_ptr<ContentSkill> Skill = AllSkills[UpperName.data()];
+	std::shared_ptr<ContentSkill> Skill = AllSkills[UpperName.data()]->Skill;
 	return Skill->IsSkillUsing();
 }
 
@@ -94,15 +117,15 @@ void SkillManager::Start()
 {
 	GameEngineGUI::CreateGUIWindow<SkillManagerGUI>("SkillManager");
 
-	CreateSkill<DoubleJump>("DoubleJump");
-	CreateSkill<SongOfHeaven>("SongOfHeaven");
-	CreateSkill<FairySpiral>("FairySpiral");
-	CreateSkill<WindWalk>("WindWalk");
-	CreateSkill<HowlingGale>("HowlingGale");
-	CreateSkill<Monsoon>("Monsoon");
-	CreateSkill<VortexSphere>("VortexSphere");
-	CreateSkill<PhalanxCharge>("PhalanxCharge");
-	CreateSkill<MercilessWinds>("MercilessWinds");	
+	CreateSkill<class DoubleJump>("DoubleJump");
+	CreateSkill<class SongOfHeaven>("SongOfHeaven");
+	CreateSkill<class FairySpiral>("FairySpiral");
+	CreateSkill<class WindWalk>("WindWalk");
+	CreateSkill<class HowlingGale>("HowlingGale");
+	CreateSkill<class Monsoon>("Monsoon");
+	CreateSkill<class VortexSphere>("VortexSphere");
+	CreateSkill<class PhalanxCharge>("PhalanxCharge");
+	CreateSkill<class MercilessWinds>("MercilessWinds");
 
 	if (nullptr == GameEngineSprite::Find("QuickSlot.png"))
 	{
@@ -117,27 +140,34 @@ void SkillManager::Start()
 	QuickSlot->SetPivotType(PivotType::RightBottom);
 	QuickSlot->SetSprite("QuickSlot.png");
 	QuickSlot->AutoSpriteSizeOn();
-	QuickSlot->Transform.SetLocalPosition({GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui});
+	QuickSlot->Transform.SetLocalPosition({ GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui });
 	// QuickSlot->SetAutoScaleRatio(1.1f);
 
 	HitPrintManager = GetLevel()->CreateActor<HitRenderManager>(UpdateOrder::Skill);
+
+	GameEngineInput::AddInputObject(this);
 }
 
 void SkillManager::Update(float _Delta)
 {
-
+	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
+	{
+		_Pair.second->SkillInfoUpdate(_Delta);
+	}
+	CheckUseSkill();
 }
 
 void SkillManager::Release()
 {
-	std::map<std::string, std::shared_ptr<ContentSkill>>::iterator StartIter = AllSkills.begin();
-	std::map<std::string, std::shared_ptr<ContentSkill>>::iterator EndIter = AllSkills.end();
+	// std::map<std::string, std::shared_ptr<ContentSkill>>::iterator StartIter = AllSkills.begin();
+	// std::map<std::string, std::shared_ptr<ContentSkill>>::iterator EndIter = AllSkills.end();
 
-	for (std::pair<const std::string, std::shared_ptr<ContentSkill>>& _Pair : AllSkills)
+	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
 	{
 		if (nullptr != _Pair.second)
 		{
-			_Pair.second->Release();
+			_Pair.second->Skill->Release();
+			_Pair.second->Skill = nullptr;
 			_Pair.second = nullptr;
 		}
 	}
@@ -149,4 +179,41 @@ void SkillManager::SkillInit(std::shared_ptr<ContentSkill> _Skill)
 {
 	_Skill->Init();
 	_Skill->Off();
+}
+
+void SkillManager::CheckUseSkill()
+{
+	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
+	{
+		switch (_Pair.second->Skill->InputTypeValue)
+		{
+		case ContentSkill::InputType::IsDown:
+		{
+			if (true == GameEngineInput::IsDown(_Pair.second->Skill->Key, this))
+			{
+				UseSkill(_Pair.second->Skill->SkillName);
+			}
+			break;
+		}
+		case ContentSkill::InputType::IsPress:
+		{
+			if (true == GameEngineInput::IsPress(_Pair.second->Skill->Key, this))
+			{
+				UseSkill(_Pair.second->Skill->SkillName);
+			}
+			break;
+		}
+		case ContentSkill::InputType::IsDown | ContentSkill::InputType::IsPress:
+		{
+			if (true == GameEngineInput::IsDown(_Pair.second->Skill->Key, this) ||
+				true == GameEngineInput::IsPress(_Pair.second->Skill->Key, this))
+			{
+				UseSkill(_Pair.second->Skill->SkillName);
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
 }

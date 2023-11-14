@@ -1,10 +1,20 @@
 #pragma once
+#include "ContentSkill.h"
 
 class SkillManagerGUI : public GameEngineGUIWindow
 {
 public:
 	void Start() override;
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
+};
+
+class SkillInfo : public std::enable_shared_from_this<SkillInfo>
+{
+	friend class SkillManager;
+
+	std::shared_ptr<ContentSkill> Skill = nullptr;
+
+	void SkillInfoUpdate(float _Delta);
 };
 
 class SkillManager : public GameEngineActor
@@ -24,32 +34,33 @@ public:
 	void CreateSkill(std::string _SkillName)
 	{
 		std::string UpperName = GameEngineString::ToUpperReturn(_SkillName);
-		std::shared_ptr<class ContentSkill> NewSkill = GetLevel()->CreateActor<SkillType>(UpdateOrder::Skill);
 		if (false == AllSkills.contains(UpperName))
 		{
-			AllSkills[UpperName] = std::shared_ptr<class ContentSkill>();
+			AllSkills[UpperName] = std::make_shared<SkillInfo>();
 		}
-		AllSkills[UpperName] = NewSkill;
+		std::shared_ptr<ContentSkill> NewSkill = GetLevel()->CreateActor<SkillType>(UpdateOrder::Skill);
+		NewSkill->SkillName = UpperName;
 		SkillInit(NewSkill);
+		AllSkills[UpperName]->Skill = NewSkill;
 	}
-
 
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);
 	bool IsSkillUsing(std::string_view _SkillName);
-	void Release() override;
 
 protected:
 	void LevelStart(class GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(class GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
+	void Release() override;
 
 private:
 	std::shared_ptr<GameEngineUIRenderer> QuickSlot;
 	std::shared_ptr<class HitRenderManager> HitPrintManager;
-	std::map<std::string, std::shared_ptr<class ContentSkill>> AllSkills;
+	std::map<std::string, std::shared_ptr<SkillInfo>> AllSkills;
  
-	void SkillInit(std::shared_ptr<class ContentSkill> _Skill);
+	void SkillInit(std::shared_ptr<ContentSkill> _Skill);
+	void CheckUseSkill();
 };
 

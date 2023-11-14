@@ -83,6 +83,7 @@ void ContentSkill::UseSkill()
 	PlayerDir = Player::MainPlayer->GetDir();
 	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 	PlayerScale = Player::MainPlayer->GetPlayerScale();
+	SkillCurCoolDown = SkillCoolDown;
 }
 
 void ContentSkill::SkillLeftFlip()

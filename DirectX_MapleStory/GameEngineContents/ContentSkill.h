@@ -1,10 +1,16 @@
 #pragma once
+#include "Player.h"
 
 class ContentSkill : public GameEngineActor
 { 
 	friend class SkillManager;
+	friend class SkillInfo;
 public:
-
+	enum InputType
+	{
+		IsDown = 1, // 비트 연산을 위해 1
+		IsPress,
+	};
 
 	// constructer destructer
 	ContentSkill();
@@ -48,6 +54,13 @@ protected:
 	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer2 = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> SkillAfterImageRenderer = nullptr;
 
+	std::string SkillName = "";
+	int Key = VK_F24; // 초기화용 값
+	int InputTypeValue = InputType::IsDown;
+	float SkillCurCoolDown = 0.0f;
+	float SkillCoolDown = 0.0f;
+	int UseState = PlayerState::Null;
+	PlayerState ChangeState = PlayerState::Null;
 private:
 };
 

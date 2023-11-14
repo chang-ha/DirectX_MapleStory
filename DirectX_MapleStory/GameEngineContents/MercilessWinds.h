@@ -21,6 +21,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void CreateWind();
+	void Init() override;
 
 private:
 	std::vector<std::shared_ptr<class BaseWindActor>> AllWindActor;

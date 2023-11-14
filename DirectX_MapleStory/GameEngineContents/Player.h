@@ -14,23 +14,23 @@
 // Time Value
 #define ALERT_TIME 5.0f
 
-enum class PlayerState
+enum PlayerState
 {
-	Null, // StartValue
-	Idle,
-	Alert,
-	Walk,
-	Jump,
-	Down,
-	Ladder,
-	Attack,
-	Shooting, // SongOfHeaven
-	Attack2, // FairySpiral
-	WindWalk, // WindWalk
-	Shoot, //HowlingGale
-	VortexSphere,
-	MercilessWinds,
-	Monsoon
+	Null = 0b0000000000000000, // StartValue
+	Idle = 0b0000000000000001,
+	Alert = 0b0000000000000010,
+	Walk = 0b0000000000000100,
+	Jump = 0b0000000000001000,
+	Down = 0b0000000000010000,
+	Ladder = 0b0000000000100000,
+	Attack = 0b0000000001000000,
+	Shooting = 0b0000000010000000, // SongOfHeaven
+	Attack2 = 0b0000000100000000, // FairySpiral
+	WindWalk = 0b0000001000000000, // WindWalk
+	Shoot = 0b0000010000000000, //HowlingGale
+	VortexSphere = 0b0000100000000000,
+	MercilessWinds = 0b0001000000000000,
+	Monsoon = 0b0010000000000000,
 };
 
 #include "ContentActor.h"
@@ -58,6 +58,12 @@ public:
 	}
 
 	void ChangeState(PlayerState _State);
+
+	PlayerState GetState()
+	{
+		return State;
+	}
+
 	void StateUpdate(float _Delta);
 	void Release() override;
 

@@ -108,3 +108,12 @@ void MercilessWinds::CreateWind()
 	std::shared_ptr<BaseWindActor> _Actor = BaseWindActor::CreateMercilessWind();
 	AllWindActor.push_back(_Actor);
 }
+
+void MercilessWinds::Init()
+{
+	Key = 'R';
+	InputTypeValue = InputType::IsDown;
+	SkillCoolDown = 10.0f;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
+	ChangeState = PlayerState::MercilessWinds;
+}

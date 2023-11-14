@@ -16,7 +16,6 @@ public:
 	FairySpiral& operator=(const FairySpiral& _Other) = delete;
 	FairySpiral& operator=(FairySpiral&& _Other) noexcept = delete;
 
-	void Init() override;
 	void UseSkill() override;
 	void EndSkill() override;
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
@@ -25,6 +24,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
+	void Init() override;
 
 private:
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
