@@ -28,11 +28,6 @@ void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
 }
 
-void SkillInfo::SkillInfoUpdate(float _Delta)
-{
-	
-}
-
 SkillManager::SkillManager()
 {
 
@@ -205,19 +200,17 @@ void SkillManager::Start()
 		CoolDownAlerts[i] = Frame;
 	}
 
-
-	QuickSlot.CoolDownAniRenderers.resize(2);
-	for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers.size(); i++)
-	{
-		QuickSlot.CoolDownAniRenderers[i].reserve(10);
-	}
-
 	QuickSlot.QuickSlotBG = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	QuickSlot.QuickSlotBG->SetPivotType(PivotType::RightBottom);
 	QuickSlot.QuickSlotBG->SetSprite("QuickSlot.png");
 	QuickSlot.QuickSlotBG->AutoSpriteSizeOn();
 	QuickSlot.QuickSlotBG->Transform.SetLocalPosition({ GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui });
 
+	QuickSlot.CoolDownAniRenderers.resize(2);
+	for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers.size(); i++)
+	{
+		QuickSlot.CoolDownAniRenderers[i].reserve(10);
+	}
 
 	for (size_t j = 0; j < QuickSlot.CoolDownAniRenderers.size(); j++)
 	{
@@ -239,25 +232,7 @@ void SkillManager::Start()
 
 void SkillManager::Update(float _Delta)
 {
-	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
-	{
-		if (0 == _Pair.second->Skill->SkillCurCoolDown)
-		{
-			continue;
-		}
-
-		_Pair.second->Skill->SkillCurCoolDown -= _Delta;
-		if (0 == _Pair.second->Skill->SkillCoolDown)
-		{
-			continue;
-		}
-
-		if (0 >= _Pair.second->Skill->SkillCurCoolDown)
-		{
-			_Pair.second->Skill->SkillCurCoolDown = 0.0f;
-			SkillAlert(_Pair.second->IconSpriteName);
-		}
-	}
+	AlertUpdate(_Delta);
 	CheckUseSkill();
 }
 
@@ -273,6 +248,18 @@ void SkillManager::Release()
 			_Pair.second->Skill->Release();
 			_Pair.second->Skill = nullptr;
 			_Pair.second = nullptr;
+		}
+	}
+
+	for (size_t i = 0; i < CoolDownAlerts.size(); i++)
+	{
+		if (nullptr != CoolDownAlerts[i]->CoolDownAlertBG)
+		{
+			CoolDownAlerts[i]->CoolDownAlertBG->Death();
+			CoolDownAlerts[i]->CoolDownAlertIcon->Death();
+
+			CoolDownAlerts[i]->CoolDownAlertBG = nullptr;
+			CoolDownAlerts[i]->CoolDownAlertIcon = nullptr;
 		}
 	}
 
@@ -318,6 +305,29 @@ void SkillManager::CheckUseSkill()
 		}
 		default:
 			break;
+		}
+	}
+}
+
+void SkillManager::AlertUpdate(float _Delta)
+{
+	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
+	{
+		if (0 == _Pair.second->Skill->SkillCurCoolDown)
+		{
+			continue;
+		}
+
+		_Pair.second->Skill->SkillCurCoolDown -= _Delta;
+		if (0 == _Pair.second->Skill->SkillCoolDown)
+		{
+			continue;
+		}
+
+		if (0 >= _Pair.second->Skill->SkillCurCoolDown)
+		{
+			_Pair.second->Skill->SkillCurCoolDown = 0.0f;
+			SkillAlert(_Pair.second->IconSpriteName);
 		}
 	}
 }

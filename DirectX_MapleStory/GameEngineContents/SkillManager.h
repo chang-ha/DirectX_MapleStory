@@ -17,8 +17,6 @@ class SkillInfo : public std::enable_shared_from_this<SkillInfo>
 	// float* SkillCurCoolDown = nullptr;
 	// float* SkillCoolDown = nullptr;
 	std::shared_ptr<ContentSkill> Skill = nullptr;
-
-	void SkillInfoUpdate(float _Delta);
 };
 
 class QuickSlotFrame
@@ -85,6 +83,7 @@ private:
 
 	void SkillInit(std::shared_ptr<ContentSkill> _Skill);
 	void CheckUseSkill();
+	void AlertUpdate(float _Delta);
 	void SkillAlert(std::string_view _IconName);
 };
 

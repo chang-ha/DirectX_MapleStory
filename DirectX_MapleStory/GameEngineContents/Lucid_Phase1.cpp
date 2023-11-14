@@ -59,7 +59,14 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder("Phase1_M", Dir.GetStringPath() + "\\Phase1_M");
 		GameEngineSprite::CreateFolder("Phase1_L", Dir.GetStringPath() + "\\Phase1_L");
 		GameEngineSprite::CreateFolder("Phase1_XL", Dir.GetStringPath() + "\\Phase1_XL");
-		GameEngineSprite::CreateFolder("Phase1_Hit", Dir.GetStringPath() + "\\Phase1_Hit");
+	}
+
+	if (nullptr == GameEngineSprite::Find("Phase1_Hit"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser\\Phase1_Hit");
+		GameEngineSprite::CreateFolder("Phase1_Hit", Dir.GetStringPath());
 	}
 
 	if (nullptr == CurMap)

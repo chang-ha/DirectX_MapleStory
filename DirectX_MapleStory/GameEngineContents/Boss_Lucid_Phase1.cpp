@@ -64,13 +64,22 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineDirectory& Childs = Directorys[i];
 			GameEngineSprite::CreateFolder("Lucid_Phase1_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
+	}
 
-		if (nullptr == GameEngineSprite::Find("Lucid_Attack"))
-		{
-			Dir.MoveParentToExistsChild("Phase1");
-			Dir.MoveChild("Attack");
-			GameEngineSprite::CreateFolder("Lucid_" + Dir.GetFileName(), Dir.GetStringPath());
-		}
+	if (nullptr == GameEngineSprite::Find("PhantasmalWind"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\PhantasmalWind");
+		GameEngineSprite::CreateFolder("PhantasmalWind", Dir.GetStringPath());
+	}
+
+	if (nullptr == GameEngineSprite::Find("PhantasmalWind_Hit"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\PhantasmalWind_Hit");
+		GameEngineSprite::CreateFolder("PhantasmalWind_Hit", Dir.GetStringPath());
 	}
 
 	if (nullptr == GameEngineSprite::Find("Phase1_ButterFly_Ready"))

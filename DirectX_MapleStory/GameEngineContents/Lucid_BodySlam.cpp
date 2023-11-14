@@ -64,6 +64,7 @@ void Lucid_BodySlam::Start()
 
 	BodySlamRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
+			BodySlamCollision->Off();
 			Death();
 		}
 	);
@@ -181,7 +182,7 @@ void Lucid_BodySlam::AttackUpdate(float _Delta)
 		BodySlamRenderer->LeftFlip();
 	}
 	
-	if (5.0f >= MoveVector.Size())
+	if (10.0f >= MoveVector.Size())
 	{
 		Transform.SetLocalPosition(DestinationPos);
 		++CurLocationIndex;

@@ -30,7 +30,7 @@ void PhantasmalWind::Start()
 {
 	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTERATTACK);
 	MainSpriteRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::monsterattack});
-	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Attack");
+	MainSpriteRenderer->CreateAnimation("Attack", "PhantasmalWind");
 	MainSpriteRenderer->ChangeAnimation("Attack");
 	MainSpriteRenderer->LeftFlip();
 
@@ -54,7 +54,7 @@ void PhantasmalWind::Start()
 	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, -DirAngle });
 	PhantasmaCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
 
-	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Lucid_Attack");
+	std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("PhantasmalWind");
 	float4 Scale = Sprite->GetSpriteData(0).GetScale();
 	float RandomRatio = Random.RandomFloat(0.2f, 1.0f);
 	MainSpriteRenderer->SetImageScale(Scale * RandomRatio);
@@ -71,7 +71,7 @@ void PhantasmalWind::Update(float _Delta)
 	}
 
 	Transform.AddLocalPosition( MoveVector * Speed * _Delta);
-	AttackFunction.AttackUpdate(PhantasmaCollision, CollisionOrder::Player, "Lucid_Phase1_PhantasmalWind_Hit", 1.0f, 1, 10, false, PivotType::Center);
+	AttackFunction.AttackUpdate(PhantasmaCollision, CollisionOrder::Player, "PhantasmalWind_Hit", 1.0f, 1, 10, false, PivotType::Center);
 	AttackFunction.CollisionTimeUpdate(_Delta);
 }
 

@@ -106,7 +106,7 @@ void PhalanxCharge::Init()
 {
 	Key = 'E';
 	InputTypeValue = InputType::IsDown;
-	SkillCoolDown = 0.0f;
+	SkillCoolDown = 30.0f;
 	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk;
 	ChangeState = PlayerState::Alert;
 }
