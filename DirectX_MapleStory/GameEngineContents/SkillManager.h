@@ -12,10 +12,10 @@ class SkillInfo : public std::enable_shared_from_this<SkillInfo>
 {
 	friend class SkillManager;
 
-	int Key = VK_F24;
 	std::string IconSpriteName = "";
-	float* SkillCurCoolDown = nullptr;
-	float* SkillCoolDown = nullptr;
+	// int Key = VK_F24;
+	// float* SkillCurCoolDown = nullptr;
+	// float* SkillCoolDown = nullptr;
 	std::shared_ptr<ContentSkill> Skill = nullptr;
 
 	void SkillInfoUpdate(float _Delta);
@@ -25,7 +25,14 @@ class QuickSlotFrame
 {
 	friend class SkillManager;
 	std::shared_ptr<GameEngineUIRenderer> QuickSlotBG = nullptr;
-	std::map<int, GameEngineUIRenderer> CoolDownAniRenderers;
+	std::vector<std::vector<std::shared_ptr<GameEngineUIRenderer>>> CoolDownAniRenderers;
+};
+
+class AlertFrame : public std::enable_shared_from_this<AlertFrame>
+{
+	friend class SkillManager;
+	std::shared_ptr<GameEngineUIRenderer> CoolDownAlertBG = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> CoolDownAlertIcon = nullptr;
 };
 
 class SkillManager : public GameEngineActor
@@ -53,9 +60,9 @@ public:
 		NewSkill->SkillName = UpperName;
 		SkillInit(NewSkill);
 		AllSkills[UpperName]->Skill = NewSkill;
-		AllSkills[UpperName]->SkillCurCoolDown = &NewSkill->SkillCurCoolDown;
-		AllSkills[UpperName]->SkillCoolDown = &NewSkill->SkillCoolDown;
-		AllSkills[UpperName]->Key = NewSkill->Key;
+		// AllSkills[UpperName]->SkillCurCoolDown = &NewSkill->SkillCurCoolDown;
+		// AllSkills[UpperName]->SkillCoolDown = &NewSkill->SkillCoolDown;
+		// AllSkills[UpperName]->Key = NewSkill->Key;
 		AllSkills[UpperName]->IconSpriteName = "Icon_" + _SkillName + ".png";
 	}
 
@@ -74,8 +81,10 @@ private:
 	QuickSlotFrame QuickSlot;
 	std::shared_ptr<class HitRenderManager> HitPrintManager;
 	std::map<std::string, std::shared_ptr<SkillInfo>> AllSkills;
- 
+	std::vector<std::shared_ptr<AlertFrame>> CoolDownAlerts;
+
 	void SkillInit(std::shared_ptr<ContentSkill> _Skill);
 	void CheckUseSkill();
+	void SkillAlert(std::string_view _IconName);
 };
 
