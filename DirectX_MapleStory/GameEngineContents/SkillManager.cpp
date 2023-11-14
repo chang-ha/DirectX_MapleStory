@@ -136,12 +136,26 @@ void SkillManager::Start()
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
-	QuickSlot = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	QuickSlot->SetPivotType(PivotType::RightBottom);
-	QuickSlot->SetSprite("QuickSlot.png");
-	QuickSlot->AutoSpriteSizeOn();
-	QuickSlot->Transform.SetLocalPosition({ GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui });
-	// QuickSlot->SetAutoScaleRatio(1.1f);
+	if (nullptr == GameEngineSprite::Find("Icon_DoubleJump.png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\UI\\QuickSlot\\SkillIcon");
+		std::vector<GameEngineFile> Directorys = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineFile& ChildFile = Directorys[i];
+			GameEngineTexture::Load(ChildFile.GetStringPath());
+			GameEngineSprite::CreateSingle(ChildFile.GetFileName());
+		}
+	}
+
+	QuickSlot.QuickSlotBG = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	QuickSlot.QuickSlotBG->SetPivotType(PivotType::RightBottom);
+	QuickSlot.QuickSlotBG->SetSprite("QuickSlot.png");
+	QuickSlot.QuickSlotBG->AutoSpriteSizeOn();
+	QuickSlot.QuickSlotBG->Transform.SetLocalPosition({ GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui });
 
 	HitPrintManager = GetLevel()->CreateActor<HitRenderManager>(UpdateOrder::Skill);
 

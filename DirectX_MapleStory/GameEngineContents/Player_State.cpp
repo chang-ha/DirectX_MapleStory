@@ -52,7 +52,7 @@ void Player::JumpStart()
 		}
 		GroundJump = true;
 	}
-	else if (PlayerState::Ladder == State)
+	else if (PlayerState::Ladder & State)
 	{
 		if (/*ActorDir::Left == Dir &&*/ GameEngineInput::IsPress(VK_LEFT, this))
 		{
@@ -247,7 +247,7 @@ void Player::MonsoonEnd()
 
 void Player::IdleUpdate(float _Delta)
 {
-	if ((State == PlayerState::Idle) && (0.0f < AlertTime))
+	if ((PlayerState::Idle & State) && (0.0f < AlertTime))
 	{
 		ChangeState(PlayerState::Alert);
 		return;

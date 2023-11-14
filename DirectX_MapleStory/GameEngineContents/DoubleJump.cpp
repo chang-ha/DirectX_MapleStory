@@ -142,3 +142,11 @@ void DoubleJump::Update(float _Delta)
 	SkillRenderer2->Transform.SetLocalPosition(Pos);
 }
 
+void DoubleJump::Init()
+{
+	//Key = 'D';
+	//InputTypeValue = InputType::IsDown;
+	//SkillCoolDown = 0.0f;
+	//UseState = PlayerState::Jump;
+	//ChangeState = PlayerState::Null;
+}
