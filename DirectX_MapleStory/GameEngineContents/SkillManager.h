@@ -17,11 +17,23 @@ class SkillInfo : public std::enable_shared_from_this<SkillInfo>
 	std::shared_ptr<ContentSkill> Skill = nullptr;
 };
 
+class CoolDownFrame : public std::enable_shared_from_this<CoolDownFrame>
+{
+	friend class SkillManager;
+
+	float4 OneNumPos = float4::ZERO;
+	float4 OnlyOneNumPos = float4::ZERO;
+
+	std::shared_ptr<GameEngineUIRenderer> CoolDown_AniRenderer = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> CoolDown_TenNumRenderer = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> CoolDown_OneNumRenderer = nullptr;
+};
+
 class QuickSlotFrame
 {
 	friend class SkillManager;
 	std::shared_ptr<GameEngineUIRenderer> QuickSlotBG = nullptr;
-	std::map<int, std::shared_ptr<GameEngineUIRenderer>> CoolDownAniRenderers;
+	std::map<int, std::shared_ptr<CoolDownFrame>> CoolDownAniRenderers;
 
 	void CreateCoolDownRenderers(int _Key);
 };

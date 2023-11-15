@@ -144,6 +144,21 @@ void SkillManager::Start()
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("CoolDownNum_0.png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\UI\\QuickSlot\\CoolDownNum");
+		std::vector<GameEngineFile> Directorys = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineFile& ChildFile = Directorys[i];
+			GameEngineTexture::Load(ChildFile.GetStringPath());
+			GameEngineSprite::CreateSingle(ChildFile.GetFileName());
+		}
+	}
+
 	if (nullptr == GameEngineSprite::Find("CoolDownAlert"))
 	{
 		GameEngineDirectory Dir;
@@ -257,6 +272,21 @@ void SkillManager::Release()
 		}
 	}
 
+	QuickSlot.QuickSlotBG->Death();
+	for (std::pair<const int, std::shared_ptr<CoolDownFrame>>& _Pair : QuickSlot.CoolDownAniRenderers)
+	{
+		if (nullptr != _Pair.second)
+		{
+			_Pair.second->CoolDown_AniRenderer->Death();
+			_Pair.second->CoolDown_TenNumRenderer->Death();
+			_Pair.second->CoolDown_OneNumRenderer->Death();
+
+			_Pair.second->CoolDown_AniRenderer = nullptr;
+			_Pair.second->CoolDown_TenNumRenderer = nullptr;
+			_Pair.second->CoolDown_OneNumRenderer = nullptr;
+		}
+	}
+
 	AllSkills.clear();
 }
 
@@ -344,10 +374,28 @@ void SkillManager::SkillAlert(std::string_view _IconName)
 
 void SkillManager::QuickSlotCoolDownCreate(int _Key, int _Index_X, int _Index_Y)
 {
-	QuickSlot.CoolDownAniRenderers[_Key] = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	QuickSlot.CoolDownAniRenderers[_Key]->AutoSpriteSizeOn();
-	QuickSlot.CoolDownAniRenderers[_Key]->SetSprite("CoolDown_015%.png");
-	QuickSlot.CoolDownAniRenderers[_Key]->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 18 - 35 * (9 - _Index_X), -GlobalValue::WinScale.Y - 6 + 35 * (2 - _Index_Y), RenderDepth::ui });
+	std::shared_ptr<CoolDownFrame> Frame = std::make_shared<CoolDownFrame>();
+
+	Frame->CoolDown_AniRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	Frame->CoolDown_AniRenderer->AutoSpriteSizeOn();
+	Frame->CoolDown_AniRenderer->SetSprite("CoolDown_015.png");
+	Frame->CoolDown_AniRenderer->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 18 - 35 * (9 - _Index_X), -GlobalValue::WinScale.Y - 6 + 35 * (2 - _Index_Y), RenderDepth::ui });
+	Frame->OnlyOneNumPos = { GlobalValue::WinScale.X - 18 - 35 * (9 - _Index_X), -GlobalValue::WinScale.Y - 6 + 35 * (2 - _Index_Y), RenderDepth::ui };
+
+	Frame->CoolDown_OneNumRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	Frame->CoolDown_OneNumRenderer->AutoSpriteSizeOn();
+	Frame->CoolDown_OneNumRenderer->SetSprite("CoolDownNum_0.png");
+	Frame->CoolDown_OneNumRenderer->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 14 - 35 * (9 - _Index_X), -GlobalValue::WinScale.Y - 6 + 35 * (2 - _Index_Y), RenderDepth::ui });
+	Frame->CoolDown_OneNumRenderer->Off();
+	Frame->OneNumPos = { GlobalValue::WinScale.X - 14 - 35 * (9 - _Index_X), -GlobalValue::WinScale.Y - 6 + 35 * (2 - _Index_Y), RenderDepth::ui };
+
+	Frame->CoolDown_TenNumRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	Frame->CoolDown_TenNumRenderer->AutoSpriteSizeOn();
+	Frame->CoolDown_TenNumRenderer->SetSprite("CoolDownNum_0.png");
+	Frame->CoolDown_TenNumRenderer->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 22 - 35 * (9 - _Index_X), -GlobalValue::WinScale.Y - 6 + 35 * (2 - _Index_Y), RenderDepth::ui });
+	Frame->CoolDown_TenNumRenderer->Off();
+
+	QuickSlot.CoolDownAniRenderers[_Key] = Frame;
 }
 
 void SkillManager::QuickSlotUpdate(float _Delta)
@@ -361,16 +409,50 @@ void SkillManager::QuickSlotUpdate(float _Delta)
 		{
 			continue;
 		}
+		std::shared_ptr<CoolDownFrame> Frame = QuickSlot.CoolDownAniRenderers[_Pair.second->Key];
 		std::shared_ptr<ContentSkill> CurSkill = _Pair.second->Skill;
 		float RemainCoolRatio = CurSkill->SkillCurCoolDown / CurSkill->SkillCoolDown;
 		int SpriteNum = static_cast<int>((1 - RemainCoolRatio) * 15);
+
 		if (10 > SpriteNum)
 		{
-			QuickSlot.CoolDownAniRenderers[_Pair.second->Key]->SetSprite("CoolDown_00" + std::to_string(SpriteNum) + ".png");
+			Frame->CoolDown_AniRenderer->SetSprite("CoolDown_00" + std::to_string(SpriteNum) + ".png");
 		}
 		else
 		{
-			QuickSlot.CoolDownAniRenderers[_Pair.second->Key]->SetSprite("CoolDown_0" + std::to_string(SpriteNum) + ".png");
+			Frame->CoolDown_AniRenderer->SetSprite("CoolDown_0" + std::to_string(SpriteNum) + ".png");
+		}
+
+		int RemainCoolInt = static_cast<int>(CurSkill->SkillCurCoolDown);
+		if (10 > RemainCoolInt)
+		{
+			if (true == Frame->CoolDown_TenNumRenderer->IsUpdate())
+			{
+				Frame->CoolDown_TenNumRenderer->Off();
+				Frame->CoolDown_OneNumRenderer->Transform.SetLocalPosition(Frame->OnlyOneNumPos);
+			}
+
+			if (5 > RemainCoolInt && true == true == Frame->CoolDown_OneNumRenderer->IsUpdate())
+			{
+				Frame->CoolDown_OneNumRenderer->Off();
+				continue;
+			}
+
+			Frame->CoolDown_OneNumRenderer->SetSprite("CoolDownNum_" + std::to_string(RemainCoolInt) + ".png");
+		}
+		else
+		{
+			if (false == Frame->CoolDown_TenNumRenderer->IsUpdate())
+			{
+				Frame->CoolDown_TenNumRenderer->On();
+				Frame->CoolDown_OneNumRenderer->On();
+			}
+
+			int TenNum = RemainCoolInt / 10;
+			int OneNum = RemainCoolInt % 10;
+
+			Frame->CoolDown_TenNumRenderer->SetSprite("CoolDownNum_" + std::to_string(TenNum) + ".png");
+			Frame->CoolDown_OneNumRenderer->SetSprite("CoolDownNum_" + std::to_string(OneNum) + ".png");
 		}
 	}
 }
