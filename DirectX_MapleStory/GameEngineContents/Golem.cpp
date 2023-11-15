@@ -245,6 +245,7 @@ void Golem::DeathStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Death");
 	MainSpriteRenderer->SetPivotValue({ 0.52f, 0.9f });
+	GolemCollision->Off();
 }
 
 void Golem::ReviveUpdate(float _Delta)

@@ -284,7 +284,9 @@ void SkillManager::Release()
 			_Pair.second->CoolDown_AniRenderer = nullptr;
 			_Pair.second->CoolDown_TenNumRenderer = nullptr;
 			_Pair.second->CoolDown_OneNumRenderer = nullptr;
+			_Pair.second = nullptr;
 		}
+
 	}
 
 	AllSkills.clear();

@@ -180,6 +180,8 @@ void MushRoom::MoveStart()
 
 void MushRoom::DeathStart()
 {
+	MushCollision->Off();
+	AttackCollision->Off();
 	MushRenderer->ChangeAnimation("Death");
 }
 

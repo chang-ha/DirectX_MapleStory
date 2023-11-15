@@ -1,7 +1,5 @@
 #pragma once
 
-#define DELAY 0.02f
-
 class PlayerUIManager : public GameEngineActor
 {
 public:
@@ -22,9 +20,10 @@ protected:
 	void Update(float _Delta) override;
 
 private:
-	float Delay = DELAY;
-	int CurHPScale = 0;
-	int CurMPScale = 0;
+	float ReflectUpSpeed = 100.0f;
+	float ReflectDownSpeed = 30.0f;
+	float CurHPScale = 0;
+	float CurMPScale = 0;
 
 	std::shared_ptr<GameEngineUIRenderer> EXP_Bar = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> HP_Bar = nullptr;
