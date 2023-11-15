@@ -22,6 +22,8 @@ protected:
 private:
 	float ReflectUpSpeed = 100.0f;
 	float ReflectDownSpeed = 30.0f;
+	int PrevHP = 0;
+	int PrevMP = 0;
 	float CurHPScale = 0;
 	float CurMPScale = 0;
 
@@ -33,5 +35,7 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> Bar_Name = nullptr;
 
 	void PlayerStatusUpdate(float _Delta);
+	void HPUpdate(float _Delta);
+	void MPUpdate(float _Delta);
 };
 

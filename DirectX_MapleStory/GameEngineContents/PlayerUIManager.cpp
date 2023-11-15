@@ -122,6 +122,18 @@ void PlayerUIManager::Update(float _Delta)
 
 void PlayerUIManager::PlayerStatusUpdate(float _Delta)
 {
+	HPUpdate(_Delta);
+	MPUpdate(_Delta);
+}
+
+void PlayerUIManager::HPUpdate(float _Delta)
+{
+	if (PrevHP == Player::MainPlayer->HP)
+	{
+		return;
+	}
+
+	PrevHP = Player::MainPlayer->HP;
 	float PlayerHP = static_cast<float>(Player::MainPlayer->HP);
 	if (PlayerHP < CurHPScale)
 	{
@@ -140,6 +152,17 @@ void PlayerUIManager::PlayerStatusUpdate(float _Delta)
 		}
 	}
 	HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
+
+}
+
+void PlayerUIManager::MPUpdate(float _Delta)
+{
+	if (PrevMP == Player::MainPlayer->MP)
+	{
+		return;
+	}
+
+	PrevMP = Player::MainPlayer->MP;
 
 	float PlayerMP = static_cast<float>(Player::MainPlayer->MP);
 	if (PlayerMP < CurMPScale)
