@@ -28,6 +28,8 @@ Player::~Player()
 
 void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	HP = PlayerHP;
+	MP = PlayerMP;
 	ContentActor::LevelStart(_PrevLevel);
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	MainPlayer = this;
@@ -44,8 +46,6 @@ void Player::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Player::Start()
 {
-	HP = PlayerHP;
-	MP = PlayerMP;
 	ContentActor::Start();
 	GameEngineInput::AddInputObject(this);
 	if (nullptr == MainSpriteRenderer)

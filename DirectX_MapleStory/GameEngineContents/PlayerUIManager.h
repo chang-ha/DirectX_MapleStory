@@ -1,5 +1,11 @@
 #pragma once
 
+class BarFrame
+{
+	friend class PlayerUIManager;
+	std::shared_ptr<GameEngineUIRenderer> Bar = nullptr;
+};
+
 class PlayerUIManager : public GameEngineActor
 {
 public:
@@ -16,8 +22,8 @@ public:
 protected:
 	void LevelStart(class GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(class GameEngineLevel* _NextLevel) override;
-	void Start() override;
 	void Update(float _Delta) override;
+	void Release() override;
 
 private:
 	float ReflectUpSpeed = 100.0f;
@@ -30,8 +36,8 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> EXP_Bar = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> HP_Bar = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> HP_Bar_BG = nullptr;
-	std::shared_ptr<GameEngineUIRenderer> HP = nullptr;
-	std::shared_ptr<GameEngineUIRenderer> MP = nullptr;
+	BarFrame HP;
+	BarFrame MP;
 	std::shared_ptr<GameEngineUIRenderer> Bar_Name = nullptr;
 
 	void PlayerStatusUpdate(float _Delta);

@@ -70,15 +70,15 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	HP_Bar_BG->SetSprite("HP_Bar_BG.png");
 	HP_Bar_BG->SetImageScale({ 173, 32 });
 
-	HP = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	HP->SetPivotType(PivotType::LeftBottom);
-	HP->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 76.0f, -GlobalValue::WinScale.Y + 37.0f, RenderDepth::ui });
-	HP->SetSprite("HP.png");
+	HP.Bar = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.Bar->SetPivotType(PivotType::LeftBottom);
+	HP.Bar->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 76.0f, -GlobalValue::WinScale.Y + 37.0f, RenderDepth::ui });
+	HP.Bar->SetSprite("HP.png");
 
-	MP = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	MP->SetPivotType(PivotType::LeftBottom);
-	MP->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 76.0f, -GlobalValue::WinScale.Y + 21.0f, RenderDepth::ui });
-	MP->SetSprite("MP.png");
+	MP.Bar = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.Bar->SetPivotType(PivotType::LeftBottom);
+	MP.Bar->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 76.0f, -GlobalValue::WinScale.Y + 21.0f, RenderDepth::ui });
+	MP.Bar->SetSprite("MP.png");
 
 	HP_Bar = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	HP_Bar->SetPivotType(PivotType::Bottom);
@@ -90,19 +90,14 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	Bar_Name->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 15.0f, -GlobalValue::WinScale.Y + 74.0f, RenderDepth::ui });
 
 	CurHPScale = static_cast<float>(Player::MainPlayer->HP);
-	HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
+	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
 	CurMPScale = static_cast<float>(Player::MainPlayer->MP);
-	MP->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
+	MP.Bar->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
 }
 
 void PlayerUIManager::LevelEnd(class GameEngineLevel* _NextLevel)
 {
-
-}
-
-void PlayerUIManager::Start()
-{
-
+	Death();
 }
 
 void PlayerUIManager::Update(float _Delta)
@@ -120,6 +115,45 @@ void PlayerUIManager::Update(float _Delta)
 	PlayerStatusUpdate(_Delta);
 }
 
+void PlayerUIManager::Release()
+{
+	if (nullptr != EXP_Bar)
+	{
+		EXP_Bar->Death();
+		EXP_Bar = nullptr;
+	}
+
+	if (nullptr != HP_Bar)
+	{
+		HP_Bar->Death();
+		HP_Bar = nullptr;
+	}
+
+	if (nullptr != HP_Bar_BG)
+	{
+		HP_Bar_BG->Death();
+		HP_Bar_BG = nullptr;
+	}
+
+	if (nullptr != HP.Bar)
+	{
+		HP.Bar->Death();
+		HP.Bar = nullptr;
+	}
+
+	if (nullptr != MP.Bar)
+	{
+		MP.Bar->Death();
+		MP.Bar = nullptr;
+	}
+
+	if (nullptr != Bar_Name)
+	{
+		Bar_Name->Death();
+		Bar_Name = nullptr;
+	}
+}
+
 void PlayerUIManager::PlayerStatusUpdate(float _Delta)
 {
 	HPUpdate(_Delta);
@@ -133,7 +167,6 @@ void PlayerUIManager::HPUpdate(float _Delta)
 		return;
 	}
 
-	PrevHP = Player::MainPlayer->HP;
 	float PlayerHP = static_cast<float>(Player::MainPlayer->HP);
 	if (PlayerHP < CurHPScale)
 	{
@@ -141,6 +174,7 @@ void PlayerUIManager::HPUpdate(float _Delta)
 		if (PlayerHP > CurHPScale)
 		{
 			CurHPScale = PlayerHP;
+			PrevHP = Player::MainPlayer->HP;
 		}
 	}
 	else if (PlayerHP > CurHPScale)
@@ -149,9 +183,10 @@ void PlayerUIManager::HPUpdate(float _Delta)
 		if (PlayerHP < CurHPScale)
 		{
 			CurHPScale = PlayerHP;
+			PrevHP = Player::MainPlayer->HP;
 		}
 	}
-	HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
+	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
 
 }
 
@@ -162,7 +197,6 @@ void PlayerUIManager::MPUpdate(float _Delta)
 		return;
 	}
 
-	PrevMP = Player::MainPlayer->MP;
 
 	float PlayerMP = static_cast<float>(Player::MainPlayer->MP);
 	if (PlayerMP < CurMPScale)
@@ -171,6 +205,7 @@ void PlayerUIManager::MPUpdate(float _Delta)
 		if (PlayerMP > CurMPScale)
 		{
 			CurMPScale = PlayerMP;
+			PrevMP = Player::MainPlayer->MP;
 		}
 	}
 	else if (PlayerMP > CurMPScale)
@@ -179,7 +214,8 @@ void PlayerUIManager::MPUpdate(float _Delta)
 		if (PlayerMP < CurMPScale)
 		{
 			CurMPScale = PlayerMP;
+			PrevMP = Player::MainPlayer->MP;
 		}
 	}
-	MP->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
+	MP.Bar->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
 }

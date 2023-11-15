@@ -448,6 +448,7 @@ void SkillManager::QuickSlotUpdate(float _Delta)
 			{
 				Frame->CoolDown_TenNumRenderer->On();
 				Frame->CoolDown_OneNumRenderer->On();
+				Frame->CoolDown_OneNumRenderer->Transform.SetLocalPosition(Frame->OneNumPos);
 			}
 
 			int TenNum = RemainCoolInt / 10;

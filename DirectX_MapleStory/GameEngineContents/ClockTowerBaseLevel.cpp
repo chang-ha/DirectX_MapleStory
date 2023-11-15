@@ -134,19 +134,16 @@ void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)
 
 	if (nullptr != CurMap)
 	{
-		CurMap->Death();
 		CurMap = nullptr;
 	}
 
 	if (nullptr != CurPlayer)
 	{
-		CurPlayer->Death();
 		CurPlayer = nullptr;
 	}
 
 	if (nullptr != Back)
 	{
-		Back->Death();
 		Back = nullptr;
 	}
 
