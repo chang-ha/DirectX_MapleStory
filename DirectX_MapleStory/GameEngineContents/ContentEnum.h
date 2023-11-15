@@ -72,6 +72,7 @@ enum class CollisionOrder
 	Detect,
 	Portal,
 	Button,
+	Npc,
 	UI,
 	Mouse,
 };

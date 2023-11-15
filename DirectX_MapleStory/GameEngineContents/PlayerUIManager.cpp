@@ -83,7 +83,7 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	HP_Bar_BG->SetPivotType(PivotType::Bottom);
 	HP_Bar_BG->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 9.0f, -GlobalValue::WinScale.Y + 19.0f, RenderDepth::ui });
 	HP_Bar_BG->SetSprite("HP_Bar_BG.png");
-	HP_Bar_BG->SetImageScale({ 173, 32 });
+	HP_Bar_BG->SetImageScale({ 173, 32, 1 });
 
 	HP.Bar = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	HP.Bar->SetPivotType(PivotType::LeftBottom);

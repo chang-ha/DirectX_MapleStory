@@ -3,7 +3,6 @@
 enum class MouseState
 {
 	Normal,
-	Button,
 };
 
 class ContentMouse : public GameEngineActor
@@ -20,7 +19,11 @@ public:
 	ContentMouse& operator=(const ContentMouse& _Other) = delete;
 	ContentMouse& operator=(ContentMouse&& _Other) noexcept = delete;
 
+	void NormalMouse();
+	void ButtonAniMouse();
+
 protected:
+	bool IsButtonAni = false;
 	MouseState State = MouseState::Normal;
 	std::shared_ptr<GameEngineUIRenderer> MouseRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> MouseCollision = nullptr;

@@ -278,6 +278,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ContentNpc.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentResources.cpp">
       <SubType>
       </SubType>
@@ -561,6 +565,10 @@
     </ClInclude>
     <ClInclude Include="ContentMonster.h" />
     <ClInclude Include="ContentMouse.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ContentNpc.h">
       <SubType>
       </SubType>
     </ClInclude>

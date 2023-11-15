@@ -247,6 +247,9 @@
     <ClCompile Include="MercilessWinds_Actor.cpp">
       <Filter>Actor\Global\Player\Skill\MercilessWinds</Filter>
     </ClCompile>
+    <ClCompile Include="ContentNpc.cpp">
+      <Filter>Actor\Npc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -495,6 +498,9 @@
     <ClInclude Include="MercilessWinds_Actor.h">
       <Filter>Actor\Global\Player\Skill\MercilessWinds</Filter>
     </ClInclude>
+    <ClInclude Include="ContentNpc.h">
+      <Filter>Actor\Npc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -577,6 +583,9 @@
     </Filter>
     <Filter Include="Actor\Global\Player\Skill\MercilessWinds">
       <UniqueIdentifier>{6bb36f70-a704-4ee7-82f8-1a912377b437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Npc">
+      <UniqueIdentifier>{0057ce65-0b1b-4134-924c-62f41be5e496}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

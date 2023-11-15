@@ -104,7 +104,6 @@ void FairySpiral::Update(float _Delta)
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
 	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "FairySprial_Hit", 6);
-	// SkillCollision->Collision(CollisionOrder::Monster, std::bind(&FairySpiral::CollisionEvent, this, std::placeholders::_1));
 }
 
 void FairySpiral::Release()
@@ -118,21 +117,6 @@ void FairySpiral::Release()
 	}
 
 	AttackFunction.CollisionActor.clear();
-}
-
-void FairySpiral::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
-{
-	for (size_t i = 0; i < _CollisionGroup.size(); i++)
-	{
-		GameEngineCollision* _Other = _CollisionGroup[i];
-		GameEngineObject* _Object = _Other->GetParentObject();
-		if (true == CollisionActor.contains(_Object))
-		{
-			return;
-		}
-		HitRenderManager::MainHitRenderManager->HitPrint("FairySprial_Hit", 6, _Object);
-		CollisionActor.insert(_Object);
-	}
 }
 
 void FairySpiral::Init()

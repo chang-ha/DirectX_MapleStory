@@ -9,6 +9,7 @@
 #include "Minimap.h"
 #include "ClockTowerOfNightMare_5th.h"
 #include "Lachlen.h"
+#include "ContentNpc.h"
 	
 Boss_WaitingRoom::Boss_WaitingRoom()
 {
@@ -83,6 +84,10 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	_Portal->SetMoveMap("3.Lucid_Enter");
 
 	Minimap::CreateMinimap("Minimap_Boss_WaitingRoom.png", "악몽의 시계탑 꼭대기");
+
+	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 1200, -838 });
+	_Npc->Init("GasMask.png", ActorDir::Left);
 }
 
 void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)

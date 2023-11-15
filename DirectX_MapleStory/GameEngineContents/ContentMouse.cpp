@@ -42,6 +42,14 @@ void ContentMouse::Start()
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("ButtonAni"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\UI\\Mouse\\ButtonAni");
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+
 	if (nullptr == MouseRenderer)
 	{
 		MouseRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::MOUSE);
@@ -53,6 +61,7 @@ void ContentMouse::Start()
 		MouseCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Mouse);
 	}
 
+	MouseRenderer->CreateAnimation("ButtonAni", "ButtonAni", 1.0f);
 	MouseRenderer->SetSprite("Mouse_Normal.png");
 	MouseRenderer->SetPivotType(PivotType::LeftTop);
 	MouseCollision->Transform.SetLocalScale({10, 10});
@@ -69,28 +78,23 @@ void ContentMouse::Update(float _Delta)
 	// Click
 	if (true == GameEngineInput::IsDown(VK_LBUTTON, this))
 	{
+		IsButtonAni = false;
 		switch (State)
 		{
 		case MouseState::Normal:
 			MouseRenderer->SetSprite("Mouse_Normal_Click.png");
-			break;
-		case MouseState::Button:
-			MouseRenderer->SetSprite("Mouse_Button_Click.png");
 			break;
 		default:
 			break;
 		}
 	}
 
-	if (true == GameEngineInput::IsFree(VK_LBUTTON, this))
+	if (true == GameEngineInput::IsFree(VK_LBUTTON, this) && false == IsButtonAni)
 	{
 		switch (State)
 		{
 		case MouseState::Normal:
 			MouseRenderer->SetSprite("Mouse_Normal.png");
-			break;
-		case MouseState::Button:
-			MouseRenderer->SetSprite("Mouse_Button.png");
 			break;
 		default:
 			break;
@@ -111,4 +115,16 @@ void ContentMouse::Release()
 		MouseCollision->Death();
 		MouseCollision = nullptr;
 	}
+}
+
+void ContentMouse::NormalMouse()
+{
+	MouseRenderer->SetSprite("Mouse_Normal.png");
+	IsButtonAni = false;
+}
+
+void ContentMouse::ButtonAniMouse()
+{
+	MouseRenderer->ChangeAnimation("ButtonAni");
+	IsButtonAni = true;
 }
