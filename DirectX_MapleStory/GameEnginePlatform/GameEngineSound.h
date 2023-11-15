@@ -41,7 +41,7 @@ class GameEngineSound
 	friend class GameEngineSoundPlayer;
 
 private:
-	static std::map<std::string, GameEngineSound*> AllSound;
+	static std::map<std::string, std::shared_ptr<GameEngineSound>> AllSound;
 
 public:
 	static void SetGlobalVolume(float _Value) 
@@ -60,7 +60,7 @@ public:
 		SoundLoad(Path.GetFileName(), _Path);
 	}
 
-	static GameEngineSound* FindSound(std::string_view _path);
+	static std::shared_ptr<GameEngineSound> FindSound(std::string_view _path);
 
 	static void SoundLoad(std::string_view _Name, std::string_view _Path);
 

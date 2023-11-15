@@ -75,7 +75,7 @@ void GameEngineSound::Update()
 SoundSystemCreator SoundInitObject = SoundSystemCreator();
 float GameEngineSound::GlobalVolume = 1.0f;
 
-std::map<std::string, GameEngineSound*> GameEngineSound::AllSound;
+std::map<std::string, std::shared_ptr<GameEngineSound>> GameEngineSound::AllSound;
 
 
 GameEngineSound::GameEngineSound() 
@@ -107,17 +107,17 @@ GameEngineSound::~GameEngineSound()
 //	IsOnce = true;
 //}
 
-GameEngineSound* GameEngineSound::FindSound(std::string_view _Name)
+std::shared_ptr<GameEngineSound> GameEngineSound::FindSound(std::string_view _Name)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
-	std::map<std::string, GameEngineSound*>::iterator FindIter = AllSound.find(UpperName);
+	std::map<std::string, std::shared_ptr<GameEngineSound>>::iterator FindIter = AllSound.find(UpperName);
 
 	if (FindIter == AllSound.end())
 	{
 		return nullptr;
 	}
-	
+
 	return FindIter->second;
 }
 
@@ -134,7 +134,7 @@ void GameEngineSound::SoundLoad(std::string_view _Name, std::string_view _Path)
 
 GameEngineSoundPlayer GameEngineSound::SoundPlay(std::string_view _Name, int _Loop)
 {
-	GameEngineSound* FindSoundPtr = FindSound(_Name);
+	std::shared_ptr<GameEngineSound> FindSoundPtr = FindSound(_Name);
 
 	if (nullptr == FindSoundPtr)
 	{
@@ -153,15 +153,7 @@ GameEngineSoundPlayer GameEngineSound::SoundPlay(std::string_view _Name, int _Lo
 
 void GameEngineSound::Release()
 {
-	for (std::pair<std::string, GameEngineSound*> Pair  : GameEngineSound::AllSound)
-	{
-		if (nullptr == Pair.second)
-		{
-			return;
-		}
-
-		delete Pair.second;
-	}
+	GameEngineSound::AllSound.clear();
 }
 
 
