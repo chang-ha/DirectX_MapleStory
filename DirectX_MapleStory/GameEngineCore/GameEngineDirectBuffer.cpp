@@ -7,6 +7,11 @@ GameEngineDirectBuffer::GameEngineDirectBuffer()
 
 GameEngineDirectBuffer::~GameEngineDirectBuffer()
 {
+	BufferRelease();
+}
+
+void GameEngineDirectBuffer::BufferRelease()
+{
 	if (nullptr != Buffer)
 	{
 		Buffer->Release();

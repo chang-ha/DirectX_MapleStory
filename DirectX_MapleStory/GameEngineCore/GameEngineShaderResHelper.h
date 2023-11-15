@@ -2,6 +2,7 @@
 #include "GameEngineConstantBuffer.h"
 #include "GameEngineTexture.h"
 #include "GameEngineSampler.h"
+#include "GameEngineStructuredBuffer.h"
 
 class GameEngineShaderResources
 {
@@ -26,7 +27,7 @@ public:
 	// 그래서 데이터에 대한 포인터를 들고있게 만듦
 	const void* CPUDataPtr = nullptr;
 	// 상수버퍼의 사이즈
-	UINT DataSize = -1;
+	int DataSize = -1;
 
 	void Setting() override;
 	void Reset() override;
@@ -50,6 +51,19 @@ public:
 	void Reset() override;
 };
 
+class GameEngineStructedBufferSetter : public GameEngineShaderResources
+{
+public:
+	std::shared_ptr<GameEngineStructuredBuffer> Res;
+
+	const void* CPUDataPtr = nullptr;
+	int DataSize = -1;
+	int DataCount = -1;
+
+	void Setting() override;
+	void Reset() override;
+};
+
 // 설명 : 쉐이더 리소스 헬퍼는 2가지 역할을 한다.
 //       1. 특정 쉐이더가 어떤 리소스들을 가지고 있느냐를 조사를 해주는 역할을
 //       2. 특정 랜더러가 어떤 리소스들을 세팅해야하는지에 대한 역할 <= 멀티맵으로 해야한다.
@@ -68,6 +82,13 @@ public:
 		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
 
 		return ConstantBufferSetters.contains(UpperString);
+	}
+
+	bool IsStructedBuffer(std::string_view _Name)
+	{
+		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+		return StructedBufferSetters.contains(UpperString);
 	}
 
 	bool IsTexture(std::string_view _Name)
@@ -96,7 +117,7 @@ public:
 		SetConstantBufferLink(_Name, &_Data, sizeof(_Data));
 	}
 
-	void SetConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
+	void SetConstantBufferLink(std::string_view _Name, const void* _Data, int _Size);
 
 	void SetTexture(std::string_view _Name, std::string_view _TextureName, bool _SamplerCheck = true);
 
@@ -108,11 +129,25 @@ public:
 
 	void ResClear();
 
+	template<typename DataType>
+	void SetStructedBufferLink(std::string_view _Name, const std::vector<DataType>& _ArrData)
+	{
+		if (true == _ArrData.empty())
+		{
+			MsgBoxAssert(std::string(_Name) + "개수가 0개인 데이터를 스트럭처드 버퍼에 세팅하려고 했습니다.");
+		}
+
+		SetStructedBufferLink(_Name, &_ArrData[0], sizeof(DataType), static_cast<int>(_ArrData.size()));
+	}
+
+	void SetStructedBufferLink(std::string_view _Name, const void* _Data, int _Size, int _Count);
+
 protected:
 
 private:
 	std::multimap<std::string, GameEngineConstantBufferSetter> ConstantBufferSetters;
 	std::multimap<std::string, GameEngineTextureSetter> TextureSetters;
 	std::multimap<std::string, GameEngineSamplerSetter> SamplerSetters;
+	std::multimap<std::string, GameEngineStructedBufferSetter> StructedBufferSetters;
 };
 
