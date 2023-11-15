@@ -59,6 +59,21 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
+	if (nullptr == GameEngineSprite::Find("PlayerBarNum_0.png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\UI\\PlayerBarNum");
+		std::vector<GameEngineFile> Directorys = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineFile& ChildFile = Directorys[i];
+			GameEngineTexture::Load(ChildFile.GetStringPath());
+			GameEngineSprite::CreateSingle(ChildFile.GetFileName());
+		}
+	}
+
 	EXP_Bar = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	EXP_Bar->SetPivotType(PivotType::Bottom);
 	EXP_Bar->Transform.SetLocalPosition({ GlobalValue::WinScale.hX(), -GlobalValue::WinScale.Y, RenderDepth::ui });
@@ -88,6 +103,62 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	Bar_Name = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	Bar_Name->SetText("돋움", "윈드브레이커", 13.0f, float4::WHITE, FW1_CENTER);
 	Bar_Name->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 15.0f, -GlobalValue::WinScale.Y + 74.0f, RenderDepth::ui });
+
+	HP.Slash = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.Slash->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 7.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
+	HP.Slash->SetSprite("PlayerBarNum_S.png");
+
+	HP.MaxStatus_Hund = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.MaxStatus_Hund->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 17.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
+	HP.MaxStatus_Hund->SetSprite("PlayerBarNum_1.png");
+
+	HP.MaxStatus_Ten = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.MaxStatus_Ten->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 27.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
+	HP.MaxStatus_Ten->SetSprite("PlayerBarNum_0.png");
+
+	HP.MaxStatus_One = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.MaxStatus_One->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 37.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
+	HP.MaxStatus_One->SetSprite("PlayerBarNum_0.png");
+
+	HP.CurStatus_Hund = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.CurStatus_Hund->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 23.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
+	HP.CurStatus_Hund->SetSprite("PlayerBarNum_1.png");
+
+	HP.CurStatus_Ten = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.CurStatus_Ten->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 13.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
+	HP.CurStatus_Ten->SetSprite("PlayerBarNum_0.png");
+
+	HP.CurStatus_One = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	HP.CurStatus_One->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 3.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
+	HP.CurStatus_One->SetSprite("PlayerBarNum_0.png");
+
+	MP.Slash = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.Slash->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 7.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
+	MP.Slash->SetSprite("PlayerBarNum_S.png");
+
+	MP.MaxStatus_Hund = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.MaxStatus_Hund->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 17.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
+	MP.MaxStatus_Hund->SetSprite("PlayerBarNum_1.png");
+
+	MP.MaxStatus_Ten = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.MaxStatus_Ten->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 27.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
+	MP.MaxStatus_Ten->SetSprite("PlayerBarNum_0.png");
+
+	MP.MaxStatus_One = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.MaxStatus_One->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 37.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
+	MP.MaxStatus_One->SetSprite("PlayerBarNum_0.png");
+
+	MP.CurStatus_Hund = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.CurStatus_Hund->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 23.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
+	MP.CurStatus_Hund->SetSprite("PlayerBarNum_1.png");
+
+	MP.CurStatus_Ten = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.CurStatus_Ten->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 13.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
+	MP.CurStatus_Ten->SetSprite("PlayerBarNum_0.png");
+
+	MP.CurStatus_One = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MP.CurStatus_One->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 3.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
+	MP.CurStatus_One->SetSprite("PlayerBarNum_0.png");
 
 	CurHPScale = static_cast<float>(Player::MainPlayer->HP);
 	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
@@ -139,6 +210,27 @@ void PlayerUIManager::Release()
 	{
 		HP.Bar->Death();
 		HP.Bar = nullptr;
+
+		HP.Slash->Death();
+		HP.Slash = nullptr;
+
+		HP.CurStatus_Hund->Death();
+		HP.CurStatus_Hund = nullptr;
+
+		HP.CurStatus_Ten->Death();
+		HP.CurStatus_Ten = nullptr;
+
+		HP.CurStatus_One->Death();
+		HP.CurStatus_One = nullptr;
+
+		HP.MaxStatus_Hund->Death();
+		HP.MaxStatus_Hund = nullptr;
+
+		HP.MaxStatus_Ten->Death();
+		HP.MaxStatus_Ten = nullptr;
+
+		HP.MaxStatus_One->Death();
+		HP.MaxStatus_One = nullptr;
 	}
 
 	if (nullptr != MP.Bar)
@@ -162,19 +254,21 @@ void PlayerUIManager::PlayerStatusUpdate(float _Delta)
 
 void PlayerUIManager::HPUpdate(float _Delta)
 {
-	if (PrevHP == Player::MainPlayer->HP)
+	int PlayerHPInt = Player::MainPlayer->HP;
+	if (PrevHP == PlayerHPInt)
 	{
 		return;
 	}
 
-	float PlayerHP = static_cast<float>(Player::MainPlayer->HP);
+	// HpBar Scale
+	float PlayerHP = static_cast<float>(PlayerHPInt);
 	if (PlayerHP < CurHPScale)
 	{
 		CurHPScale -= ReflectDownSpeed * _Delta;
 		if (PlayerHP > CurHPScale)
 		{
 			CurHPScale = PlayerHP;
-			PrevHP = Player::MainPlayer->HP;
+			PrevHP = PlayerHPInt;
 		}
 	}
 	else if (PlayerHP > CurHPScale)
@@ -183,29 +277,54 @@ void PlayerUIManager::HPUpdate(float _Delta)
 		if (PlayerHP < CurHPScale)
 		{
 			CurHPScale = PlayerHP;
-			PrevHP = Player::MainPlayer->HP;
+			PrevHP = PlayerHPInt;
 		}
 	}
 	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
 
+	// HpNum
+	int HundNum = PlayerHPInt / 100;
+	if (0 == HundNum)
+	{
+		HP.CurStatus_Hund->Off();
+	}
+	else
+	{
+		HP.CurStatus_Hund->SetSprite("PlayerBarNum_" + std::to_string(HundNum) + ".png");
+	}
+
+	int TenNum = (PlayerHPInt / 10) % 10;
+	if (0 == HundNum && 0 == TenNum)
+	{
+		HP.CurStatus_Ten->Off();
+	}
+	else
+	{
+		HP.CurStatus_Ten->SetSprite("PlayerBarNum_" + std::to_string(TenNum) + ".png");
+	}
+
+	int OneNum = PlayerHPInt % 10;
+	HP.CurStatus_One->SetSprite("PlayerBarNum_" + std::to_string(OneNum) + ".png");
 }
 
 void PlayerUIManager::MPUpdate(float _Delta)
 {
-	if (PrevMP == Player::MainPlayer->MP)
+	int PlayerMPInt = Player::MainPlayer->MP;
+	if (PrevMP == PlayerMPInt)
 	{
 		return;
 	}
 
 
-	float PlayerMP = static_cast<float>(Player::MainPlayer->MP);
+	// MpBar Scale
+	float PlayerMP = static_cast<float>(PlayerMPInt);
 	if (PlayerMP < CurMPScale)
 	{
 		CurMPScale -= ReflectDownSpeed * _Delta;
 		if (PlayerMP > CurMPScale)
 		{
 			CurMPScale = PlayerMP;
-			PrevMP = Player::MainPlayer->MP;
+			PrevMP = PlayerMPInt;
 		}
 	}
 	else if (PlayerMP > CurMPScale)
@@ -214,8 +333,32 @@ void PlayerUIManager::MPUpdate(float _Delta)
 		if (PlayerMP < CurMPScale)
 		{
 			CurMPScale = PlayerMP;
-			PrevMP = Player::MainPlayer->MP;
+			PrevMP = PlayerMPInt;
 		}
 	}
 	MP.Bar->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
+
+	// MpNum
+	int HundNum = PlayerMPInt / 100;
+	if (0 == HundNum)
+	{
+		MP.CurStatus_Hund->Off();
+	}
+	else
+	{
+		MP.CurStatus_Hund->SetSprite("PlayerBarNum_" + std::to_string(HundNum) + ".png");
+	}
+
+	int TenNum = (PlayerMPInt / 10) % 10;
+	if (0 == HundNum && 0 == TenNum)
+	{
+		MP.CurStatus_Ten->Off();
+	}
+	else
+	{
+		MP.CurStatus_Ten->SetSprite("PlayerBarNum_" + std::to_string(TenNum) + ".png");
+	}
+
+	int OneNum = PlayerMPInt % 10;
+	MP.CurStatus_One->SetSprite("PlayerBarNum_" + std::to_string(OneNum) + ".png");
 }

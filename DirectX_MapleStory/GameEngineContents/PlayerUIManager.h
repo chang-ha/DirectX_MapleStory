@@ -4,6 +4,13 @@ class BarFrame
 {
 	friend class PlayerUIManager;
 	std::shared_ptr<GameEngineUIRenderer> Bar = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> Slash = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> CurStatus_Hund = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> CurStatus_Ten = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> CurStatus_One = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> MaxStatus_Hund = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> MaxStatus_Ten = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> MaxStatus_One = nullptr;
 };
 
 class PlayerUIManager : public GameEngineActor
