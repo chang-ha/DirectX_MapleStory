@@ -11,6 +11,7 @@ public:
 	~GameEngineRenderUnit();
 
 	void SetText(const std::string& _Font, const std::string& _Text, float _Scale = 20.0f, const float4& Color = float4::RED, FW1_TEXT_FLAG Flag = FW1_LEFT);
+	void ChangeText(std::string_view _Text);
 	void SetTextColor(const float4& _Color = float4::RED);
 	void SetTextAlpha(float _AlphaValue = 0.0f);
 

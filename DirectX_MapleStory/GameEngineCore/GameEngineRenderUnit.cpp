@@ -35,6 +35,17 @@ void GameEngineRenderUnit::SetText(const std::string& _Font, const std::string& 
 	FontFlag = Flag;
 }
 
+void GameEngineRenderUnit::ChangeText(std::string_view _Text)
+{
+	if (nullptr == Font)
+	{
+		MsgBoxAssert("존재하지 않는 폰트를 참조하려 했습니다.");
+		return;
+	}
+
+	FontText = _Text;
+}
+
 void GameEngineRenderUnit::SetTextColor(const float4& _Color /*= float4::RED*/)
 {
 	if (nullptr == Font)
