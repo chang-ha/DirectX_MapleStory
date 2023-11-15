@@ -96,13 +96,11 @@ void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)
 
 	if (nullptr == CurMap)
 	{
-		CurMap->Death();
 		CurMap = nullptr;
 	}
 
 	if (nullptr == Back)
 	{
-		Back->Death();
 		Back = nullptr;
 	}
 

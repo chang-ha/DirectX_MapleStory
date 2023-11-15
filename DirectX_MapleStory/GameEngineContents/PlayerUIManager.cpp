@@ -122,15 +122,12 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 
 	HP.CurStatus_Hund = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	HP.CurStatus_Hund->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 23.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
-	HP.CurStatus_Hund->SetSprite("PlayerBarNum_1.png");
 
 	HP.CurStatus_Ten = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	HP.CurStatus_Ten->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 13.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
-	HP.CurStatus_Ten->SetSprite("PlayerBarNum_0.png");
 
 	HP.CurStatus_One = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	HP.CurStatus_One->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 3.0f, -GlobalValue::WinScale.Y + 43.0f, RenderDepth::ui });
-	HP.CurStatus_One->SetSprite("PlayerBarNum_0.png");
 
 	MP.Slash = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MP.Slash->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 7.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
@@ -150,15 +147,15 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 
 	MP.CurStatus_Hund = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MP.CurStatus_Hund->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 23.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
-	MP.CurStatus_Hund->SetSprite("PlayerBarNum_1.png");
 
 	MP.CurStatus_Ten = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MP.CurStatus_Ten->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 13.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
-	MP.CurStatus_Ten->SetSprite("PlayerBarNum_0.png");
 
 	MP.CurStatus_One = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MP.CurStatus_One->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 3.0f, -GlobalValue::WinScale.Y + 27.0f, RenderDepth::ui });
-	MP.CurStatus_One->SetSprite("PlayerBarNum_0.png");
+
+	NumUpdate(HP, Player::MainPlayer->HP);
+	NumUpdate(MP, Player::MainPlayer->MP);
 
 	CurHPScale = static_cast<float>(Player::MainPlayer->HP);
 	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
@@ -281,30 +278,7 @@ void PlayerUIManager::HPUpdate(float _Delta)
 	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
 
 	// HpNum
-	int HundNum = PlayerHPInt / 100;
-	if (0 == HundNum)
-	{
-		HP.CurStatus_Hund->Off();
-	}
-	else
-	{
-		HP.CurStatus_Hund->On();
-		HP.CurStatus_Hund->SetSprite("PlayerBarNum_" + std::to_string(HundNum) + ".png");
-	}
-
-	int TenNum = (PlayerHPInt / 10) % 10;
-	if (0 == HundNum && 0 == TenNum)
-	{
-		HP.CurStatus_Ten->Off();
-	}
-	else
-	{
-		HP.CurStatus_Ten->On();
-		HP.CurStatus_Ten->SetSprite("PlayerBarNum_" + std::to_string(TenNum) + ".png");
-	}
-
-	int OneNum = PlayerHPInt % 10;
-	HP.CurStatus_One->SetSprite("PlayerBarNum_" + std::to_string(OneNum) + ".png");
+	NumUpdate(HP, PlayerHPInt);
 }
 
 void PlayerUIManager::MPUpdate(float _Delta)
@@ -336,28 +310,33 @@ void PlayerUIManager::MPUpdate(float _Delta)
 	MP.Bar->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
 
 	// MpNum
-	int HundNum = PlayerMPInt / 100;
+	NumUpdate(MP, PlayerMPInt);
+}
+
+void PlayerUIManager::NumUpdate(BarFrame _Bar, int PlayerStateValue)
+{
+	int HundNum = PlayerStateValue / 100;
 	if (0 == HundNum)
 	{
-		MP.CurStatus_Hund->Off();
+		_Bar.CurStatus_Hund->Off();
 	}
 	else
 	{
-		MP.CurStatus_Hund->On();
-		MP.CurStatus_Hund->SetSprite("PlayerBarNum_" + std::to_string(HundNum) + ".png");
+		_Bar.CurStatus_Hund->On();
+		_Bar.CurStatus_Hund->SetSprite("PlayerBarNum_" + std::to_string(HundNum) + ".png");
 	}
 
-	int TenNum = (PlayerMPInt / 10) % 10;
+	int TenNum = (PlayerStateValue / 10) % 10;
 	if (0 == HundNum && 0 == TenNum)
 	{
-		MP.CurStatus_Ten->Off();
+		_Bar.CurStatus_Ten->Off();
 	}
 	else
 	{
-		MP.CurStatus_Ten->On();
-		MP.CurStatus_Ten->SetSprite("PlayerBarNum_" + std::to_string(TenNum) + ".png");
+		_Bar.CurStatus_Ten->On();
+		_Bar.CurStatus_Ten->SetSprite("PlayerBarNum_" + std::to_string(TenNum) + ".png");
 	}
 
-	int OneNum = PlayerMPInt % 10;
-	MP.CurStatus_One->SetSprite("PlayerBarNum_" + std::to_string(OneNum) + ".png");
+	int OneNum = PlayerStateValue % 10;
+	_Bar.CurStatus_One->SetSprite("PlayerBarNum_" + std::to_string(OneNum) + ".png");
 }

@@ -51,6 +51,10 @@ public:
 		return IsFreeCameraValue;
 	}
 
+	EPROJECTIONTYPE GetProjectionType()
+	{
+		return ProjectionType;
+	}
 
 	void CameraTargetSetting(GameEngineTransform& _Target, float4 _Pivot)
 	{

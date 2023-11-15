@@ -82,18 +82,49 @@ void GameEngineRenderUnit::Draw()
 	if (nullptr != Font)
 	{
 		float4x4 ViewPort;
-
-		float4 ScreenPos = ParentRenderer->Transform.GetWorldPosition();
 		float4 Scale = GameEngineCore::MainWindow.GetScale();
 		ViewPort.ViewPort(Scale.X, Scale.Y, 0, 0);
 
-		ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ViewMatrix;
-		ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ProjectionMatrix;
-		ScreenPos *= ViewPort;
-		// WindowPos
-		Font->FontDraw(FontText, FontScale, ScreenPos, FontColor, FontFlag);
+		GameEngineActor* Parent = ParentRenderer->GetParent<GameEngineActor>();
 
-		GameEngineCore::GetContext()->GSSetShader(nullptr, nullptr, 0);
+		if (nullptr != Parent && Parent->GetLevel()->GetMainCamera()->GetProjectionType() == EPROJECTIONTYPE::Orthographic)
+		{
+			float4 ScreenPos = ParentRenderer->Transform.GetWorldPosition();
+
+			ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ViewMatrix;
+			ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ProjectionMatrix;
+			ScreenPos *= ViewPort;
+			// WindowPos
+			Font->FontDraw(FontText, FontScale, ScreenPos, FontColor, FontFlag);
+
+			GameEngineCore::GetContext()->GSSetShader(nullptr, nullptr, 0);
+		}
+		else if (nullptr != Parent && Parent->GetLevel()->GetMainCamera()->GetProjectionType() == EPROJECTIONTYPE::Perspective)
+		{
+			float4 ScreenPos = ParentRenderer->Transform.GetWorldPosition();
+
+			ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ViewMatrix;
+			ScreenPos *= ParentRenderer->Transform.GetConstTransformDataRef().ProjectionMatrix;
+
+
+			const float RHW = 1.0f / ScreenPos.W;
+
+			float4 PosInScreenSpace = float4(ScreenPos.X * RHW, ScreenPos.Y * RHW, ScreenPos.Z * RHW, ScreenPos.W);
+			const float NormalizedX = (PosInScreenSpace.X / 2.f) + 0.5f;
+			const float NormalizedY = 1.f - (PosInScreenSpace.Y / 2.f) - 0.5f;
+
+			float4 RayStartViewRectSpace;
+
+			RayStartViewRectSpace.X = NormalizedX * Scale.X;
+			RayStartViewRectSpace.Y = NormalizedY * Scale.Y;
+
+			float4 Result = RayStartViewRectSpace + float4(0, 0, 0, 0);
+
+
+			Font->FontDraw(FontText, FontScale, Result, FontColor, FontFlag);
+			GameEngineCore::GetContext()->GSSetShader(nullptr, nullptr, 0);
+		}
+
 
 		return;
 	}

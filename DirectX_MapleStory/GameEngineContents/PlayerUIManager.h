@@ -48,5 +48,6 @@ private:
 	void PlayerStatusUpdate(float _Delta);
 	void HPUpdate(float _Delta);
 	void MPUpdate(float _Delta);
+	void NumUpdate(BarFrame _Bar, int PlayerStateValue);
 };
 
