@@ -140,4 +140,23 @@ void PlayerUIManager::PlayerStatusUpdate(float _Delta)
 		}
 	}
 	HP->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
+
+	float PlayerMP = static_cast<float>(Player::MainPlayer->MP);
+	if (PlayerMP < CurMPScale)
+	{
+		CurMPScale -= ReflectDownSpeed * _Delta;
+		if (PlayerMP > CurMPScale)
+		{
+			CurMPScale = PlayerMP;
+		}
+	}
+	else if (PlayerMP > CurMPScale)
+	{
+		CurMPScale += ReflectUpSpeed * _Delta;
+		if (PlayerMP < CurMPScale)
+		{
+			CurMPScale = PlayerMP;
+		}
+	}
+	MP->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
 }

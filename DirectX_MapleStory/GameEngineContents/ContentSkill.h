@@ -55,6 +55,7 @@ protected:
 	std::shared_ptr<GameEngineSpriteRenderer> SkillAfterImageRenderer = nullptr;
 
 	std::string SkillName = "";
+	int MP = -1;
 	int Key = VK_F24; // 초기화용 값
 	int InputTypeValue = InputType::IsDown;
 	float SkillCurCoolDown = 0.0f;

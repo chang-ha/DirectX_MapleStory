@@ -68,6 +68,7 @@ void DoubleJump::EndSkill()
 
 void DoubleJump::Start() 
 {
+	MP = 0;
 	GameEngineInput::AddInputObject(this);
 	ContentSkill::Start();
 

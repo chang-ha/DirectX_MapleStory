@@ -12,8 +12,18 @@ public:
 		}
 	}
 
+	inline void AddMP(int _Value)
+	{
+		MP += _Value;
+		if (0 > MP)
+		{
+			MP = 0;
+		}
+	}
+
 protected:
 	int HP = 0;
+	int MP = 0;
 };
 
 #define MAX_GRAVITY_FORCE 1400.0f

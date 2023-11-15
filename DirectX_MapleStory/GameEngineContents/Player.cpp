@@ -15,6 +15,7 @@
 
 Player* Player::MainPlayer = nullptr;
 int Player::PlayerHP = PLAYER_MAX_HP;
+int Player::PlayerMP = PLAYER_MAX_MP;
 
 Player::Player() 
 {
@@ -36,6 +37,7 @@ void Player::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	IsTempInputValue = true;
 	PlayerHP = HP;
+	PlayerMP = MP;
 	ContentActor::LevelEnd(_NextLevel);
 	Death();
 }
@@ -43,7 +45,7 @@ void Player::LevelEnd(GameEngineLevel* _NextLevel)
 void Player::Start()
 {
 	HP = PlayerHP;
-
+	MP = PlayerMP;
 	ContentActor::Start();
 	GameEngineInput::AddInputObject(this);
 	if (nullptr == MainSpriteRenderer)
@@ -173,6 +175,7 @@ void Player::Update(float _Delta)
 	if (true == GameEngineInput::IsDown('Q', this))
 	{
 		HP = PLAYER_MAX_HP;
+		MP = PLAYER_MAX_MP;
 	}
 
 	if (0 == HP && true == HitCollision->IsUpdate())
