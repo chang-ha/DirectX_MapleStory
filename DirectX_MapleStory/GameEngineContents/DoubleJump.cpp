@@ -145,9 +145,9 @@ void DoubleJump::Update(float _Delta)
 
 void DoubleJump::Init()
 {
-	//Key = 'D';
-	//InputTypeValue = InputType::IsDown;
-	//SkillCoolDown = 0.0f;
-	//UseState = PlayerState::Jump;
-	//ChangeState = PlayerState::Null;
+	Key = 'D';
+	InputTypeValue = -1;
+	SkillCoolDown = 0.0f;
+	UseState = PlayerState::Jump;
+	ChangeState = PlayerState::Null;
 }

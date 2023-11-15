@@ -50,6 +50,8 @@ void WindWalk::EndSkill()
 
 void WindWalk::Start()
 {
+	MP = 0;
+
 	ContentSkill::Start();
 	GameEngineDirectory Dir;
 	Dir.MoveParentToExistsChild("ContentResources");

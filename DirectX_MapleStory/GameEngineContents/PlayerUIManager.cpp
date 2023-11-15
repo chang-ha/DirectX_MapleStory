@@ -255,20 +255,19 @@ void PlayerUIManager::PlayerStatusUpdate(float _Delta)
 void PlayerUIManager::HPUpdate(float _Delta)
 {
 	int PlayerHPInt = Player::MainPlayer->HP;
-	if (PrevHP == PlayerHPInt)
+	// HpBar Scale
+	float PlayerHP = static_cast<float>(PlayerHPInt);
+	if (PlayerHP == CurHPScale)
 	{
 		return;
 	}
 
-	// HpBar Scale
-	float PlayerHP = static_cast<float>(PlayerHPInt);
 	if (PlayerHP < CurHPScale)
 	{
 		CurHPScale -= ReflectDownSpeed * _Delta;
 		if (PlayerHP > CurHPScale)
 		{
 			CurHPScale = PlayerHP;
-			PrevHP = PlayerHPInt;
 		}
 	}
 	else if (PlayerHP > CurHPScale)
@@ -277,7 +276,6 @@ void PlayerUIManager::HPUpdate(float _Delta)
 		if (PlayerHP < CurHPScale)
 		{
 			CurHPScale = PlayerHP;
-			PrevHP = PlayerHPInt;
 		}
 	}
 	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
@@ -290,6 +288,7 @@ void PlayerUIManager::HPUpdate(float _Delta)
 	}
 	else
 	{
+		HP.CurStatus_Hund->On();
 		HP.CurStatus_Hund->SetSprite("PlayerBarNum_" + std::to_string(HundNum) + ".png");
 	}
 
@@ -300,6 +299,7 @@ void PlayerUIManager::HPUpdate(float _Delta)
 	}
 	else
 	{
+		HP.CurStatus_Ten->On();
 		HP.CurStatus_Ten->SetSprite("PlayerBarNum_" + std::to_string(TenNum) + ".png");
 	}
 
@@ -310,21 +310,19 @@ void PlayerUIManager::HPUpdate(float _Delta)
 void PlayerUIManager::MPUpdate(float _Delta)
 {
 	int PlayerMPInt = Player::MainPlayer->MP;
-	if (PrevMP == PlayerMPInt)
+	// MpBar Scale
+	float PlayerMP = static_cast<float>(PlayerMPInt);
+	if (PlayerMP == CurMPScale)
 	{
 		return;
 	}
 
-
-	// MpBar Scale
-	float PlayerMP = static_cast<float>(PlayerMPInt);
 	if (PlayerMP < CurMPScale)
 	{
 		CurMPScale -= ReflectDownSpeed * _Delta;
 		if (PlayerMP > CurMPScale)
 		{
 			CurMPScale = PlayerMP;
-			PrevMP = PlayerMPInt;
 		}
 	}
 	else if (PlayerMP > CurMPScale)
@@ -333,7 +331,6 @@ void PlayerUIManager::MPUpdate(float _Delta)
 		if (PlayerMP < CurMPScale)
 		{
 			CurMPScale = PlayerMP;
-			PrevMP = PlayerMPInt;
 		}
 	}
 	MP.Bar->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
@@ -346,6 +343,7 @@ void PlayerUIManager::MPUpdate(float _Delta)
 	}
 	else
 	{
+		MP.CurStatus_Hund->On();
 		MP.CurStatus_Hund->SetSprite("PlayerBarNum_" + std::to_string(HundNum) + ".png");
 	}
 
@@ -356,6 +354,7 @@ void PlayerUIManager::MPUpdate(float _Delta)
 	}
 	else
 	{
+		MP.CurStatus_Ten->On();
 		MP.CurStatus_Ten->SetSprite("PlayerBarNum_" + std::to_string(TenNum) + ".png");
 	}
 

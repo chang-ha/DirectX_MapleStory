@@ -253,14 +253,6 @@ void Player::IdleUpdate(float _Delta)
 		return;
 	}
 
-	///////////// Skill Code
-	//if (true == GameEngineInput::IsPress(VK_CONTROL, this))
-	//{
-	//	ChangeState(PlayerState::Attack);
-	//	return;
-	//}
-	/////////////
-
 	if (GameEngineInput::IsPress(VK_DOWN, this))
 	{
 		if (false == IsLadder)
@@ -300,14 +292,6 @@ void Player::AlertUpdate(float _Delta)
 
 void Player::WalkUpdate(float _Delta)
 {
-	///////////// Skill Code
-	//if (true == GameEngineInput::IsPress(VK_CONTROL, this))
-	//{
-	//	ChangeState(PlayerState::Attack);
-	//	return;
-	//}
-	/////////////
-
 	float4 MovePos = float4::ZERO;
 	float MoveDir = 0.0f;
 	GameEngineColor CheckColor = GROUND_COLOR;
@@ -411,7 +395,7 @@ void Player::JumpUpdate(float _Delta)
 	if (GameEngineInput::IsDown('D', this))
 	{
 		GravityReset();
-		// SkillManagerActor->UseSkill("DoubleJump");
+		SkillManagerActor->UseSkill("DoubleJump");
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP, this))
 		{
