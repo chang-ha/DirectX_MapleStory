@@ -129,12 +129,19 @@ void SkillManager::Start()
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
-	if (nullptr == GameEngineSprite::Find("CoolDownAni"))
+	if (nullptr == GameEngineSprite::Find("CoolDown_001.png"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
 		Dir.MoveChild("ContentResources\\Textures\\UI\\QuickSlot\\CoolDownAni");
-		GameEngineSprite::CreateFolder("CoolDownAni", Dir.GetStringPath());
+		std::vector<GameEngineFile> Directorys = Dir.GetAllFile();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineFile& ChildFile = Directorys[i];
+			GameEngineTexture::Load(ChildFile.GetStringPath());
+			GameEngineSprite::CreateSingle(ChildFile.GetFileName());
+		}
 	}
 
 	if (nullptr == GameEngineSprite::Find("CoolDownAlert"))
@@ -204,29 +211,12 @@ void SkillManager::Start()
 	QuickSlot.QuickSlotBG->AutoSpriteSizeOn();
 	QuickSlot.QuickSlotBG->Transform.SetLocalPosition({ GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui });
 
-	//QuickSlot.CoolDownAniRenderers.resize(2);
-	//for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers.size(); i++)
-	//{
-	//	QuickSlot.CoolDownAniRenderers[i].reserve(10);
-	//}
-
-	//for (size_t j = 0; j < QuickSlot.CoolDownAniRenderers.size(); j++)
-	//{
-	//	for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers[j].capacity(); i++)
-	//	{
-	//		std::shared_ptr<GameEngineUIRenderer> _CoolDownRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	//		_CoolDownRenderer->AutoSpriteSizeOn();
-	//		_CoolDownRenderer->CreateAnimation("CoolDownStart", "CoolDownAni", 10.0f, -1, -1, false);
-	//		_CoolDownRenderer->ChangeAnimation("CoolDownStart");
-	//		_CoolDownRenderer->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 18 -  35 * (9 - i), -GlobalValue::WinScale.Y - 8 + 36 * (2 - j), RenderDepth::ui});
-	//		QuickSlot.CoolDownAniRenderers[j].push_back(_CoolDownRenderer);
-	//	}
-	//}m
-
-	std::vector<int> Keys = {'W', 'E', 'R', 'S', 'F'};
-
-	QuickSlot.CoolDownAniRenderers['Q'] = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-
+	QuickSlotCoolDownCreate('Q', 1, 0);
+	QuickSlotCoolDownCreate('W', 2, 0);
+	QuickSlotCoolDownCreate('E', 3, 0);
+	QuickSlotCoolDownCreate('R', 4, 0);
+	QuickSlotCoolDownCreate('S', 2, 1);
+	QuickSlotCoolDownCreate('F', 4, 1);
 
 	HitPrintManager = GetLevel()->CreateActor<HitRenderManager>(UpdateOrder::Skill);
 
@@ -236,6 +226,7 @@ void SkillManager::Start()
 void SkillManager::Update(float _Delta)
 {
 	AlertUpdate(_Delta);
+	QuickSlotUpdate(_Delta);
 	CheckUseSkill();
 }
 
@@ -348,5 +339,38 @@ void SkillManager::SkillAlert(std::string_view _IconName)
 		CoolDownAlerts[i]->CoolDownAlertBG->ChangeAnimation("Alert", true, 0);
 		CoolDownAlerts[i]->CoolDownAlertIcon->SetSprite(_IconName);
 		return;
+	}
+}
+
+void SkillManager::QuickSlotCoolDownCreate(int _Key, int _Index_X, int _Index_Y)
+{
+	QuickSlot.CoolDownAniRenderers[_Key] = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	QuickSlot.CoolDownAniRenderers[_Key]->AutoSpriteSizeOn();
+	QuickSlot.CoolDownAniRenderers[_Key]->SetSprite("CoolDown_015%.png");
+	QuickSlot.CoolDownAniRenderers[_Key]->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 18 - 35 * (9 - _Index_X), -GlobalValue::WinScale.Y - 6 + 35 * (2 - _Index_Y), RenderDepth::ui });
+}
+
+void SkillManager::QuickSlotUpdate(float _Delta)
+{
+	// CurCoolDowm/CoolDown -> 0 ~ 1사이 값
+	// * 16 -> 0 ~ 16사이 값
+	// 16 - 결과값
+	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
+	{
+		if (false == QuickSlot.CoolDownAniRenderers.contains(_Pair.second->Key))
+		{
+			continue;
+		}
+		std::shared_ptr<ContentSkill> CurSkill = _Pair.second->Skill;
+		float RemainCoolRatio = CurSkill->SkillCurCoolDown / CurSkill->SkillCoolDown;
+		int SpriteNum = static_cast<int>((1 - RemainCoolRatio) * 15);
+		if (10 > SpriteNum)
+		{
+			QuickSlot.CoolDownAniRenderers[_Pair.second->Key]->SetSprite("CoolDown_00" + std::to_string(SpriteNum) + ".png");
+		}
+		else
+		{
+			QuickSlot.CoolDownAniRenderers[_Pair.second->Key]->SetSprite("CoolDown_0" + std::to_string(SpriteNum) + ".png");
+		}
 	}
 }

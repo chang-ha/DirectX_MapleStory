@@ -13,9 +13,7 @@ class SkillInfo : public std::enable_shared_from_this<SkillInfo>
 	friend class SkillManager;
 
 	std::string IconSpriteName = "";
-	// int Key = VK_F24;
-	// float* SkillCurCoolDown = nullptr;
-	// float* SkillCoolDown = nullptr;
+	int Key = VK_F24;
 	std::shared_ptr<ContentSkill> Skill = nullptr;
 };
 
@@ -24,7 +22,6 @@ class QuickSlotFrame
 	friend class SkillManager;
 	std::shared_ptr<GameEngineUIRenderer> QuickSlotBG = nullptr;
 	std::map<int, std::shared_ptr<GameEngineUIRenderer>> CoolDownAniRenderers;
-	// std::vector<std::vector<std::shared_ptr<GameEngineUIRenderer>>> CoolDownAniRenderers;
 
 	void CreateCoolDownRenderers(int _Key);
 };
@@ -61,14 +58,7 @@ public:
 		NewSkill->SkillName = UpperName;
 		SkillInit(NewSkill);
 		AllSkills[UpperName]->Skill = NewSkill;
-
-		if (true == QuickSlot.CoolDownAniRenderers.contains(NewSkill->Key))
-		{
-
-		}
-		// AllSkills[UpperName]->SkillCurCoolDown = &NewSkill->SkillCurCoolDown;
-		// AllSkills[UpperName]->SkillCoolDown = &NewSkill->SkillCoolDown;
-		// AllSkills[UpperName]->Key = NewSkill->Key;
+		AllSkills[UpperName]->Key = NewSkill->Key;
 		AllSkills[UpperName]->IconSpriteName = "Icon_" + _SkillName + ".png";
 	}
 
@@ -92,5 +82,7 @@ private:
 	void CheckUseSkill();
 	void AlertUpdate(float _Delta);
 	void SkillAlert(std::string_view _IconName);
+	void QuickSlotCoolDownCreate(int _Key, int _Index_X, int _Index_Y);
+	void QuickSlotUpdate(float _Delta);
 };
 
