@@ -2,6 +2,8 @@
 #include "PhalanxCharge.h"
 #include "PhalanxCharge_Actor.h"
 
+float PhalanxCharge::WholeCoolDown = 0.0f;
+
 PhalanxCharge::PhalanxCharge()
 {
 	
@@ -94,6 +96,8 @@ void PhalanxCharge::Start()
 			EndSkill();
 		}
 	);
+
+	SkillCurCoolDown = WholeCoolDown;
 }
 
 void PhalanxCharge::Update(float _Delta)
@@ -101,6 +105,13 @@ void PhalanxCharge::Update(float _Delta)
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
 }
+
+void PhalanxCharge::Release()
+{
+	ContentSkill::Release();
+	WholeCoolDown = SkillCurCoolDown;
+}
+
 
 void PhalanxCharge::Init()
 {

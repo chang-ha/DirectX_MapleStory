@@ -28,6 +28,10 @@ void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
 }
 
+void QuickSlotFrame::CreateCoolDownRenderers(int _Key)
+{
+}
+
 SkillManager::SkillManager()
 {
 
@@ -94,12 +98,6 @@ bool SkillManager::IsSkillUsing(std::string_view _SkillName)
 
 	std::shared_ptr<ContentSkill> Skill = AllSkills[UpperName.data()]->Skill;
 	return Skill->IsSkillUsing();
-}
-
-
-void SkillManager::LevelStart(class GameEngineLevel* _PrevLevel)
-{
-
 }
 
 void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
@@ -195,7 +193,7 @@ void SkillManager::Start()
 			});
 
 		Frame->CoolDownAlertBG->Transform.SetLocalPosition({ GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 80 * (i + 2), RenderDepth::ui });
-		Frame->CoolDownAlertIcon->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 156, -GlobalValue::WinScale.Y  + 80 * ( i + 2 ), RenderDepth::ui });
+		Frame->CoolDownAlertIcon->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 156, -GlobalValue::WinScale.Y + 80 * (i + 2), RenderDepth::ui });
 
 		CoolDownAlerts[i] = Frame;
 	}
@@ -206,24 +204,29 @@ void SkillManager::Start()
 	QuickSlot.QuickSlotBG->AutoSpriteSizeOn();
 	QuickSlot.QuickSlotBG->Transform.SetLocalPosition({ GlobalValue::WinScale.X, -GlobalValue::WinScale.Y + 10, RenderDepth::ui });
 
-	QuickSlot.CoolDownAniRenderers.resize(2);
-	for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers.size(); i++)
-	{
-		QuickSlot.CoolDownAniRenderers[i].reserve(10);
-	}
+	//QuickSlot.CoolDownAniRenderers.resize(2);
+	//for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers.size(); i++)
+	//{
+	//	QuickSlot.CoolDownAniRenderers[i].reserve(10);
+	//}
 
-	for (size_t j = 0; j < QuickSlot.CoolDownAniRenderers.size(); j++)
-	{
-		for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers[j].capacity(); i++)
-		{
-			std::shared_ptr<GameEngineUIRenderer> _CoolDownRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-			_CoolDownRenderer->AutoSpriteSizeOn();
-			_CoolDownRenderer->CreateAnimation("CoolDownStart", "CoolDownAni", 10.0f, -1, -1, false);
-			_CoolDownRenderer->ChangeAnimation("CoolDownStart");
-			_CoolDownRenderer->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 18 -  35 * (9 - i), -GlobalValue::WinScale.Y - 8 + 36 * (2 - j), RenderDepth::ui});
-			QuickSlot.CoolDownAniRenderers[j].push_back(_CoolDownRenderer);
-		}
-	}
+	//for (size_t j = 0; j < QuickSlot.CoolDownAniRenderers.size(); j++)
+	//{
+	//	for (size_t i = 0; i < QuickSlot.CoolDownAniRenderers[j].capacity(); i++)
+	//	{
+	//		std::shared_ptr<GameEngineUIRenderer> _CoolDownRenderer = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	//		_CoolDownRenderer->AutoSpriteSizeOn();
+	//		_CoolDownRenderer->CreateAnimation("CoolDownStart", "CoolDownAni", 10.0f, -1, -1, false);
+	//		_CoolDownRenderer->ChangeAnimation("CoolDownStart");
+	//		_CoolDownRenderer->Transform.SetLocalPosition({ GlobalValue::WinScale.X - 18 -  35 * (9 - i), -GlobalValue::WinScale.Y - 8 + 36 * (2 - j), RenderDepth::ui});
+	//		QuickSlot.CoolDownAniRenderers[j].push_back(_CoolDownRenderer);
+	//	}
+	//}m
+
+	std::vector<int> Keys = {'W', 'E', 'R', 'S', 'F'};
+
+	QuickSlot.CoolDownAniRenderers['Q'] = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+
 
 	HitPrintManager = GetLevel()->CreateActor<HitRenderManager>(UpdateOrder::Skill);
 

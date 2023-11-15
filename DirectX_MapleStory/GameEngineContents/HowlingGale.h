@@ -3,6 +3,7 @@
 
 class HowlingGale : public ContentSkill
 {
+	static float WholeCoolDown;
 public:
 	// constructer destructer
 	HowlingGale();
@@ -21,6 +22,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Init() override;
+	void Release() override;
 
 private:
 

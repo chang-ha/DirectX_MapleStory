@@ -3,6 +3,7 @@
 #include "HowlingGale_Actor.h"
 
 #define ANI_SPEED 0.08f
+float HowlingGale::WholeCoolDown = 0.0f;
 
 HowlingGale::HowlingGale()
 {
@@ -105,12 +106,20 @@ void HowlingGale::Start()
 		{
 			EndSkill();
 		});
+
+	SkillCurCoolDown = WholeCoolDown;
 }
 
 void HowlingGale::Update(float _Delta)
 {
 	ContentSkill::Update(_Delta);
 	Transform.SetLocalPosition(PlayerPos);
+}
+
+void HowlingGale::Release()
+{
+	ContentSkill::Release();
+	WholeCoolDown = SkillCurCoolDown;
 }
 
 void HowlingGale::Init()

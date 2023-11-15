@@ -4,6 +4,7 @@
 
 class Monsoon : public ContentSkill
 {
+	static float WholeCoolDown;
 public:
 	// constructer destructer
 	Monsoon();

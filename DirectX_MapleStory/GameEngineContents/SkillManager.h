@@ -23,7 +23,10 @@ class QuickSlotFrame
 {
 	friend class SkillManager;
 	std::shared_ptr<GameEngineUIRenderer> QuickSlotBG = nullptr;
-	std::vector<std::vector<std::shared_ptr<GameEngineUIRenderer>>> CoolDownAniRenderers;
+	std::map<int, std::shared_ptr<GameEngineUIRenderer>> CoolDownAniRenderers;
+	// std::vector<std::vector<std::shared_ptr<GameEngineUIRenderer>>> CoolDownAniRenderers;
+
+	void CreateCoolDownRenderers(int _Key);
 };
 
 class AlertFrame : public std::enable_shared_from_this<AlertFrame>
@@ -58,6 +61,11 @@ public:
 		NewSkill->SkillName = UpperName;
 		SkillInit(NewSkill);
 		AllSkills[UpperName]->Skill = NewSkill;
+
+		if (true == QuickSlot.CoolDownAniRenderers.contains(NewSkill->Key))
+		{
+
+		}
 		// AllSkills[UpperName]->SkillCurCoolDown = &NewSkill->SkillCurCoolDown;
 		// AllSkills[UpperName]->SkillCoolDown = &NewSkill->SkillCoolDown;
 		// AllSkills[UpperName]->Key = NewSkill->Key;
@@ -69,7 +77,6 @@ public:
 	bool IsSkillUsing(std::string_view _SkillName);
 
 protected:
-	void LevelStart(class GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(class GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;

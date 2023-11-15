@@ -3,6 +3,9 @@
 #include "ContentLevel.h"
 #include "HitRenderManager.h"
 #include "BaseWindActor.h"
+
+float Monsoon::WholeCoolDown = 0.0f;
+
 Monsoon::Monsoon()
 {
 	
@@ -110,6 +113,8 @@ void Monsoon::Start()
 			SceneRenderer->Off();
 		}
 	);
+
+	SkillCurCoolDown = WholeCoolDown;
 }
 
 void Monsoon::Update(float _Delta)
@@ -137,6 +142,8 @@ void Monsoon::Init()
 
 void Monsoon::Release()
 {
+	WholeCoolDown = SkillCurCoolDown;
+
 	if (nullptr != SceneRenderer)
 	{
 		SceneRenderer->Death();

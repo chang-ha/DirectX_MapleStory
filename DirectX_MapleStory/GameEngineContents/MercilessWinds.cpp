@@ -3,6 +3,8 @@
 #include "MercilessWinds.h"
 #include "BaseWindActor.h"
 
+float MercilessWinds::WholeCoolDown = 0.0f;
+
 MercilessWinds::MercilessWinds()
 {
 
@@ -94,6 +96,8 @@ void MercilessWinds::Start()
 			EndSkill();
 		}
 	);
+
+	SkillCurCoolDown = WholeCoolDown;
 }
 
 void MercilessWinds::Update(float _Delta)
@@ -109,11 +113,18 @@ void MercilessWinds::CreateWind()
 	AllWindActor.push_back(_Actor);
 }
 
+void MercilessWinds::Release()
+{
+	ContentSkill::Release();
+	WholeCoolDown = SkillCurCoolDown;
+}
+
+
 void MercilessWinds::Init()
 {
 	Key = 'R';
 	InputTypeValue = InputType::IsDown;
-	SkillCoolDown = 10.0f;
+	SkillCoolDown = 1.0f;
 	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
 	ChangeState = PlayerState::MercilessWinds;
 }

@@ -2,6 +2,8 @@
 #include "VortexSphere.h"
 #include "VortexSphere_Actor.h"
 
+float VortexSphere::WholeCoolDown = 0.0f;
+
 VortexSphere::VortexSphere()
 {
 	
@@ -101,6 +103,8 @@ void VortexSphere::Start()
 			EndSkill();
 		}
 	);
+
+	SkillCurCoolDown = WholeCoolDown;
 }
 
 void VortexSphere::Update(float _Delta)
@@ -109,11 +113,17 @@ void VortexSphere::Update(float _Delta)
 	Transform.SetLocalPosition(PlayerPos);
 }
 
+void VortexSphere::Release()
+{
+	ContentSkill::Release();
+	WholeCoolDown = SkillCurCoolDown;
+}
+
 void VortexSphere::Init()
 {
 	Key = 'S';
 	InputTypeValue = InputType::IsPress | InputType::IsDown;
-	SkillCoolDown = 30.0f;
+	SkillCoolDown = 1.0f;
 	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
 	ChangeState = PlayerState::VortexSphere;
 }

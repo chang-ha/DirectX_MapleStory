@@ -3,6 +3,7 @@
 
 class MercilessWinds : public ContentSkill
 {
+	static float WholeCoolDown;
 public:
 	// constructer destructer
 	MercilessWinds();
@@ -21,6 +22,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 	void CreateWind();
+	void Release() override;
 	void Init() override;
 
 private:

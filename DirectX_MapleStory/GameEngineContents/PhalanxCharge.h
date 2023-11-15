@@ -3,6 +3,7 @@
 
 class PhalanxCharge : public ContentSkill
 {
+	static float WholeCoolDown;
 public:
 	// constructer destructer
 	PhalanxCharge();
@@ -20,6 +21,7 @@ public:
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
+	void Release() override;
 	void Init() override;
 
 private:
