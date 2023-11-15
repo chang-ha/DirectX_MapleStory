@@ -46,7 +46,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 		Back->Init("BG_Lucid_Next.png");
 	}
 
-	GetMainCamera()->Transform.SetLocalPosition(float4(800, -500));
+	GetMainCamera()->Transform.SetLocalPosition(float4(750, -580));
 
 	// Player Renderer
 	if (nullptr == PlayerRender)

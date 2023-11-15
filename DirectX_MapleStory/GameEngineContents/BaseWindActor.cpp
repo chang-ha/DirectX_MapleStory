@@ -46,6 +46,7 @@ void BaseWindActor::CreateTriflingWind()
 {
 	std::shared_ptr<BaseWindActor> _Wind = ContentLevel::CurContentLevel->CreateActor<BaseWindActor>(UpdateOrder::Skill);
 
+
 	GameEngineRandom Random;
 	Random.SetSeed(reinterpret_cast<long long>(_Wind.get()));
 	float4 RandomValue = Random.RandomVectorBox2D(0, 1, 0, 1);
@@ -56,15 +57,17 @@ void BaseWindActor::CreateTriflingWind()
 	else
 	{
 		_Wind->Init("Wind1");
+		_Wind->MainSpriteRenderer->SetAutoScaleRatio(0.8f);
+		_Wind->HitCollision->Transform.SetLocalScale({ 60, 20 });
 	}
 
 	if (0.5 >= RandomValue.Y)
 	{
-		_Wind->DirAngle = 90.0f;
+		_Wind->DirAngle = Random.RandomFloat(60.0f, 90.0f);
 	}
 	else
 	{
-		_Wind->DirAngle = -90.0f;
+		_Wind->DirAngle = -Random.RandomFloat(60.0f, 90.0f);
 	}
 }
 
