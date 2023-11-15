@@ -89,6 +89,8 @@ void Arrow::Start()
 
 void Arrow::Update(float _Delta)
 {
+	ArrowRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
+
 	if (4 <= CollisionCount)
 	{
 		Death();
@@ -118,7 +120,6 @@ void Arrow::Update(float _Delta)
 		Death();
 	}
 
-	ArrowRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
 	ArrowCollision->CollisionEvent(CollisionOrder::Monster, ArrowEvent);
 }
 
@@ -140,5 +141,5 @@ void Arrow::Release()
 void Arrow::CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
 	++CollisionCount;
-	HitRenderManager::MainHitRenderManager->HitPrint("SongOfHeaven_Actor_Arrow_Hit", 1, _Other->GetParentObject(), false);
+	HitRenderManager::MainHitRenderManager->HitPrint("SongOfHeaven_Actor_Arrow_Hit", 1, _Other->GetParentObject(), 1, false);
 }

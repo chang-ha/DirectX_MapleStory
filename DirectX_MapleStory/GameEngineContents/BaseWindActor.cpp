@@ -19,38 +19,14 @@ BaseWindActor::~BaseWindActor()
 
 }
 
-std::shared_ptr<BaseWindActor> BaseWindActor::CreateMercilessWind()
-{
-	std::shared_ptr<BaseWindActor> _Wind = ContentLevel::CurContentLevel->CreateActor<BaseWindActor>(UpdateOrder::Skill);
-	_Wind->Init("Wind3");
-	_Wind->Off();
-	GameEngineRandom Random;
-	Random.SetSeed(reinterpret_cast<long long>(_Wind.get()));
-	float4 PivotValue = Random.RandomVectorBox2D(-150, 150, 100, 200);
-	_Wind->Transform.AddLocalPosition(PivotValue);
-
-	float RandomValue = Random.RandomFloat(0, 1);
-	if (0.5 >= RandomValue)
-	{
-		_Wind->DirAngle = 90.0f;
-	}
-	else
-	{
-		_Wind->DirAngle = -90.0f;
-	}
-
-	return _Wind;
-}
-
 void BaseWindActor::CreateTriflingWind()
 {
 	std::shared_ptr<BaseWindActor> _Wind = ContentLevel::CurContentLevel->CreateActor<BaseWindActor>(UpdateOrder::Skill);
 
-
 	GameEngineRandom Random;
 	Random.SetSeed(reinterpret_cast<long long>(_Wind.get()));
 	float4 RandomValue = Random.RandomVectorBox2D(0, 1, 0, 1);
-	if (0.10 >= RandomValue.X)
+	if (0.3f >= RandomValue.X)
 	{
 		_Wind->Init("Wind2");
 	}
@@ -69,11 +45,6 @@ void BaseWindActor::CreateTriflingWind()
 	{
 		_Wind->DirAngle = -Random.RandomFloat(60.0f, 90.0f);
 	}
-}
-
-void BaseWindActor::LevelStart(GameEngineLevel* _PrevLevel)
-{
-
 }
 
 void BaseWindActor::LevelEnd(GameEngineLevel* _NextLevel)
@@ -105,74 +76,14 @@ void BaseWindActor::Start()
 void BaseWindActor::Update(float _Delta)
 {
 	MainSpriteRenderer->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
-	if (true == MainSpriteRenderer->IsCurAnimation("Hit") || true == MainSpriteRenderer->IsCurAnimation("Death"))
-	{
-		return;
-	}
 
 	LiveTime -= _Delta;
 	if (0.0f >= LiveTime)
 	{
-		MainSpriteRenderer->ChangeAnimation("Death");
+		ChangeState(WindState::Death);
 	}
 
-	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
-	HitCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
-
-	HitCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
-		{
-			// 가장 먼저 충돌하는 녀석에게
-			GameEngineCollision* _Other = _CollisionGroup[0];
-			MainSpriteRenderer->ChangeAnimation("Hit");
-
-			ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Other->GetParentObject());
-			if (nullptr != _BaseActor)
-			{
-				_BaseActor->AddHP(-1);
-			}
-		}
-	);
-
-	DetectCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
-		{
-			// Targeting
-			float4 MostCloseTargetPos = float4::ZERO;
-			float4 CurPos = Transform.GetWorldPosition();
-
-			for (size_t i = 0; i < _CollisionGroup.size(); i++)
-			{
-				GameEngineCollision* _Other = _CollisionGroup[i];
-				float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
-
-				if ((MostCloseTargetPos - CurPos).Size() > (OtherPos - CurPos).Size() || MostCloseTargetPos == float4::ZERO)
-				{
-					MostCloseTargetPos = OtherPos;
-				}
-			}
-
-			float4 DirVector = (MostCloseTargetPos - CurPos ).NormalizeReturn();
-			// 현재 이동벡터와 목적지까지의 벡터 사이의 각도를 구함
-			float4 Angle = DirectX::XMVector2AngleBetweenNormals(DirVector.DirectXVector, MoveVector.DirectXVector);
-			// Radina to Degree
-			float PlusAngle = Angle.X * GameEngineMath::R2D;
-
-			// 회전방향 결정용 외적
-			float4 RotationDir = DirectX::XMVector2Cross(DirVector.DirectXVector, MoveVector.DirectXVector);
-			if (0.0f <= RotationDir.X)
-			{
-				DirAngle -= PlusAngle * RotationSpeed * _Delta;
-			}
-			else
-			{
-				DirAngle += PlusAngle * RotationSpeed * _Delta;
-			}
-			RotationSpeed += 30.0f * _Delta;
-
-			MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
-
-			Transform.AddLocalPosition( MoveVector * Speed * _Delta);
-		}
-	);
+	StateUpdate(_Delta);
 }
 
 void BaseWindActor::Release()
@@ -218,13 +129,11 @@ void BaseWindActor::Init(std::string_view _WindName)
 	MainSpriteRenderer->CreateAnimation("Attack", std::string(_WindName) + "_Attack", 0.06f);
 	MainSpriteRenderer->CreateAnimation("Hit", std::string(_WindName) + "_Hit", 0.06f);
 	MainSpriteRenderer->CreateAnimation("Death", std::string(_WindName) + "_Death", 0.08f);
-	MainSpriteRenderer->ChangeAnimation("Ready");
-	MainSpriteRenderer->SetPivotValue({0.625f, 0.44f});
+	ReadyStart();
 
 	MainSpriteRenderer->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer)
 		{
-			MainSpriteRenderer->ChangeAnimation("Attack");
-			MainSpriteRenderer->SetPivotType(PivotType::Center);
+			ChangeState(WindState::Attack);
 		}
 	);
 
@@ -251,4 +160,152 @@ void BaseWindActor::Init(std::string_view _WindName)
 	MainSpriteRenderer->LeftFlip();
 
 	MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
+}
+
+void BaseWindActor::ChangeState(WindState _State)
+{
+	if (_State != State)
+	{
+		// State Start
+		switch (_State)
+		{
+		case WindState::Ready:
+			ReadyStart();
+			break;
+		case WindState::Attack:
+			AttackStart();
+			break;
+		case WindState::Hit:
+			HitStart();
+			break;
+		case WindState::Death:
+			DeathStart();
+			break;
+		default:
+			MsgBoxAssert("존재하지 않는 상태값을 시작하려고 했습니다.");
+			break;
+		}
+	}
+
+	State = _State;
+}
+
+void BaseWindActor::StateUpdate(float _Delta)
+{
+	switch (State)
+	{
+	case WindState::Ready:
+		return ReadyUpdate(_Delta);
+	case WindState::Attack:
+		return AttackUpdate(_Delta);
+	case WindState::Hit:
+		return HitUpdate(_Delta);
+	case WindState::Death:
+		return DeathUpdate(_Delta);
+	default:
+		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌릴 수 없습니다.");
+		break;
+	}
+}
+
+void BaseWindActor::ReadyStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Ready");
+	MainSpriteRenderer->SetPivotValue({ 0.625f, 0.44f });
+}
+
+void BaseWindActor::AttackStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Attack");
+	MainSpriteRenderer->SetPivotType(PivotType::Center);
+}
+
+void BaseWindActor::HitStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Hit", true, 0);
+	HitCollision->Off();
+	DetectCollision->Off();
+}
+
+void BaseWindActor::DeathStart()
+{
+	MainSpriteRenderer->ChangeAnimation("Death");
+	HitCollision->Off();
+	DetectCollision->Off();
+}
+
+void BaseWindActor::ReadyUpdate(float _Delta)
+{
+	AttackUpdate(_Delta);
+}
+
+void BaseWindActor::AttackUpdate(float _Delta)
+{
+	MainSpriteRenderer->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
+	HitCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
+
+	HitCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
+		{
+			// 가장 먼저 충돌하는 녀석에게
+			GameEngineCollision* _Other = _CollisionGroup[0];
+			ChangeState(WindState::Hit);
+
+			ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Other->GetParentObject());
+			if (nullptr != _BaseActor)
+			{
+				_BaseActor->AddHP(-1);
+			}
+		}
+	);
+
+	DetectCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
+		{
+			// Targeting
+			float4 MostCloseTargetPos = float4::ZERO;
+			float4 CurPos = Transform.GetWorldPosition();
+
+			for (size_t i = 0; i < _CollisionGroup.size(); i++)
+			{
+				GameEngineCollision* _Other = _CollisionGroup[i];
+				float4 OtherPos = _Other->GetParentObject()->Transform.GetWorldPosition();
+
+				if ((MostCloseTargetPos - CurPos).Size() > (OtherPos - CurPos).Size() || MostCloseTargetPos == float4::ZERO)
+				{
+					MostCloseTargetPos = OtherPos;
+				}
+			}
+
+			float4 DirVector = (MostCloseTargetPos - CurPos).NormalizeReturn();
+			// 현재 이동벡터와 목적지까지의 벡터 사이의 각도를 구함
+			float4 Angle = DirectX::XMVector2AngleBetweenNormals(DirVector.DirectXVector, MoveVector.DirectXVector);
+			// Radina to Degree
+			float PlusAngle = Angle.X * GameEngineMath::R2D;
+
+			// 회전방향 결정용 외적
+			float4 RotationDir = DirectX::XMVector2Cross(DirVector.DirectXVector, MoveVector.DirectXVector);
+			if (0.0f <= RotationDir.X)
+			{
+				DirAngle -= PlusAngle * RotationSpeed * _Delta;
+			}
+			else
+			{
+				DirAngle += PlusAngle * RotationSpeed * _Delta;
+			}
+			RotationSpeed += 30.0f * _Delta;
+
+			MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
+
+			Transform.AddLocalPosition(MoveVector * Speed * _Delta);
+		}
+	);
+}
+
+void BaseWindActor::HitUpdate(float _Delta)
+{
+
+}
+
+void BaseWindActor::DeathUpdate(float _Delta)
+{
+
 }

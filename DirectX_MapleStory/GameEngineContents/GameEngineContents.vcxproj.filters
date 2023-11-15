@@ -82,9 +82,6 @@
     <ClCompile Include="BaseWindActor.cpp">
       <Filter>Actor\Global\Player\Skill\Wind</Filter>
     </ClCompile>
-    <ClCompile Include="MercilessWinds.cpp">
-      <Filter>Actor\Global\Player\Skill</Filter>
-    </ClCompile>
     <ClCompile Include="Lucid_Phase1.cpp">
       <Filter>Level\Boss_Stage</Filter>
     </ClCompile>
@@ -244,6 +241,12 @@
     <ClCompile Include="ReleaseFunction.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="MercilessWinds.cpp">
+      <Filter>Actor\Global\Player\Skill\MercilessWinds</Filter>
+    </ClCompile>
+    <ClCompile Include="MercilessWinds_Actor.cpp">
+      <Filter>Actor\Global\Player\Skill\MercilessWinds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -326,9 +329,6 @@
     </ClInclude>
     <ClInclude Include="BaseWindActor.h">
       <Filter>Actor\Global\Player\Skill\Wind</Filter>
-    </ClInclude>
-    <ClInclude Include="MercilessWinds.h">
-      <Filter>Actor\Global\Player\Skill</Filter>
     </ClInclude>
     <ClInclude Include="Lucid_Phase1.h">
       <Filter>Level\Boss_Stage</Filter>
@@ -489,6 +489,12 @@
     <ClInclude Include="ReleaseFunction.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="MercilessWinds.h">
+      <Filter>Actor\Global\Player\Skill\MercilessWinds</Filter>
+    </ClInclude>
+    <ClInclude Include="MercilessWinds_Actor.h">
+      <Filter>Actor\Global\Player\Skill\MercilessWinds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -568,6 +574,9 @@
     </Filter>
     <Filter Include="Actor\Monster\FieldMonster">
       <UniqueIdentifier>{8e90c388-1daf-4a8c-a14b-1937a3947193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actor\Global\Player\Skill\MercilessWinds">
+      <UniqueIdentifier>{6bb36f70-a704-4ee7-82f8-1a912377b437}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

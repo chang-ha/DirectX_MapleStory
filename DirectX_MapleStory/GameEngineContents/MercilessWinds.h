@@ -26,6 +26,6 @@ protected:
 	void Init() override;
 
 private:
-	std::vector<std::shared_ptr<class BaseWindActor>> AllWindActor;
+	std::vector<std::shared_ptr<class MercilessWinds_Actor>> AllWindActor;
 };
 

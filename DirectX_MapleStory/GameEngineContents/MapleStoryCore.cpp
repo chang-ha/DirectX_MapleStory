@@ -79,7 +79,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
 	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
 
-	GameEngineCore::ChangeLevel("5.Lucid_Next");
+	GameEngineCore::ChangeLevel("4.Lucid_Phase1");
 }
 
 

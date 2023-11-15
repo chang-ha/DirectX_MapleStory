@@ -1,7 +1,8 @@
 ﻿#include "PreCompile.h"
 
 #include "MercilessWinds.h"
-#include "BaseWindActor.h"
+#include "MercilessWinds_Actor.h"
+#include "ContentLevel.h"
 
 float MercilessWinds::WholeCoolDown = 0.0f;
 
@@ -109,7 +110,7 @@ void MercilessWinds::Update(float _Delta)
 
 void MercilessWinds::CreateWind()
 {
-	std::shared_ptr<BaseWindActor> _Actor = BaseWindActor::CreateMercilessWind();
+	std::shared_ptr<MercilessWinds_Actor> _Actor = ContentLevel::CurContentLevel->CreateActor<MercilessWinds_Actor>(UpdateOrder::Skill);
 	AllWindActor.push_back(_Actor);
 }
 
