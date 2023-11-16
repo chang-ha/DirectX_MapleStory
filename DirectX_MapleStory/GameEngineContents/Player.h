@@ -78,11 +78,17 @@ public:
 		NotGround.erase(_Value);
 	}
 
-	void PopInput()
+	void InputObjectOff()
 	{
 		ChangeState(PlayerState::Idle);
-		MoveVectorForceXReset();
-		IsTempInputValue = false;
+		GameEngineInput::InputObjectOff(Player::MainPlayer);
+		GameEngineInput::InputObjectOff(SkillManagerActor.get());
+	}
+
+	void InputObjectOn()
+	{
+		GameEngineInput::InputObjectOn(Player::MainPlayer);
+		GameEngineInput::InputObjectOn(SkillManagerActor.get());
 	}
 
 	void PlayerCollisionOn()
@@ -121,7 +127,6 @@ protected:
 
 private:
 	bool Invincibility = false;
-	bool IsTempInputValue = true;
 	bool IsLadder = false;
 	bool IsDirCheck = true;
 	bool IsGroundCheck = true;

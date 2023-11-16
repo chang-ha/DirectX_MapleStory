@@ -319,3 +319,23 @@ void GameEngineInput::IsObjectAllInputOn()
 		InputPair.second = true;
 	}
 }
+
+void GameEngineInput::InputObjectOn(void* _Ptr)
+{
+	if (false == InputObject.contains(_Ptr))
+	{
+		MsgBoxAssert("InputObject에 포함되어 있지 않은 객체입니다.");
+	}
+
+	InputObject[_Ptr] = true;
+}
+
+void GameEngineInput::InputObjectOff(void* _Ptr)
+{
+	if (false == InputObject.contains(_Ptr))
+	{
+		MsgBoxAssert("InputObject에 포함되어 있지 않은 객체입니다.");
+	}
+
+	InputObject[_Ptr] = false;
+}

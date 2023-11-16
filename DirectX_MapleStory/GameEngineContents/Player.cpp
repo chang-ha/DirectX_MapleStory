@@ -37,7 +37,6 @@ void Player::LevelStart(GameEngineLevel* _PrevLevel)
 
 void Player::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	IsTempInputValue = true;
 	PlayerHP = HP;
 	PlayerMP = MP;
 	ContentActor::LevelEnd(_NextLevel);
@@ -166,11 +165,6 @@ void Player::Update(float _Delta)
 	ContentActor::Update(_Delta);
 	ChasingCamera(_Delta);
 	BlockOutMap();
-
-	if (false == IsTempInputValue)
-	{
-		return;
-	}
 
 	if (true == GameEngineInput::IsDown('Q', this))
 	{

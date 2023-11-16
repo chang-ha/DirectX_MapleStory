@@ -41,8 +41,8 @@ void ClockTowerOfNightMare_4th::LevelStart(GameEngineLevel* _PrevLevel)
 	ClockTowerOfNightMare_5th* PrevLevel = dynamic_cast<ClockTowerOfNightMare_5th*>(_PrevLevel);
 	if (nullptr != PrevLevel)
 	{
-		CurPlayer->Transform.SetLocalPosition({ 1250, -526 });
-		GetMainCamera()->Transform.SetLocalPosition(float4(1250, -526, -100000));
+		CurPlayer->Transform.SetLocalPosition({ 1250, -523 });
+		GetMainCamera()->Transform.SetLocalPosition(float4(1250, -523, -100000));
 	}
 	else
 	{

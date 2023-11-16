@@ -3,6 +3,7 @@
 #include "ContentMouse.h"
 #include "ContentButton.h"
 #include "ContentLevel.h"
+#include "Player.h"
 
 void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName)
 {
@@ -40,13 +41,19 @@ void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _N
 
 	CancelButton->SetButtonClickEndEvent([&]()
 		{
-			this->Off();
-			MentIndex = 0;
-			MentEnd = false;
-			MentText->SetText("돋움", "", 11.0f, float4::ZERO);
+			MentOff();
+			Player::MainPlayer->InputObjectOn();
 		});
 
 	GameEngineInput::AddInputObject(this);
+}
+
+void OneButtonNpcMentFrame::MentOff()
+{
+	Off();
+	MentIndex = 0;
+	MentEnd = false;
+	MentText->SetText("돋움", "", 11.0f, float4::ZERO);
 }
 
 void OneButtonNpcMentFrame::Update(float _Delta)
@@ -223,9 +230,20 @@ void ContentNpc::CollisionEnter(GameEngineCollision* _this, GameEngineCollision*
 
 void ContentNpc::CollisionStay(GameEngineCollision* _this, GameEngineCollision* _Other)
 {
+	if (true == GameEngineInput::IsFree(VK_LBUTTON, this))
+	{
+		ContentMouse::MainMouse->ButtonAniMouse();
+	}
+
+	if (L"" == Ment->Ment)
+	{
+		return;
+	}
+
 	if (true == GameEngineInput::IsDown(VK_LBUTTON, this))
 	{
 		Ment->On();
+		Player::MainPlayer->InputObjectOff();
 	}
 }
 

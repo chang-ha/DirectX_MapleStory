@@ -26,6 +26,7 @@ protected:
 	std::shared_ptr<class ContentButton> CancelButton = nullptr;
 
 	void StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName);
+	void MentOff();
 	void MentUpdate(float _Delta);
 	void SkipUpdate(float _Delta);
 	void Update(float _Delta) override;
@@ -58,10 +59,16 @@ public:
 	}
 
 	void Init(std::string_view _NpcName, ActorDir _Dir);
+
 	void SetMentText(std::wstring_view _Ment)
 	{
 		Ment->Ment = _Ment;
 		Ment->MentMaxIndex = _Ment.size();
+	}
+
+	void NpcMentOff()
+	{
+		Ment->MentOff();
 	}
 
 	void CreateOneButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName);

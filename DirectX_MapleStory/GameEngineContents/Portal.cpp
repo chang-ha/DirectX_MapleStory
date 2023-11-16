@@ -58,7 +58,8 @@ void Portal::Update(float _Delta)
 		_FadeObject->SetChangeLevel(MoveMap);
 		_FadeObject->FadeStart();
 
-		Player::MainPlayer->PopInput();
+		Player::MainPlayer->InputObjectOff();
+		Player::MainPlayer->MoveVectorForceXReset();
 	}
 }
 
