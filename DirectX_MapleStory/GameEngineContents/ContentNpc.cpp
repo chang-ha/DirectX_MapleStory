@@ -29,19 +29,68 @@ void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _N
 	NpcName->Transform.SetLocalPosition({ -180, -27, RenderDepth::ui });
 	NpcName->SetText( "돋움", _NpcName.data(), 13.0f, float4::WHITE, FW1_CENTER);
 
+	MentText = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	MentText->SetText("돋움", "", 11.0f, float4::ZERO);
+	MentText->Transform.SetLocalPosition({-90, 20});
+
 	CancelButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
 	CancelButton->SetParent(this, static_cast<int>(UpdateOrder::UI));
 	CancelButton->Init(_CancelButtonName);
-	CancelButton->Transform.SetLocalPosition({210, -78});
+	CancelButton->Transform.SetLocalPosition({210, -79});
 
 	CancelButton->SetButtonClickEndEvent([&]()
 		{
 			this->Off();
-			// CancelButton->CollisionOff();
-			// ContentLevel::CurContentLevel->AllButtonOn();
+			MentIndex = 0;
+			MentEnd = false;
+			MentText->SetText("돋움", "", 11.0f, float4::ZERO);
 		});
 
+	GameEngineInput::AddInputObject(this);
 }
+
+void OneButtonNpcMentFrame::Update(float _Delta)
+{
+	MentUpdate(_Delta);
+	SkipUpdate(_Delta);
+}
+
+void OneButtonNpcMentFrame::MentUpdate(float _Delta)
+{
+	if (true == MentEnd)
+	{
+		return;
+	}
+
+	MentSpeed -= _Delta;
+	if (0.0f >= MentSpeed)
+	{
+		MentSpeed = MENT_SPEED;
+		++MentIndex;
+		std::wstring OutString = Ment.substr(0, MentIndex);
+		std::string Result = GameEngineString::UnicodeToAnsi(OutString);
+		MentText->SetText("돋움", Result, 11.0f, float4::ZERO);
+
+		if (MentIndex == MentMaxIndex)
+		{
+			MentEnd = true;
+		}
+	}
+}
+
+void OneButtonNpcMentFrame::SkipUpdate(float _Delta)
+{
+	if (L"" == Ment)
+	{
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown(VK_ESCAPE, this))
+	{
+		MentIndex = MentMaxIndex - 1;
+	}
+}
+
 
 void TwoButtonNpcMentFrame::StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void()> _OkButtonEndFunction /*= nullptr*/)
 {
@@ -50,11 +99,15 @@ void TwoButtonNpcMentFrame::StructStart(class ContentNpc* _Parent, std::string_v
 	OkButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
 	OkButton->SetParent(this, static_cast<int>(UpdateOrder::UI));
 	OkButton->Init(_OkButtonName);
-	OkButton->Transform.SetLocalPosition({ 130, -78 });
+	OkButton->Transform.SetLocalPosition({ 140, -79 });
 
 	if (nullptr == _OkButtonEndFunction)
 	{
 		OkButton->SetButtonClickEndEvent(CancelButton->GetButtonClickEndEvent());
+	}
+	else
+	{
+		OkButton->SetButtonClickEvent(_OkButtonEndFunction);
 	}
 }
 
@@ -146,21 +199,6 @@ void ContentNpc::Init(std::string_view _NpcName, ActorDir _Dir)
 	float4 TextureScale = _Sprite->GetSpriteData(0).Texture->GetScale();
 	NpcCollision->Transform.SetLocalScale(TextureScale);
 	NpcCollision->Transform.SetLocalPosition({0, TextureScale.hY()});
-
-	//switch (_Type)
-	//{
-	//case MentType::OneButton:
-	//	Ment = ContentLevel::CurContentLevel->CreateActor<OneButtonNpcMentFrame>(UpdateOrder::UI);
-	//	Ment->StructStart(this);
-	//	break;
-	//case MentType::TwoButton:
-	//	Ment = ContentLevel::CurContentLevel->CreateActor<TwoButtonNpcMentFrame>(UpdateOrder::UI);
-	//	Ment->StructStart(this);
-	//	break;
-	//default:
-	//	MsgBoxAssert("존재하지 않는 타입입니다.");
-	//	break;
-	//}
 }
 
 void ContentNpc::CreateOneButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName)
@@ -187,10 +225,7 @@ void ContentNpc::CollisionStay(GameEngineCollision* _this, GameEngineCollision* 
 {
 	if (true == GameEngineInput::IsDown(VK_LBUTTON, this))
 	{
-		if (nullptr != Ment)
-		{
-			Ment->On();
-		}
+		Ment->On();
 	}
 }
 

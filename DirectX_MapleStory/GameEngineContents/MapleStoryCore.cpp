@@ -54,6 +54,7 @@ MapleStoryCore::~MapleStoryCore()
 void MapleStoryCore::Start()
 {
 	GameEngineFont::Load("메이플스토리");
+	GameEngineFont::Load("돋움체 보통");
 
 	ContentResources::ContentResourcesInit();
 

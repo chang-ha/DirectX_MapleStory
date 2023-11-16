@@ -97,10 +97,5 @@ private:
 	void MouseOverUpdate(float _Delta);
 	void ClickUpdate(float _Delta);
 	void DisabledUpdate(float _Delta);
-
-	void NormalEnd();
-	void MouseOverEnd();
-	void ClickEnd();
-	void DisabledEnd();
 };
 

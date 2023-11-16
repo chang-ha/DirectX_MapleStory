@@ -1,5 +1,7 @@
 #pragma once
 
+#define MENT_SPEED 0.05f
+
 enum class MentType
 {
 	OneButton,
@@ -11,13 +13,22 @@ class OneButtonNpcMentFrame : public GameEngineActor
 	friend class ContentNpc;
 
 protected:
+	bool MentEnd = false;
+	float MentSpeed = MENT_SPEED;
+	size_t MentIndex = 0;
+	size_t MentMaxIndex = -1;
+	std::wstring Ment = L"";
 	ContentNpc* Parent = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> MentBG = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> MentNpc = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> NpcName = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> MentText = nullptr;
 	std::shared_ptr<class ContentButton> CancelButton = nullptr;
 
 	void StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName);
+	void MentUpdate(float _Delta);
+	void SkipUpdate(float _Delta);
+	void Update(float _Delta) override;
 };
 
 class TwoButtonNpcMentFrame : public OneButtonNpcMentFrame
@@ -47,6 +58,11 @@ public:
 	}
 
 	void Init(std::string_view _NpcName, ActorDir _Dir);
+	void SetMentText(std::wstring_view _Ment)
+	{
+		Ment->Ment = _Ment;
+		Ment->MentMaxIndex = _Ment.size();
+	}
 
 	void CreateOneButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName);
 	void CreateTwoButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void ()> _OkButtonEndFunction = nullptr);

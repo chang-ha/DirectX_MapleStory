@@ -120,26 +120,6 @@ void ContentButton::ChangeState(ButtonState _State)
 {
 	if (_State != State)
 	{
-		// State End
-		switch (State)
-		{
-		case ButtonState::Normal:
-			NormalEnd();
-			break;
-		case ButtonState::MouseOver:
-			MouseOverEnd();
-			break;
-		case ButtonState::Click:
-			ClickEnd();
-			break;
-		case ButtonState::Disabled:
-			DisabledEnd();
-			break;
-		default:
-			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
-			break;
-		}
-
 		// State Start
 		switch (_State)
 		{
@@ -272,26 +252,6 @@ void ContentButton::ClickUpdate(float _Delta)
 }
 
 void ContentButton::DisabledUpdate(float _Delta)
-{
-
-}
-
-void ContentButton::NormalEnd()
-{
-
-}
-
-void ContentButton::MouseOverEnd()
-{
-
-}
-
-void ContentButton::ClickEnd()
-{
-
-}
-
-void ContentButton::DisabledEnd()
 {
 
 }
