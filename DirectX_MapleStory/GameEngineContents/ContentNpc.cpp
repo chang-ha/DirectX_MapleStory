@@ -174,20 +174,20 @@ void ContentNpc::Release()
 	}
 }
 
-void ContentNpc::Init(std::string_view _NpcName, ActorDir _Dir)
+void ContentNpc::Init(std::string_view _NpcName, std::string_view _KoreanName, ActorDir _Dir, float _AniSpeed)
 {
 	NpcName = _NpcName;
+	KoreanName = _KoreanName;
 	if (nullptr == GameEngineSprite::Find(NpcName))
 	{
-		GameEnginePath Path;
-		Path.SetCurrentPath();
-		Path.MoveParentToExistsChild("ContentResources");
-		Path.MoveChild("ContentResources\\Textures\\Npc\\" + std::string(NpcName));
-		GameEngineTexture::Load(Path.GetStringPath());
-		GameEngineSprite::CreateSingle(std::string(NpcName));
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Npc\\" + NpcName);
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
+	NpcRenderer->CreateAnimation("Idle", NpcName, _AniSpeed);
+	NpcRenderer->ChangeAnimation("Idle");
 
-	NpcRenderer->SetSprite(std::string(NpcName));
 	switch (_Dir)
 	{
 	case ActorDir::Right:
@@ -208,17 +208,17 @@ void ContentNpc::Init(std::string_view _NpcName, ActorDir _Dir)
 	NpcCollision->Transform.SetLocalPosition({0, TextureScale.hY()});
 }
 
-void ContentNpc::CreateOneButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName)
+void ContentNpc::CreateOneButtonMent(std::string_view _CancelButtonName)
 {
 	Ment = ContentLevel::CurContentLevel->CreateActor<OneButtonNpcMentFrame>(UpdateOrder::UI);
-	Ment->StructStart(this, _NpcName, _CancelButtonName);
+	Ment->StructStart(this, KoreanName, _CancelButtonName);
 	Ment->Off();
 }
 
-void ContentNpc::CreateTwoButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void()> _OkButtonEndFunction /*= nullptr*/)
+void ContentNpc::CreateTwoButtonMent(std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void()> _OkButtonEndFunction /*= nullptr*/)
 {
 	std::shared_ptr<TwoButtonNpcMentFrame> Frame = ContentLevel::CurContentLevel->CreateActor<TwoButtonNpcMentFrame>(UpdateOrder::UI);
-	Frame->StructStart(this, _NpcName, _CancelButtonName, _OkButtonName, _OkButtonEndFunction);
+	Frame->StructStart(this, KoreanName, _CancelButtonName, _OkButtonName, _OkButtonEndFunction);
 	Ment = Frame;
 	Ment->Off();
 }

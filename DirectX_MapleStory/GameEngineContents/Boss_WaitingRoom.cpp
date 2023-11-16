@@ -88,16 +88,20 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1200, -838 });
-	_Npc->Init("GasMask.png", ActorDir::Left);
-	_Npc->CreateTwoButtonMent("방독면", "Npc_BossEnter_Cancel", "Npc_BossEnter_Ok", [=]()
+	_Npc->Init("GasMask", "방독면", ActorDir::Left);
+	_Npc->CreateTwoButtonMent("Npc_BossEnter_Cancel", "Npc_BossEnter_Ok", [=]()
 		{
 			_Npc->NpcMentOff();
 			std::shared_ptr<FadeObject> _FadeObject = ContentLevel::CurContentLevel->FadeOutObject;
 			_FadeObject->SetChangeLevel("3.Lucid_Enter");
 			_FadeObject->FadeStart();
 		});
-
 	_Npc->SetMentText(L"루시드를 쓰러트리기 위해 몽환의 숲으로 이동하시겠습니까?");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 1000, -838 });
+	_Npc->Init("PiedPiper", "피리부는가면", ActorDir::Left, 0.18f);
+
 }
 
 void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)

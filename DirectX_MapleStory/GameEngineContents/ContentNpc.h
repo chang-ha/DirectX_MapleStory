@@ -58,7 +58,7 @@ public:
 		return NpcName;
 	}
 
-	void Init(std::string_view _NpcName, ActorDir _Dir);
+	void Init(std::string_view _NpcName, std::string_view _KoreanName, ActorDir _Dir = ActorDir::Left, float _AniSpeed = 0.1f);
 
 	void SetMentText(std::wstring_view _Ment)
 	{
@@ -71,11 +71,12 @@ public:
 		Ment->MentOff();
 	}
 
-	void CreateOneButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName);
-	void CreateTwoButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void ()> _OkButtonEndFunction = nullptr);
+	void CreateOneButtonMent(std::string_view _CancelButtonName);
+	void CreateTwoButtonMent(std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void ()> _OkButtonEndFunction = nullptr);
 
 protected:
 	std::string NpcName = "";
+	std::string KoreanName = "";
 	std::shared_ptr<GameEngineSpriteRenderer> NpcRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> NpcCollision = nullptr;
 	EventParameter NpcEvent;
@@ -91,7 +92,6 @@ protected:
 	void CollisionExit(GameEngineCollision* _this, GameEngineCollision* _Other);
 
 private:
-
 
 };
 
