@@ -62,6 +62,39 @@ void OneButtonNpcMentFrame::Update(float _Delta)
 	SkipUpdate(_Delta);
 }
 
+void OneButtonNpcMentFrame::Release()
+{
+	if (nullptr != MentBG)
+	{
+		MentBG->Death();
+		MentBG = nullptr;
+	}
+
+	if (nullptr != MentNpc)
+	{
+		MentNpc->Death();
+		MentNpc = nullptr;
+	}
+
+	if (nullptr != NpcName)
+	{
+		NpcName->Death();
+		NpcName = nullptr;
+	}
+
+	if (nullptr != MentText)
+	{
+		MentText->Death();
+		MentText = nullptr;
+	}
+
+	if (nullptr != CancelButton)
+	{
+		CancelButton->Death();
+		CancelButton = nullptr;
+	}
+}
+
 void OneButtonNpcMentFrame::MentUpdate(float _Delta)
 {
 	if (true == MentEnd)
@@ -118,6 +151,17 @@ void TwoButtonNpcMentFrame::StructStart(class ContentNpc* _Parent, std::string_v
 	}
 }
 
+void TwoButtonNpcMentFrame::Release()
+{
+	OneButtonNpcMentFrame::Release();
+
+	if (nullptr != OkButton)
+	{
+		OkButton->Death();
+		OkButton = nullptr;
+	}
+}
+
 ContentNpc::ContentNpc()
 {
 
@@ -141,6 +185,20 @@ void ContentNpc::Start()
 		NpcRenderer->Transform.SetLocalPosition({0, 0, RenderDepth::playbelow});
 		NpcRenderer->SetPivotType(PivotType::Bottom);
 		NpcRenderer->AutoSpriteSizeOn();
+	}
+
+	if (nullptr == NpcNameBGRenderer)
+	{
+		NpcNameBGRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAYBELOW);
+		NpcNameBGRenderer->Transform.SetLocalPosition({ 0, -1, RenderDepth::playbelow });
+		NpcNameBGRenderer->SetPivotType(PivotType::Top);
+		NpcNameBGRenderer->AutoSpriteSizeOff();
+	}
+
+	if (nullptr == NpcNameRenderer)
+	{
+		NpcNameRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAYBELOW);
+		NpcNameRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::playbelow });
 	}
 
 	if (nullptr == NpcCollision)
@@ -167,10 +225,22 @@ void ContentNpc::Release()
 		NpcRenderer = nullptr;
 	}
 
+	if (nullptr  != NpcNameRenderer)
+	{
+		NpcNameRenderer->Death();
+		NpcNameRenderer = nullptr;
+	}
+
 	if (nullptr != NpcCollision)
 	{
 		NpcCollision->Death();
 		NpcCollision = nullptr;
+	}
+
+	if (nullptr != Ment)
+	{
+		Ment->Death();
+		Ment = nullptr;
 	}
 }
 
@@ -188,6 +258,15 @@ void ContentNpc::Init(std::string_view _NpcName, std::string_view _KoreanName, A
 	NpcRenderer->CreateAnimation("Idle", NpcName, _AniSpeed);
 	NpcRenderer->ChangeAnimation("Idle");
 
+	if (nullptr == GameEngineSprite::Find("Npc_NameTag.png"))
+	{
+		GameEngineFile File;
+		File.MoveParentToExistsChild("ContentResources");
+		File.MoveChild("ContentResources\\Textures\\UI\\Npc_NameTag.png");
+		GameEngineTexture::Load(File.GetStringPath());
+		GameEngineSprite::CreateSingle(File.GetFileName());
+	}
+
 	switch (_Dir)
 	{
 	case ActorDir::Right:
@@ -201,6 +280,16 @@ void ContentNpc::Init(std::string_view _NpcName, std::string_view _KoreanName, A
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	NpcNameBGRenderer->SetSprite("Npc_NameTag.png");
+	NpcNameBGRenderer->SetSampler("EngineBaseWRAPSampler");
+
+	size_t TextSize = KoreanName.size();
+
+	NpcNameBGRenderer->SetImageScale({ 7.5f * TextSize, 16, 1 });
+	NpcNameBGRenderer->RenderBaseInfoValue.VertexUVMul.X = 7.5f * TextSize;
+
+	NpcNameRenderer->SetText("돋움", KoreanName, 13.0f, {1.0f, 1.0f, 0.0f}, FW1_CENTER);
 
 	std::shared_ptr<GameEngineSprite> _Sprite = GameEngineSprite::Find(NpcName);
 	float4 TextureScale = _Sprite->GetSpriteData(0).Texture->GetScale();

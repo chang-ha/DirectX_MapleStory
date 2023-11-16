@@ -8,6 +8,7 @@
 #include "Dreamkeeper.h"
 #include "ClockTowerOfNightMare_3th.h"
 #include "LinkPortal.h"
+#include "ContentNpc.h"
 
 ClockTowerOfNightMare_2th::ClockTowerOfNightMare_2th()
 {
@@ -101,6 +102,12 @@ void ClockTowerOfNightMare_2th::LevelStart(GameEngineLevel* _PrevLevel)
 	CreateMonster<Dreamkeeper>({ 800, -2639 });
 	CreateMonster<Dreamkeeper>({ 1100, -2852 });
 	CreateMonster<Dreamkeeper>({ 1340, -2925 });
+
+	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 700, -2890 });
+	_Npc->Init("WaterMelonMask", "수박가면", ActorDir::Left);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"수박가면");
 }
 
 void ClockTowerOfNightMare_2th::LevelEnd(GameEngineLevel* _NextLevel)

@@ -8,6 +8,7 @@
 #include "Portal.h"
 #include "LinkPortal.h"
 #include "ClockTowerOfNightMare_4th.h"
+#include "ContentNpc.h"
 
 ClockTowerOfNightMare_3th::ClockTowerOfNightMare_3th()
 {
@@ -102,6 +103,12 @@ void ClockTowerOfNightMare_3th::LevelStart(GameEngineLevel* _PrevLevel)
 	CreateMonster<BlueEyed_Gargoyle>({ 1050	, -2785 });
 	CreateMonster<BlueEyed_Gargoyle>({ 1120	, -2920 });
 	CreateMonster<BlueEyed_Gargoyle>({ 1300	, -2995 });
+
+	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 500, -2505 });
+	_Npc->Init("DarkMask", "검은가면", ActorDir::Right);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"검은가면");
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_3th.png", "악몽의시계탑 3층");

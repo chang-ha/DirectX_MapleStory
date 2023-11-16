@@ -30,6 +30,7 @@ protected:
 	void MentUpdate(float _Delta);
 	void SkipUpdate(float _Delta);
 	void Update(float _Delta) override;
+	void Release() override;
 };
 
 class TwoButtonNpcMentFrame : public OneButtonNpcMentFrame
@@ -38,6 +39,7 @@ class TwoButtonNpcMentFrame : public OneButtonNpcMentFrame
 
 	std::shared_ptr<class ContentButton> OkButton = nullptr;
 	void StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void()> _OkButtonEndFunction = nullptr);
+	void Release() override;
 };
 
 class ContentNpc : public GameEngineActor
@@ -78,6 +80,8 @@ protected:
 	std::string NpcName = "";
 	std::string KoreanName = "";
 	std::shared_ptr<GameEngineSpriteRenderer> NpcRenderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> NpcNameBGRenderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> NpcNameRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> NpcCollision = nullptr;
 	EventParameter NpcEvent;
 	std::shared_ptr<OneButtonNpcMentFrame> Ment = nullptr;

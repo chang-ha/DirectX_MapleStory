@@ -54,7 +54,6 @@ MapleStoryCore::~MapleStoryCore()
 void MapleStoryCore::Start()
 {
 	GameEngineFont::Load("메이플스토리");
-	GameEngineFont::Load("돋움체 보통");
 
 	ContentResources::ContentResourcesInit();
 
@@ -72,15 +71,15 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
+	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_1th>("ClockTowerOfNightMare_1th");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_2th>("ClockTowerOfNightMare_2th");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_3th>("ClockTowerOfNightMare_3th");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_4th>("ClockTowerOfNightMare_4th");
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_5th>("ClockTowerOfNightMare_5th");
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
-	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
 
-	GameEngineCore::ChangeLevel("Boss_WaitingRoom");
+	GameEngineCore::ChangeLevel("Lachlen");
 }
 
 

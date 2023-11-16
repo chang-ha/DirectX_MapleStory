@@ -10,6 +10,7 @@
 #include "Minimap.h"
 #include "ClockTowerOfNightMare_1th.h"
 #include "FireWork.h"
+#include "ContentNpc.h"
 
 Lachlen::Lachlen()
 {
@@ -283,6 +284,60 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
 	_FireWork->Init(FireWorkType::FireWork1);
 	_FireWork->Transform.SetLocalPosition({ 1780, -320 });
+
+	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 2700, -817 });
+	_Npc->Init("BeautyMask", "미녀가면", ActorDir::Left, 0.18f);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"미녀가면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 2550, -817 });
+	_Npc->Init("GentleCatMask", "신사고냥이가면", ActorDir::Right, 0.18f);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"신사고냥이가면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 2360, -817 });
+	_Npc->Init("RabbitMask", "토끼가면", ActorDir::Left);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"토끼가면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 2260, -817 });
+	_Npc->Init("CatMask", "고양이가면", ActorDir::Left, 0.21f);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"고양이가면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 1600, -817 });
+	_Npc->Init("PiedPiperMask", "피리리가면", ActorDir::Left, 0.18f);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"피리리가면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 1500, -817 });
+	_Npc->Init("GasMask", "방독면", ActorDir::Right);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"방독면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 1270, -790 });
+	_Npc->Init("ShrimpMask_Ani", "새우가면", ActorDir::Right, 0.15f);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"새우가면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 1100, -790 });
+	_Npc->Init("OctopusMask", "문어가면", ActorDir::Left, 0.15f);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"문어가면");
+
+	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 980, -500 });
+	_Npc->Init("DandyMask", "멋쟁이가면", ActorDir::Right, 0.18f);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"멋쟁이가면");
 
 	Minimap::CreateMinimap("Minimap_Lachlen.png", "레헬른 중심가");
 }
