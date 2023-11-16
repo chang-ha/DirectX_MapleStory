@@ -1,5 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "ContentButton.h"
+#include "ContentLevel.h"
 
 ContentButton::ContentButton()
 {
@@ -35,6 +36,7 @@ void ContentButton::Start()
 void ContentButton::Update(float _Delta)
 {
 	StateUpdate(_Delta);
+	CalcuUItoMain();
 }
 
 void ContentButton::Release()
@@ -99,6 +101,19 @@ void ContentButton::ReleaseButton(std::string_view _ButtonTextureName)
 	{
 		GameEngineSprite::Release(std::string(_ButtonTextureName) + "_Disabled.png");
 	}
+}
+
+void ContentButton::CalcuUItoMain()
+{
+	float4 Pos = /*ContentLevel::CurContentLevel->GetCamera(static_cast<int>(ECAMERAORDER::UI))->*/Transform.GetWorldPosition();
+	const TransformData& MainTrans = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetConstTransformDataRef();
+	const TransformData& UITrans = ContentLevel::CurContentLevel->GetCamera(static_cast<int>(ECAMERAORDER::UI))->Transform.GetConstTransformDataRef();
+
+	Pos *= UITrans.ViewMatrix;
+	Pos *= UITrans.ProjectionMatrix;
+	Pos *= MainTrans.ProjectionMatrix.InverseReturn();
+	Pos *= MainTrans.ViewMatrix.InverseReturn();
+	ButtonCollision->Transform.SetWorldPosition(Pos);
 }
 
 void ContentButton::ChangeState(ButtonState _State)

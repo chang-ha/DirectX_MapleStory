@@ -1,5 +1,33 @@
 #pragma once
 
+enum class MentType
+{
+	OneButton,
+	TwoButton
+};
+
+class OneButtonNpcMentFrame : public GameEngineActor
+{
+	friend class ContentNpc;
+
+protected:
+	ContentNpc* Parent = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> MentBG = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> MentNpc = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> NpcName = nullptr;
+	std::shared_ptr<class ContentButton> CancelButton = nullptr;
+
+	void StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName);
+};
+
+class TwoButtonNpcMentFrame : public OneButtonNpcMentFrame
+{
+	friend class ContentNpc;
+
+	std::shared_ptr<class ContentButton> OkButton = nullptr;
+	void StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void()> _OkButtonEndFunction = nullptr);
+};
+
 class ContentNpc : public GameEngineActor
 {
 public:
@@ -13,12 +41,22 @@ public:
 	ContentNpc& operator=(const ContentNpc& _Other) = delete;
 	ContentNpc& operator=(ContentNpc&& _Other) noexcept = delete;
 
+	std::string GetNpcName()
+	{
+		return NpcName;
+	}
+
 	void Init(std::string_view _NpcName, ActorDir _Dir);
 
+	void CreateOneButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName);
+	void CreateTwoButtonMent(std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void ()> _OkButtonEndFunction = nullptr);
+
 protected:
+	std::string NpcName = "";
 	std::shared_ptr<GameEngineSpriteRenderer> NpcRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> NpcCollision = nullptr;
 	EventParameter NpcEvent;
+	std::shared_ptr<OneButtonNpcMentFrame> Ment = nullptr;
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;

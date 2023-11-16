@@ -88,6 +88,7 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1200, -838 });
 	_Npc->Init("GasMask.png", ActorDir::Left);
+	_Npc->CreateTwoButtonMent("방독면", "Npc_Ok", "Npc_Cancel");
 }
 
 void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)

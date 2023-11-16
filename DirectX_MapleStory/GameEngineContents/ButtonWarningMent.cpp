@@ -17,7 +17,7 @@ void OneButtonWarningMentStruct::StructStart(ButtonWarningMent* _Parent)
 
 	CancelButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
 	CancelButton->Init("CancelButton");
-	CancelButton->SetParent(Parent, 0);
+	CancelButton->SetParent(Parent, static_cast<int>(UpdateOrder::UI));
 	CancelButton->GetButtonRenderer()->GetColorData().MulColor.A = 0.0f;
 	CancelButton->CollisionOff();
 

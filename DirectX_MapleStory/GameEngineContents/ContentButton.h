@@ -30,6 +30,21 @@ public:
 	void SetButtonClickEndEvent(std::function<void()> _Function);
 	void SetButtonStayEvent(std::function<void()> _Function);
 
+	std::function<void()> GetButtonClickEvent()
+	{
+		return ButtonClickEvent;
+	}
+
+	std::function<void()> GetButtonClickEndEvent()
+	{
+		return ButtonClickEndEvent;
+	}
+
+	std::function<void()> GetButtonStayEvent()
+	{
+		return ButtonStayEvent;
+	}
+
 	float4 GetButtonScale()
 	{
 		return ButtonScale;
@@ -70,6 +85,8 @@ private:
 	std::function<void()> ButtonClickEvent;
 	std::function<void()> ButtonClickEndEvent;
 	std::function<void()> ButtonStayEvent;
+
+	void CalcuUItoMain();
 
 	void NormalStart();
 	void MouseOverStart();
