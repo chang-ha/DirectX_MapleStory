@@ -125,5 +125,5 @@ void FairySpiral::Init()
 	InputTypeValue = InputType::IsPress | InputType::IsDown;
 	SkillCoolDown = 0.0f;
 	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Jump;
-	ChangeState = PlayerState::Attack2;
+	ChangeState = PlayerState::FairySpiral;
 }

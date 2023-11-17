@@ -142,5 +142,5 @@ void SongOfHeaven::Init()
 	InputTypeValue = InputType::IsPress;
 	SkillCoolDown = 0.0f;
 	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk;
-	ChangeState = PlayerState::Shooting;
+	ChangeState = PlayerState::SongOfHeaven;
 }

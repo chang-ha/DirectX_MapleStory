@@ -128,5 +128,5 @@ void HowlingGale::Init()
 	InputTypeValue = InputType::IsDown;
 	SkillCoolDown = 20.0f;
 	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk;
-	ChangeState = PlayerState::Shoot;
+	ChangeState = PlayerState::HowlingGale;
 }

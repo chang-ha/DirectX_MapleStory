@@ -82,14 +82,9 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Idle", "Idle", IDLE_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Alert", "Alert", IDLE_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Walk", "Walk", WALK_ANI_SPEED);
-		MainSpriteRenderer->CreateAnimation("Shoot", "Shoot1", SHOOT1_ANI_SPEED);
-		MainSpriteRenderer->CreateAnimation("Shooting", "Shoot1", 0.1f, 1, 1);
-		MainSpriteRenderer->CreateAnimation("Rope", "Rope", ROPE_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("HowlingGale", "Shoot", SHOOT1_ANI_SPEED);
+		MainSpriteRenderer->CreateAnimation("SongOfHeaven", "Shoot", 0.1f, 1, 1);
 		MainSpriteRenderer->CreateAnimation("Ladder", "Ladder", ROPE_ANI_SPEED);
-		MainSpriteRenderer->CreateAnimation("Attack1", "Attack1", ATT_ANI_SPEED);
-		MainSpriteRenderer->CreateAnimation("Attack2", "Attack2", 0.05f);
-		MainSpriteRenderer->CreateAnimation("Attack3", "Attack3", ATT_ANI_SPEED);
-		MainSpriteRenderer->CreateAnimation("Down_Attack", "Down_Attack", DOWN_ATT_ANI_SPEED);
 		MainSpriteRenderer->CreateAnimation("Down", "Down");
 		MainSpriteRenderer->CreateAnimation("Jump", "Jump");
 		MainSpriteRenderer->CreateAnimation("WindWalk", "WindWalk");
@@ -101,20 +96,19 @@ void Player::Start()
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Idle");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
 	}
-	MainSpriteRenderer->ChangeAnimation("Idle"); 
 	MainSpriteRenderer->AutoSpriteSizeOn();
 	State = PlayerState::Idle;
 	Dir = ActorDir::Right;
 	MainSpriteRenderer->LeftFlip();
-	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
+	IdleStart();
 
 	// Animation Speed Setting
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("FairySpiral");
 	_Animation->Inter[0] = 0.05f;
 	_Animation->Inter[1] = 0.05f;
 
-	_Animation = MainSpriteRenderer->FindAnimation("Shoot");
-	_Animation->Inter[1] = 0.2f;
+	_Animation = MainSpriteRenderer->FindAnimation("HowlingGale");
+	_Animation->Inter[0] = 0.6f;
 
 	_Animation = MainSpriteRenderer->FindAnimation("VortexSphere");
 	_Animation->Inter[2] = 0.2f;
@@ -125,27 +119,27 @@ void Player::Start()
 
 	_Animation = MainSpriteRenderer->FindAnimation("Monsoon");
 	_Animation->Inter[0] = 0.3f;
-	_Animation->Inter[2] = 0.8f;
+	_Animation->Inter[2] = 1.0f;
 
 	if (nullptr == HitCollision)
 	{
 		HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Player);
-		HitCollision->Transform.SetLocalScale({ 32, 70 });
-		HitCollision->Transform.SetLocalPosition({ 0, 35 });
+		// HitCollision->Transform.SetLocalScale({ 32, 70 });
+		// HitCollision->Transform.SetLocalPosition({ 0, 35 });
 	}
 
 
 	if (nullptr == NameBGRenderer)
 	{
 		NameBGRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
-		NameBGRenderer->Transform.SetLocalPosition({ -6, -10, RenderDepth::play });
+		NameBGRenderer->Transform.SetLocalPosition({ -6, -12, RenderDepth::play });
 		NameBGRenderer->SetSprite("PlayerNameTag.png");
 	}
 
 	if (nullptr == NameRenderer)
 	{
 		NameRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
-		NameRenderer->Transform.SetLocalPosition({ 0, -3.5f, RenderDepth::play });
+		NameRenderer->Transform.SetLocalPosition({ 0, -5.5f, RenderDepth::play });
 		NameRenderer->SetText("돋움", "윈드브레이커", 11.0f, {1.0f, 1.0f, 0.6f}, FW1_CENTER);
 	}
 
@@ -462,20 +456,17 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Ladder:
 			LadderEnd();
 			break;
-		case PlayerState::Attack:
-			AttackEnd();
+		case PlayerState::SongOfHeaven:
+			SongOfHeavenEnd();
 			break;
-		case PlayerState::Shooting:
-			ShootingEnd();
-			break;
-		case PlayerState::Attack2:
-			Attack2End();
+		case PlayerState::FairySpiral:
+			FairySpiralEnd();
 			break;
 		case PlayerState::WindWalk:
 			WindWalkEnd();
 			break;
-		case PlayerState::Shoot:
-			ShootEnd();
+		case PlayerState::HowlingGale:
+			HowlingGaleEnd();
 			break;
 		case PlayerState::VortexSphere:
 			VortexSphereEnd();
@@ -513,20 +504,17 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Ladder:
 			LadderStart();
 			break;
-		case PlayerState::Attack:
-			AttackStart();
+		case PlayerState::SongOfHeaven:
+			SongOfHeavenStart();
 			break;
-		case PlayerState::Shooting:
-			ShootingStart();
-			break;
-		case PlayerState::Attack2:
-			Attack2Start();
+		case PlayerState::FairySpiral:
+			FairySpiralStart();
 			break;
 		case PlayerState::WindWalk:
 			WindWalkStart();
 			break;
-		case PlayerState::Shoot:
-			ShootStart();
+		case PlayerState::HowlingGale:
+			HowlingGaleStart();
 			break;
 		case PlayerState::VortexSphere:
 			VortexSphereStart();
@@ -563,16 +551,14 @@ void Player::StateUpdate(float _Delta)
 		return DownUpdate(_Delta);
 	case PlayerState::Ladder:
 		return LadderUpdate(_Delta);
-	case PlayerState::Attack:
-		return AttackUpdate(_Delta);
-	case PlayerState::Shooting:
-		return ShootingUpdate(_Delta);
-	case PlayerState::Attack2:
-		return Attack2Update(_Delta);
+	case PlayerState::SongOfHeaven:
+		return SongOfHeavenUpdate(_Delta);
+	case PlayerState::FairySpiral:
+		return FairySpiralUpdate(_Delta);
 	case PlayerState::WindWalk:
 		return WindWalkUpdate(_Delta);
-	case PlayerState::Shoot:
-		return ShootUpdate(_Delta);
+	case PlayerState::HowlingGale:
+		return HowlingGaleUpdate(_Delta);
 	case PlayerState::VortexSphere:
 		return VortexSphereUpdate(_Delta);
 	case PlayerState::MercilessWinds:

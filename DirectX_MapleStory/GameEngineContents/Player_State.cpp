@@ -8,8 +8,8 @@
 #define JUMP_DIS 50.0f
 
 #define DOUBLE_JUMP_DIS 230.0f
-#define DOUBLE_JUMP_HEIGHT 100.0f
-#define DOUBLE_JUMP_MIN_DIS 450.0f
+#define DOUBLE_JUMP_HEIGHT 300.0f
+#define DOUBLE_JUMP_MIN_DIS 500.0f
 
 #define LADDER_JUMP_DIS 200.0f
 #define LADDER_JUMP_HEIGHT 300.0f
@@ -19,21 +19,62 @@
 // State함수들 구현
 void Player::IdleStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.3f, 1.0f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.7f, 1.0f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 	MainSpriteRenderer->ChangeAnimation("Idle");
 }
 
 void Player::AlertStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Alert");
+	MainSpriteRenderer->SetPivotType(PivotType::Bottom);
 }
 
 void Player::WalkStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.3f, 1.0f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.7f, 1.0f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 	MainSpriteRenderer->ChangeAnimation("Walk");
 }
 
 void Player::JumpStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.55f, 0.73f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.45f, 0.73f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	MainSpriteRenderer->ChangeAnimation("Jump");
 
 	if (true == IsGround)
@@ -67,6 +108,20 @@ void Player::JumpStart()
 
 void Player::DownStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.7f, 1.0f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.3f, 1.0f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	MainSpriteRenderer->ChangeAnimation("Down");
 	HitCollision->Transform.SetLocalScale({ 32, 40 });
 	HitCollision->Transform.SetLocalPosition({ 0, 20 });
@@ -74,28 +129,64 @@ void Player::DownStart()
 
 void Player::LadderStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.33f, 1.0f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.67f, 1.0f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	float4 CurPos = Transform.GetWorldPosition();
 	Transform.SetLocalPosition(float4(CurPos.X + LadderPivot, CurPos.Y, CurPos.Z));
 	MainSpriteRenderer->ChangeAnimation("Ladder");
 	GravityOff();
+	IsDirCheck = false;
 }
 
-void Player::AttackStart()
+void Player::SongOfHeavenStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.77f, 0.653f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.23f, 0.653f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	IsDirCheck = false;
-	MainSpriteRenderer->ChangeAnimation("Shoot");
+	MainSpriteRenderer->ChangeAnimation("SongOfHeaven");
 	AlertTime = ALERT_TIME;
 }
 
-void Player::ShootingStart()
+void Player::FairySpiralStart()
 {
-	IsDirCheck = false;
-	MainSpriteRenderer->ChangeAnimation("Shooting");
-	AlertTime = ALERT_TIME;
-}
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.47f, 0.71f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.53f, 0.71f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
 
-void Player::Attack2Start()
-{
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("FairySpiral");
 	AlertTime = ALERT_TIME;
@@ -109,6 +200,19 @@ void Player::WindWalkStart()
 	IsGroundVectorReset = false;
 	if (true == IsGround)
 	{
+		switch (Dir)
+		{
+		case ActorDir::Right:
+			MainSpriteRenderer->SetPivotValue({ 0.37f, 1.0f });
+			break;
+		case ActorDir::Left:
+			MainSpriteRenderer->SetPivotValue({ 0.63f, 1.0f });
+			break;
+		case ActorDir::Null:
+		default:
+			MsgBoxAssert("존재하지 않는 방향입니다.");
+			break;
+		}
 		MainSpriteRenderer->ChangeAnimation("WindWalk");
 	}
 	else
@@ -134,15 +238,43 @@ void Player::WindWalkStart()
 	AirResisOn(Dir, WINDWALK_XVECTOR * 1.8f);
 }
 
-void Player::ShootStart()
+void Player::HowlingGaleStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.77f, 0.65f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.23f, 0.65f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	IsDirCheck = false;
-	MainSpriteRenderer->ChangeAnimation("Shoot");
+	MainSpriteRenderer->ChangeAnimation("HowlingGale");
 	AlertTime = ALERT_TIME;
 }
 
 void Player::VortexSphereStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.77f, 0.65f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.23f, 0.65f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("VortexSphere");
 	AlertTime = ALERT_TIME;
@@ -150,6 +282,20 @@ void Player::VortexSphereStart()
 
 void Player::MercilessWindsStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.75f, 0.78f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.25f, 0.78f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("MercilessWinds");
 	AlertTime = ALERT_TIME;
@@ -157,6 +303,21 @@ void Player::MercilessWindsStart()
 
 void Player::MonsoonStart()
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.72f, 0.78f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.25f, 0.78f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
+	IsDirCheck = false;
 	MainSpriteRenderer->ChangeAnimation("Monsoon");
 	AlertTime = ALERT_TIME;
 }
@@ -188,6 +349,7 @@ void Player::DownEnd()
 
 void Player::LadderEnd()
 {
+	IsDirCheck = true;
 	GravityReset();
 	MoveVectorForceReset();
 	GravityOn();
@@ -199,17 +361,12 @@ void Player::LadderEnd()
 	}
 }
 
-void Player::AttackEnd()
+void Player::SongOfHeavenEnd()
 {
 	IsDirCheck = true;
 }
 
-void Player::ShootingEnd()
-{
-	IsDirCheck = true;
-}
-
-void Player::Attack2End()
+void Player::FairySpiralEnd()
 {
 	IsDirCheck = true;
 }
@@ -224,10 +381,9 @@ void Player::WindWalkEnd()
 	AirResisOff();
 }
 
-void Player::ShootEnd()
+void Player::HowlingGaleEnd()
 {
 	IsDirCheck = true;
-	// MainSpriteRenderer->ChangeAnimation("Shoot");
 }
 
 void Player::VortexSphereEnd()
@@ -242,7 +398,7 @@ void Player::MercilessWindsEnd()
 
 void Player::MonsoonEnd()
 {
-
+	IsDirCheck = true;
 }
 
 void Player::IdleUpdate(float _Delta)
@@ -300,9 +456,11 @@ void Player::WalkUpdate(float _Delta)
 	{
 	case ActorDir::Right:
 		MoveDir = 1.0f;
+		MainSpriteRenderer->SetPivotValue({ 0.33f, 1.0f });
 		break;
 	case ActorDir::Left:
 		MoveDir = -1.0f;
+		MainSpriteRenderer->SetPivotValue({ 0.67f, 1.0f });
 		break;
 	case ActorDir::Null:
 	default:
@@ -336,6 +494,20 @@ void Player::WalkUpdate(float _Delta)
 
 void Player::JumpUpdate(float _Delta)
 {
+	switch (Dir)
+	{
+	case ActorDir::Right:
+		MainSpriteRenderer->SetPivotValue({ 0.55f, 0.73f });
+		break;
+	case ActorDir::Left:
+		MainSpriteRenderer->SetPivotValue({ 0.45f, 0.73f });
+		break;
+	case ActorDir::Null:
+	default:
+		MsgBoxAssert("존재하지 않는 방향입니다.");
+		break;
+	}
+
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
 		ChangeToIdle();
@@ -394,12 +566,13 @@ void Player::JumpUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown('D', this))
 	{
+		MoveVectorForceYReset();
 		GravityReset();
 		SkillManagerActor->UseSkill("DoubleJump");
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP, this))
 		{
-			PlusMoveVectorForce(float4(0, JUMP_HEIGHT /** 1.3f*/));
+			PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 1.7f));
 		}
 		else if (GameEngineInput::IsPress(VK_LEFT, this))
 		{
@@ -424,6 +597,7 @@ void Player::JumpUpdate(float _Delta)
 			default:
 				break;
 			}
+			MoveVectorForce.Y = DOUBLE_JUMP_HEIGHT;
 		}
 	}
 }
@@ -464,6 +638,7 @@ void Player::LadderUpdate(float _Delta)
 		MainSpriteRenderer->AnimationPauseOn();
 		if (GameEngineInput::IsDown('D', this))
 		{
+			IsDirCheck = true;
 			DirCheck();
 			ChangeState(PlayerState::Jump);
 			return;
@@ -484,16 +659,7 @@ void Player::LadderUpdate(float _Delta)
 	}
 }
 
-void Player::AttackUpdate(float _Delta)
-{
-	if (true == MainSpriteRenderer->IsCurAnimationEnd())
-	{
-		GetLevel()->CreateActor<Arrow>(UpdateOrder::Skill);
-		ChangeToIdle();
-	}
-}
-
-void Player::ShootingUpdate(float _Delta)
+void Player::SongOfHeavenUpdate(float _Delta)
 {
 	if (true == GameEngineInput::IsFree('A', this))
 	{
@@ -502,7 +668,7 @@ void Player::ShootingUpdate(float _Delta)
 	}
 }
 
-void Player::Attack2Update(float _Delta)
+void Player::FairySpiralUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
@@ -525,7 +691,7 @@ void Player::WindWalkUpdate(float _Delta)
 	}
 }
 
-void Player::ShootUpdate(float _Delta)
+void Player::HowlingGaleUpdate(float _Delta)
 {
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{

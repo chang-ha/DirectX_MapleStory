@@ -3,7 +3,7 @@
 // Ani Speed
 #define IDLE_ANI_SPEED 0.5f
 #define WALK_ANI_SPEED 0.1f
-#define SHOOT1_ANI_SPEED 0.7f
+#define SHOOT1_ANI_SPEED 0.3f
 #define ROPE_ANI_SPEED 0.2f
 #define ATT_ANI_SPEED 0.3f
 #define DOWN_ATT_ANI_SPEED 0.5f
@@ -23,11 +23,10 @@ enum PlayerState
 	Jump = 0b0000000000001000,
 	Down = 0b0000000000010000,
 	Ladder = 0b0000000000100000,
-	Attack = 0b0000000001000000,
-	Shooting = 0b0000000010000000, // SongOfHeaven
-	Attack2 = 0b0000000100000000, // FairySpiral
-	WindWalk = 0b0000001000000000, // WindWalk
-	Shoot = 0b0000010000000000, //HowlingGale
+	SongOfHeaven = 0b0000000010000000,
+	FairySpiral = 0b0000000100000000,
+	WindWalk = 0b0000001000000000,
+	HowlingGale = 0b0000010000000000,
 	VortexSphere = 0b0000100000000000,
 	MercilessWinds = 0b0001000000000000,
 	Monsoon = 0b0010000000000000,
@@ -160,11 +159,10 @@ private:
 	void JumpStart();
 	void DownStart();
 	void LadderStart();
-	void AttackStart();
-	void ShootingStart();
-	void Attack2Start();
+	void SongOfHeavenStart();
+	void FairySpiralStart();
 	void WindWalkStart();
-	void ShootStart();
+	void HowlingGaleStart();
 	void VortexSphereStart();
 	void MercilessWindsStart();
 	void MonsoonStart();
@@ -176,11 +174,10 @@ private:
 	void JumpEnd();
 	void DownEnd();
 	void LadderEnd();
-	void AttackEnd();
-	void ShootingEnd();
-	void Attack2End();
+	void SongOfHeavenEnd();
+	void FairySpiralEnd();
 	void WindWalkEnd();
-	void ShootEnd();
+	void HowlingGaleEnd();
 	void VortexSphereEnd();
 	void MercilessWindsEnd();
 	void MonsoonEnd();
@@ -192,11 +189,10 @@ private:
 	void JumpUpdate(float _Delta);
 	void DownUpdate(float _Delta);
 	void LadderUpdate(float _Delta);
-	void AttackUpdate(float _Delta);
-	void ShootingUpdate(float _Delta);
-	void Attack2Update(float _Delta);
+	void SongOfHeavenUpdate(float _Delta);
+	void FairySpiralUpdate(float _Delta);
 	void WindWalkUpdate(float _Delta);
-	void ShootUpdate(float _Delta);
+	void HowlingGaleUpdate(float _Delta);
 	void VortexSphereUpdate(float _Delta);
 	void MercilessWindsUpdate(float _Delta);
 	void MonsoonUpdate(float _Delta);
