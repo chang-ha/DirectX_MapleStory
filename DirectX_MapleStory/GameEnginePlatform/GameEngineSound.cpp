@@ -125,7 +125,7 @@ void GameEngineSound::SoundLoad(std::string_view _Name, std::string_view _Path)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
-	GameEngineSound* NewSound = new GameEngineSound();
+	std::shared_ptr<GameEngineSound> NewSound = std::make_shared<GameEngineSound>();
 
 	NewSound->Load(_Path);
 
