@@ -19,6 +19,15 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	if (nullptr == GameEngineSound::FindSound("NxLogo.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\NxLogo.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	ContentLevel::LevelStart(_PrevLevel);
 	FadeInObject->SetWhiteFade();
 	FadeInObject->SetFadeSpeed(0.5f);
@@ -46,8 +55,6 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	);
 
 	float4 WinScale = GlobalValue::WinScale;
-	//std::shared_ptr<ContentBackGround> Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
-	//Back->Init("Title.png", WinScale);
 	WinScale.Y *= -1.0f;
 	_Actor->Transform.SetLocalPosition(WinScale.Half() + float4(0, 70.0f));
 	GetMainCamera()->Transform.SetLocalPosition(WinScale.Half());
@@ -57,6 +64,9 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
 		CurMap->CreateBaseColorMap({ 1.0f, 1.0f, 1.0f, 1.0f });
 	}
+
+	BGMPlayer.Stop();
+	BGMPlayer = GameEngineSound::SoundPlay("NxLogo.mp3", 0);
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)

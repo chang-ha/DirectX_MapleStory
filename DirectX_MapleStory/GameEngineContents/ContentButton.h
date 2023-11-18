@@ -73,7 +73,7 @@ public:
 protected:
 	std::shared_ptr<GameEngineUIRenderer> ButtonRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> ButtonCollision = nullptr;
-
+	
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;

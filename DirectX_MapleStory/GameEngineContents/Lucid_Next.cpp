@@ -34,6 +34,15 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder("Render_Idle", Dir.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("ClockTowerofNightMare.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\ClockTowerofNightMare.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -136,6 +145,19 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	_FireWork->Transform.SetLocalPosition({ 600, -500 });
 
 	Minimap::CreateMinimap("Minimap_Lucid_Next.png", "악몽의 시계탑");
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("ClockTowerofNightMare.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
+	}
 }
 
 void Lucid_Next::LevelEnd(GameEngineLevel* _NextLevel)

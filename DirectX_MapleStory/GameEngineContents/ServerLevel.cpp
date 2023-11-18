@@ -52,6 +52,15 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("ServerSelect.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\ServerSelect.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	std::shared_ptr<RenderActor> _Actor = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
 	_Actor->Renderer->CreateAnimation("ServerLogo", "ServerLogo");
@@ -137,6 +146,19 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor2->Renderer->CreateAnimation("RecommendServer", "RecommendServer");
 	_Actor2->Renderer->ChangeAnimation("RecommendServer");
 	_Actor2->Transform.SetLocalPosition({ 1236, -50 });
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("ServerSelect.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
+	}
 }
 
 void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)

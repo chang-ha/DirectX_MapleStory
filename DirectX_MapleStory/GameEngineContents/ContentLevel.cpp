@@ -57,6 +57,7 @@ ContentLevel::~ContentLevel()
 }
 
 ContentLevel* ContentLevel::CurContentLevel = nullptr;
+GameEngineSoundPlayer ContentLevel::BGMPlayer;
 
 void ContentLevel::Start()
 {
@@ -70,12 +71,6 @@ void ContentLevel::Start()
 void ContentLevel::Update(float _Delta)
 {
 }
-
-void ContentLevel::ResourcesRelease()
-{
-
-}
-
 
 void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {

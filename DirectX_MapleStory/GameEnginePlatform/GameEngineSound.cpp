@@ -28,6 +28,33 @@ void GameEngineSoundPlayer::Stop()
 	Control->stop();
 }
 
+bool GameEngineSoundPlayer::IsPlaying()
+{
+	bool Result = false;
+	if (FMOD_OK != Control->isPlaying(&Result))
+	{
+		return false;
+	}
+	return Result;
+}
+
+std::string GameEngineSoundPlayer::GetCurSoundName()
+{
+	FMOD::Sound* _Sound;
+	if (FMOD_OK != Control->getCurrentSound(&_Sound))
+	{
+		MsgBoxAssert("FMOD::Sound를 얻어오는데 실패했습니다.");
+	}
+
+	char _Name[512] = {};
+	if (FMOD_OK != _Sound->getName(_Name, 512))
+	{
+		MsgBoxAssert("이름을 얻어오는데 실패했습니다.");
+	}
+	std::string Result = _Name;
+
+	return Result;
+}
 
 //////////////////////////////////////////////// 관리를 위한 코드 
 

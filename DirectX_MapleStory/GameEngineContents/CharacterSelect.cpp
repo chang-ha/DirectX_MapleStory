@@ -188,6 +188,24 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("ServerSelect.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\ServerSelect.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
+	if (nullptr == GameEngineSound::FindSound("CharSelect.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\CharSelect.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	std::shared_ptr<UIRenderActor> _Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor->Init(RenderOrder::MAP, RenderDepth::map);
 	_Actor->Renderer->SetSprite("CharacterSelect_BG.png");
@@ -269,7 +287,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
 	_Actor->Renderer->SetSprite("PageNumber.png");
-	_Actor->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 90, -645});
+	_Actor->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 90, -645 });
 
 	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
@@ -375,6 +393,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		Frame.CharacterRenderer->Renderer->ChangeAnimation("Idle");
 		Frame.CharacterRenderer->Transform.SetLocalPosition({ 175, -311 });
 		Frame.CharacterRenderer->Renderer->LeftFlip();
+		Frame.CharacterRenderer->Renderer->SetPivotValue({0.33f, 0.5f});
 
 
 		Frame.CharacterFootHold = CreateActor<UIRenderActor>(UpdateOrder::UI);
@@ -386,7 +405,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		AllCharacter.push_back(Frame);
 
 		SelectCollision = Frame.CharacterRenderer->CreateComponent<GameEngineCollision>(CollisionOrder::UI);
-		SelectCollision->Transform.SetLocalScale({65, 78});
+		SelectCollision->Transform.SetLocalScale({ 65, 78 });
 	}
 
 	for (int i = 0; i < 6; i++)
@@ -434,6 +453,19 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		Frame.CharacterFootHold->Transform.SetLocalPosition({ 175 + 165 * static_cast<float>(i), -585 });
 
 		AllCharacter.push_back(Frame);
+	}
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("ServerSelect.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
 	}
 }
 
@@ -512,9 +544,13 @@ void CharacterSelect::SelectCharacter()
 {
 	IsCharacterSelect = true;
 	AllCharacter[0].CharacterRenderer->Renderer->ChangeAnimation("Walk");
+	AllCharacter[0].CharacterRenderer->Renderer->SetPivotValue({ 0.35f, 0.5f });
+
 	InfoFrame.FrameOn();
 	CharSelectEffect0->On();
 	CharSelectEffect1->On();
+
+	GameEngineSoundPlayer CharSelectPlayer = GameEngineSound::SoundPlay("CharSelect.mp3");
 }
 
 void CharacterSelect::ResourcesRelease()

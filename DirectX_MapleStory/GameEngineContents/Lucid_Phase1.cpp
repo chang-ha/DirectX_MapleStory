@@ -69,6 +69,15 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder("Phase1_Hit", Dir.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("WierldForestIntheGirlsdream.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\WierldForestIntheGirlsdream.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -182,6 +191,19 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	CreateActor<BossTimer>(UpdateOrder::UI);
 	BossTimer::TimeValue = 1800.0f;
 	CreateActor<DeathCount>(UpdateOrder::UI);
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("WierldForestIntheGirlsdream.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("WierldForestIntheGirlsdream.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("WierldForestIntheGirlsdream.mp3", 10000);
+	}
 }
 
 void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)

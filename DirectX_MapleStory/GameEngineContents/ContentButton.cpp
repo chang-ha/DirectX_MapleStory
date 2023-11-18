@@ -19,6 +19,24 @@ void ContentButton::LevelEnd(GameEngineLevel* _NextLevel)
 
 void ContentButton::Start()
 {
+	if (nullptr == GameEngineSound::FindSound("Button_Click.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\UI\\Button_Click.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
+	if (nullptr == GameEngineSound::FindSound("Button_MouseOver.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\UI\\Button_MouseOver.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	GameEngineInput::AddInputObject(this);
 
 	if (nullptr == ButtonRenderer)
@@ -184,12 +202,15 @@ void ContentButton::NormalStart()
 void ContentButton::MouseOverStart()
 {
 	ButtonRenderer->SetSprite(std::string(ButtonName) + "_MouseOver.png");
+	GameEngineSoundPlayer ButtonEffPlayer = GameEngineSound::SoundPlay("Button_MouseOver.mp3");
 
 }
 
 void ContentButton::ClickStart()
 {
 	ButtonRenderer->SetSprite(std::string(ButtonName) + "_Click.png");
+	GameEngineSoundPlayer ButtonEffPlayer = GameEngineSound::SoundPlay("Button_Click.mp3");
+
 }
 
 void ContentButton::DisabledStart()

@@ -124,8 +124,8 @@ void Player::Start()
 	if (nullptr == HitCollision)
 	{
 		HitCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Player);
-		// HitCollision->Transform.SetLocalScale({ 32, 70 });
-		// HitCollision->Transform.SetLocalPosition({ 0, 35 });
+		HitCollision->Transform.SetLocalScale({ 32, 70 });
+		HitCollision->Transform.SetLocalPosition({ 0, 35 });
 	}
 
 

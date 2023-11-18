@@ -78,6 +78,15 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("Lachlen.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\Lachlen.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -340,6 +349,19 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	_Npc->SetMentText(L"멋쟁이가면");
 
 	Minimap::CreateMinimap("Minimap_Lachlen.png", "레헬른 중심가");
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("Lachlen.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("Lachlen.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("Lachlen.mp3", 10000);
+	}
 }
 
 void Lachlen::LevelEnd(GameEngineLevel* _NextLevel)

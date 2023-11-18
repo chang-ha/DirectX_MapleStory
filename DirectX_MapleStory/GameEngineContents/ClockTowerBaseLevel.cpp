@@ -23,6 +23,15 @@ void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
+	if (nullptr == GameEngineSound::FindSound("ClockTowerofNightMare.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\ClockTowerofNightMare.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == Back)
 	{
 		Back = CreateActor<ContentBackGround>(UpdateOrder::BackGround);
@@ -126,6 +135,19 @@ void ClockTowerBaseLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	LeftWall->WallRenderer->LeftFlip();
 	RightWall = CreateActor<TowerWall>(UpdateOrder::Map);
 	RightWall->Transform.SetLocalPosition({ 1593, 3 });
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("ClockTowerofNightMare.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
+	}
 }
 
 void ClockTowerBaseLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -79,7 +79,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<ClockTowerOfNightMare_5th>("ClockTowerOfNightMare_5th");
 	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
 
-	GameEngineCore::ChangeLevel("Lachlen");
+	GameEngineCore::ChangeLevel("CharacterSelect");
 }
 
 

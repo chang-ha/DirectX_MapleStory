@@ -248,6 +248,16 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("BrokenDream.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\BrokenDream.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -763,6 +773,19 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	CreateActor<BossTimer>(UpdateOrder::UI);
 	CreateActor<DeathCount>(UpdateOrder::UI);
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("BrokenDream.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("BrokenDream.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("BrokenDream.mp3", 10000);
+	}
 }
 
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)

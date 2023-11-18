@@ -20,11 +20,33 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 
 	FadeOutObject->SetChangeLevel("4.Lucid_Phase1");
 
+	if (nullptr == GameEngineSound::FindSound("ClockTowerofNightMare.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\ClockTowerofNightMare.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == _CutsceneActor)
 	{
 		_CutsceneActor = CreateActor<CutsceneActor>(UpdateOrder::UI);
 		_CutsceneActor->Init("Lucid", "4.Lucid_Phase1");
 		_CutsceneActor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
+	}
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("ClockTowerofNightMare.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
 	}
 }
 

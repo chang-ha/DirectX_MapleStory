@@ -175,6 +175,12 @@ ContentNpc::~ContentNpc()
 void ContentNpc::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	Death();
+
+	if (nullptr != Ment)
+	{
+		Ment->Death();
+		Ment = nullptr;
+	}
 }
 
 void ContentNpc::Start()
@@ -235,12 +241,6 @@ void ContentNpc::Release()
 	{
 		NpcCollision->Death();
 		NpcCollision = nullptr;
-	}
-
-	if (nullptr != Ment)
-	{
-		Ment->Death();
-		Ment = nullptr;
 	}
 }
 

@@ -234,7 +234,7 @@ void GameEngineCollisionGroup::AllReleaseCheck()
 
 	for (; StartIter != EndIter; )
 	{
-		if (false == (*StartIter)->IsDeath())
+ 		if (false == (*StartIter)->IsDeath())
 		{
 			++StartIter;
 			continue;

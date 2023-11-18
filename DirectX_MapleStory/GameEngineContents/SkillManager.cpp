@@ -182,6 +182,15 @@ void SkillManager::Start()
 		}
 	}
 
+	if (nullptr == GameEngineSound::FindSound("CoolDownEndAlarm.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\UI\\CoolDownEndAlarm.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	CoolDownAlerts.resize(6);
 	for (size_t i = 0; i < CoolDownAlerts.size(); i++)
 	{
@@ -370,6 +379,7 @@ void SkillManager::SkillAlert(std::string_view _IconName)
 
 		CoolDownAlerts[i]->CoolDownAlertBG->ChangeAnimation("Alert", true, 0);
 		CoolDownAlerts[i]->CoolDownAlertIcon->SetSprite(_IconName);
+		GameEngineSoundPlayer AlertPlayer = GameEngineSound::SoundPlay("CoolDownEndAlarm.mp3");
 		return;
 	}
 }

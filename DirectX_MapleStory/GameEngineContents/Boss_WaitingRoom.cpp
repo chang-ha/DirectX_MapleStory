@@ -26,6 +26,15 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
+	if (nullptr == GameEngineSound::FindSound("ClockTowerofNightMare.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BGM\\ClockTowerofNightMare.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -84,8 +93,6 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	_Portal->Transform.SetLocalPosition({ 1300, -845 });
 	_Portal->SetMoveMap("3.Lucid_Enter");
 
-	Minimap::CreateMinimap("Minimap_Boss_WaitingRoom.png", "악몽의 시계탑 꼭대기");
-
 	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1200, -838 });
 	_Npc->Init("GasMask", "방독면", ActorDir::Left);
@@ -98,6 +105,20 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 		});
 	_Npc->SetMentText(L"루시드를 쓰러트리기 위해 몽환의 숲으로 이동하시겠습니까?");
 
+	Minimap::CreateMinimap("Minimap_Boss_WaitingRoom.png", "악몽의 시계탑 꼭대기");
+
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
+		return;
+	}
+
+	std::string BGMName = BGMPlayer.GetCurSoundName();
+	if ("ClockTowerofNightMare.mp3" != BGMName)
+	{
+		BGMPlayer.Stop();
+		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
+	}
 }
 
 void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)
