@@ -85,6 +85,27 @@ void Laser::Init(std::string_view _LaserName, int _ReadyEndIndex, float _AniSpee
 			Death();
 		}
 	);
+
+	if ("Phase2" != _LaserName)
+	{
+		return;
+	}
+
+	if (nullptr == GameEngineSound::FindSound("LaserRain.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BossRoom\\LaserRain.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
+	LaserRenderer->SetFrameEvent("Attack", _ReadyEndIndex, [=](GameEngineSpriteRenderer*)
+		{
+			GameEngineSoundPlayer LaserPlayer = GameEngineSound::SoundPlay("LaserRain.mp3");
+			LaserPlayer.SetVolume(0.7f);
+		}
+	);
 }
 
 void Laser::SetAngle(float _Angle)

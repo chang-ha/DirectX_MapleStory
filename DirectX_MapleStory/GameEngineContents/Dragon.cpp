@@ -61,6 +61,15 @@ void Dragon::Start()
 		}
 	}
 
+	if (nullptr == GameEngineSound::FindSound("DragonBreath.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BossRoom\\DragonBreath.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	DragonRenderer->CreateAnimation("Idle", "Lucid_Phase1_Dragon_Move", 0, 0, 0, false);
 	DragonRenderer->CreateAnimation("Move", "Lucid_Phase1_Dragon_Move", 0.15f);
 	DragonRenderer->CreateAnimation("Breath", "Lucid_Phase1_Dragon_Breath", 0.15f, 0, 35, false);
@@ -261,6 +270,8 @@ void Dragon::BreathStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	GameEngineSoundPlayer BreathSound = GameEngineSound::SoundPlay("DragonBreath.mp3");
 }
 
 void Dragon::IdleUpdate(float _Delta)

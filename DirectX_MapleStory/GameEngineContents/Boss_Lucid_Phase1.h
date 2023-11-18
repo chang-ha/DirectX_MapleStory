@@ -65,6 +65,7 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> FlowerRenderer = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> TeleportRenderer = nullptr;
 	LucidState State = LucidState::Idle;
+	GameEngineSoundPlayer BossPlayer;
 
 	///// State
 	// Start

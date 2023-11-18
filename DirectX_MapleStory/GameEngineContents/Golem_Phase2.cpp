@@ -20,6 +20,21 @@ void Golem_Phase2::Start()
 {
 	Golem::Start();
 	Golem::Init(Golem_Phase::Phase2);
+
+	if (nullptr == GameEngineSound::FindSound("BreakFoothold.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BossRoom\\BreakFoothold.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
+	MainSpriteRenderer->SetFrameEvent("Ready", 6, [=](GameEngineSpriteRenderer*)
+		{
+			GameEngineSoundPlayer BreakPlayer = GameEngineSound::SoundPlay("BreakFoothold.mp3");
+		}
+	);
 }
 
 void Golem_Phase2::Update(float _Delta)

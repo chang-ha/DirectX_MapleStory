@@ -132,9 +132,33 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	// 2 Phase Sound
+	if (nullptr == GameEngineSound::FindSound("RushPrepare.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "RushPrepare.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "RushEnd.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "LaserPattern.mp3");
+	}
+
+	// 1 & 2 Phase Common Sound
+	if (nullptr == GameEngineSound::FindSound("PhantasmalWind.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "PhantasmalWind.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "CallDragon.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Summon.mp3");
+	}
+
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase2_Idle");
 	BossRenderer->CreateAnimation("Death", "Lucid_Phase2_Death");
-	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase2_PhantasmalWind");
+	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase2_PhantasmalWind", 0.12f);
 	BossRenderer->CreateAnimation("Summon_Dragon", "Lucid_Phase2_Summon_Dragon");
 	BossRenderer->CreateAnimation("Laser", "Lucid_Phase2_Laser", 0.09f, -1, -1, false);
 	BossRenderer->CreateAnimation("BodySlam", "Lucid_Phase2_BodySlam");
@@ -158,6 +182,12 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	);
 
 	// Laser Render Event
+	BossRenderer->SetFrameEvent("Laser", 10, [&](GameEngineRenderer* _Renderer)
+		{
+			BossPlayer = GameEngineSound::SoundPlay("LaserPattern.mp3");
+		}
+	);
+
 	BossRenderer->SetFrameEvent("Laser", 16, [&](GameEngineRenderer* _Renderer)
 		{
 			BossCollision->Off();
@@ -188,6 +218,12 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	BossRenderer->SetFrameEvent("BodySlam", 14, [&](GameEngineRenderer* _Renderer)
 		{
 			ContentLevel::CurContentLevel->CreateActor<Lucid_BodySlam>(UpdateOrder::Monster);
+		}
+	);
+
+	BossRenderer->SetFrameEvent("BodySlam", 16, [&](GameEngineRenderer* _Renderer)
+		{
+			BossPlayer = GameEngineSound::SoundPlay("RushEnd.mp3");
 		}
 	);
 
@@ -443,7 +479,6 @@ void Boss_Lucid_Phase2::DeathStart()
 void Boss_Lucid_Phase2::PhantasmalWindStart()
 {
 	BossRenderer->ChangeAnimation("PhantasmalWind");
-
 	switch (Dir)
 	{
 	case ActorDir::Right:
@@ -459,6 +494,8 @@ void Boss_Lucid_Phase2::PhantasmalWindStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	BossPlayer = GameEngineSound::SoundPlay("PhantasmalWind.mp3");
 }
 
 void Boss_Lucid_Phase2::LaserStart()
@@ -507,6 +544,7 @@ void Boss_Lucid_Phase2::BodySlamStart()
 	}
 
 	BossWarningMent->SetWarningMent("루시드가 강력한 공격을 사용하려 합니다!");
+	BossPlayer = GameEngineSound::SoundPlay("RushPrepare.mp3");
 }
 
 void Boss_Lucid_Phase2::Summon_DragonStart()
@@ -530,12 +568,16 @@ void Boss_Lucid_Phase2::Summon_DragonStart()
 	}
 
 	BossWarningMent->SetWarningMent("루시드가 강력한 소환수를 소환했습니다!");
+
+	BossPlayer = GameEngineSound::SoundPlay("CallDragon.mp3");
 }
 
 void Boss_Lucid_Phase2::Summon_ButterFlyStart()
 {
 	BossRenderer->ChangeAnimation("Summon");
 	BossRenderer->SetPivotValue({ 0.5f, 0.635f });
+	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
+	BossPlayer.SetVolume(0.7f);
 }
 
 ///// Update

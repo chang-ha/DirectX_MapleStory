@@ -105,6 +105,15 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	if (nullptr == GameEngineSound::FindSound("PhantasmalWind.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\PhantasmalWind.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase1_Idle");
 	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase1_PhantasmalWind", 0.12f);
 	BossRenderer->CreateAnimation("Summon_Dragon", "Lucid_Phase1_Summon_Dragon", 0.09f, -1, -1, false);
@@ -418,6 +427,8 @@ void Boss_Lucid_Phase1::PhantasmalWindStart()
 		BossWarningMent->SetWarningMent("저 바람을 맞으면 꿈이 더 강해질 겁니다!");
 		OnceWarning = true;
 	}
+
+	BossPlayer = GameEngineSound::SoundPlay("PhantasmalWind.mp3");
 }
 
 void Boss_Lucid_Phase1::Summon_DragonStart()

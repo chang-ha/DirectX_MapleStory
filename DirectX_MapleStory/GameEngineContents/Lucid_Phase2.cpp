@@ -257,7 +257,6 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.GetStringPath());
 	}
 
-
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);

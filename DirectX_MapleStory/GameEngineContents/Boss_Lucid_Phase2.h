@@ -73,6 +73,7 @@ private:
 	ActorDir Dir = ActorDir::Right;
 	LucidState State = LucidState::Idle;
 	std::vector<Phase2_Boss_Skill_Info> SkillInfo;
+	GameEngineSoundPlayer BossPlayer;
 
 	///// State
 	// Start

@@ -19,6 +19,15 @@ void Lucid_BodySlam::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Lucid_BodySlam::Start()
 {
+	if (nullptr == GameEngineSound::FindSound("Rush.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\Rush.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	MoveLocation.resize(14);
 	MoveLocation[0] = { 15.0f, float4(445, -865) };
 	MoveLocation[1] = { 20.0f, float4(581, -741) };
@@ -146,6 +155,7 @@ void Lucid_BodySlam::AttackStart()
 {
 	BodySlamRenderer->ChangeAnimation("Attack");
 	BodySlamRenderer->SetPivotValue({ 0.515f, 0.535f });
+	GameEngineSoundPlayer RushPlayer = GameEngineSound::SoundPlay("Rush.mp3");
 }
 
 void Lucid_BodySlam::DeathStart()

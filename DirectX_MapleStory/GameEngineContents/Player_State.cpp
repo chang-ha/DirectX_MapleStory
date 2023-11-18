@@ -566,21 +566,22 @@ void Player::JumpUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown('D', this))
 	{
-		MoveVectorForceYReset();
 		GravityReset();
 		SkillManagerActor->UseSkill("DoubleJump");
 		DoubleJump = true;
 		if (GameEngineInput::IsPress(VK_UP, this))
 		{
-			PlusMoveVectorForce(float4(0, JUMP_HEIGHT * 1.7f));
+			PlusMoveVectorForce(float4(0, JUMP_HEIGHT /** 1.3f*/));
 		}
 		else if (GameEngineInput::IsPress(VK_LEFT, this))
 		{
 			PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
+			MoveVectorForceYReset();
 		}
 		else if (GameEngineInput::IsPress(VK_RIGHT, this))
 		{
 			PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS , DOUBLE_JUMP_HEIGHT));
+			MoveVectorForceYReset();
 		}
 
 		if (false == GameEngineInput::IsPress(VK_UP, this) && abs(DOUBLE_JUMP_MIN_DIS) > abs(MoveVectorForce.X))

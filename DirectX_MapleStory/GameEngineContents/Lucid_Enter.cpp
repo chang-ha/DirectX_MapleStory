@@ -29,6 +29,15 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("Lucid_Enter.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BossRoom\\Lucid_Enter.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == _CutsceneActor)
 	{
 		_CutsceneActor = CreateActor<CutsceneActor>(UpdateOrder::UI);
@@ -36,6 +45,7 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 		_CutsceneActor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	}
 
+	GameEngineSoundPlayer EnterPlayer = GameEngineSound::SoundPlay("Lucid_Enter.mp3");
 	if (false == BGMPlayer.IsPlaying())
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);

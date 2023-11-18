@@ -43,6 +43,15 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("Lucid_Next.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\BossRoom\\Lucid_Next.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	if (nullptr == CurMap)
 	{
 		CurMap = CreateActor<ContentMap>(UpdateOrder::Map);
@@ -145,6 +154,8 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	_FireWork->Transform.SetLocalPosition({ 600, -500 });
 
 	Minimap::CreateMinimap("Minimap_Lucid_Next.png", "악몽의 시계탑");
+
+	GameEngineSoundPlayer NextPlayer = GameEngineSound::SoundPlay("Lucid_Next.mp3");
 
 	if (false == BGMPlayer.IsPlaying())
 	{
