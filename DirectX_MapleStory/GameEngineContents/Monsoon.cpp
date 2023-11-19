@@ -186,7 +186,7 @@ void Monsoon::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
 			return;
 		}
-		HitRenderManager::MainHitRenderManager->HitPrint("Monsoon_Hit", 12, _Object);
+		HitRenderManager::MainHitRenderManager->HitPrint("Monsoon_Hit", 8, _Object, 40);
 		CollisionActor.insert(_Object);
 	}
 }

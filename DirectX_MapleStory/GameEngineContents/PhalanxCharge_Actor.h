@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseSkillActor.h"
 
-#define HIT_TIME 0.2f
+#define HIT_TIME 0.6f
 #define SOUNDLOOP_DELAY 0.8f
 
 class PhalanxCharge_Actor : public BaseSkillActor

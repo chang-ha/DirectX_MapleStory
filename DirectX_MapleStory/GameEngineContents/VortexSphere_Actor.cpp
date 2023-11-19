@@ -56,7 +56,7 @@ void VortexSphere_Actor::Update(float _Delta)
 		Speed = SPEED;
 	}
 
-	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "VortexSphere_Hit", 0.2f, 6);
+	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "VortexSphere_Hit", 0.4f, 6, 12);
 	//SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 	//	{
 	//		for (size_t i = 0; i < _CollisionGroup.size(); i++)

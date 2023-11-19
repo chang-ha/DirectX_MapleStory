@@ -8,7 +8,7 @@
 #include "BaseWindActor.h"
 
 #define HIT_ANI_TIME 0.04f
-#define HIT_DELAY 0.1f
+#define HIT_DELAY 0.12f
 #define RANDOMRANGE 30
 
 HitRenderManager* HitRenderManager::MainHitRenderManager;
@@ -64,6 +64,7 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 
 	GameEngineRandom RandomActor;
 	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
+	_Data->HitSpriteName = _HitSpriteName;
 	_Data->Object = _Object;
 	_Data->HitAnimations.resize(_HitCount);
 	_Data->RandomPivot.resize(_HitCount);
@@ -97,7 +98,6 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 		_HitAnimation->SetPivotType(_PivotType);
 
 		_Data->HitAnimations[i] = _HitAnimation;
-
 	}
 
 	ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
@@ -149,6 +149,12 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 			_CurData->HitAnimations[_CurData->CurIndex]->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
 			_CurData->CurIndex += 1;
 			_CurData->DelayTime = HIT_DELAY;
+
+			if (nullptr != GameEngineSound::FindSound(_CurData->HitSpriteName + ".mp3"))
+			{
+				GameEngineSoundPlayer HitSound = GameEngineSound::SoundPlay(_CurData->HitSpriteName + ".mp3");
+				HitSound.SetVolume(GlobalValue::HitVolume);
+			}
 		}
 
 		++StartIter;

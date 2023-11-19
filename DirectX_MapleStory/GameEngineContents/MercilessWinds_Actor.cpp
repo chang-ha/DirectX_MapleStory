@@ -87,6 +87,8 @@ void MercilessWinds_Actor::HitStart()
 	MainSpriteRenderer->SetPivotType(PivotType::Center);
 	HitCollision->Off();
 	DetectCollision->Off();
+
+	GameEngineSoundPlayer MercilessPlayer = GameEngineSound::SoundPlay("MercilessWinds_Hit.mp3");
 }
 
 void MercilessWinds_Actor::DeathStart()

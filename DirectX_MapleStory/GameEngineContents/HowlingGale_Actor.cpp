@@ -105,7 +105,7 @@ void HowlingGale_Actor::Update(float _Delta)
 		Speed = SPEED;
 	}
 
-	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "HowlingGale_Hit", 0.1f, 3);
+	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "HowlingGale_Hit", 0.4f, 3, 6);
 }
 
 void HowlingGale_Actor::Release()

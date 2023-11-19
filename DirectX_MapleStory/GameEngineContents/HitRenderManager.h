@@ -4,6 +4,7 @@ struct HitRenderData
 {
 	friend class HitRenderManager;
 private:
+	std::string HitSpriteName = "";
 	bool AniEnd = false;
 	int CurIndex = 0;
 	float DelayTime = 0.0f;
