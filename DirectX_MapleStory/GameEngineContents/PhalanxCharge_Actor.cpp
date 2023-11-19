@@ -78,15 +78,24 @@ void PhalanxCharge_Actor::Start()
 	Scale = {280, 100};
 	SkillCollision->Transform.SetLocalScale(Scale);
 	SkillCollision->Transform.SetLocalPosition({0, 50});
+
 }
 
 void PhalanxCharge_Actor::Update(float _Delta)
 {
 	LiveTime -= _Delta;
+	SoundLoopTime -= _Delta;
 
 	if (0.0f >= LiveTime || 70 <= HitCount)
 	{
 		MainSpriteRenderer->ChangeAnimation("Death");
+	}
+
+	if (0.0f >= SoundLoopTime)
+	{
+		PhalanPlayer = GameEngineSound::SoundPlay("PhalanxCharge_Loop.mp3");
+		PhalanPlayer.SetVolume(GlobalValue::SkillVolume);
+		SoundLoopTime = SOUNDLOOP_DELAY;
 	}
 
 	if (true == IsGround && 0.0f > MoveVectorForce.Y)

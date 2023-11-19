@@ -11,6 +11,7 @@ class GlobalValue
 {
 public:
 	static float SkillEffectAlpha;
+	static float SkillVolume;
 
 	// constrcuter destructer
 	GlobalValue();

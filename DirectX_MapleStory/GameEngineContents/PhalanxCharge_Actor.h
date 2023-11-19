@@ -2,6 +2,7 @@
 #include "BaseSkillActor.h"
 
 #define HIT_TIME 0.2f
+#define SOUNDLOOP_DELAY 0.8f
 
 class PhalanxCharge_Actor : public BaseSkillActor
 {
@@ -29,7 +30,9 @@ protected:
 
 private:
 	int HitCount = 0;
+	float SoundLoopTime = SOUNDLOOP_DELAY;
 	float4 MoveDir = float4::ZERO;
+	GameEngineSoundPlayer PhalanPlayer;
 
 	void SwitchDir();
 	void CollisionTimeUpdate(float _Delta);

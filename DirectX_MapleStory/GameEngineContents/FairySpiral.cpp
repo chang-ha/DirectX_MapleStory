@@ -46,6 +46,9 @@ void FairySpiral::UseSkill()
 	}
 
 	SkillRenderer1->ChangeAnimation("Attack", true, 0);
+
+	SkillPlayer = GameEngineSound::SoundPlay("FairySprial_Use.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void FairySpiral::EndSkill()
@@ -58,15 +61,28 @@ void FairySpiral::EndSkill()
 void FairySpiral::Start()
 {
 	ContentSkill::Start();
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExistsChild("ContentResources");
-	Dir.MoveChild("ContentResources\\Textures\\Skill\\FairySprial");
-	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	for (size_t i = 0; i < Directorys.size(); i++)
+	if (nullptr == GameEngineSprite::Find("FairySprial_Attack"))
 	{
-		GameEngineDirectory& Childs = Directorys[i];
-		GameEngineSprite::CreateFolder("FairySprial_" + Childs.GetFileName(), Childs.GetStringPath());
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\FairySprial");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("FairySprial_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound("FairySprial_Use.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "FairySprial_Use.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "FairySprial_Hit.mp3");
 	}
 
 	SkillRenderer1->CreateAnimation("Attack", "FairySprial_Attack", 0.06f);

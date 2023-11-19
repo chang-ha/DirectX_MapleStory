@@ -44,6 +44,12 @@ void Monsoon::UseSkill()
 	SceneRenderer->ChangeAnimation("Screen", true, 0);
 	SkillRenderer1->On();
 	SceneRenderer->On();
+
+	SkillPlayer = GameEngineSound::SoundPlay("Monsoon_Ready.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
+
+	SkillPlayer = GameEngineSound::SoundPlay("Monsoon_Use.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void Monsoon::EndSkill()
@@ -83,6 +89,17 @@ void Monsoon::Start()
 			GameEngineDirectory& Childs = Directorys[i];
 			GameEngineSprite::CreateFolder("Monsoon_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound("Monsoon_Ready.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Monsoon_Ready.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Monsoon_Use.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Monsoon_Hit.mp3");
 	}
 
 	SkillRenderer1->CreateAnimation("Effect", "Monsoon_Effect", 0.07f);

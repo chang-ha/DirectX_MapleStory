@@ -27,6 +27,7 @@ public:
 	void StateUpdate(float _Delta);
 
 protected:
+	std::string WindName = "";
 	float LiveTime = 5.0f;
 	float DirAngle = 0.0f;
 	float Speed = 600.0f;
@@ -36,6 +37,7 @@ protected:
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer;
 	std::shared_ptr<GameEngineCollision> DetectCollision;
 	std::shared_ptr<GameEngineCollision> HitCollision;
+	GameEngineSoundPlayer WindPlayer;
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start() override;

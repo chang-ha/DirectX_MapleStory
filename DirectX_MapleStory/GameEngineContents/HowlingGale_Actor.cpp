@@ -31,6 +31,7 @@ void HowlingGale_Actor::LevelEnd(GameEngineLevel* _NextLevel)
 		Death();
 		MainHowlingGale = nullptr;
 	}
+	HowlingGalePlayer.Stop();
 }
 
 void HowlingGale_Actor::Start()
@@ -65,6 +66,9 @@ void HowlingGale_Actor::Start()
 	Scale = { 100, 600 };
 	SkillCollision->Transform.SetLocalScale(Scale);
 	SkillCollision->Transform.SetLocalPosition({0, 300});
+
+	HowlingGalePlayer = GameEngineSound::SoundPlay("HowlingGale_Loop.mp3", 10000);
+	HowlingGalePlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void HowlingGale_Actor::Update(float _Delta)
@@ -78,6 +82,10 @@ void HowlingGale_Actor::Update(float _Delta)
 	if (0.0f >= LiveTime && false == MainSpriteRenderer->IsCurAnimation("Death"))
 	{
 		MainSpriteRenderer->ChangeAnimation("Death");
+
+		HowlingGalePlayer.Stop();
+		HowlingGalePlayer = GameEngineSound::SoundPlay("HowlingGale_Death.mp3");
+		HowlingGalePlayer.SetVolume(GlobalValue::SkillVolume);
 	}
 
 	BaseSkillActor::Update(_Delta);

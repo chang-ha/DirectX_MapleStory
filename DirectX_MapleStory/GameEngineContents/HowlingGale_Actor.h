@@ -34,5 +34,6 @@ protected:
 
 private:
 	HowlingGaleState State = HowlingGaleState::Ready;
+	GameEngineSoundPlayer HowlingGalePlayer;
 };
 

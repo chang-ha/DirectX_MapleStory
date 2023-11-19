@@ -40,6 +40,9 @@ void VortexSphere::UseSkill()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	SkillPlayer = GameEngineSound::SoundPlay("VortexSphere_Use.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void VortexSphere::EndSkill()
@@ -66,6 +69,16 @@ void VortexSphere::Start()
 			GameEngineDirectory& Childs = Directorys[i];
 			GameEngineSprite::CreateFolder("VortexSphere_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound("VortexSphere_Use.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "VortexSphere_Use.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "VortexSphere_Hit.mp3");
 	}
 
 	SkillRenderer1->CreateAnimation("Effect1", "VortexSphere_Effect1", 0.08f);

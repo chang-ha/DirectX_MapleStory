@@ -38,6 +38,9 @@ void HowlingGale::UseSkill()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	SkillPlayer = GameEngineSound::SoundPlay("HowlingGale_Use.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void HowlingGale::EndSkill()
@@ -83,6 +86,17 @@ void HowlingGale::Start()
 		}
 	}
 
+	if (nullptr == GameEngineSound::FindSound("HowlingGale_Use.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "HowlingGale_Use.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "HowlingGale_Loop.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "HowlingGale_Death.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "HowlingGale_Hit.mp3");
+	}
 
 	SkillRenderer1->CreateAnimation("Effect", "HowlingGale_Effect", ANI_SPEED);
 	

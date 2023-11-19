@@ -40,6 +40,9 @@ void PhalanxCharge::UseSkill()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	SkillPlayer = GameEngineSound::SoundPlay("PhalanxCharge_Use.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void PhalanxCharge::EndSkill()
@@ -65,6 +68,17 @@ void PhalanxCharge::Start()
 			GameEngineDirectory& Childs = Directorys[i];
 			GameEngineSprite::CreateFolder("PhalanxCharge_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound("PhalanxCharge_Use.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "PhalanxCharge_Use.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "PhalanxCharge_Loop.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "PhalanxCharge_Hit.mp3");
 	}
 
 	SkillRenderer1->CreateAnimation("Effect1", "PhalanxCharge_Effect1", 0.06f);

@@ -150,6 +150,8 @@ private:
 	std::shared_ptr<class SkillManager> SkillManagerActor;
 	std::shared_ptr<class PlayerUIManager> UIManager;
 
+	GameEngineSoundPlayer CharPlayer;
+
 	void ChangeToIdle();
 	//////////// State 
 	/// Start

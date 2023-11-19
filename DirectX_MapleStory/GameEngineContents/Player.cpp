@@ -77,6 +77,16 @@ void Player::Start()
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("Jump.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Jump.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Double_Jump.mp3");
+	}
+
 	// Create Animation
 	{
 		MainSpriteRenderer->CreateAnimation("Idle", "Idle", IDLE_ANI_SPEED);

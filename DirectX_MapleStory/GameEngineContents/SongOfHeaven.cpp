@@ -9,7 +9,7 @@
 #define PIVOT_PLUSX 20.0f
 #define PIVOT_PLUSY 5.0f
 
-#define PIVOT2_PLUSX 60.0f
+#define PIVOT2_PLUSX 35.0f
 
 SongOfHeaven::SongOfHeaven()
 {
@@ -48,6 +48,9 @@ void SongOfHeaven::UseSkill()
 		break;
 	}
 	SkillRenderer1->ChangeAnimation("Ready");
+
+	SkillPlayer = GameEngineSound::SoundPlay("SongOfHeaven_Ready.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void SongOfHeaven::EndSkill()
@@ -68,21 +71,38 @@ void SongOfHeaven::EndSkill()
 		MsgBoxAssert("존재하지 않는 방향으로 스킬을 사용할 수 없습니다.");
 		break;
 	}
+
+	SkillPlayer = GameEngineSound::SoundPlay("SongOfHeaven_End.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void SongOfHeaven::Start()
 {
 	ContentSkill::Start();
 
-	GameEngineDirectory Dir;
-	Dir.MoveParentToExistsChild("ContentResources");
-	Dir.MoveChild("ContentResources\\Textures\\Skill\\SongOfHeaven");
-	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	for (size_t i = 0; i < Directorys.size(); i++)
+	if (nullptr == GameEngineSprite::Find("SongOfHeaven_Ready"))
 	{
-		GameEngineDirectory& Childs = Directorys[i];
-		GameEngineSprite::CreateFolder("SongOfHeaven_" + Childs.GetFileName(), Childs.GetStringPath());
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\SongOfHeaven");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder("SongOfHeaven_" + Childs.GetFileName(), Childs.GetStringPath());
+		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound("SongOfHeaven_Ready.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "SongOfHeaven_Ready.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "SongOfHeaven_Hit.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "SongOfHeaven_End.mp3");
 	}
 
 	SkillRenderer1->CreateAnimation("Ready", "SongOfHeaven_Ready", READY_ANI_SPEED);
@@ -118,6 +138,9 @@ void SongOfHeaven::Update(float _Delta)
 		{
 			ShootDps = 0.12f;
 			GetLevel()->CreateActor<Arrow>(UpdateOrder::Skill);
+
+			SkillPlayer = GameEngineSound::SoundPlay("SongOfHeaven_Ready.mp3");
+			SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 		}
 	}
 

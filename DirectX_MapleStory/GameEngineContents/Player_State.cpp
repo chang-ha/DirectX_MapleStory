@@ -92,6 +92,8 @@ void Player::JumpStart()
 			PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
 		}
 		GroundJump = true;
+		CharPlayer = GameEngineSound::SoundPlay("Jump.mp3");
+		CharPlayer.SetVolume(GlobalValue::SkillVolume);
 	}
 	else if (PlayerState::Ladder & State)
 	{
@@ -569,6 +571,9 @@ void Player::JumpUpdate(float _Delta)
 		GravityReset();
 		SkillManagerActor->UseSkill("DoubleJump");
 		DoubleJump = true;
+		CharPlayer = GameEngineSound::SoundPlay("Double_Jump.mp3");
+		CharPlayer.SetVolume(GlobalValue::SkillVolume);
+
 		if (GameEngineInput::IsPress(VK_UP, this))
 		{
 			PlusMoveVectorForce(float4(0, JUMP_HEIGHT /** 1.3f*/));
@@ -598,7 +603,7 @@ void Player::JumpUpdate(float _Delta)
 			default:
 				break;
 			}
-			MoveVectorForce.Y = DOUBLE_JUMP_HEIGHT * 0.8f;
+			MoveVectorForce.Y = DOUBLE_JUMP_HEIGHT;
 		}
 	}
 }

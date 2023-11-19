@@ -37,6 +37,9 @@ void MercilessWinds::UseSkill()
 	}
 
 	SkillRenderer1->ChangeAnimation("Effect1", true);
+
+	SkillPlayer = GameEngineSound::SoundPlay("MercilessWinds_Use.mp3");
+	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void MercilessWinds::EndSkill()
@@ -65,6 +68,16 @@ void MercilessWinds::Start()
 			GameEngineDirectory& Childs = Directorys[i];
 			GameEngineSprite::CreateFolder("MercilessWinds_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound("MercilessWinds_Use.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "MercilessWinds_Use.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "MercilessWinds_Hit.mp3");
 	}
 
 	SkillRenderer1->CreateAnimation("Effect1", "MercilessWinds_Effect1", 0.06f);

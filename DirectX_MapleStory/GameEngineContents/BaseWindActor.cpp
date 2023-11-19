@@ -109,26 +109,37 @@ void BaseWindActor::Release()
 
 void BaseWindActor::Init(std::string_view _WindName)
 {
-	if (nullptr == GameEngineSprite::Find(std::string(_WindName) + "_Ready"))
+	WindName = _WindName;
+	if (nullptr == GameEngineSprite::Find(WindName + "_Ready"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Skill\\Wind\\" + std::string(_WindName.data()));
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\Wind\\" + WindName);
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
 		for (size_t i = 0; i < Directorys.size(); i++)
 		{
 			GameEngineDirectory& Childs = Directorys[i];
-			GameEngineSprite::CreateFolder(std::string(_WindName) + "_" + Childs.GetFileName(), Childs.GetStringPath());
+			GameEngineSprite::CreateFolder(WindName + "_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound(WindName + "_Ready.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + WindName + "_Ready.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + WindName + "_Hit.mp3");
 	}
 
 	Transform.SetLocalPosition(Player::MainPlayer->Transform.GetWorldPosition());
 
-	MainSpriteRenderer->CreateAnimation("Ready", std::string(_WindName) + "_Ready", 0.03f);
-	MainSpriteRenderer->CreateAnimation("Attack", std::string(_WindName) + "_Attack", 0.06f);
-	MainSpriteRenderer->CreateAnimation("Hit", std::string(_WindName) + "_Hit", 0.06f);
-	MainSpriteRenderer->CreateAnimation("Death", std::string(_WindName) + "_Death", 0.08f);
+	MainSpriteRenderer->CreateAnimation("Ready", WindName + "_Ready", 0.03f);
+	MainSpriteRenderer->CreateAnimation("Attack", WindName + "_Attack", 0.06f);
+	MainSpriteRenderer->CreateAnimation("Hit", WindName + "_Hit", 0.06f);
+	MainSpriteRenderer->CreateAnimation("Death", WindName + "_Death", 0.08f);
 	ReadyStart();
 
 	MainSpriteRenderer->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer)
@@ -212,6 +223,8 @@ void BaseWindActor::ReadyStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Ready");
 	MainSpriteRenderer->SetPivotValue({ 0.625f, 0.44f });
+	WindPlayer = GameEngineSound::SoundPlay(WindName + "_Ready.mp3");
+	WindPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void BaseWindActor::AttackStart()
@@ -225,6 +238,8 @@ void BaseWindActor::HitStart()
 	MainSpriteRenderer->ChangeAnimation("Hit", true, 0);
 	HitCollision->Off();
 	DetectCollision->Off();
+	WindPlayer = GameEngineSound::SoundPlay(WindName + "_Hit.mp3");
+	WindPlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void BaseWindActor::DeathStart()

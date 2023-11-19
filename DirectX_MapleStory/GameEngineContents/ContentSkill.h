@@ -53,6 +53,7 @@ protected:
 	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer1 = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer2 = nullptr;
 	std::shared_ptr<GameEngineSpriteRenderer> SkillAfterImageRenderer = nullptr;
+	GameEngineSoundPlayer SkillPlayer;
 
 	std::string SkillName = "";
 	int MP = -1;
