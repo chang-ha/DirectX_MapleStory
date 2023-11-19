@@ -142,6 +142,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "RushPrepare.mp3");
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "RushEnd.mp3");
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "LaserPattern.mp3");
+		// GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Phase2_Death.mp3");
 	}
 
 	// 1 & 2 Phase Common Sound
@@ -307,7 +308,7 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('4', this))
 	{
-		ChangeState(LucidState::Idle);
+		ChangeState(LucidState::Death);
 	}
 
 	if (true == GameEngineInput::IsDown('5', this))
@@ -474,6 +475,8 @@ void Boss_Lucid_Phase2::DeathStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	// BossPlayer = GameEngineSound::SoundPlay("Phase2_Death.mp3");
 }
 
 void Boss_Lucid_Phase2::PhantasmalWindStart()
@@ -577,7 +580,7 @@ void Boss_Lucid_Phase2::Summon_ButterFlyStart()
 	BossRenderer->ChangeAnimation("Summon");
 	BossRenderer->SetPivotValue({ 0.5f, 0.635f });
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
-	BossPlayer.SetVolume(0.7f);
+	BossPlayer.SetVolume(0.5f);
 }
 
 ///// Update

@@ -105,13 +105,27 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	// 1 Phase Sound
+	if (nullptr == GameEngineSound::FindSound("RushPrepare.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Phase1_Death.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Teleport.mp3");
+	}
+	
+	// 1 & 2 Phase Common Sound
 	if (nullptr == GameEngineSound::FindSound("PhantasmalWind.mp3"))
 	{
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
 		FilePath.MoveParentToExistsChild("ContentResources");
-		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\PhantasmalWind.mp3");
-		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "PhantasmalWind.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "CallDragon.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Summon.mp3");
 	}
 
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase1_Idle");
@@ -416,6 +430,7 @@ void Boss_Lucid_Phase1::DeathStart()
 	FlowerRenderer->Off();
 	BossCollision->Off();
 	Player::MainPlayer->InvincibilityOn();
+	BossPlayer = GameEngineSound::SoundPlay("Phase1_Death.mp3");
 }
 
 void Boss_Lucid_Phase1::PhantasmalWindStart()
@@ -436,30 +451,36 @@ void Boss_Lucid_Phase1::Summon_DragonStart()
 	BossRenderer->SetPivotValue({ 0.274f, 0.706f });
 	BossRenderer->ChangeAnimation("Summon_Dragon");
 	BossWarningMent->SetWarningMent("루시드가 강력한 소환수를 소환했습니다!");
+
+	BossPlayer = GameEngineSound::SoundPlay("CallDragon.mp3");
 }
 
 void Boss_Lucid_Phase1::TeleportSkillStart()
 {
 	BossRenderer->SetPivotValue({ 0.215f, 0.648f });
 	BossRenderer->ChangeAnimation("TeleportSkill");
+	BossPlayer = GameEngineSound::SoundPlay("Teleport.mp3");
 }
 
 void Boss_Lucid_Phase1::Summon_MushStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Skill4");
+	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
 }
 
 void Boss_Lucid_Phase1::Summon_GolemStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Skill4");
+	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
 }
 
 void Boss_Lucid_Phase1::Summon_ButterFlyStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Skill4");
+	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
 }
 
 

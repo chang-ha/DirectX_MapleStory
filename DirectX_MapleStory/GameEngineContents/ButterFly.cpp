@@ -6,6 +6,8 @@
 #include "ButterFly_Ball.h"
 #include "Player.h"
 
+#define BUTTERFLY_VOLUME 0.1f
+
 ButterFly::ButterFly()
 {
 
@@ -23,6 +25,18 @@ void ButterFly::LevelEnd(GameEngineLevel* _NextLevel)
 
 void ButterFly::Start()
 {
+	if (nullptr == GameEngineSound::FindSound("Butterfly_Move.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Butterfly_Summon.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Butterfly_Move.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Butterfly_Attack.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Butterfly_Death.mp3");
+	}
+
 	if (nullptr == FlyRenderer)
 	{
 		FlyRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
@@ -129,6 +143,8 @@ void ButterFly::Init(int _Phase)
 			}
 
 			_Ball->Transform.SetLocalPosition(Transform.GetWorldPosition() + PivotValue);
+			ButterFlyPlayer = GameEngineSound::SoundPlay("Butterfly_Attack.mp3");
+			ButterFlyPlayer.SetVolume(BUTTERFLY_VOLUME);
 		});
 	ReadyStart();
 }
@@ -212,6 +228,9 @@ void ButterFly::ReadyStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	ButterFlyPlayer = GameEngineSound::SoundPlay("Butterfly_Summon.mp3");
+	ButterFlyPlayer.SetVolume(BUTTERFLY_VOLUME);
 }
 
 void ButterFly::MoveStart()
@@ -233,6 +252,9 @@ void ButterFly::MoveStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	ButterFlyPlayer = GameEngineSound::SoundPlay("Butterfly_Move.mp3", 10000);
+	ButterFlyPlayer.SetVolume(BUTTERFLY_VOLUME);
 }
 
 void ButterFly::AttackStart()
@@ -266,6 +288,7 @@ void ButterFly::AttackStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
 }
 
 void ButterFly::DeathStart()
@@ -287,6 +310,9 @@ void ButterFly::DeathStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	ButterFlyPlayer = GameEngineSound::SoundPlay("Butterfly_Death.mp3");
+	ButterFlyPlayer.SetVolume(BUTTERFLY_VOLUME);
 }
 
 void ButterFly::ReadyUpdate(float _Delta)
@@ -346,6 +372,7 @@ void ButterFly::MoveUpdate(float _Delta)
 
 		CurLocationIndex = LocationNumber[RandomInt];
 		MoveSpeed = Fly_Default_MoveSpeed;
+		ButterFlyPlayer.Stop();
 		ChangeState(ButterFlyState::Attack);
 	}
 }

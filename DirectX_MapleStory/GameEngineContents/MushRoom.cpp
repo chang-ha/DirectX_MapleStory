@@ -18,6 +18,16 @@ void MushRoom::LevelEnd(GameEngineLevel* _NextLevel)
 
 void MushRoom::Start()
 {
+	if (nullptr == GameEngineSound::FindSound("MushRoom_Summon.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "MushRoom_Summon.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "MushRoom_Death.mp3");
+	}
+
 	HP = 50;
 
 	MushRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);
@@ -53,6 +63,8 @@ void MushRoom::Start()
 	MushRenderer->CreateAnimation("Move", "Lucid_Phase1_MushRoom_Move");
 	MushRenderer->CreateAnimation("Death", "Lucid_Phase1_MushRoom_Death");
 	MushRenderer->ChangeAnimation("Ready");
+	MushRoomPlayer = GameEngineSound::SoundPlay("MushRoom_Summon.mp3");
+	MushRoomPlayer.SetVolume(0.5f);
 
 	////// Render Event
 	MushRenderer->SetEndEvent("Ready", [&](GameEngineSpriteRenderer*)
@@ -183,6 +195,8 @@ void MushRoom::DeathStart()
 	MushCollision->Off();
 	AttackCollision->Off();
 	MushRenderer->ChangeAnimation("Death");
+	MushRoomPlayer = GameEngineSound::SoundPlay("MushRoom_Death.mp3");
+	MushRoomPlayer.SetVolume(0.5f);
 }
 
 void MushRoom::IdleUpdate(float _Delta)

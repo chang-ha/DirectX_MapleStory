@@ -19,6 +19,16 @@ void Golem::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Golem::Start()
 {
+	if (nullptr == GameEngineSound::FindSound("Golem_Summon.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\Boss\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Golem_Summon.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Golem_Death.mp3");
+	}
+
 	ContentActor::Start();
 	HP = 25;
 
@@ -220,6 +230,7 @@ void Golem::ReadyStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Ready");
 	MainSpriteRenderer->SetPivotValue({ 0.48f, 0.8f });
+	GolemPlayer = GameEngineSound::SoundPlay("Golem_Summon.mp3");
 }
 
 void Golem::ReviveStart()
@@ -246,6 +257,7 @@ void Golem::DeathStart()
 	MainSpriteRenderer->ChangeAnimation("Death");
 	MainSpriteRenderer->SetPivotValue({ 0.52f, 0.9f });
 	GolemCollision->Off();
+	GolemPlayer = GameEngineSound::SoundPlay("Golem_Death.mp3");
 }
 
 void Golem::ReviveUpdate(float _Delta)

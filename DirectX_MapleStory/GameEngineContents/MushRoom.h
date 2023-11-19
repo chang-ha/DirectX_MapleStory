@@ -44,6 +44,7 @@ private:
 	std::shared_ptr<GameEngineCollision> MushCollision = nullptr;
 	std::shared_ptr<GameEngineCollision> AttackCollision = nullptr;
 	HitTimeAttackFunction AttackFunction;
+	GameEngineSoundPlayer MushRoomPlayer;
 
 	void IdleStart();
 	void MoveStart();

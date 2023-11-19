@@ -62,6 +62,7 @@ protected:
 	Golem_Phase Phase = Golem_Phase::Phase1;
 	GolemState State = GolemState::Ready;
 	std::shared_ptr<GameEngineCollision> GolemCollision = nullptr;
+	GameEngineSoundPlayer GolemPlayer;
 
 	void Init(int _PhaseNumber);
 private:
