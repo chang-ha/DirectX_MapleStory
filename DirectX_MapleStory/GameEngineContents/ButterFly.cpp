@@ -21,6 +21,7 @@ ButterFly::~ButterFly()
 void ButterFly::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	Death();
+	ButterFlyPlayer.Stop();
 }
 
 void ButterFly::Start()

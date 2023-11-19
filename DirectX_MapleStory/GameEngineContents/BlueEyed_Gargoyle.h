@@ -20,7 +20,6 @@ protected:
 	void Update(float _Delta) override;
 	void Release() override;
 private:
-
 	void ReadyStart() override;
 	void IdleStart() override;
 	void MoveStart() override;

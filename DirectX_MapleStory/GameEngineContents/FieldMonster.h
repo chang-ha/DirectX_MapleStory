@@ -2,7 +2,7 @@
 #include "ContentActor.h"
 #include "AttackFunction.h"
 
-// #define ATTACK_COOLDOWN 1.5f
+#define FIELDMONSTER_VOLUME 0.7f
 
 enum class FieldMonsterState
 {
@@ -56,6 +56,7 @@ protected:
 	std::shared_ptr<GameEngineCollision> DetectCollision = nullptr;
 	std::shared_ptr<GameEngineCollision> AttackCollision = nullptr;
 	OneHitAttackFunction AttackFunction;
+	GameEngineSoundPlayer FieldMonsterPlayer;
 
 	// Start
 	virtual void ReadyStart();

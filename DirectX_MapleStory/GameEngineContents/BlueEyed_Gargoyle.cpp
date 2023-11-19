@@ -18,6 +18,16 @@ void BlueEyed_Gargoyle::LevelEnd(GameEngineLevel* _NextLevel)
 
 void BlueEyed_Gargoyle::Start()
 {
+	if (nullptr == GameEngineSound::FindSound("Gargoyle_Death.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\FieldMonster\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Gargoyle_Attack.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Gargoyle_Death.mp3");
+	}
+
 	FieldMonster::Start();
 	FieldMonster::Init("BlueEyed_Gargoyle");
 
@@ -88,6 +98,9 @@ void BlueEyed_Gargoyle::AttackStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	FieldMonsterPlayer = GameEngineSound::SoundPlay("Gargoyle_Attack.mp3");
+	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
 }
 
 void BlueEyed_Gargoyle::DeathStart()
@@ -108,4 +121,7 @@ void BlueEyed_Gargoyle::DeathStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	FieldMonsterPlayer = GameEngineSound::SoundPlay("Gargoyle_Death.mp3");
+	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
 }

@@ -21,7 +21,6 @@ protected:
 	void Release() override;
 
 private:
-
 	void ReadyStart() override;
 	void IdleStart() override;
 	void MoveStart() override;

@@ -598,7 +598,7 @@ void Player::JumpUpdate(float _Delta)
 			default:
 				break;
 			}
-			MoveVectorForce.Y = DOUBLE_JUMP_HEIGHT;
+			MoveVectorForce.Y = DOUBLE_JUMP_HEIGHT * 0.8f;
 		}
 	}
 }

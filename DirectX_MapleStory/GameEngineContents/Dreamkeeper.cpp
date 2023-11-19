@@ -19,6 +19,16 @@ void Dreamkeeper::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Dreamkeeper::Start()
 {
+	if (nullptr == GameEngineSound::FindSound("DreamKeeper_Death.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\FieldMonster\\");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "DreamKeeper_Death.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "DreamKeeper_Attack.mp3");
+	}
+
 	FieldMonster::Start();
 	FieldMonster::Init("Dreamkeeper");
 
@@ -110,6 +120,9 @@ void Dreamkeeper::AttackStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	FieldMonsterPlayer = GameEngineSound::SoundPlay("DreamKeeper_Attack.mp3");
+	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
 }
 
 void Dreamkeeper::DeathStart()
@@ -128,4 +141,7 @@ void Dreamkeeper::DeathStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+
+	FieldMonsterPlayer = GameEngineSound::SoundPlay("DreamKeeper_Death.mp3");
+	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
 }
