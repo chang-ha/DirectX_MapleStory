@@ -249,6 +249,14 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSprite::Find("Phase1_Hit"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser\\Phase1_Hit");
+		GameEngineSprite::CreateFolder("Phase1_Hit", Dir.GetStringPath());
+	}
+
 	if (nullptr == GameEngineSound::FindSound("BrokenDream.mp3"))
 	{
 		GameEnginePath FilePath;
@@ -885,6 +893,11 @@ void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 	if (nullptr != GameEngineSprite::Find("Phase2"))
 	{
 		ReleaseFunction::FolderRelease("Phase2", "Phase2_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Phase1_Hit"))
+	{
+		ReleaseFunction::FolderRelease("Phase1_Hit", "Phase1_Hit_");
 	}
 }
 

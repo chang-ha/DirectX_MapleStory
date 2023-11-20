@@ -13,6 +13,7 @@
 #include "ClockTowerOfNightMare_2th.h"
 #include "LinkPortal.h"
 #include "ContentNpc.h"
+#include "ReleaseFunction.h"
 
 ClockTowerOfNightMare_1th::ClockTowerOfNightMare_1th()
 {
@@ -117,6 +118,15 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ClockTowerBaseLevel::LevelEnd(_NextLevel);
+
+	if (nullptr != GameEngineSprite::Find("Dreamkeeper_Death"))
+	{
+		ReleaseFunction::FolderRelease("Dreamkeeper_Death", "Dreamkeeper_Death_");
+		ReleaseFunction::FolderRelease("Dreamkeeper_Attack", "Dreamkeeper_Attack_");
+		ReleaseFunction::FolderRelease("Dreamkeeper_Attack_Hit", "Dreamkeeper_Attack_Hit_");
+		ReleaseFunction::FolderRelease("Dreamkeeper_Idle", "Dreamkeeper_Idle_");
+		ReleaseFunction::FolderRelease("Dreamkeeper_Move", "Dreamkeeper_Move_");
+	}
 }
 
 void ClockTowerOfNightMare_1th::Start()

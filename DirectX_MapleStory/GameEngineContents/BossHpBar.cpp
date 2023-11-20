@@ -19,15 +19,45 @@ void BossHpBar::LevelEnd(GameEngineLevel* _NextLevel)
 void BossHpBar::Start()
 {
 	// Frame
-	BossHpBarFrame.BossFace = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	BossHpBarFrame.HpStart = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	BossHpBarFrame.HpMiddle = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	BossHpBarFrame.HpEnd = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	BossHpBarFrame.HpBack = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	BossHpBarFrame.HpFront = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	BossHpBarFrame.DeathCountBG = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	BossHpBarFrame.DeathCountNum = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	if (nullptr == BossHpBarFrame.BossFace)
+	{
+		BossHpBarFrame.BossFace = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
 
+	if (nullptr == BossHpBarFrame.HpStart)
+	{
+		BossHpBarFrame.HpStart = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == BossHpBarFrame.HpMiddle)
+	{
+		BossHpBarFrame.HpMiddle = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == BossHpBarFrame.HpEnd)
+	{
+		BossHpBarFrame.HpEnd = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == BossHpBarFrame.HpBack)
+	{
+		BossHpBarFrame.HpBack = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == BossHpBarFrame.HpFront)
+	{
+		BossHpBarFrame.HpFront = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == BossHpBarFrame.DeathCountBG)
+	{
+		BossHpBarFrame.DeathCountBG = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == BossHpBarFrame.DeathCountNum)
+	{
+		BossHpBarFrame.DeathCountNum = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
 
 	BossHpBarFrame.BossFace->SetPivotType(PivotType::RightUp);
 	BossHpBarFrame.HpStart->SetPivotType(PivotType::Top);
@@ -131,7 +161,77 @@ void BossHpBar::Update(float _Delta)
 
 void BossHpBar::Release()
 {
+	if (nullptr != BossHpBarFrame.BossFace)
+	{
+		BossHpBarFrame.BossFace->Death();
+		BossHpBarFrame.BossFace = nullptr;
 
+		BossHpBarFrame.HpStart->Death();
+		BossHpBarFrame.HpStart = nullptr;
+
+		BossHpBarFrame.HpMiddle->Death();
+		BossHpBarFrame.HpMiddle = nullptr;
+
+		BossHpBarFrame.HpEnd->Death();
+		BossHpBarFrame.HpEnd = nullptr;
+
+		BossHpBarFrame.HpBack->Death();
+		BossHpBarFrame.HpBack = nullptr;
+
+		BossHpBarFrame.HpFront->Death();
+		BossHpBarFrame.HpFront = nullptr;
+
+		BossHpBarFrame.DeathCountBG->Death();
+		BossHpBarFrame.DeathCountBG = nullptr;
+
+		BossHpBarFrame.DeathCountNum->Death();
+		BossHpBarFrame.DeathCountNum = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find("Boss_Face.png"))
+	{
+		GameEngineTexture::Release("Boss_Face.png");
+		GameEngineSprite::Release("Boss_Face.png");
+
+		GameEngineTexture::Release("Boss_HpStart.png");
+		GameEngineSprite::Release("Boss_HpStart.png");
+
+		GameEngineTexture::Release("Boss_HpMiddle.png");
+		GameEngineSprite::Release("Boss_HpMiddle.png");
+
+		GameEngineTexture::Release("Boss_HpEnd.png");
+		GameEngineSprite::Release("Boss_HpEnd.png");
+
+		GameEngineTexture::Release("Boss_DeathCount.png");
+		GameEngineSprite::Release("Boss_DeathCount.png");
+
+		GameEngineTexture::Release("Boss_BackHp.png");
+		GameEngineSprite::Release("Boss_BackHp.png");
+
+		GameEngineTexture::Release("Boss_FrontHp.png");
+		GameEngineSprite::Release("Boss_FrontHp.png");
+
+		GameEngineTexture::Release("Boss_HpRatio_BG.png");
+		GameEngineSprite::Release("Boss_HpRatio_BG.png");
+
+		GameEngineTexture::Release("Boss_HpRatioNum_dot.png");
+		GameEngineSprite::Release("Boss_HpRatioNum_dot.png");
+
+		GameEngineTexture::Release("Boss_HpRatioNum_percent.png");
+		GameEngineSprite::Release("Boss_HpRatioNum_percent.png");
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			GameEngineTexture::Release("Boss_DeathCountNum_" + std::to_string(i) + ".png");
+			GameEngineSprite::Release("Boss_DeathCountNum_" + std::to_string(i) + ".png");
+		}
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			GameEngineTexture::Release("Boss_HpRatioNum_" + std::to_string(i) + ".png");
+			GameEngineSprite::Release("Boss_HpRatioNum_" + std::to_string(i) + ".png");
+		}
+	}
 }
 
 void BossHpBar::CalcuLifeCount()

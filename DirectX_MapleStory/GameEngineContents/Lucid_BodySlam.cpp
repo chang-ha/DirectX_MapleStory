@@ -1,6 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "Lucid_BodySlam.h"
-
+#include "ReleaseFunction.h"
 
 Lucid_BodySlam::Lucid_BodySlam()
 {

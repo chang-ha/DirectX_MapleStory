@@ -8,6 +8,7 @@
 #include "RedEyed_Gargoyle.h"
 #include "LinkPortal.h"
 #include "Boss_WaitingRoom.h"
+#include "ReleaseFunction.h"
 
 ClockTowerOfNightMare_5th::ClockTowerOfNightMare_5th()
 {
@@ -105,7 +106,25 @@ void ClockTowerOfNightMare_5th::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ClockTowerBaseLevel::LevelEnd(_NextLevel);
 
+	if (nullptr != GameEngineSprite::Find("BlueEyed_Gargoyle_Death"))
+	{
+		ReleaseFunction::FolderRelease("BlueEyed_Gargoyle_Death", "BlueEyed_Gargoyle_Death_");
+		ReleaseFunction::FolderRelease("BlueEyed_Gargoyle_Attack", "BlueEyed_Gargoyle_Attack_");
+		ReleaseFunction::FolderRelease("BlueEyed_Gargoyle_Attack_Hit", "BlueEyed_Gargoyle_Attack_Hit_");
+		ReleaseFunction::FolderRelease("BlueEyed_Gargoyle_Idle", "BlueEyed_Gargoyle_Idle_");
+		ReleaseFunction::FolderRelease("BlueEyed_Gargoyle_Move", "BlueEyed_Gargoyle_Move_");
+		ReleaseFunction::FolderRelease("BlueEyed_Gargoyle_Ready", "BlueEyed_Gargoyle_Ready_");
+	}
 
+	if (nullptr != GameEngineSprite::Find("RedEyed_Gargoyle_Death"))
+	{
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Death", "RedEyed_Gargoyle_Death_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Attack", "RedEyed_Gargoyle_Attack_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Attack_Hit", "RedEyed_Gargoyle_Attack_Hit_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Idle", "RedEyed_Gargoyle_Idle_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Move", "RedEyed_Gargoyle_Move_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Ready", "RedEyed_Gargoyle_Ready_");
+	}
 }
 
 void ClockTowerOfNightMare_5th::Start()

@@ -8,6 +8,7 @@
 #include "Lamp.h"
 #include "ClockTowerOfNightMare_5th.h"
 #include "LinkPortal.h"
+#include "ReleaseFunction.h"
 
 ClockTowerOfNightMare_4th::ClockTowerOfNightMare_4th()
 {
@@ -114,6 +115,15 @@ void ClockTowerOfNightMare_4th::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ClockTowerBaseLevel::LevelEnd(_NextLevel);
 
+	if (nullptr != GameEngineSprite::Find("RedEyed_Gargoyle_Death"))
+	{
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Death", "RedEyed_Gargoyle_Death_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Attack", "RedEyed_Gargoyle_Attack_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Attack_Hit", "RedEyed_Gargoyle_Attack_Hit_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Idle", "RedEyed_Gargoyle_Idle_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Move", "RedEyed_Gargoyle_Move_");
+		ReleaseFunction::FolderRelease("RedEyed_Gargoyle_Ready", "RedEyed_Gargoyle_Ready_");
+	}
 }
 
 void ClockTowerOfNightMare_4th::Start()

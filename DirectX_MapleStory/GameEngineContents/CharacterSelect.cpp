@@ -671,4 +671,5 @@ void CharacterSelect::ResourcesRelease()
 	ContentButton::ReleaseButton("CreateCharacter");
 	ContentButton::ReleaseButton("DeleteCharacter");
 	ContentButton::ReleaseButton("RightButton");
+	ContentButton::ReleaseButton("GameStart");
 }

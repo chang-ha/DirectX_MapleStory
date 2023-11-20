@@ -3,6 +3,7 @@
 #include <GameEngineBase\GameEngineRandom.h>
 
 #include "PhantasmalWind.h"
+#include "ReleaseFunction.h"
 
 bool PhantasmalWind::AllAngleValue = false;
 
@@ -12,11 +13,6 @@ PhantasmalWind::PhantasmalWind()
 }
 
 PhantasmalWind::~PhantasmalWind()
-{
-
-}
-
-void PhantasmalWind::LevelStart(GameEngineLevel* _PrevLevel)
 {
 
 }

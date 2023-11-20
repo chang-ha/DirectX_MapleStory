@@ -246,6 +246,7 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 		MapObjects[i]->Death();
 		MapObjects[i] = nullptr;
 	}
+	MapObjects.clear();
 
 	if (nullptr != GameEngineSprite::Find("BackObject1.png"))
 	{
@@ -283,7 +284,6 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		ReleaseFunction::FolderRelease("Phase1_Hit", "Phase1_Hit_");
 	}
-	MapObjects.clear();
 }
 
 void Lucid_Phase1::Start()

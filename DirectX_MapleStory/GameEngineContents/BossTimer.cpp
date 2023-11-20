@@ -35,11 +35,30 @@ void BossTimer::Start()
 		}
 	}
 
-	Frame.TimerFrame = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	Frame.TimerNum1 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	Frame.TimerNum2 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	Frame.TimerNum3 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	Frame.TimerNum4 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	if (nullptr == Frame.TimerFrame)
+	{
+		Frame.TimerFrame = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == Frame.TimerNum1)
+	{
+		Frame.TimerNum1 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == Frame.TimerNum2)
+	{
+		Frame.TimerNum2 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == Frame.TimerNum3)
+	{
+		Frame.TimerNum3 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
+
+	if (nullptr == Frame.TimerNum4)
+	{
+		Frame.TimerNum4 = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
+	}
 
 	Frame.TimerFrame->AutoSpriteSizeOn();
 
@@ -78,7 +97,35 @@ void BossTimer::Update(float _Delta)
 
 void BossTimer::Release()
 {
+	if (nullptr != Frame.TimerFrame)
+	{
+		Frame.TimerFrame->Death();
+		Frame.TimerFrame = nullptr;
 
+		Frame.TimerNum1->Death();
+		Frame.TimerNum1 = nullptr;
+
+		Frame.TimerNum2->Death();
+		Frame.TimerNum2 = nullptr;
+
+		Frame.TimerNum3->Death();
+		Frame.TimerNum3 = nullptr;
+
+		Frame.TimerNum4->Death();
+		Frame.TimerNum4 = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find("Boss_TimerFrame.png"))
+	{
+		GameEngineTexture::Release("Boss_TimerFrame.png");
+		GameEngineSprite::Release("Boss_TimerFrame.png");
+
+		for (size_t i = 0; i < 10; i++)
+		{
+			GameEngineTexture::Release("Boss_TimeNum_" + std::to_string(i) + ".png");
+			GameEngineSprite::Release("Boss_TimeNum_" + std::to_string(i) + ".png");
+		}
+	}
 }
 
 void BossTimer::CalcuRemainTime()

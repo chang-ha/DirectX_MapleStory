@@ -5,6 +5,7 @@
 #include "ButterFly.h"
 #include "ButterFly_Ball.h"
 #include "Player.h"
+#include "ReleaseFunction.h"
 
 #define BUTTERFLY_VOLUME 0.1f
 

@@ -11,6 +11,11 @@ ContentBackGround::~ContentBackGround()
 
 }
 
+void ContentBackGround::LevelEnd(GameEngineLevel* _PrevLevel)
+{
+	Death();
+}
+
 void ContentBackGround::Start()
 {
 	if (nullptr == BackGroundRenderer)

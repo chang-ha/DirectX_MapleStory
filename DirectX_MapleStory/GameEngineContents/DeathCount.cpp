@@ -57,5 +57,27 @@ void DeathCount::Update(float _Delta)
 
 void DeathCount::Release()
 {
+	if (nullptr != Frame.CounterFrame)
+	{
+		Frame.CounterFrame->Death();
+		Frame.CounterFrame = nullptr;
 
+		Frame.CounterNum1->Death();
+		Frame.CounterNum1 = nullptr;
+
+		Frame.CounterNum2->Death();
+		Frame.CounterNum2 = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find("DeathCountFrame.png"))
+	{
+		GameEngineTexture::Release("DeathCountFrame.png");
+		GameEngineSprite::Release("DeathCountFrame.png");
+		
+		for (size_t i = 0; i < 10; i++)
+		{
+			GameEngineTexture::Release("DeathCountNum_" + std::to_string(i) + ".png");
+			GameEngineSprite::Release("DeathCountNum_" + std::to_string(i) + ".png");
+		}
+	}
 }

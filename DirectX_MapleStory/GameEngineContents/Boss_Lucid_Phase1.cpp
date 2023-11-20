@@ -13,6 +13,7 @@
 #include "ButterFly.h"
 #include "BossHpBar.h"
 #include "FadeObject.h"
+#include "ReleaseFunction.h"
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
 {
@@ -106,7 +107,7 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	// 1 Phase Sound
-	if (nullptr == GameEngineSound::FindSound("RushPrepare.mp3"))
+	if (nullptr == GameEngineSound::FindSound("Phase1_Death.mp3"))
 	{
 		GameEnginePath FilePath;
 		FilePath.SetCurrentPath();
@@ -132,7 +133,7 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase1_PhantasmalWind", 0.12f);
 	BossRenderer->CreateAnimation("Summon_Dragon", "Lucid_Phase1_Summon_Dragon", 0.09f, -1, -1, false);
 	BossRenderer->CreateAnimation("TeleportSkill", "Lucid_Phase1_TeleportSkill", 0.09f);
-	BossRenderer->CreateAnimation("Skill4", "Lucid_Phase1_Skill4", 0.09f);
+	BossRenderer->CreateAnimation("Summon", "Lucid_Phase1_Summon", 0.09f);
 	BossRenderer->CreateAnimation("Death", "Lucid_Phase1_Death", 0.11f, -1, -1, false);
 	IdleStart();
 
@@ -181,7 +182,7 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	);
 
-	BossRenderer->SetFrameEvent("Skill4", 10, [&](GameEngineRenderer* _Renderer)
+	BossRenderer->SetFrameEvent("Summon", 10, [&](GameEngineRenderer* _Renderer)
 		{
 			switch (State)
 			{
@@ -302,16 +303,71 @@ void Boss_Lucid_Phase1::Update(float _Delta)
 void Boss_Lucid_Phase1::Release()
 {
 	BaseBossActor::Release();
-	if (nullptr != BossRenderer)
+	if (nullptr != FlowerRenderer)
 	{
-		BossRenderer->Death();
-		BossRenderer = nullptr;
+		FlowerRenderer->Death();
+		FlowerRenderer = nullptr;
 	}
 
 	if (nullptr != TeleportRenderer)
 	{
 		TeleportRenderer->Death();
 		TeleportRenderer = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Death"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Death", "Lucid_Phase1_Death_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Flower", "Lucid_Phase1_Flower_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Idle", "Lucid_Phase1_Idle_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_PhantasmalWind", "Lucid_Phase1_PhantasmalWind_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Summon", "Lucid_Phase1_Summon_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Summon_Dragon", "Lucid_Phase1_Summon_Dragon_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Teleport", "Lucid_Phase1_Teleport_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_TeleportSkill", "Lucid_Phase1_TeleportSkill_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Golem_Ready"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Ready", "Phase1_Golem_Ready_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Attack", "Phase1_Golem_Attack_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Death", "Phase1_Golem_Death_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Idle", "Phase1_Golem_Idle_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Revive", "Phase1_Golem_Revive_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Golem_TakeDown_Hit"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_TakeDown_Hit", "TakeDown_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Phase1_ButterFly_Ready"))
+	{
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Ready", "Phase1_ButterFly_Ready_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Attack", "Phase1_ButterFly_Attack_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Move", "Phase1_ButterFly_Move_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Death", "Phase1_ButterFly_Death_");
+
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Ball_Ball", "Phase1_ButterFly_Ball_Ball_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Ball_Hit", "Phase1_ButterFly_Ball_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("PhantasmalWind"))
+	{
+		ReleaseFunction::FolderRelease("PhantasmalWind", "PhantasmalWind_");
+		ReleaseFunction::FolderRelease("PhantasmalWind_Hit", "PhantasmalWind_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("WarningMent_Start.png"))
+	{
+		GameEngineTexture::Release("WarningMent_Start.png");
+		GameEngineSprite::Release("WarningMent_Start.png");
+
+		GameEngineTexture::Release("WarningMent_Middle.png");
+		GameEngineSprite::Release("WarningMent_Middle.png");
+
+		GameEngineTexture::Release("WarningMent_End.png");
+		GameEngineSprite::Release("WarningMent_End.png");
 	}
 }
 
@@ -465,21 +521,21 @@ void Boss_Lucid_Phase1::TeleportSkillStart()
 void Boss_Lucid_Phase1::Summon_MushStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
-	BossRenderer->ChangeAnimation("Skill4");
+	BossRenderer->ChangeAnimation("Summon");
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
 }
 
 void Boss_Lucid_Phase1::Summon_GolemStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
-	BossRenderer->ChangeAnimation("Skill4");
+	BossRenderer->ChangeAnimation("Summon");
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
 }
 
 void Boss_Lucid_Phase1::Summon_ButterFlyStart()
 {
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
-	BossRenderer->ChangeAnimation("Skill4");
+	BossRenderer->ChangeAnimation("Summon");
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
 }
 

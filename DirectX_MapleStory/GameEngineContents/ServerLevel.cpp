@@ -197,6 +197,7 @@ void ServerLevel::ResourcesRelease()
 
 	if (nullptr != GameEngineSprite::Find("ServerButton_BG.png"))
 	{
+		GameEngineTexture::Release("ServerButton_BG.png");
 		GameEngineSprite::Release("ServerButton_BG.png");
 	}
 

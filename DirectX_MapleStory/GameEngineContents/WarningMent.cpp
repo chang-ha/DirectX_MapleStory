@@ -32,6 +32,7 @@ void WarningMent::Start()
 			GameEngineSprite::CreateSingle(Childs.GetFileName());
 		}
 	}
+
 	Frame.FrameStart = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	Frame.FrameMiddle = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	Frame.FrameEnd = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
@@ -64,7 +65,20 @@ void WarningMent::Update(float _Delta)
 
 void WarningMent::Release()
 {
+	if (nullptr != Frame.FrameStart)
+	{
+		Frame.FrameStart->Death();
+		Frame.FrameStart = nullptr;
 
+		Frame.FrameMiddle->Death();
+		Frame.FrameMiddle = nullptr;
+
+		Frame.FrameEnd->Death();
+		Frame.FrameEnd = nullptr;
+
+		Frame.WarningMent->Death();
+		Frame.WarningMent = nullptr;
+	}
 }
 
 void WarningMent::SetWarningMent(std::string_view _Ment)

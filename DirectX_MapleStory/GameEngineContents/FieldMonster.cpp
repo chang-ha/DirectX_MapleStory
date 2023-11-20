@@ -22,9 +22,6 @@ void FieldMonster::LevelEnd(GameEngineLevel* _NextLevel)
 
 void FieldMonster::Start()
 {
-	//Speed = 0.0f;
-	//GravityOff();
-
 	HP = 1;
 
 	ContentActor::Start();
@@ -61,14 +58,8 @@ void FieldMonster::Start()
 
 void FieldMonster::Update(float _Delta)
 {
-	// AttackCoolDown -= _Delta;
 	ContentActor::Gravity(_Delta);
 	IsGround = ContentActor::CheckGround();
-	//if (true == IsGround)
-	//{
-	//	GravityOff();
-	//	GravityReset();
-	//}
 	StateUpdate(_Delta);
 
 	if (0 >= HP)
@@ -185,27 +176,26 @@ void FieldMonster::Respawn()
 	On();
 	HP = 1;
 	ChangeState(FieldMonsterState::Ready);
-	// MainSpriteRenderer->On();
 }
 
 void FieldMonster::Init(std::string_view _MonsterName)
 {
 	MonsterName = _MonsterName;
-	if (nullptr == GameEngineSprite::Find(std::string(MonsterName) + "_Death"))
+	if (nullptr == GameEngineSprite::Find(MonsterName + "_Death"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Monster\\" + std::string(MonsterName));
+		Dir.MoveChild("ContentResources\\Textures\\Monster\\" + MonsterName);
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
 		for (size_t i = 0; i < Directorys.size(); i++)
 		{
 			GameEngineDirectory& Childs = Directorys[i];
-			GameEngineSprite::CreateFolder(std::string(MonsterName) + "_" + Childs.GetFileName(), Childs.GetStringPath());
+			GameEngineSprite::CreateFolder(MonsterName + "_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
 	}
 
-	MainSpriteRenderer->CreateAnimation("Death", std::string(MonsterName) + "_Death");
+	MainSpriteRenderer->CreateAnimation("Death", MonsterName + "_Death");
 	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer* _Renderer)
 		{
 			Off();

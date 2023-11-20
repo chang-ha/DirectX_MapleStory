@@ -372,6 +372,29 @@ void Lachlen::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 
+	for (size_t i = 0; i < MapObjects.size(); i++)
+	{
+		MapObjects[i]->Death();
+		MapObjects[i] = nullptr;
+	}
+
+	if (nullptr != CurMap)
+	{
+		CurMap = nullptr;
+	}
+
+	if (nullptr != Back)
+	{
+		Back = nullptr;
+	}
+
+	if (nullptr != CurPlayer)
+	{
+		CurPlayer = nullptr;
+	}
+
+	MapObjects.clear();
+
 	if (nullptr != GameEngineSprite::Find("WaterMelonMen"))
 	{
 		ReleaseFunction::FolderRelease("WaterMelonMen", "WaterMelonMen_");
@@ -405,29 +428,6 @@ void Lachlen::LevelEnd(GameEngineLevel* _NextLevel)
 		GameEngineTexture::Release("Bridge.png");
 		GameEngineSprite::Release("Bridge.png");
 	}
-
-	for (size_t i = 0; i < MapObjects.size(); i++)
-	{
-		MapObjects[i]->Death();
-		MapObjects[i] = nullptr;
-	}
-
-	if (nullptr != CurMap)
-	{
-		CurMap = nullptr;
-	}
-
-	if (nullptr != Back)
-	{
-		Back = nullptr;
-	}
-
-	if (nullptr != CurPlayer)
-	{
-		CurPlayer = nullptr;
-	}
-
-	MapObjects.clear();
 }
 
 void Lachlen::Start()

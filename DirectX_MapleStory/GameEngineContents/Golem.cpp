@@ -90,20 +90,6 @@ void Golem::Release()
 	}
 
 	AttackFunction.CollisionActor.clear();
-
-	if (nullptr != GameEngineSprite::Find("Lucid_Phase" + PhaseNumber + "_Golem_Ready"))
-	{
-		ReleaseFunction::FolderRelease("Lucid_Phase" + PhaseNumber + "_Golem_Ready", "Phase" + PhaseNumber + "_Golem_Ready_");
-		ReleaseFunction::FolderRelease("Lucid_Phase" + PhaseNumber + "_Golem_Attack", "Phase" + PhaseNumber + "_Golem_Attack_");
-		ReleaseFunction::FolderRelease("Lucid_Phase" + PhaseNumber + "_Golem_Death", "Phase" + PhaseNumber + "_Golem_Death_");
-		ReleaseFunction::FolderRelease("Lucid_Phase" + PhaseNumber + "_Golem_Idle", "Phase" + PhaseNumber + "_Golem_Idle_");
-		ReleaseFunction::FolderRelease("Lucid_Phase" + PhaseNumber + "_Golem_Revive", "Phase" + PhaseNumber + "_Golem_Revive_");
-	}
-
-	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Golem_TakeDown_Hit"))
-	{
-		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_TakeDown_Hit", "TakeDown_Hit_");
-	}
 }
 
 void Golem::Init(int _PhaseNumber)
