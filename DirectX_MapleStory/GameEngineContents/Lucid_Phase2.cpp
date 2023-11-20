@@ -16,6 +16,7 @@
 #include "FadeObject.h"
 #include "BossTimer.h"
 #include "DeathCount.h"
+#include "ReleaseFunction.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -173,7 +174,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	FadeInObject->SetWhiteFade();
 
-	FadeOutObject->SetChangeLevel("Boss_WaitingRoom");
+	FadeOutObject->SetChangeLevel("10.Boss_WaitingRoom");
 
 	GetMainCamera()->SetZSort(RenderOrder::BACKGROUNDOBJECT);
 	GetMainCamera()->SetZSort(RenderOrder::MAP);
@@ -209,7 +210,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 			for (size_t x = 0; x < Directorys.size(); x++)
 			{
 				GameEngineDirectory& Childs = Directorys[x];
-				GameEngineSprite::CreateFolder("StainedGlass" + std::to_string(i) + + "_" +Childs.GetFileName(), Childs.GetStringPath());
+				GameEngineSprite::CreateFolder("StainedGlass" + std::to_string(i) + "_" + Childs.GetFileName(), Childs.GetStringPath());
 			}
 		}
 	}
@@ -224,8 +225,8 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		for (size_t i = 0; i < Files.size(); i++)
 		{
 			GameEngineFile& Childs = Files[i];
-			GameEngineTexture::Load(Childs.GetStringPath(), "FallingObject_" + Childs.GetFileName());
-			GameEngineSprite::CreateSingle("FallingObject_" + Childs.GetFileName());
+			GameEngineTexture::Load(Childs.GetStringPath());
+			GameEngineSprite::CreateSingle(Childs.GetFileName());
 		}
 	}
 
@@ -825,6 +826,66 @@ void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 	MapObjects.clear();
 	AllFootHolds.clear();
 	FootHoldsNumber.clear();
+
+	if (nullptr != GameEngineSprite::Find("BackStar1.png"))
+	{
+		GameEngineTexture::Release("BackStar1.png");
+		GameEngineSprite::Release("BackStar1.png");
+
+		GameEngineTexture::Release("BackStar2.png");
+		GameEngineSprite::Release("BackStar2.png");
+
+		GameEngineTexture::Release("BackStar3.png");
+		GameEngineSprite::Release("BackStar3.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("StainedGlass0_Idle"))
+	{
+		ReleaseFunction::FolderRelease("StainedGlass0_Idle", "StainedGlass0_Idle_");
+		ReleaseFunction::FolderRelease("StainedGlass0_Break", "StainedGlass0_Break_");
+
+		ReleaseFunction::FolderRelease("StainedGlass1_Idle", "StainedGlass1_Idle_");
+		ReleaseFunction::FolderRelease("StainedGlass1_Break", "StainedGlass1_Break_");
+
+		ReleaseFunction::FolderRelease("StainedGlass2_Idle", "StainedGlass2_Idle_");
+		ReleaseFunction::FolderRelease("StainedGlass2_Break", "StainedGlass2_Break_");
+
+		ReleaseFunction::FolderRelease("StainedGlass3_Idle", "StainedGlass3_Idle_");
+		ReleaseFunction::FolderRelease("StainedGlass3_Break", "StainedGlass3_Break_");
+
+		ReleaseFunction::FolderRelease("StainedGlass4_Idle", "StainedGlass4_Idle_");
+		ReleaseFunction::FolderRelease("StainedGlass4_Break", "StainedGlass4_Break_");
+
+		ReleaseFunction::FolderRelease("StainedGlass5_Idle", "StainedGlass5_Idle_");
+		ReleaseFunction::FolderRelease("StainedGlass5_Break", "StainedGlass5_Break_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("FallingObject_001.png"))
+	{
+		for (size_t i = 1; i <= 61; i++)
+		{
+			if (10 > i)
+			{
+				GameEngineTexture::Release("FallingObject_00" + std::to_string(i) + ".png");
+				GameEngineSprite::Release("FallingObject_00" + std::to_string(i) + ".png");
+			}
+			else
+			{
+				GameEngineTexture::Release("FallingObject_0" + std::to_string(i) + ".png");
+				GameEngineSprite::Release("FallingObject_0" + std::to_string(i) + ".png");
+			}
+		}
+	}
+
+	if (nullptr != GameEngineSprite::Find("LaserBackGround"))
+	{
+		ReleaseFunction::FolderRelease("LaserBackGround", "LaserBackGround_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Phase2"))
+	{
+		ReleaseFunction::FolderRelease("Phase2", "Phase2_");
+	}
 }
 
 void Lucid_Phase2::Start()
@@ -836,12 +897,6 @@ void Lucid_Phase2::Start()
 
 void Lucid_Phase2::Update(float _Delta)
 {
-	//if (true == OnceFadeAlphaSetting)
-	//{
-	//	OnceFadeAlphaSetting = false;
-	//	FadeInObject->SetAlpha(1.0f);
-	//}
-
 	ContentLevel::Update(_Delta);
 	ObjectUpdate(_Delta);
 
@@ -880,11 +935,6 @@ void Lucid_Phase2::Update(float _Delta)
 	{
 		SummonGolem();
 	}
-}
-
-void Lucid_Phase2::ResourcesRelease()
-{
-
 }
 
 void Lucid_Phase2::ObjectUpdate(float _Delta)

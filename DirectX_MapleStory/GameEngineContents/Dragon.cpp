@@ -1,5 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "Dragon.h"
+#include "ReleaseFunction.h"
 
 #define DELAY_TIME 1.0f
 #define Dir_Up 1.0f
@@ -151,6 +152,14 @@ void Dragon::Release()
 	}
 
 	AttackFunction.CollisionTime.clear();
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Dragon_Move"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Dragon_Move", "Move_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Dragon_Breath", "Breath_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Dragon_Attack", "Attack_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Dragon_Attack_Hit", "Attack_Hit_");
+	}
 }
 
 void Dragon::SetDir(ActorDir _Dir)

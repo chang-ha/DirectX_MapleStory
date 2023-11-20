@@ -39,5 +39,15 @@ void TowerWall::Start()
 
 void TowerWall::Release()
 {
+	if (nullptr != WallRenderer)
+	{
+		WallRenderer->Death();
+		WallRenderer = nullptr;
+	}
 
+	if (nullptr != GameEngineSprite::Find("Tower_Wall.png"))
+	{
+		GameEngineTexture::Release("Tower_Wall.png");
+		GameEngineSprite::Release("Tower_Wall.png");
+	}
 }

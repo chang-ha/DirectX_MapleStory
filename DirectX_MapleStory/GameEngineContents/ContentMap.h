@@ -25,8 +25,8 @@ public:
 	void CreateBaseColorMap(const float4& _Color);
 
 	void InitMap(std::string_view _MapName);
-	void InitMapCollision(std::string_view _MapName);
-	void InitFootHold(std::string_view _MapName);
+	void InitMapCollision(std::string_view _MapCollisionName);
+	void InitFootHold(std::string_view _FootHoldName);
 	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = GROUND_COLOR);
 
 protected:
@@ -36,6 +36,9 @@ protected:
 	void Release() override;
 
 private:
+	std::string MapName = "";
+	std::string MapCollisionName = "";
+	std::string FootHoldName = "";
 	float4 MapScale = float4::ZERO;
 	// std::string MapName = "";
 	std::shared_ptr<GameEngineTexture> MapCollisionTexture = nullptr;

@@ -17,6 +17,7 @@ protected:
 	float MentSpeed = MENT_SPEED;
 	size_t MentIndex = 0;
 	size_t MentMaxIndex = -1;
+	std::string CancelButtonName = "";
 	std::wstring Ment = L"";
 	ContentNpc* Parent = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> MentBG = nullptr;
@@ -37,7 +38,9 @@ class TwoButtonNpcMentFrame : public OneButtonNpcMentFrame
 {
 	friend class ContentNpc;
 
+	std::string OkButtonName = "";
 	std::shared_ptr<class ContentButton> OkButton = nullptr;
+
 	void StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void()> _OkButtonEndFunction = nullptr);
 	void Release() override;
 };

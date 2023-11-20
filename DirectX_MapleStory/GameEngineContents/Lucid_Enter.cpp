@@ -15,10 +15,13 @@ Lucid_Enter::~Lucid_Enter()
 
 void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "10.Boss_WaitingRoom";
+	NextLevel = "12.Lucid_Phase1";
+
 	ContentLevel::LevelStart(_PrevLevel);
 	FadeInObject->Off();
 
-	FadeOutObject->SetChangeLevel("4.Lucid_Phase1");
+	FadeOutObject->SetChangeLevel("12.Lucid_Phase1");
 
 	if (nullptr == GameEngineSound::FindSound("ClockTowerofNightMare.mp3"))
 	{
@@ -41,7 +44,7 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == _CutsceneActor)
 	{
 		_CutsceneActor = CreateActor<CutsceneActor>(UpdateOrder::UI);
-		_CutsceneActor->Init("Lucid", "4.Lucid_Phase1");
+		_CutsceneActor->Init("Lucid");
 		_CutsceneActor->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
 	}
 
@@ -77,9 +80,4 @@ void Lucid_Enter::Start()
 void Lucid_Enter::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
-}
-
-void Lucid_Enter::ResourcesRelease()
-{
-
 }

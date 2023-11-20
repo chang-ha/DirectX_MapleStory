@@ -15,7 +15,7 @@ Minimap::~Minimap()
 
 void Minimap::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void Minimap::Start()
@@ -39,7 +39,83 @@ void Minimap::Update(float _Delta)
 
 void Minimap::Release()
 {
+	if (nullptr != GameEngineSprite::Find(MinimapName))
+	{
+		GameEngineTexture::Release(MinimapName);
+		GameEngineSprite::Release(MinimapName);
+	}
 
+	if (nullptr != MinimapObject.LT)
+	{
+		MinimapObject.LT->Death();
+		MinimapObject.LT = nullptr;
+	}
+
+	if (nullptr != MinimapObject.RT)
+	{
+		MinimapObject.RT->Death();
+		MinimapObject.RT = nullptr;
+	}
+
+	if (nullptr != MinimapObject.LB)
+	{
+		MinimapObject.LB->Death();
+		MinimapObject.LB = nullptr;
+	}
+
+	if (nullptr != MinimapObject.RB)
+	{
+		MinimapObject.RB->Death();
+		MinimapObject.RB = nullptr;
+	}
+
+	if (nullptr != MinimapObject.Minimap)
+	{
+		MinimapObject.Minimap->Death();
+		MinimapObject.Minimap = nullptr;
+	}
+
+	if (nullptr != MinimapObject.RM)
+	{
+		MinimapObject.RM->Death();
+		MinimapObject.RM = nullptr;
+	}
+
+	if (nullptr != MinimapObject.LM)
+	{
+		MinimapObject.LM->Death();
+		MinimapObject.LM = nullptr;
+	}
+
+	if (nullptr != MinimapObject.MB)
+	{
+		MinimapObject.MB->Death();
+		MinimapObject.MB = nullptr;
+	}
+
+	if (nullptr != MinimapObject.MT)
+	{
+		MinimapObject.MT->Death();
+		MinimapObject.MT = nullptr;
+	}
+
+	if (nullptr != MinimapObject.MiniPlayer)
+	{
+		MinimapObject.MiniPlayer->Death();
+		MinimapObject.MiniPlayer = nullptr;
+	}
+
+	if (nullptr != MinimapObject.MapName1)
+	{
+		MinimapObject.MapName1->Death();
+		MinimapObject.MapName1 = nullptr;
+	}
+
+	if (nullptr != MinimapObject.MapName2)
+	{
+		MinimapObject.MapName2->Death();
+		MinimapObject.MapName2 = nullptr;
+	}
 }
 
 void Minimap::Init(std::string_view _MinimapName, std::string_view _MinimapTextName)

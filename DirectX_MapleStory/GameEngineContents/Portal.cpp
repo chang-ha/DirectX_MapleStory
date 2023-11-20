@@ -3,6 +3,7 @@
 #include "ContentLevel.h"
 #include "FadeObject.h"
 #include "Player.h"
+#include "ReleaseFunction.h"
 
 Portal::Portal()
 {
@@ -75,5 +76,10 @@ void Portal::Release()
 	{
 		PortalCollision->Death();
 		PortalCollision = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find("NormalPortal"))
+	{
+		ReleaseFunction::FolderRelease("NormalPortal", "NormalPortal_");
 	}
 }

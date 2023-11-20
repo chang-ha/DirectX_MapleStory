@@ -1,5 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "Lamp.h"
+#include "ReleaseFunction.h"
 
 Lamp::Lamp()
 {
@@ -13,7 +14,7 @@ Lamp::~Lamp()
 
 void Lamp::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void Lamp::Start()
@@ -24,11 +25,6 @@ void Lamp::Start()
 	LampRenderer->SetPivotType(PivotType::Top);
 }
 
-void Lamp::Update(float _Delta)
-{
-
-}
-
 void Lamp::Release()
 {
 	if (nullptr != LampRenderer)
@@ -36,23 +32,29 @@ void Lamp::Release()
 		LampRenderer->Death();
 		LampRenderer = nullptr;
 	}
+
+	if (nullptr != GameEngineSprite::Find("Lamp" + std::to_string(Type)))
+	{
+		ReleaseFunction::FolderRelease("Lamp" + std::to_string(Type), "Lamp" + std::to_string(Type) + "_");
+	}
 }
 
 void Lamp::Init(int _Type)
 {
-	if (nullptr == GameEngineSprite::Find("Lamp" + std::to_string(_Type)))
+	Type = _Type;
+	if (nullptr == GameEngineSprite::Find("Lamp" + std::to_string(Type)))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lachlen\\Lamp" + std::to_string(_Type));
-		GameEngineSprite::CreateFolder("Lamp" + std::to_string(_Type), Dir.GetStringPath());
+		Dir.MoveChild("ContentResources\\Textures\\MapObject\\Lachlen\\Lamp" + std::to_string(Type));
+		GameEngineSprite::CreateFolder("Lamp" + std::to_string(Type), Dir.GetStringPath());
 	}
 
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = nullptr;
-	LampRenderer->CreateAnimation("Lamp", "Lamp" + std::to_string(_Type));
+	LampRenderer->CreateAnimation("Lamp", "Lamp" + std::to_string(Type));
 	LampRenderer->ChangeAnimation("Lamp");
 
-	if (9 == _Type)
+	if (9 == Type)
 	{
 		LampRenderer->SetPivotType(PivotType::Bottom);
 	}

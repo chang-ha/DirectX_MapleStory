@@ -1,5 +1,6 @@
 ﻿#include "PreCompile.h"
 #include "MushRoom.h"
+#include "ReleaseFunction.h"
 
 MushRoom::MushRoom()
 {
@@ -110,6 +111,14 @@ void MushRoom::Release()
 	{
 		AttackCollision->Death();
 		AttackCollision = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_MushRoom_Move"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase1_MushRoom_Move", "MushRoom_Move_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_MushRoom_Death", "MushRoom_Death_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_MushRoom_Idle", "MushRoom_Idle_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_MushRoom_Ready", "MushRoom_Ready_");
 	}
 }
 

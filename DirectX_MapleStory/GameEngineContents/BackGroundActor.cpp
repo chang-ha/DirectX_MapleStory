@@ -39,6 +39,12 @@ void BackGroundActor::Release()
 			BackGroundRenderers[i] = nullptr;
 		}
 	}
+
+	if (nullptr != GameEngineSprite::Find(BackGroundName))
+	{
+		GameEngineTexture::Release(BackGroundName);
+		GameEngineSprite::Release(BackGroundName);
+	}
 }
 
 void BackGroundActor::Init(std::string_view _BackGroundName, int LoopNumber_X, float BackGroundScale_X, float OverLapRatio_X)

@@ -34,6 +34,7 @@ public:
 	static void CreateMinimap(std::string_view _MinimapName, std::string_view _MinimapTextName)
 	{
 		std::shared_ptr<Minimap> CurMinimap = ContentLevel::CurContentLevel->CreateActor<Minimap>(UpdateOrder::UI);
+		CurMinimap->MinimapName = _MinimapName;
 		CurMinimap->Init(_MinimapName, _MinimapTextName);
 		CurMinimap->Transform.SetWorldPosition({0, 0, 1});
 	}
@@ -44,6 +45,7 @@ protected:
 	void Update(float _Delta) override;
 	void Release() override;
 private:
+	std::string MinimapName = "";
 	float4 MinimapScale = float4::ZERO;
 	float4 FullMinimapScale = float4::ZERO;
 	float4 PlayerPos = float4::ZERO;

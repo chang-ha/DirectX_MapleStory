@@ -19,6 +19,8 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	NextLevel = "02.ServerLevel";
+
 	if (nullptr == GameEngineSound::FindSound("NxLogo.mp3"))
 	{
 		GameEnginePath FilePath;
@@ -33,7 +35,7 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	FadeInObject->SetFadeSpeed(0.5f);
 
 	FadeOutObject->SetWhiteFade();
-	FadeOutObject->SetChangeLevel("2.ServerLevel");
+	FadeOutObject->SetChangeLevel("02.ServerLevel");
 
 	if (nullptr == GameEngineSprite::Find("Logo"))
 	{

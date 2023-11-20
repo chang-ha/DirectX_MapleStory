@@ -24,6 +24,9 @@ Boss_WaitingRoom::~Boss_WaitingRoom()
 
 void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "9.ClockTowerOfNightMare_5th";
+	NextLevel = "12.Lucid_Phase1";
+
 	ContentLevel::LevelStart(_PrevLevel);
 
 	if (nullptr == GameEngineSound::FindSound("ClockTowerofNightMare.mp3"))
@@ -87,11 +90,7 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({750, -845});
-	_Portal->SetMoveMap("ClockTowerOfNightMare_5th");
-
-	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
-	_Portal->Transform.SetLocalPosition({ 1300, -845 });
-	_Portal->SetMoveMap("3.Lucid_Enter");
+	_Portal->SetMoveMap("9.ClockTowerOfNightMare_5th");
 
 	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1200, -838 });
@@ -100,7 +99,7 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			_Npc->NpcMentOff();
 			std::shared_ptr<FadeObject> _FadeObject = ContentLevel::CurContentLevel->FadeOutObject;
-			_FadeObject->SetChangeLevel("3.Lucid_Enter");
+			_FadeObject->SetChangeLevel("11.Lucid_Enter");
 			_FadeObject->FadeStart();
 		});
 	_Npc->SetMentText(L"루시드를 쓰러트리기 위해 몽환의 숲으로 이동하시겠습니까?");
@@ -125,17 +124,12 @@ void Boss_WaitingRoom::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 	
-	//if (nullptr != GameEngineSprite::Find("BG_Lucid_Next.png"))
-	//{
-	//	GameEngineSprite::Release("BG_Lucid_Next.png");
-	//}
-
-	if (nullptr == CurMap)
+	if (nullptr != CurMap)
 	{
 		CurMap = nullptr;
 	}
 
-	if (nullptr == Back)
+	if (nullptr != Back)
 	{
 		Back = nullptr;
 	}

@@ -24,7 +24,7 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 
 	FadeOutObject->SetWhiteFade();
 
-	FadeOutObject->SetChangeLevel("6.Lucid_Phase2");
+	FadeOutObject->SetChangeLevel("14.Lucid_Phase2");
 
 	if (nullptr == GameEngineSprite::Find("Render_Idle"))
 	{
@@ -32,6 +32,24 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 		Dir.MoveParentToExistsChild("ContentResources");
 		Dir.MoveChild("ContentResources\\Textures\\Character\\Idle");
 		GameEngineSprite::CreateFolder("Render_Idle", Dir.GetStringPath());
+	}
+
+	if (nullptr == GameEngineSprite::Find("Clock.png"))
+	{
+		GameEnginePath Path;
+		Path.SetCurrentPath();
+		Path.MoveParentToExistsChild("ContentResources");
+		Path.MoveChild("ContentResources\\Textures\\Boss\\Clock.png");
+		GameEngineTexture::Load(Path.GetStringPath());
+		GameEngineSprite::CreateSingle("Clock.png");
+	}
+
+	if (nullptr == GameEngineSprite::Find("Lucid_PhaseChange"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid_PhaseChange");
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 
 	if (nullptr == GameEngineSound::FindSound("ClockTowerofNightMare.mp3"))
@@ -80,16 +98,6 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	// Clock Renderer
-	if (nullptr == GameEngineSprite::Find("Clock.png"))
-	{
-		GameEnginePath Path;
-		Path.SetCurrentPath();
-		Path.MoveParentToExistsChild("ContentResources");
-		Path.MoveChild("ContentResources\\Textures\\Boss\\Clock.png");
-		GameEngineTexture::Load(Path.GetStringPath());
-		GameEngineSprite::CreateSingle("Clock.png");
-	}
-
 	if (nullptr == Clock)
 	{
 		Clock = CreateActor<RenderActor>(UpdateOrder::RenderActor);
@@ -101,14 +109,6 @@ void Lucid_Next::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	// Lucid Renderer
-	if (nullptr == GameEngineSprite::Find("Lucid_PhaseChange"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid_PhaseChange");
-		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
-	}
-
 	if (nullptr == LucidRender)
 	{
 		LucidRender = CreateActor<RenderActor>(UpdateOrder::RenderActor);
@@ -192,25 +192,12 @@ void Lucid_Next::LevelEnd(GameEngineLevel* _NextLevel)
 		LucidRender->Death();
 		LucidRender = nullptr;
 	}
-}
 
-void Lucid_Next::Start()
-{
-	ContentLevel::Start();
-}
-
-void Lucid_Next::Update(float _Delta)
-{
-	ContentLevel::Update(_Delta);
-}
-
-void Lucid_Next::ResourcesRelease()
-{
 	if (nullptr != GameEngineSprite::Find("Render_Idle"))
 	{
 		GameEngineSprite::Release("Render_Idle");
 	}
-	
+
 	if (nullptr != GameEngineSprite::Find("Clock.png"))
 	{
 		GameEngineTexture::Release("Clock.png");
@@ -221,4 +208,14 @@ void Lucid_Next::ResourcesRelease()
 	{
 		ReleaseFunction::FolderRelease("Lucid_PhaseChange", "PhaseChange_");
 	}
+}
+
+void Lucid_Next::Start()
+{
+	ContentLevel::Start();
+}
+
+void Lucid_Next::Update(float _Delta)
+{
+	ContentLevel::Update(_Delta);
 }

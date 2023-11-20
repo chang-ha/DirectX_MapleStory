@@ -20,7 +20,6 @@ protected:
 
 	void Start() override;
 	void Update(float _Delta) override;
-	void ResourcesRelease() override;
 
 private:
 	std::shared_ptr<class CutsceneActor> _CutsceneActor = nullptr;

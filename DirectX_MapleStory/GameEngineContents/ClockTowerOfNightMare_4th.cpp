@@ -21,6 +21,9 @@ ClockTowerOfNightMare_4th::~ClockTowerOfNightMare_4th()
 
 void ClockTowerOfNightMare_4th::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "07.ClockTowerOfNightMare_3th";
+	NextLevel = "09.ClockTowerOfNightMare_5th";
+
 	ClockTowerBaseLevel::LevelStart(_PrevLevel);
 
 	if (nullptr == CurMap)
@@ -55,11 +58,11 @@ void ClockTowerOfNightMare_4th::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({ 1250, -532 });
-	_Portal->SetMoveMap("ClockTowerOfNightMare_5th");
+	_Portal->SetMoveMap("09.ClockTowerOfNightMare_5th");
 
 	_Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({ 750, -2900 });
-	_Portal->SetMoveMap("ClockTowerOfNightMare_3th");
+	_Portal->SetMoveMap("07.ClockTowerOfNightMare_3th");
 
 	std::shared_ptr<LinkPortal> _LinkPortal1 = CreateActor<LinkPortal>(UpdateOrder::Portal);
 	_LinkPortal1->Transform.SetLocalPosition({ 920, -2970 });

@@ -28,20 +28,11 @@ void RenderActor::LevelEnd(GameEngineLevel* _NextLevel)
 
 void RenderActor::Start()
 {
-	// GameEngineInput::AddInputObject(this);
+
 }
 
 void RenderActor::Update(float _Delta)
 {
-	//if (true == GameEngineInput::IsDown(VK_F5, this))
-	//{
-	//	Renderer->On();
-	//}
-
-	//if (true == GameEngineInput::IsDown(VK_F6, this))
-	//{
-	//	Renderer->Off();
-	//}
 }
 
 void RenderActor::Release()

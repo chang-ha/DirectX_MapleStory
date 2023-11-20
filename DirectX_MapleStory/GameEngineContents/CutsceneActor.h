@@ -13,7 +13,7 @@ public:
 	CutsceneActor& operator=(const CutsceneActor& _Other) = delete;
 	CutsceneActor& operator=(CutsceneActor&& _Other) noexcept = delete;
 
-	void Init(std::string_view _BossName, std::string_view _NextLevelName);
+	void Init(std::string_view _BossName);
 
 protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -21,7 +21,6 @@ protected:
 
 private:
 	std::string BossName = "";
-	std::string NextLevelName = "";
 	std::shared_ptr<GameEngineUIRenderer> CutRenderer = nullptr;
 };
 

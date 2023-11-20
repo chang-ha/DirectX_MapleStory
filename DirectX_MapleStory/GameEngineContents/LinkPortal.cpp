@@ -1,6 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "LinkPortal.h"
 #include "Player.h"
+#include "ReleaseFunction.h"
 
 float LinkPortal::LinkPortalDelayTime = 0.0f;
 
@@ -82,6 +83,11 @@ void LinkPortal::Release()
 	{
 		PortalCollision->Death();
 		PortalCollision = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find("LinkPortal"))
+	{
+		ReleaseFunction::FolderRelease("LinkPortal", "LinkPortal_");
 	}
 }
 

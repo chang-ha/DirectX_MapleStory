@@ -59,6 +59,7 @@ protected:
 	void AttackUpdate(float _Delta);
 	void DeathUpdate(float _Delta);
 
+	std::string PhaseNumber = "";
 	Golem_Phase Phase = Golem_Phase::Phase1;
 	GolemState State = GolemState::Ready;
 	std::shared_ptr<GameEngineCollision> GolemCollision = nullptr;

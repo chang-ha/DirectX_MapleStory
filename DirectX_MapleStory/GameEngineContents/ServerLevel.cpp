@@ -19,10 +19,13 @@ ServerLevel::~ServerLevel()
 
 void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "01.TitleLevel";
+	NextLevel = "03.CharacterSelect";
+
 	ContentLevel::LevelStart(_PrevLevel);
 	FadeInObject->Off();
 
-	FadeOutObject->SetChangeLevel("3.CharacterSelect");
+	FadeOutObject->SetChangeLevel("03.CharacterSelect");
 	FadeOutObject->SetFadeSpeed(2.0f);
 
 	// Server Animation Logo
@@ -103,7 +106,7 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			std::shared_ptr<ContentButton> _MentButton = _Ment->GetOkButton();
 			_MentButton->SetButtonClickEndEvent([&]()
 				{
-					FadeOutObject->SetChangeLevel("1.TitleLevel");
+					FadeOutObject->SetChangeLevel("01.TitleLevel");
 					FadeOutObject->FadeStart();
 				});
 		});

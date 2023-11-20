@@ -40,6 +40,12 @@ void ContentBackGround::Release()
 		BackGroundRenderer->Death();
 		BackGroundRenderer = nullptr;
 	}
+
+	if (nullptr != GameEngineSprite::Find(BackGroundName))
+	{
+		GameEngineTexture::Release(BackGroundName);
+		GameEngineSprite::Release(BackGroundName);
+	}
 }
 
 void ContentBackGround::Init(std::string_view _BackGroundName, const float4& _BackGroundScale)

@@ -4,9 +4,12 @@
 #include "ContentButton.h"
 #include "ContentLevel.h"
 #include "Player.h"
+#include "ReleaseFunction.h"
 
 void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName)
 {
+	CancelButtonName = _CancelButtonName;
+
 	if (nullptr == GameEngineSprite::Find("NpcMent_BG.png"))
 	{
 		GameEngineFile File;
@@ -36,7 +39,7 @@ void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _N
 
 	CancelButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
 	CancelButton->SetParent(this, static_cast<int>(UpdateOrder::UI));
-	CancelButton->Init(_CancelButtonName);
+	CancelButton->Init(CancelButtonName);
 	CancelButton->Transform.SetLocalPosition({210, -79});
 
 	CancelButton->SetButtonClickEndEvent([&]()
@@ -93,6 +96,14 @@ void OneButtonNpcMentFrame::Release()
 		CancelButton->Death();
 		CancelButton = nullptr;
 	}
+
+	if (nullptr != GameEngineSprite::Find("NpcMent_BG.png"))
+	{
+		GameEngineTexture::Release("NpcMent_BG.png");
+		GameEngineSprite::Release("NpcMent_BG.png");
+	}
+
+	ContentButton::ReleaseButton(CancelButtonName);
 }
 
 void OneButtonNpcMentFrame::MentUpdate(float _Delta)
@@ -134,11 +145,13 @@ void OneButtonNpcMentFrame::SkipUpdate(float _Delta)
 
 void TwoButtonNpcMentFrame::StructStart(class ContentNpc* _Parent, std::string_view _NpcName, std::string_view _CancelButtonName, std::string_view _OkButtonName, std::function<void()> _OkButtonEndFunction /*= nullptr*/)
 {
+	OkButtonName = _OkButtonName;
+
 	OneButtonNpcMentFrame::StructStart(_Parent, _NpcName, _CancelButtonName);
 
 	OkButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);
 	OkButton->SetParent(this, static_cast<int>(UpdateOrder::UI));
-	OkButton->Init(_OkButtonName);
+	OkButton->Init(OkButtonName);
 	OkButton->Transform.SetLocalPosition({ 140, -79 });
 
 	if (nullptr == _OkButtonEndFunction)
@@ -160,6 +173,8 @@ void TwoButtonNpcMentFrame::Release()
 		OkButton->Death();
 		OkButton = nullptr;
 	}
+
+	ContentButton::ReleaseButton(OkButtonName);
 }
 
 ContentNpc::ContentNpc()
@@ -174,13 +189,13 @@ ContentNpc::~ContentNpc()
 
 void ContentNpc::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	Death();
-
 	if (nullptr != Ment)
 	{
 		Ment->Death();
 		Ment = nullptr;
 	}
+
+	Death();
 }
 
 void ContentNpc::Start()
@@ -241,6 +256,17 @@ void ContentNpc::Release()
 	{
 		NpcCollision->Death();
 		NpcCollision = nullptr;
+	}
+
+	if (nullptr != GameEngineSprite::Find(NpcName))
+	{
+		ReleaseFunction::FolderRelease(NpcName, NpcName + "_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Npc_NameTag.png"))
+	{
+		GameEngineTexture::Release("Npc_NameTag.png");
+		GameEngineSprite::Release("Npc_NameTag.png");
 	}
 }
 

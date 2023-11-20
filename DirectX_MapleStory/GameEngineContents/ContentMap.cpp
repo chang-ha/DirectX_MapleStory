@@ -15,6 +15,7 @@ ContentMap::~ContentMap()
 
 void ContentMap::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	Death();
 	IsCollisionDebug = false;
 }
 
@@ -65,14 +66,16 @@ void ContentMap::CreateBaseColorMap(const float4& _Color)
 
 void ContentMap::InitMap(std::string_view _MapName)
 {
-	if (nullptr == GameEngineTexture::Find(_MapName))
+	MapName = _MapName;
+
+	if (nullptr == GameEngineTexture::Find(MapName))
 	{
 		GameEnginePath Path;
 		Path.SetCurrentPath();
 		Path.MoveParentToExistsChild("ContentResources");
 		Path.MoveChild("ContentResources\\Textures\\Map\\");
-		GameEngineTexture::Load(Path.GetStringPath() + std::string(_MapName.data()));
-		GameEngineSprite::CreateSingle(_MapName);
+		GameEngineTexture::Load(Path.GetStringPath() + MapName);
+		GameEngineSprite::CreateSingle(MapName);
 	}
 
 	if (nullptr == MapRenderer)
@@ -81,24 +84,25 @@ void ContentMap::InitMap(std::string_view _MapName)
 		MapRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
 	}
 
-	// MapName = _MapName;
-	MapRenderer->SetSprite(_MapName);
+	MapRenderer->SetSprite(MapName);
 	
-	float4 HalfMapScale = GameEngineTexture::Find(_MapName)->GetScale().Half();
+	float4 HalfMapScale = GameEngineTexture::Find(MapName)->GetScale().Half();
 	HalfMapScale.Y *= -1.0f;
 	this->Transform.SetLocalPosition(HalfMapScale);
 }
 
-void ContentMap::InitMapCollision(std::string_view _MapName)
+void ContentMap::InitMapCollision(std::string_view _MapCollisionName)
 {
-	if (nullptr == GameEngineTexture::Find(_MapName))
+	MapCollisionName = _MapCollisionName;
+
+	if (nullptr == GameEngineTexture::Find(MapCollisionName))
 	{
 		GameEnginePath Path;
 		Path.SetCurrentPath();
 		Path.MoveParentToExistsChild("ContentResources");
 		Path.MoveChild("ContentResources\\Textures\\Map\\");
-		GameEngineTexture::Load(Path.GetStringPath() + std::string(_MapName.data()));
-		GameEngineSprite::CreateSingle(_MapName);
+		GameEngineTexture::Load(Path.GetStringPath() + MapCollisionName);
+		GameEngineSprite::CreateSingle(MapCollisionName);
 	}
 
 	if (nullptr == MapCollisionRenderer)
@@ -107,26 +111,27 @@ void ContentMap::InitMapCollision(std::string_view _MapName)
 		MapCollisionRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::map });
 	}
 
-	MapCollisionRenderer->SetSprite(_MapName);
+	MapCollisionRenderer->SetSprite(MapCollisionName);
 	MapCollisionRenderer->Off();
 
-	MapCollisionTexture = GameEngineTexture::Find(_MapName);
+	MapCollisionTexture = GameEngineTexture::Find(MapCollisionName);
 	MapScale = MapCollisionTexture->GetScale();
 	float4 HalfMapScale = MapScale.Half();
 	HalfMapScale.Y *= -1.0f;
 	this->Transform.SetLocalPosition(HalfMapScale);
 }
 
-void ContentMap::InitFootHold(std::string_view _MapName)
+void ContentMap::InitFootHold(std::string_view _FootHoldName)
 {
-	if (nullptr == GameEngineTexture::Find(_MapName))
+	FootHoldName = _FootHoldName;
+	if (nullptr == GameEngineTexture::Find(FootHoldName))
 	{
 		GameEnginePath Path;
 		Path.SetCurrentPath();
 		Path.MoveParentToExistsChild("ContentResources");
 		Path.MoveChild("ContentResources\\Textures\\Map\\");
-		GameEngineTexture::Load(Path.GetStringPath() + std::string(_MapName.data()));
-		GameEngineSprite::CreateSingle(_MapName);
+		GameEngineTexture::Load(Path.GetStringPath() + FootHoldName);
+		GameEngineSprite::CreateSingle(FootHoldName);
 	}
 
 	if (nullptr == FootHoldRenderer)
@@ -135,7 +140,7 @@ void ContentMap::InitFootHold(std::string_view _MapName)
 		FootHoldRenderer->Transform.SetLocalPosition({ 0, 0, RenderDepth::foothold });
 	}
 
-	FootHoldRenderer->SetSprite(_MapName);
+	FootHoldRenderer->SetSprite(FootHoldName);
 	float4 HalfMapScale = MapScale.Half();
 	HalfMapScale.Y *= -1.0f;
 	this->Transform.SetLocalPosition(HalfMapScale);
@@ -161,5 +166,29 @@ void ContentMap::Release()
 	{
 		MapCollisionRenderer->Death();
 		MapCollisionRenderer = nullptr;
+	}
+
+	if (nullptr != FootHoldRenderer)
+	{
+		FootHoldRenderer->Death();
+		FootHoldRenderer = nullptr;
+	}
+
+	if ("" != MapName && nullptr != GameEngineSprite::Find(MapName))
+	{
+		GameEngineTexture::Release(MapName);
+		GameEngineSprite::Release(MapName);
+	}
+
+	if ("" != MapCollisionName && nullptr != GameEngineSprite::Find(MapCollisionName))
+	{
+		GameEngineTexture::Release(MapCollisionName);
+		GameEngineSprite::Release(MapCollisionName);
+	}
+
+	if ("" != FootHoldName && nullptr != GameEngineSprite::Find(FootHoldName))
+	{
+		GameEngineTexture::Release(FootHoldName);
+		GameEngineSprite::Release(FootHoldName);
 	}
 }

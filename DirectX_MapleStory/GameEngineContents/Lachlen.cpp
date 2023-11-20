@@ -11,6 +11,7 @@
 #include "ClockTowerOfNightMare_1th.h"
 #include "FireWork.h"
 #include "ContentNpc.h"
+#include "ReleaseFunction.h"
 
 Lachlen::Lachlen()
 {
@@ -24,6 +25,9 @@ Lachlen::~Lachlen()
 
 void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "03.CharacterSelect";
+	NextLevel = "05.ClockTowerOfNightMare_1th";
+
 	ContentLevel::LevelStart(_PrevLevel);
 
 	if (nullptr == GameEngineSprite::Find("WaterMelonMen"))
@@ -242,7 +246,7 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({ 3770, -825 });
-	_Portal->SetMoveMap("ClockTowerOfNightMare_1th");
+	_Portal->SetMoveMap("05.ClockTowerOfNightMare_1th");
 
 	for (size_t i = 0; i < 8; i++)
 	{
@@ -368,28 +372,38 @@ void Lachlen::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 
-	if (nullptr != GameEngineSprite::Find("Lachlen_NBG.png"))
+	if (nullptr != GameEngineSprite::Find("WaterMelonMen"))
 	{
-		GameEngineTexture::Release("Lachlen_NBG.png");
-		GameEngineSprite::Release("Lachlen_NBG.png");
+		ReleaseFunction::FolderRelease("WaterMelonMen", "WaterMelonMen_");
 	}
 
-	if (nullptr != GameEngineSprite::Find("Collision_Lacheln.png"))
+	if (nullptr != GameEngineSprite::Find("Boat1"))
 	{
-		GameEngineTexture::Release("Collision_Lacheln.png");
-		GameEngineSprite::Release("Collision_Lacheln.png");
+		ReleaseFunction::FolderRelease("Boat1", "Boat1_");
 	}
 
-	//if (nullptr != GameEngineSprite::Find("BG_Lachlen_Sky.png"))
-	//{
-	//	GameEngineTexture::Release("BG_Lachlen_Sky.png");
-	//	GameEngineSprite::Release("BG_Lachlen_Sky.png");
-	//}
-
-	if (nullptr != GameEngineSprite::Find("BG_Lachlen_Water.png"))
+	if (nullptr != GameEngineSprite::Find("Wood1.png"))
 	{
-		GameEngineTexture::Release("BG_Lachlen_Water.png");
-		GameEngineSprite::Release("BG_Lachlen_Water.png");
+		GameEngineTexture::Release("Wood1.png");
+		GameEngineSprite::Release("Wood1.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Wood2.png"))
+	{
+		GameEngineTexture::Release("Wood2.png");
+		GameEngineSprite::Release("Wood2.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Wood3.png"))
+	{
+		GameEngineTexture::Release("Wood3.png");
+		GameEngineSprite::Release("Wood3.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Bridge.png"))
+	{
+		GameEngineTexture::Release("Bridge.png");
+		GameEngineSprite::Release("Bridge.png");
 	}
 
 	for (size_t i = 0; i < MapObjects.size(); i++)
@@ -425,9 +439,4 @@ void Lachlen::Start()
 void Lachlen::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
-}
-
-void Lachlen::ResourcesRelease()
-{
-
 }

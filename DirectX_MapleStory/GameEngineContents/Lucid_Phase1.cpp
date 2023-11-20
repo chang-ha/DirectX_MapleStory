@@ -15,6 +15,7 @@
 #include "Minimap.h"
 #include "BossTimer.h"
 #include "DeathCount.h"
+#include "ReleaseFunction.h"
 
 #define Lase_Cooldown 8.0f
 
@@ -32,9 +33,9 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	ContentLevel::LevelStart(_PrevLevel);
 
-	FadeOutObject->SetChangeLevel("5.Lucid_Next");
+	FadeOutObject->SetChangeLevel("13.Lucid_Next");
 
-	if (nullptr == GameEngineSprite::Find("Water.png"))
+	if (nullptr == GameEngineSprite::Find("BackObject1.png"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
@@ -54,11 +55,11 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser");
-		GameEngineSprite::CreateFolder("Phase1_S", Dir.GetStringPath() + "\\Phase1_S");
-		GameEngineSprite::CreateFolder("Phase1_M", Dir.GetStringPath() + "\\Phase1_M");
-		GameEngineSprite::CreateFolder("Phase1_L", Dir.GetStringPath() + "\\Phase1_L");
-		GameEngineSprite::CreateFolder("Phase1_XL", Dir.GetStringPath() + "\\Phase1_XL");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser\\");
+		GameEngineSprite::CreateFolder(Dir.GetStringPath() + "Phase1_S");
+		GameEngineSprite::CreateFolder(Dir.GetStringPath() + "Phase1_M");
+		GameEngineSprite::CreateFolder(Dir.GetStringPath() + "Phase1_L");
+		GameEngineSprite::CreateFolder(Dir.GetStringPath() + "Phase1_XL");
 	}
 
 	if (nullptr == GameEngineSprite::Find("Phase1_Hit"))
@@ -66,7 +67,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
 		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser\\Phase1_Hit");
-		GameEngineSprite::CreateFolder("Phase1_Hit", Dir.GetStringPath());
+		GameEngineSprite::CreateFolder(Dir.GetStringPath());
 	}
 
 	if (nullptr == GameEngineSound::FindSound("WierldForestIntheGirlsdream.mp3"))
@@ -246,6 +247,42 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 		MapObjects[i] = nullptr;
 	}
 
+	if (nullptr != GameEngineSprite::Find("BackObject1.png"))
+	{
+		GameEngineTexture::Release("BackObject1.png");
+		GameEngineSprite::Release("BackObject1.png");
+
+		GameEngineTexture::Release("BackObject2.png");
+		GameEngineSprite::Release("BackObject2.png");
+
+		GameEngineTexture::Release("BackObject3.png");
+		GameEngineSprite::Release("BackObject3.png");
+
+		GameEngineTexture::Release("BackTree1.png");
+		GameEngineSprite::Release("BackTree1.png");
+
+		GameEngineTexture::Release("BackTree2.png");
+		GameEngineSprite::Release("BackTree2.png");
+
+		GameEngineTexture::Release("BackTree3.png");
+		GameEngineSprite::Release("BackTree3.png");
+
+		GameEngineTexture::Release("BackTree4.png");
+		GameEngineSprite::Release("BackTree4.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Phase1_S"))
+	{
+		ReleaseFunction::FolderRelease("Phase1_S", "Phase1_S_");
+		ReleaseFunction::FolderRelease("Phase1_M", "Phase1_M_");
+		ReleaseFunction::FolderRelease("Phase1_L", "Phase1_L_");
+		ReleaseFunction::FolderRelease("Phase1_XL", "Phase1_XL_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Phase1_Hit"))
+	{
+		ReleaseFunction::FolderRelease("Phase1_Hit", "Phase1_Hit_");
+	}
 	MapObjects.clear();
 }
 

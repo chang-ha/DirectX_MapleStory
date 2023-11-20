@@ -9,17 +9,19 @@
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
-	if (nullptr == GameEngineSprite::Find(_SpriteName))
+	SpriteName = _SpriteName;
+
+	if (nullptr == GameEngineSprite::Find(SpriteName))
 	{
 		GameEngineFile File;
 		File.MoveParentToExistsChild("ContentResources");
-		File.MoveChild("ContentResources\\Textures\\MapObject\\FlowObject\\" + std::string(_SpriteName));
+		File.MoveChild("ContentResources\\Textures\\MapObject\\FlowObject\\" + SpriteName);
 		GameEngineTexture::Load(File.GetStringPath());
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
 
 	RenderActor::Init(RenderOrder::MAPOBJECT, RenderDepth::mapobject);
-	Renderer->SetSprite(_SpriteName);
+	Renderer->SetSprite(SpriteName);
 	ObjectSpeed = _ObjectSpeed;
 	StartPos = _StartPos;
 	EndPos = _EndPos;
@@ -32,6 +34,15 @@ void FlowObject::Update(float _Delta)
 	if (EndPos.X <= Transform.GetWorldPosition().X)
 	{
 		Transform.SetLocalPosition(StartPos);
+	}
+}
+
+void FlowObject::Release()
+{
+	if (nullptr != GameEngineSprite::Find(SpriteName))
+	{
+		GameEngineTexture::Release(SpriteName);
+		GameEngineSprite::Release(SpriteName);
 	}
 }
 
@@ -70,6 +81,17 @@ void ContentLevel::Start()
 
 void ContentLevel::Update(float _Delta)
 {
+	if ("" != PrevLevel && true == GameEngineInput::IsDown(VK_F5, this))
+	{
+		FadeOutObject->SetChangeLevel(PrevLevel);
+		FadeOutObject->FadeStart();
+	}
+
+	if ("" != NextLevel && true == GameEngineInput::IsDown(VK_F6, this))
+	{
+		FadeOutObject->SetChangeLevel(NextLevel);
+		FadeOutObject->FadeStart();
+	}
 }
 
 void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)

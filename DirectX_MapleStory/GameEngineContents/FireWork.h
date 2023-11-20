@@ -32,9 +32,9 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 	void Start() override;
-	void Update(float _Delta) override;
 	void Release() override;
 private:
+	int Type = -1;
 	std::shared_ptr<GameEngineSpriteRenderer> FireWorkRenderer = nullptr;
 
 	void Init(int _Type);

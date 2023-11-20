@@ -44,6 +44,9 @@ CharacterSelect::~CharacterSelect()
 
 void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "02.ServerLevel";
+	NextLevel = "04.Lachlen";
+
 	AllCharacter.reserve(12);
 
 	ContentLevel::LevelStart(_PrevLevel);
@@ -231,7 +234,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		InfoFrame.GameStartButton->SetButtonClickEndEvent([&]()
 			{
 				FadeOutObject->SetFadeSpeed(1.0f);
-				FadeOutObject->SetChangeLevel("Lachlen");
+				FadeOutObject->SetChangeLevel("04.Lachlen");
 				FadeOutObject->FadeStart();
 			});
 		AllButton.push_back(InfoFrame.GameStartButton);
@@ -307,7 +310,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button->SetButtonClickEndEvent([&]()
 		{
 			FadeOutObject->SetFadeSpeed(2.0f);
-			FadeOutObject->SetChangeLevel("2.ServerLevel");
+			FadeOutObject->SetChangeLevel("02.ServerLevel");
 			FadeOutObject->FadeStart();
 		});
 	AllButton.push_back(_Button);
@@ -323,7 +326,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 			std::shared_ptr<ContentButton> _MentButton = _Ment->GetOkButton();
 			_MentButton->SetButtonClickEndEvent([&]()
 				{
-					FadeOutObject->SetChangeLevel("1.TitleLevel");
+					FadeOutObject->SetChangeLevel("01.TitleLevel");
 					FadeOutObject->FadeStart();
 				});
 		});
@@ -526,6 +529,19 @@ void CharacterSelect::Update(float _Delta)
 
 	if (true == IsCharacterSelect)
 	{
+		if (true == GameEngineInput::IsDown(VK_RETURN, this))
+		{
+			FadeOutObject->SetChangeLevel("04.Lachlen");
+			FadeOutObject->FadeStart();
+			return;
+		}
+
+		if (true == SelectCollision->Collision(CollisionOrder::Mouse) && GameEngineInput::IsDown(VK_LBUTTON, this))
+		{
+			FadeOutObject->SetChangeLevel("04.Lachlen");
+			FadeOutObject->FadeStart();
+			return;
+		}
 		return;
 	}
 
