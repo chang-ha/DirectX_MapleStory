@@ -85,6 +85,7 @@ void Player::Start()
 		FilePath.MoveChild("ContentResources\\Sounds\\Skill\\");
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Jump.mp3");
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Double_Jump.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "UsePortion.mp3");
 	}
 
 	// Create Animation
@@ -150,7 +151,7 @@ void Player::Start()
 	{
 		NameRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::PLAY);
 		NameRenderer->Transform.SetLocalPosition({ 0, -5.5f, RenderDepth::play });
-		NameRenderer->SetText("돋움", "윈드브레이커", 11.0f, {1.0f, 1.0f, 0.6f}, FW1_CENTER);
+		NameRenderer->SetText("돋움", "윈드브레이커", 11.0f, /*{1.0f, 1.0f, 0.6f}*/ /*{1.0f, 0.4f, 0.0f }*/{0.0f, 0.73f, 0.06f}, FW1_CENTER);
 	}
 
 	if (nullptr == SkillManagerActor)
@@ -172,6 +173,7 @@ void Player::Update(float _Delta)
 
 	if (true == GameEngineInput::IsDown('Q', this))
 	{
+		GameEngineSoundPlayer PortionPlayer = GameEngineSound::SoundPlay("UsePortion.mp3");
 		HP = PLAYER_MAX_HP;
 		MP = PLAYER_MAX_MP;
 	}
@@ -184,8 +186,6 @@ void Player::Update(float _Delta)
 	{
 		HitCollision->On();
 	}
-
-
 
 	DirCheck();
 	LadderCheck();
@@ -202,7 +202,7 @@ void Player::Update(float _Delta)
 	//	GravityReset();
 	//}
 	 
-	if (true == IsGround /*&& 0.0f >= MoveVectorForce.Y*/ && (PlayerState::Jump != State && PlayerState::WindWalk != State && PlayerState::Walk != State))
+	if (true == IsGround && 0.0f >= MoveVectorForce.Y && (PlayerState::Jump != State && PlayerState::WindWalk != State && PlayerState::Walk != State))
 	{
 		MoveVectorForceReset();
 		GravityReset();

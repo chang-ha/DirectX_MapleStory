@@ -122,7 +122,7 @@ void Dreamkeeper::AttackStart()
 	}
 
 	FieldMonsterPlayer = GameEngineSound::SoundPlay("DreamKeeper_Attack.mp3");
-	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
+	FieldMonsterPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 }
 
 void Dreamkeeper::DeathStart()
@@ -143,5 +143,5 @@ void Dreamkeeper::DeathStart()
 	}
 
 	FieldMonsterPlayer = GameEngineSound::SoundPlay("DreamKeeper_Death.mp3");
-	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
+	FieldMonsterPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 }

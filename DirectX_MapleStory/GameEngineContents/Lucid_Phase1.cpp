@@ -196,6 +196,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	if (false == BGMPlayer.IsPlaying())
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("WierldForestIntheGirlsdream.mp3", 10000);
+		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 		return;
 	}
 
@@ -204,6 +205,7 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		BGMPlayer.Stop();
 		BGMPlayer = GameEngineSound::SoundPlay("WierldForestIntheGirlsdream.mp3", 10000);
+		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 	}
 }
 

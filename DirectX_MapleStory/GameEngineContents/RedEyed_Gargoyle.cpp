@@ -100,7 +100,7 @@ void RedEyed_Gargoyle::AttackStart()
 	}
 
 	FieldMonsterPlayer = GameEngineSound::SoundPlay("Gargoyle_Attack.mp3");
-	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
+	FieldMonsterPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 }
 
 void RedEyed_Gargoyle::DeathStart()
@@ -121,5 +121,5 @@ void RedEyed_Gargoyle::DeathStart()
 	}
 
 	FieldMonsterPlayer = GameEngineSound::SoundPlay("Gargoyle_Death.mp3");
-	FieldMonsterPlayer.SetVolume(FIELDMONSTER_VOLUME);
+	FieldMonsterPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 }

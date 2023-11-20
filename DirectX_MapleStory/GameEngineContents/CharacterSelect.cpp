@@ -248,20 +248,20 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 		InfoFrame.JobName->Transform.SetLocalPosition({ 65, 43.0f });
 
 		InfoFrame.STR = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-		InfoFrame.STR->SetText("메이플스토리", "4", 12.0f, float4::WHITE, FW1_RIGHT);
-		InfoFrame.STR->Transform.SetLocalPosition({ -5, 17.0f });
+		InfoFrame.STR->SetText("돋움", "4", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.STR->Transform.SetLocalPosition({ -5, 18.0f });
 
 		InfoFrame.DEX = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-		InfoFrame.DEX->SetText("메이플스토리", "1300", 12.0f, float4::WHITE, FW1_RIGHT);
-		InfoFrame.DEX->Transform.SetLocalPosition({ -5, -7.0f });
+		InfoFrame.DEX->SetText("돋움", "1300", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.DEX->Transform.SetLocalPosition({ -5, -6.0f });
 
 		InfoFrame.INT = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-		InfoFrame.INT->SetText("메이플스토리", "4", 12.0f, float4::WHITE, FW1_RIGHT);
-		InfoFrame.INT->Transform.SetLocalPosition({ 65, 17.0f });
+		InfoFrame.INT->SetText("돋움", "4", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.INT->Transform.SetLocalPosition({ 65, 18.0f });
 
 		InfoFrame.LUK = InfoFrame.CharacterInfo_BG->CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-		InfoFrame.LUK->SetText("메이플스토리", "4", 12.0f, float4::WHITE, FW1_RIGHT);
-		InfoFrame.LUK->Transform.SetLocalPosition({ 65, -7.0f });
+		InfoFrame.LUK->SetText("돋움", "4", 12.0f, float4::WHITE, FW1_RIGHT);
+		InfoFrame.LUK->Transform.SetLocalPosition({ 65, -6.0f });
 	}
 	InfoFrame.FrameOff();
 
@@ -299,7 +299,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 
 	_Actor = CreateActor<UIRenderActor>(UpdateOrder::UI);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
-	_Actor->Renderer->SetText("메이플스토리", "윈드브레이커", 14.0f, float4::WHITE, FW1_CENTER);
+	_Actor->Renderer->SetText("돋움", "윈드브레이커", 11.0f, float4::WHITE, FW1_CENTER);
 	_Actor->Transform.SetLocalPosition({ 180, -362 });
 
 	GetMainCamera()->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());
@@ -461,6 +461,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	if (false == BGMPlayer.IsPlaying())
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
+		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 		return;
 	}
 
@@ -469,6 +470,7 @@ void CharacterSelect::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		BGMPlayer.Stop();
 		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
+		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 	}
 }
 

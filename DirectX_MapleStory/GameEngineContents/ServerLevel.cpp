@@ -64,6 +64,15 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("ServerEnter.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentResources");
+		FilePath.MoveChild("ContentResources\\Sounds\\UI\\ServerEnter.mp3");
+		GameEngineSound::SoundLoad(FilePath.GetStringPath());
+	}
+
 	std::shared_ptr<RenderActor> _Actor = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 	_Actor->Init(RenderOrder::UI, RenderDepth::ui);
 	_Actor->Renderer->CreateAnimation("ServerLogo", "ServerLogo");
@@ -117,6 +126,7 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	_Button->Transform.SetLocalPosition({ 1260, -50 });
 	_Button->SetButtonClickEndEvent([&]()
 		{
+			GameEngineSoundPlayer SoundPlayer = GameEngineSound::SoundPlay("ServerEnter.mp3");
 			FadeOutObject->FadeStart();
 		});
 	_Button->SetButtonCollisionScale({90, 15});
@@ -153,6 +163,7 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (false == BGMPlayer.IsPlaying())
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
+		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 		return;
 	}
 
@@ -161,6 +172,7 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		BGMPlayer.Stop();
 		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
+		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 	}
 }
 

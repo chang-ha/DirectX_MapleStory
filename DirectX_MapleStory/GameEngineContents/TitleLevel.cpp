@@ -69,6 +69,7 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	BGMPlayer.Stop();
 	BGMPlayer = GameEngineSound::SoundPlay("NxLogo.mp3", 0);
+	BGMPlayer.SetVolume(GlobalValue::BGVolume);
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)

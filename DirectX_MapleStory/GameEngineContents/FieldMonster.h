@@ -2,8 +2,6 @@
 #include "ContentActor.h"
 #include "AttackFunction.h"
 
-#define FIELDMONSTER_VOLUME 0.7f
-
 enum class FieldMonsterState
 {
 	Ready,
