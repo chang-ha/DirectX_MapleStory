@@ -66,20 +66,20 @@ void MapleStoryCore::Start()
 
 	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
 	GameEngineCore::CreateLevel<ServerLevel>("2.ServerLevel");
-	GameEngineCore::CreateLevel<Boss_WaitingRoom>("Boss_WaitingRoom");
-	GameEngineCore::CreateLevel<Lucid_Enter>("3.Lucid_Enter");
-	GameEngineCore::CreateLevel<Lucid_Phase1>("4.Lucid_Phase1");
-	GameEngineCore::CreateLevel<Lucid_Next>("5.Lucid_Next");
-	GameEngineCore::CreateLevel<Lucid_Phase2>("6.Lucid_Phase2");
-	GameEngineCore::CreateLevel<Lachlen>("Lachlen");
-	GameEngineCore::CreateLevel<ClockTowerOfNightMare_1th>("ClockTowerOfNightMare_1th");
-	GameEngineCore::CreateLevel<ClockTowerOfNightMare_2th>("ClockTowerOfNightMare_2th");
-	GameEngineCore::CreateLevel<ClockTowerOfNightMare_3th>("ClockTowerOfNightMare_3th");
-	GameEngineCore::CreateLevel<ClockTowerOfNightMare_4th>("ClockTowerOfNightMare_4th");
-	GameEngineCore::CreateLevel<ClockTowerOfNightMare_5th>("ClockTowerOfNightMare_5th");
-	GameEngineCore::CreateLevel<CharacterSelect>("CharacterSelect");
+	GameEngineCore::CreateLevel<CharacterSelect>("3.CharacterSelect");
+	GameEngineCore::CreateLevel<Lachlen>("4.Lachlen");
+	GameEngineCore::CreateLevel<ClockTowerOfNightMare_1th>("5.ClockTowerOfNightMare_1th");
+	GameEngineCore::CreateLevel<ClockTowerOfNightMare_2th>("6.ClockTowerOfNightMare_2th");
+	GameEngineCore::CreateLevel<ClockTowerOfNightMare_3th>("7.ClockTowerOfNightMare_3th");
+	GameEngineCore::CreateLevel<ClockTowerOfNightMare_4th>("8.ClockTowerOfNightMare_4th");
+	GameEngineCore::CreateLevel<ClockTowerOfNightMare_5th>("9.ClockTowerOfNightMare_5th");
+	GameEngineCore::CreateLevel<Boss_WaitingRoom>("10.Boss_WaitingRoom");
+	GameEngineCore::CreateLevel<Lucid_Enter>("11.Lucid_Enter");
+	GameEngineCore::CreateLevel<Lucid_Phase1>("12.Lucid_Phase1");
+	GameEngineCore::CreateLevel<Lucid_Next>("13.Lucid_Next");
+	GameEngineCore::CreateLevel<Lucid_Phase2>("14.Lucid_Phase2");
 
-	GameEngineCore::ChangeLevel("Lachlen");
+	GameEngineCore::ChangeLevel("3.CharacterSelect");
 }
 
 

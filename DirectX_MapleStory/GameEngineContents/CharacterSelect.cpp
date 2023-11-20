@@ -600,11 +600,59 @@ void CharacterSelect::ResourcesRelease()
 
 	if (nullptr != GameEngineSprite::Find("Render_Idle"))
 	{
-		GameEngineSprite::Release("Render_Idle");
+		ReleaseFunction::FolderRelease("Render_Idle", "Idle_");
 	}
 
 	if (nullptr != GameEngineSprite::Find("Render_Walk"))
 	{
-		GameEngineSprite::Release("Render_Walk");
+		ReleaseFunction::FolderRelease("Render_Walk", "Walk_");
 	}
+
+	if (nullptr != GameEngineSprite::Find("CharSelectEffect0"))
+	{
+		ReleaseFunction::FolderRelease("CharSelectEffect0", "CharSelectEffect0_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("CharSelectEffect1"))
+	{
+		ReleaseFunction::FolderRelease("CharSelectEffect1", "CharSelectEffect1_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Button_ChangeCP.png"))
+	{
+		GameEngineTexture::Release("Button_ChangeCP.png");
+		GameEngineSprite::Release("Button_ChangeCP.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Button_SecondPassword.png"))
+	{
+		GameEngineTexture::Release("Button_SecondPassword.png");
+		GameEngineSprite::Release("Button_SecondPassword.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Button_Otp.png"))
+	{
+		GameEngineTexture::Release("Button_Otp.png");
+		GameEngineSprite::Release("Button_Otp.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("PageNumber.png"))
+	{
+		GameEngineTexture::Release("PageNumber.png");
+		GameEngineSprite::Release("PageNumber.png");
+	}
+
+	if (nullptr != GameEngineSprite::Find("NameTag.png"))
+	{
+		GameEngineTexture::Release("NameTag.png");
+		GameEngineSprite::Release("NameTag.png");
+	}
+
+	ContentButton::ReleaseButton("PrevButton");
+	ContentButton::ReleaseButton("GoFirstLevel");
+	ContentButton::ReleaseButton("LeftButton");
+	ContentButton::ReleaseButton("PrevButton");
+	ContentButton::ReleaseButton("CreateCharacter");
+	ContentButton::ReleaseButton("DeleteCharacter");
+	ContentButton::ReleaseButton("RightButton");
 }

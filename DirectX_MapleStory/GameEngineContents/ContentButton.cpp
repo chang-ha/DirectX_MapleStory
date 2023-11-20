@@ -102,28 +102,32 @@ void ContentButton::ReleaseButton(std::string_view _ButtonTextureName)
 {
 	if (nullptr != GameEngineSprite::Find(std::string(_ButtonTextureName) + "_Normal.png"))
 	{
+		GameEngineTexture::Release(std::string(_ButtonTextureName) + "_Normal.png");
 		GameEngineSprite::Release(std::string(_ButtonTextureName) + "_Normal.png");
 	}
 
 	if (nullptr != GameEngineSprite::Find(std::string(_ButtonTextureName) + "_MouseOver.png"))
 	{
+		GameEngineTexture::Release(std::string(_ButtonTextureName) + "_MouseOver.png");
 		GameEngineSprite::Release(std::string(_ButtonTextureName) + "_MouseOver.png");
 	}
 
 	if (nullptr != GameEngineSprite::Find(std::string(_ButtonTextureName) + "_Click.png"))
 	{
+		GameEngineTexture::Release(std::string(_ButtonTextureName) + "_Click.png");
 		GameEngineSprite::Release(std::string(_ButtonTextureName) + "_Click.png");
 	}
 
 	if (nullptr != GameEngineSprite::Find(std::string(_ButtonTextureName) + "_Disabled.png"))
 	{
+		GameEngineTexture::Release(std::string(_ButtonTextureName) + "_Disabled.png");
 		GameEngineSprite::Release(std::string(_ButtonTextureName) + "_Disabled.png");
 	}
 }
 
 void ContentButton::CalcuUItoMain()
 {
-	float4 Pos = /*ContentLevel::CurContentLevel->GetCamera(static_cast<int>(ECAMERAORDER::UI))->*/Transform.GetWorldPosition();
+	float4 Pos = Transform.GetWorldPosition();
 	const TransformData& MainTrans = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetConstTransformDataRef();
 	const TransformData& UITrans = ContentLevel::CurContentLevel->GetCamera(static_cast<int>(ECAMERAORDER::UI))->Transform.GetConstTransformDataRef();
 

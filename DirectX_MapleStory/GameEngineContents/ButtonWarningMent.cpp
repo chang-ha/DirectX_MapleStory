@@ -186,7 +186,17 @@ void ButtonWarningMent::Update(float _Delta)
 
 void ButtonWarningMent::Release()
 {
+	if (nullptr != GameEngineSprite::Find(BGName))
+	{
+		GameEngineTexture::Release(BGName);
+		GameEngineSprite::Release(BGName);
+	}
 
+	if (nullptr != GameEngineSprite::Find(WarningMentName))
+	{
+		GameEngineTexture::Release(WarningMentName);
+		GameEngineSprite::Release(WarningMentName);
+	}
 }
 
 void ButtonWarningMent::MoveUpdate(float _Delta)
@@ -218,26 +228,29 @@ void ButtonWarningMent::MoveUpdate(float _Delta)
 
 void ButtonWarningMent::Init(std::string_view _BGName, std::string_view _WarningMentName)
 {
-	if (nullptr == GameEngineSprite::Find(_BGName))
+	BGName = _BGName;
+	WarningMentName = _WarningMentName;
+
+	if (nullptr == GameEngineSprite::Find(BGName))
 	{
 		GameEngineFile File;
 		File.MoveParentToExistsChild("ContentResources");
-		File.MoveChild("ContentResources\\Textures\\UI\\ButtonWarningMent\\BG\\" + std::string(_BGName));
+		File.MoveChild("ContentResources\\Textures\\UI\\ButtonWarningMent\\BG\\" + BGName);
 		GameEngineTexture::Load(File.GetStringPath());
-		GameEngineSprite::CreateSingle(_BGName);
+		GameEngineSprite::CreateSingle(BGName);
 	}
 
-	if (nullptr == GameEngineSprite::Find(_WarningMentName))
+	if (nullptr == GameEngineSprite::Find(WarningMentName))
 	{
 		GameEngineFile File;
 		File.MoveParentToExistsChild("ContentResources");
-		File.MoveChild("ContentResources\\Textures\\UI\\ButtonWarningMent\\Ment\\" + std::string(_WarningMentName));
+		File.MoveChild("ContentResources\\Textures\\UI\\ButtonWarningMent\\Ment\\" + WarningMentName);
 		GameEngineTexture::Load(File.GetStringPath());
-		GameEngineSprite::CreateSingle(_WarningMentName);
+		GameEngineSprite::CreateSingle(WarningMentName);
 	}
 
-	MentObject->MentBG->SetSprite(_BGName);
-	MentObject->Ment->SetSprite(_WarningMentName);
+	MentObject->MentBG->SetSprite(BGName);
+	MentObject->Ment->SetSprite(WarningMentName);
 }
 
 std::shared_ptr<class ContentButton> ButtonWarningMent::GetOkButton()

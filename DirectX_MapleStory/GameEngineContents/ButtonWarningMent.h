@@ -52,6 +52,8 @@ public:
 	static std::shared_ptr<ButtonWarningMent> CreateTwoButtonMent();
 	
 protected:
+	std::string BGName = "";
+	std::string WarningMentName = "";
 	float MoveSpeed = 200.0f;
 	float RemainMoveX = MOVEPOS_X;
 	float RemainMoveY = MOVEPOS_Y;
