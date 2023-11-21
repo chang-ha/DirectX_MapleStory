@@ -48,6 +48,16 @@ void GameEngineConstantBuffer::PSSetting(UINT _Slot)
 	GameEngineCore::GetContext()->PSSetConstantBuffers(_Slot, 1, &Buffer);
 }
 
+void GameEngineConstantBuffer::CSSetting(UINT _Slot)
+{
+	if (nullptr == Buffer)
+	{
+		MsgBoxAssert(std::string(GetName()) + "만들어지지 않은 상수버퍼를 세팅하려고 했습니다.");
+	}
+
+	GameEngineCore::GetContext()->CSSetConstantBuffers(_Slot, 1, &Buffer);
+}
+
 void GameEngineConstantBuffer::ChangeData(const void* _Data, UINT _Size)
 {
 	if (nullptr == _Data)

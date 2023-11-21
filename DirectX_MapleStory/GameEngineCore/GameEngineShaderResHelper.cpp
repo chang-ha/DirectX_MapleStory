@@ -23,6 +23,9 @@ void GameEngineConstantBufferSetter::Setting()
 	case ShaderType::Pixel:
 		Res->PSSetting(BindPoint);
 		break;
+	case ShaderType::Compute:
+		Res->CSSetting(BindPoint);
+		break;
 	default:
 		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
 		break;
@@ -46,6 +49,9 @@ void GameEngineTextureSetter::Setting()
 	case ShaderType::Pixel:
 		Res->PSSetting(BindPoint);
 		break;
+	case ShaderType::Compute:
+		Res->CSSetting(BindPoint);
+		break;
 	default:
 		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
 		break;
@@ -64,6 +70,9 @@ void GameEngineTextureSetter::Reset()
 	case ShaderType::Pixel:
 		Res->PSReset(BindPoint);
 		break;
+	case ShaderType::Compute:
+		Res->CSReset(BindPoint);
+		break;
 	default:
 		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
 		break;
@@ -81,6 +90,9 @@ void GameEngineSamplerSetter::Setting()
 		break;
 	case ShaderType::Pixel:
 		Res->PSSetting(BindPoint);
+		break;
+	case ShaderType::Compute:
+		Res->CSSetting(BindPoint);
 		break;
 	default:
 		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
@@ -108,6 +120,9 @@ void GameEngineStructedBufferSetter::Setting()
 	case ShaderType::Pixel:
 		Res->PSSetting(BindPoint);
 		break;
+	case ShaderType::Compute:
+		Res->CSSetting(BindPoint);
+		break;
 	default:
 		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
 		break;
@@ -126,6 +141,9 @@ void GameEngineStructedBufferSetter::Reset()
 		break;
 	case ShaderType::Pixel:
 		Res->VSReset(BindPoint);
+		break;
+	case ShaderType::Compute:
+		Res->CSReset(BindPoint);
 		break;
 	default:
 		MsgBoxAssert("처리할수 없는 쉐이더 세팅 유형입니다.");
@@ -244,6 +262,7 @@ void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, GameEn
 			SamplerSetters.insert(std::make_pair(UpperName, NewSetter));
 			break;
 		}
+		case D3D11_SIT_UAV_RWSTRUCTURED:
 		case D3D_SIT_STRUCTURED:
 		{
 			// 스트럭처드 버퍼는 상수버퍼와는 다르다.

@@ -82,6 +82,9 @@
     <Filter Include="GUI\Engine">
       <UniqueIdentifier>{dbef2572-e55e-4632-9bb2-5ce8732aa297}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Rendering\Compute">
+      <UniqueIdentifier>{0a987524-ef21-469f-9ed6-099e9b118ce1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineActor.h">
@@ -253,6 +256,18 @@
     <ClInclude Include="GameEngineStructuredBuffer.h">
       <Filter>Resources\Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineGeometryShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineComputeShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineParticleRenderer.h">
+      <Filter>Rendering\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineComputeUnit.h">
+      <Filter>Rendering\Compute</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineActor.cpp">
@@ -411,6 +426,18 @@
     </ClCompile>
     <ClCompile Include="GameEngineStructuredBuffer.cpp">
       <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineGeometryShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineComputeShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineParticleRenderer.cpp">
+      <Filter>Rendering\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineComputeUnit.cpp">
+      <Filter>Rendering\Compute</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

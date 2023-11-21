@@ -10,6 +10,7 @@ enum class ShaderType
 	Domain,
 	Geometry,
 	Pixel, // 필수
+	Compute,
 	Max, // Max는 for문 체크용
 };
 

@@ -58,6 +58,7 @@ public:
 
 	void VSSetting(UINT _Slot);
 	void PSSetting(UINT _Slot);
+	void CSSetting(UINT _Slot);
 
 protected:
 	void ResCreate(const D3D11_SAMPLER_DESC& _Desc);

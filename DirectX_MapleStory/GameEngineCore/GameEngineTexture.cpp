@@ -174,6 +174,11 @@ void GameEngineTexture::PSSetting(UINT _Slot)
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &SRV);
 }
 
+void GameEngineTexture::CSSetting(UINT _Slot)
+{
+	GameEngineCore::GetContext()->CSSetShaderResources(_Slot, 1, &SRV);
+}
+
 void GameEngineTexture::VSReset(UINT _Slot)
 {
 	ID3D11ShaderResourceView* ResetRes = nullptr;
@@ -184,6 +189,12 @@ void GameEngineTexture::PSReset(UINT _Slot)
 {
 	ID3D11ShaderResourceView* ResetRes = nullptr;
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &ResetRes);
+}
+
+void GameEngineTexture::CSReset(UINT _Slot)
+{
+	ID3D11ShaderResourceView* ResetRes = nullptr;
+	GameEngineCore::GetContext()->CSSetShaderResources(_Slot, 1, &ResetRes);
 }
 
 void GameEngineTexture::ResCreate(ID3D11Texture2D* _Res)

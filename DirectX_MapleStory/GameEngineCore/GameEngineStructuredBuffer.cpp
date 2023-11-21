@@ -24,6 +24,21 @@ void GameEngineStructuredBuffer::PSSetting(UINT _Slot)
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &SRV);
 }
 
+void GameEngineStructuredBuffer::CSSetting(UINT _Slot)
+{
+	// 컴퓨트 쉐이더 일때는 일단
+	// 계산용 RWStructuredBuffer로서 세팅한다고 생각하고 세팅을 만들겠다.
+
+	// 마지막 인자 값 - 1은 현재 오프셋을 유지함을 나타냅니다.
+	// 다른 모든 값은 숨겨진 카운터를 설정합니다 추가 및 소모성 UAV의 경우.
+
+	static const UINT Offset = -1;
+	GameEngineCore::GetContext()->CSSetUnorderedAccessViews(_Slot, 1, &UAV, &Offset);
+
+	// 그래픽 리소스용 쉐이더 리소스세팅방식
+	// GameEngineCore::GetContext()->CSSetShaderResources(_Slot, 1, &SRV);
+}
+
 void GameEngineStructuredBuffer::VSReset(UINT _Slot)
 {
 	ID3D11ShaderResourceView* NullSRV = nullptr;
@@ -37,6 +52,13 @@ void GameEngineStructuredBuffer::PSReset(UINT _Slot)
 	ID3D11ShaderResourceView* NullSRV = nullptr;
 
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &NullSRV);
+}
+
+void GameEngineStructuredBuffer::CSReset(UINT _Slot)
+{
+	ID3D11ShaderResourceView* NullSRV = nullptr;
+
+	GameEngineCore::GetContext()->CSSetShaderResources(_Slot, 1, &NullSRV);
 }
 
 void GameEngineStructuredBuffer::Release()

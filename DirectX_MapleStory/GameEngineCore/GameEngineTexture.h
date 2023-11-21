@@ -100,9 +100,11 @@ public:
 
 	void VSSetting(UINT _Slot);
 	void PSSetting(UINT _Slot);
+	void CSSetting(UINT _Slot);
 
 	void VSReset(UINT _Slot);
 	void PSReset(UINT _Slot);
+	void CSReset(UINT _Slot);
 
 	GameEngineColor GetColor(const float4& _Pos, GameEngineColor _DefaultColor)
 	{

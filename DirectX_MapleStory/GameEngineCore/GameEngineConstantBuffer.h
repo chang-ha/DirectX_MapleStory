@@ -42,6 +42,7 @@ public:
 
 	void VSSetting(UINT _Slot);
 	void PSSetting(UINT _Slot);
+	void CSSetting(UINT _Slot);
 
 	template<typename DataType>
 	void ChangeData(const DataType& _Data)

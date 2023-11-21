@@ -35,3 +35,8 @@ void GameEngineSampler::PSSetting(UINT _Slot)
 {
 	GameEngineCore::GetContext()->PSSetSamplers(_Slot, 1, &State);
 }
+
+void GameEngineSampler::CSSetting(UINT _Slot)
+{
+	GameEngineCore::GetContext()->CSSetSamplers(_Slot, 1, &State);
+}
