@@ -287,10 +287,10 @@ void Player::MercilessWindsStart()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		MainSpriteRenderer->SetPivotValue({ 0.75f, 0.78f });
+		MainSpriteRenderer->SetPivotValue({ 0.66f, 0.78f });
 		break;
 	case ActorDir::Left:
-		MainSpriteRenderer->SetPivotValue({ 0.25f, 0.78f });
+		MainSpriteRenderer->SetPivotValue({ 0.34f, 0.78f });
 		break;
 	case ActorDir::Null:
 	default:
@@ -308,10 +308,10 @@ void Player::MonsoonStart()
 	switch (Dir)
 	{
 	case ActorDir::Right:
-		MainSpriteRenderer->SetPivotValue({ 0.72f, 0.78f });
+		MainSpriteRenderer->SetPivotValue({ 0.66f, 0.78f });
 		break;
 	case ActorDir::Left:
-		MainSpriteRenderer->SetPivotValue({ 0.25f, 0.78f });
+		MainSpriteRenderer->SetPivotValue({ 0.34f, 0.78f });
 		break;
 	case ActorDir::Null:
 	default:
