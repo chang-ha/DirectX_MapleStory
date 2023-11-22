@@ -17,6 +17,7 @@
 #include "BossTimer.h"
 #include "DeathCount.h"
 #include "ReleaseFunction.h"
+#include "PortalNpc.h"
 
 #define FALL_SPEED1 60.0f
 #define FALL_SPEED2 55.0f
@@ -781,6 +782,9 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	CreateActor<BossTimer>(UpdateOrder::UI);
 	CreateActor<DeathCount>(UpdateOrder::UI);
+
+	std::shared_ptr<PortalNpc> _Portal = CreateActor<PortalNpc>(UpdateOrder::Portal);
+	_Portal->Transform.SetLocalPosition({ 1010, -1350 });
 
 	if (false == BGMPlayer.IsPlaying())
 	{

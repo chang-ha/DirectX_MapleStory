@@ -16,6 +16,7 @@
 #include "BossTimer.h"
 #include "DeathCount.h"
 #include "ReleaseFunction.h"
+#include "PortalNpc.h"
 
 #define Lase_Cooldown 8.0f
 
@@ -192,6 +193,9 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	CreateActor<BossTimer>(UpdateOrder::UI);
 	BossTimer::TimeValue = 1800.0f;
 	CreateActor<DeathCount>(UpdateOrder::UI);
+
+	std::shared_ptr<PortalNpc> _Portal = CreateActor<PortalNpc>(UpdateOrder::Portal);
+	_Portal->Transform.SetLocalPosition({ 100, -720 });
 
 	if (false == BGMPlayer.IsPlaying())
 	{

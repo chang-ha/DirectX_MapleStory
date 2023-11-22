@@ -256,6 +256,9 @@
     <ClCompile Include="NightmareMusicBox.cpp">
       <Filter>Actor\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="PortalNpc.cpp">
+      <Filter>Level\Actor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -512,6 +515,9 @@
     </ClInclude>
     <ClInclude Include="NightmareMusicBox.h">
       <Filter>Actor\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalNpc.h">
+      <Filter>Level\Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
