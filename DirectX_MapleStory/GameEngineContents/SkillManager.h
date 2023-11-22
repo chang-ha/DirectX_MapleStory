@@ -1,13 +1,6 @@
 #pragma once
 #include "ContentSkill.h"
 
-class SkillManagerGUI : public GameEngineGUIWindow
-{
-public:
-	void Start() override;
-	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
-};
-
 class SkillInfo : public std::enable_shared_from_this<SkillInfo>
 {
 	friend class SkillManager;

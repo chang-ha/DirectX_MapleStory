@@ -789,7 +789,6 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	if (false == BGMPlayer.IsPlaying())
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("BrokenDream.mp3", 10000);
-		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 		return;
 	}
 
@@ -798,7 +797,6 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		BGMPlayer.Stop();
 		BGMPlayer = GameEngineSound::SoundPlay("BrokenDream.mp3", 10000);
-		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 	}
 }
 

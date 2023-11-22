@@ -18,24 +18,6 @@
 #include "Player.h"
 #include "HitRenderManager.h"
 
-void SkillManagerGUI::Start()
-{
-
-}
-
-void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
-{
-	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
-
-	if (true == Player::MainPlayer->GetGroundValue())
-	{
-		ImGui::Button("true");
-	}
-	else
-	{
-		ImGui::Button("false");
-	}
-}
 
 SkillManager::SkillManager()
 {
@@ -113,8 +95,6 @@ void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 
 void SkillManager::Start()
 {
-	GameEngineGUI::CreateGUIWindow<SkillManagerGUI>("SkillManager");
-
 	CreateSkill<class DoubleJump>("DoubleJump");
 	CreateSkill<class SongOfHeaven>("SongOfHeaven");
 	CreateSkill<class FairySpiral>("FairySpiral");

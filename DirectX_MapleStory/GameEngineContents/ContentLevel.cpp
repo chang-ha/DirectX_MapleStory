@@ -92,6 +92,8 @@ void ContentLevel::Update(float _Delta)
 		FadeOutObject->SetChangeLevel(NextLevel);
 		FadeOutObject->FadeStart();
 	}
+
+	BGMPlayer.SetVolume(GlobalValue::BGVolume);
 }
 
 void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)

@@ -6,6 +6,13 @@
 #define PLAYER_MAX_HP 100
 #define PLAYER_MAX_MP 100
 
+class GlobalValueGUI : public GameEngineGUIWindow
+{
+public:
+	void Start() override;
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
+};
+
 // Ό³Έν :
 class GlobalValue
 {

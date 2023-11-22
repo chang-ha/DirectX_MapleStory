@@ -52,7 +52,6 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 	if (false == BGMPlayer.IsPlaying())
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
-		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 		return;
 	}
 
@@ -61,7 +60,6 @@ void Lucid_Enter::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		BGMPlayer.Stop();
 		BGMPlayer = GameEngineSound::SoundPlay("ClockTowerofNightMare.mp3", 10000);
-		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 	}
 }
 

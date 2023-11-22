@@ -172,7 +172,6 @@ void ServerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		BGMPlayer.Stop();
 		BGMPlayer = GameEngineSound::SoundPlay("ServerSelect.mp3", 10000);
-		BGMPlayer.SetVolume(GlobalValue::BGVolume);
 	}
 }
 

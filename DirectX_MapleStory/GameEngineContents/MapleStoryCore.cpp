@@ -58,6 +58,7 @@ void MapleStoryCore::Start()
 	ContentResources::ContentResourcesInit();
 
 	GameEngineGUI::CreateGUIWindow<LevelChangeGUI>("LevelChange");
+	GameEngineGUI::CreateGUIWindow<GlobalValueGUI>("Option");
 
 	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({1.0f, 1.0f, 1.0f, 1.0f});
 
