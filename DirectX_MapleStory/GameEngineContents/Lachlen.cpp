@@ -117,6 +117,7 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		{
 			CurPlayer->Transform.SetLocalPosition(float4(3770, -817));
 			GetMainCamera()->Transform.SetLocalPosition(float4(3770, -817, -100000));
+			CurPlayer->SetDir(ActorDir::Left);
 		}
 		else
 		{

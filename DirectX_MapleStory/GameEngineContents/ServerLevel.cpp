@@ -180,23 +180,6 @@ void ServerLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 
-
-}
-
-void ServerLevel::Start()
-{
-	ContentLevel::Start();
-}
-
-void ServerLevel::Update(float _Delta)
-{
-	ContentLevel::Update(_Delta);
-}
-
-void ServerLevel::ResourcesRelease()
-{
-	ContentLevel::ResourcesRelease();
-
 	if (nullptr != GameEngineSprite::Find("ServerLogo"))
 	{
 		ReleaseFunction::FolderRelease("ServerLogo", "ServerLogo_");
@@ -220,3 +203,12 @@ void ServerLevel::ResourcesRelease()
 	ContentButton::ReleaseButton("TestWorld3Button");
 }
 
+void ServerLevel::Start()
+{
+	ContentLevel::Start();
+}
+
+void ServerLevel::Update(float _Delta)
+{
+	ContentLevel::Update(_Delta);
+}

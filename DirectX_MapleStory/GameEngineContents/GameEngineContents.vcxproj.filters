@@ -250,6 +250,12 @@
     <ClCompile Include="ContentNpc.cpp">
       <Filter>Actor\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="Boss_ClearRoom.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="NightmareMusicBox.cpp">
+      <Filter>Actor\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -500,6 +506,12 @@
     </ClInclude>
     <ClInclude Include="ContentNpc.h">
       <Filter>Actor\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_ClearRoom.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="NightmareMusicBox.h">
+      <Filter>Actor\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

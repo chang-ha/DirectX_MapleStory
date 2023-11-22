@@ -517,63 +517,6 @@ void CharacterSelect::LevelEnd(GameEngineLevel* _NextLevel)
 	SelectCollision = nullptr;
 
 	AllCharacter.clear();
-}
-
-void CharacterSelect::Start()
-{
-	ContentLevel::Start();
-	GameEngineInput::AddInputObject(this);
-}
-
-void CharacterSelect::Update(float _Delta)
-{
-	ContentLevel::Update(_Delta);
-
-	if (true == IsCharacterSelect)
-	{
-		if (true == GameEngineInput::IsDown(VK_RETURN, this))
-		{
-			FadeOutObject->SetChangeLevel("04.Lachlen");
-			FadeOutObject->FadeStart();
-			return;
-		}
-
-		if (true == SelectCollision->Collision(CollisionOrder::Mouse) && GameEngineInput::IsDown(VK_LBUTTON, this))
-		{
-			FadeOutObject->SetChangeLevel("04.Lachlen");
-			FadeOutObject->FadeStart();
-			return;
-		}
-		return;
-	}
-
-	if (true == SelectCollision->Collision(CollisionOrder::Mouse) && GameEngineInput::IsDown(VK_LBUTTON, this))
-	{
-		SelectCharacter();
-	}
-
-	if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
-	{
-		SelectCharacter();
-	}
-}
-
-void CharacterSelect::SelectCharacter()
-{
-	IsCharacterSelect = true;
-	AllCharacter[0].CharacterRenderer->Renderer->ChangeAnimation("Walk");
-	AllCharacter[0].CharacterRenderer->Renderer->SetPivotValue({ 0.35f, 0.5f });
-
-	InfoFrame.FrameOn();
-	CharSelectEffect0->On();
-	CharSelectEffect1->On();
-
-	GameEngineSoundPlayer CharSelectPlayer = GameEngineSound::SoundPlay("CharSelect.mp3");
-}
-
-void CharacterSelect::ResourcesRelease()
-{
-	ContentLevel::ResourcesRelease();
 
 	if (nullptr != GameEngineSprite::Find("CharacterSelect_BG.png"))
 	{
@@ -674,4 +617,56 @@ void CharacterSelect::ResourcesRelease()
 	ContentButton::ReleaseButton("DeleteCharacter");
 	ContentButton::ReleaseButton("RightButton");
 	ContentButton::ReleaseButton("GameStart");
+}
+
+void CharacterSelect::Start()
+{
+	ContentLevel::Start();
+	GameEngineInput::AddInputObject(this);
+}
+
+void CharacterSelect::Update(float _Delta)
+{
+	ContentLevel::Update(_Delta);
+
+	if (true == IsCharacterSelect)
+	{
+		if (true == GameEngineInput::IsDown(VK_RETURN, this))
+		{
+			FadeOutObject->SetChangeLevel("04.Lachlen");
+			FadeOutObject->FadeStart();
+			return;
+		}
+
+		if (true == SelectCollision->Collision(CollisionOrder::Mouse) && GameEngineInput::IsDown(VK_LBUTTON, this))
+		{
+			FadeOutObject->SetChangeLevel("04.Lachlen");
+			FadeOutObject->FadeStart();
+			return;
+		}
+		return;
+	}
+
+	if (true == SelectCollision->Collision(CollisionOrder::Mouse) && GameEngineInput::IsDown(VK_LBUTTON, this))
+	{
+		SelectCharacter();
+	}
+
+	if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
+	{
+		SelectCharacter();
+	}
+}
+
+void CharacterSelect::SelectCharacter()
+{
+	IsCharacterSelect = true;
+	AllCharacter[0].CharacterRenderer->Renderer->ChangeAnimation("Walk");
+	AllCharacter[0].CharacterRenderer->Renderer->SetPivotValue({ 0.35f, 0.5f });
+
+	InfoFrame.FrameOn();
+	CharSelectEffect0->On();
+	CharSelectEffect1->On();
+
+	GameEngineSoundPlayer CharSelectPlayer = GameEngineSound::SoundPlay("CharSelect.mp3");
 }

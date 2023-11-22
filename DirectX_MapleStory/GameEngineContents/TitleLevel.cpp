@@ -75,6 +75,11 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+
+	if (nullptr != GameEngineSprite::Find("Logo"))
+	{
+		ReleaseFunction::FolderRelease("Logo", "Logo_");
+	}
 }
 
 void TitleLevel::Start()
@@ -86,14 +91,4 @@ void TitleLevel::Start()
 void TitleLevel::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
-}
-
-void TitleLevel::ResourcesRelease()
-{
-	ContentLevel::ResourcesRelease();
-
-	if (nullptr != GameEngineSprite::Find("Logo"))
-	{
-		ReleaseFunction::FolderRelease("Logo", "Logo_");
-	}
 }

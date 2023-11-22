@@ -24,7 +24,7 @@ Boss_WaitingRoom::~Boss_WaitingRoom()
 
 void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	PrevLevel = "9.ClockTowerOfNightMare_5th";
+	PrevLevel = "09.ClockTowerOfNightMare_5th";
 	NextLevel = "12.Lucid_Phase1";
 
 	ContentLevel::LevelStart(_PrevLevel);
@@ -90,7 +90,7 @@ void Boss_WaitingRoom::LevelStart(GameEngineLevel* _PrevLevel)
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({750, -845});
-	_Portal->SetMoveMap("9.ClockTowerOfNightMare_5th");
+	_Portal->SetMoveMap("09.ClockTowerOfNightMare_5th");
 
 	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1200, -838 });
@@ -150,9 +150,4 @@ void Boss_WaitingRoom::Start()
 void Boss_WaitingRoom::Update(float _Delta)
 {
 	ContentLevel::Update(_Delta);
-}
-
-void Boss_WaitingRoom::ResourcesRelease()
-{
-
 }

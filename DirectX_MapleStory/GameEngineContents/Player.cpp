@@ -33,6 +33,7 @@ void Player::LevelStart(GameEngineLevel* _PrevLevel)
 	ContentActor::LevelStart(_PrevLevel);
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	MainPlayer = this;
+	ChangeState(PlayerState::Idle);
 }
 
 void Player::LevelEnd(GameEngineLevel* _NextLevel)
@@ -108,10 +109,8 @@ void Player::Start()
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
 	}
 	MainSpriteRenderer->AutoSpriteSizeOn();
-	State = PlayerState::Idle;
 	Dir = ActorDir::Right;
 	MainSpriteRenderer->LeftFlip();
-	IdleStart();
 
 	// Animation Speed Setting
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("FairySpiral");
@@ -423,8 +422,6 @@ bool Player::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 
 void Player::ChangeToIdle()
 {
-	//GravityReset();
-	//MoveVectorForceReset();
 	if (true == IsGround)
 	{
 		GroundJump = false;
@@ -488,6 +485,7 @@ void Player::ChangeState(PlayerState _State)
 			MonsoonEnd();
 			break;
 		case PlayerState::Null:
+			break;
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려고 했습니다.");
 			break;

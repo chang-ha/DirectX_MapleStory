@@ -53,6 +53,11 @@ void Portal::Start()
 
 void Portal::Update(float _Delta)
 {
+	if (false == Player::MainPlayer->GetGroundValue())
+	{
+		return;
+	}
+
 	if (true == PortalCollision->Collision(CollisionOrder::Player) && true == GameEngineInput::IsPress(VK_UP, this))
 	{
 		std::shared_ptr<FadeObject> _FadeObject = ContentLevel::CurContentLevel->FadeOutObject;

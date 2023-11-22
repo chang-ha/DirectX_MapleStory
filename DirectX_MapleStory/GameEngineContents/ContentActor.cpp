@@ -72,7 +72,6 @@ void ContentActor::Gravity(float _Delta)
 
 	if (0.0f > MoveVectorForce.Y && -1.0f > MoveVectorForceDelta)
 	{
-		// GameEngineColor GroundColor = CheckGroundColor();
 		float Count = 0.0f;
 		for (; ; Count -= 1.0f)
 		{
@@ -84,13 +83,9 @@ void ContentActor::Gravity(float _Delta)
 
 			if (true == CheckGround(float4(0, Count)))
 			{
+				MoveVectorForceReset();
 				break;
 			}
-			//GroundColor = CheckGroundColor(float4(0, Count));
-			//if (GROUND_COLOR == GroundColor || FLOOR_COLOR == GroundColor)
-			//{
-			//	break;
-			//}
 		}
 		Transform.AddLocalPosition(float4(0, Count));
 	}
@@ -196,7 +191,7 @@ void ContentActor::CalcuMove(float _Delta)
 
 		CheckColor = CheckGroundColor(MovePos);
 		DownYPivot = 0;
-		if ( (GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
+		if ((GROUND_COLOR != CheckColor && FLOOR_COLOR != CheckColor))
 		{
 			GameEngineColor PivotColor = LADDER_COLOR;
 			while (-DOWN_PIXEL_LIMIT < DownYPivot && (GROUND_COLOR != PivotColor && FLOOR_COLOR != PivotColor))
@@ -214,25 +209,32 @@ void ContentActor::CalcuMove(float _Delta)
 		}
 
 		// 이동중 땅을 만나면 멈춤
-		if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		{
-			Transform.AddLocalPosition(MovePos);
-			GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
-			GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
+		//if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		//{
+		//	Transform.AddLocalPosition(MovePos);
+		//	GameEngineColor UpPixel = CheckGroundColor(MovePos + float4::UP);
+		//	GameEngineColor DownPixel = CheckGroundColor(MovePos + float4::DOWN);
+		//	GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
+		//	GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
 
-			if (false == IsGroundVectorReset)
-			{
-				break;
-			}
+		//	if (false == IsGroundVectorReset)
+		//	{
+		//		break;
+		//	}
 
-			if ((GROUND_COLOR == RightPixel || FLOOR_COLOR == RightPixel) && (GROUND_COLOR == LeftPixel || FLOOR_COLOR == LeftPixel))
-			{
-				break;
-			}
+		//	if ((GROUND_COLOR == UpPixel || FLOOR_COLOR == UpPixel) && (GROUND_COLOR == DownPixel || FLOOR_COLOR == DownPixel))
+		//	{
+		//		break;
+		//	}
 
-			MoveVectorForceReset();
-			break;
-		}
+		//	if ((GROUND_COLOR == RightPixel || FLOOR_COLOR == RightPixel) && (GROUND_COLOR == LeftPixel || FLOOR_COLOR == LeftPixel))
+		//	{
+		//		break;
+		//	}
+
+		//	MoveVectorForceReset();
+		//	break;
+		//}
 
 		Transform.AddLocalPosition(MovePos);
 	}
@@ -251,10 +253,6 @@ bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 	{
 		GravityReset();
 		Result = true;
-	}
-	else
-	{
-		Result = false;
 	}
 
 	return Result;

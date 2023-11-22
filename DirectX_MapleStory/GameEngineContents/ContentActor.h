@@ -21,6 +21,16 @@ public:
 		}
 	}
 
+	inline int GetHP()
+	{
+		return HP;
+	}
+
+	inline int GetMP()
+	{
+		return MP;
+	}
+
 protected:
 	int HP = 0;
 	int MP = 0;
@@ -120,6 +130,11 @@ public:
 	inline void SetDir(ActorDir _Dir)
 	{
 		Dir = _Dir;
+	}
+
+	inline bool GetGroundValue()
+	{
+		return IsGround;
 	}
 
 	void Gravity(float _Delta);

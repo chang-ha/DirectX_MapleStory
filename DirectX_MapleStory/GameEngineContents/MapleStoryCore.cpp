@@ -20,6 +20,7 @@
 #include "ClockTowerOfNightMare_3th.h"
 #include "ClockTowerOfNightMare_4th.h"
 #include "ClockTowerOfNightMare_5th.h"
+#include "Boss_ClearRoom.h"
 
 void LevelChangeGUI::Start()
 {
@@ -77,8 +78,9 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase1>("12.Lucid_Phase1");
 	GameEngineCore::CreateLevel<Lucid_Next>("13.Lucid_Next");
 	GameEngineCore::CreateLevel<Lucid_Phase2>("14.Lucid_Phase2");
+	GameEngineCore::CreateLevel<Boss_ClearRoom>("15.Boss_ClearRoom");
 
-	GameEngineCore::ChangeLevel("01.TitleLevel");
+	GameEngineCore::ChangeLevel("15.Boss_ClearRoom");
 }
 
 

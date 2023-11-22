@@ -115,7 +115,6 @@ void ContentLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void ContentLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	ResourcesRelease();
 	// sFadeOutObject->FadeStart();
 	AllButton.clear();
 

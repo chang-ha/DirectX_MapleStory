@@ -7,8 +7,8 @@
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 50.0f
 
-#define DOUBLE_JUMP_DIS 230.0f
-#define DOUBLE_JUMP_HEIGHT 300.0f
+#define DOUBLE_JUMP_DIS 420.0f
+#define DOUBLE_JUMP_HEIGHT 350.0f
 #define DOUBLE_JUMP_MIN_DIS 500.0f
 
 #define LADDER_JUMP_DIS 200.0f
@@ -23,9 +23,11 @@ void Player::IdleStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.3f, 1.0f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.7f, 1.0f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -47,9 +49,11 @@ void Player::WalkStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.3f, 1.0f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.7f, 1.0f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -65,9 +69,11 @@ void Player::JumpStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.55f, 0.73f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.45f, 0.73f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -92,8 +98,8 @@ void Player::JumpStart()
 			PlusMoveVectorForce(float4(0, JUMP_HEIGHT));
 		}
 		GroundJump = true;
-		CharPlayer = GameEngineSound::SoundPlay("Jump.mp3");
 		CharPlayer.SetVolume(GlobalValue::SkillVolume);
+		CharPlayer = GameEngineSound::SoundPlay("Jump.mp3");
 	}
 	else if (PlayerState::Ladder & State)
 	{
@@ -114,9 +120,11 @@ void Player::DownStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.7f, 1.0f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.3f, 1.0f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -135,9 +143,11 @@ void Player::LadderStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.33f, 1.0f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.67f, 1.0f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -158,9 +168,11 @@ void Player::SongOfHeavenStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.77f, 0.653f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.23f, 0.653f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -179,9 +191,11 @@ void Player::FairySpiralStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.47f, 0.71f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.53f, 0.71f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -206,9 +220,11 @@ void Player::WindWalkStart()
 		{
 		case ActorDir::Right:
 			MainSpriteRenderer->SetPivotValue({ 0.37f, 1.0f });
+			MainSpriteRenderer->LeftFlip();
 			break;
 		case ActorDir::Left:
 			MainSpriteRenderer->SetPivotValue({ 0.63f, 1.0f });
+			MainSpriteRenderer->RightFlip();
 			break;
 		case ActorDir::Null:
 		default:
@@ -246,9 +262,11 @@ void Player::HowlingGaleStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.77f, 0.65f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.23f, 0.65f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -267,9 +285,11 @@ void Player::VortexSphereStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.77f, 0.65f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.23f, 0.65f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -288,9 +308,11 @@ void Player::MercilessWindsStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.66f, 0.78f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.34f, 0.78f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -309,9 +331,11 @@ void Player::MonsoonStart()
 	{
 	case ActorDir::Right:
 		MainSpriteRenderer->SetPivotValue({ 0.66f, 0.78f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	case ActorDir::Left:
 		MainSpriteRenderer->SetPivotValue({ 0.34f, 0.78f });
+		MainSpriteRenderer->RightFlip();
 		break;
 	case ActorDir::Null:
 	default:
@@ -336,7 +360,6 @@ void Player::AlertEnd()
 
 void Player::WalkEnd()
 {
-
 }
 
 void Player::JumpEnd()
@@ -512,11 +535,9 @@ void Player::JumpUpdate(float _Delta)
 
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
+		MoveVectorForceReset();
+		GravityReset();
 		ChangeToIdle();
-		//GravityReset();
-		//MoveVectorForceReset();
-		//GroundJump = false;
-		//DoubleJump = false;
 		return;
 	}
 	
@@ -574,37 +595,42 @@ void Player::JumpUpdate(float _Delta)
 		CharPlayer = GameEngineSound::SoundPlay("Double_Jump.mp3");
 		CharPlayer.SetVolume(GlobalValue::SkillVolume);
 
-		if (GameEngineInput::IsPress(VK_UP, this))
+		if (true == GameEngineInput::IsPress(VK_UP, this))
 		{
 			PlusMoveVectorForce(float4(0, JUMP_HEIGHT /** 1.3f*/));
+			return;
 		}
-		else if (GameEngineInput::IsPress(VK_LEFT, this))
+		//else if (true ==GameEngineInput::IsPress(VK_LEFT, this))
+		//{
+		//	PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
+		//	return;
+		//}
+		//else if (true == GameEngineInput::IsPress(VK_RIGHT, this))
+		//{
+		//	PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS , DOUBLE_JUMP_HEIGHT));
+		//	return;
+		//}
+
+		MoveVectorForceReset();
+
+		switch (Dir)
 		{
-			PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
-			MoveVectorForceYReset();
-		}
-		else if (GameEngineInput::IsPress(VK_RIGHT, this))
-		{
-			PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS , DOUBLE_JUMP_HEIGHT));
-			MoveVectorForceYReset();
+		case ActorDir::Right:	
+			PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
+			break;
+		case ActorDir::Left:
+			PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS , DOUBLE_JUMP_HEIGHT));
+			break;
+		case ActorDir::Null:
+		default:
+			MsgBoxAssert("존재하지 않는 방향입니다.");
+			break;
 		}
 
-		if (false == GameEngineInput::IsPress(VK_UP, this) && abs(DOUBLE_JUMP_MIN_DIS) > abs(MoveVectorForce.X))
-		{
-			switch (Dir)
-			{
-			case ActorDir::Right:
-				MoveVectorForce.X = DOUBLE_JUMP_MIN_DIS;
-				break;
-			case ActorDir::Left:
-				MoveVectorForce.X = -DOUBLE_JUMP_MIN_DIS;
-				break;
-			case ActorDir::Null:
-			default:
-				break;
-			}
-			MoveVectorForce.Y = DOUBLE_JUMP_HEIGHT;
-		}
+		//if (abs(DOUBLE_JUMP_MIN_DIS) > abs(MoveVectorForce.Y))
+		//{
+		//	MoveVectorForce.Y = -DOUBLE_JUMP_MIN_DIS;
+		//}
 	}
 }
 
@@ -623,6 +649,7 @@ void Player::DownUpdate(float _Delta)
 		IsGround = false;
 		SkipGround = Transform.GetWorldPosition().Y - 3.0f;
 		ChangeState(PlayerState::Jump);
+		CharPlayer = GameEngineSound::SoundPlay("Jump.mp3");
 	}
 }
 

@@ -341,11 +341,6 @@ void Lucid_Phase1::Update(float _Delta)
 	}
 }
 
-void Lucid_Phase1::ResourcesRelease()
-{
-
-}
-
 void Lucid_Phase1::CallDragon()
 {
 	GameEngineRandom Random;

@@ -26,10 +26,15 @@ void SkillManagerGUI::Start()
 void SkillManagerGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
 	ImGui::SliderFloat("SkillEffect", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
-}
 
-void QuickSlotFrame::CreateCoolDownRenderers(int _Key)
-{
+	if (true == Player::MainPlayer->GetGroundValue())
+	{
+		ImGui::Button("true");
+	}
+	else
+	{
+		ImGui::Button("false");
+	}
 }
 
 SkillManager::SkillManager()

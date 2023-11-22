@@ -63,6 +63,11 @@ void LinkPortal::Update(float _Delta)
 		return;
 	}
 
+	if (false == Player::MainPlayer->GetGroundValue())
+	{
+		return;
+	}
+
 	if (true == PortalCollision->Collision(CollisionOrder::Player) && true == GameEngineInput::IsPress(VK_UP, this))
 	{
 		Player::MainPlayer->MoveVectorForceReset();

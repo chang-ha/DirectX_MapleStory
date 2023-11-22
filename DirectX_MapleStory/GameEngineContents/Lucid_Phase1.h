@@ -22,7 +22,6 @@ protected:
 
 	void Start() override;
 	void Update(float _Delta) override;
-	void ResourcesRelease() override;
 
 private:
 	float LaserCooldown = 0.0f;

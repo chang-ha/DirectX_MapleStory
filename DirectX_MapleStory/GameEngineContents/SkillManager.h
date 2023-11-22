@@ -34,8 +34,6 @@ class QuickSlotFrame
 	friend class SkillManager;
 	std::shared_ptr<GameEngineUIRenderer> QuickSlotBG = nullptr;
 	std::map<int, std::shared_ptr<CoolDownFrame>> CoolDownAniRenderers;
-
-	void CreateCoolDownRenderers(int _Key);
 };
 
 class AlertFrame : public std::enable_shared_from_this<AlertFrame>
