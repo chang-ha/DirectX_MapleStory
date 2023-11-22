@@ -31,7 +31,7 @@ void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _N
 
 	NpcName = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	NpcName->Transform.SetLocalPosition({ -180, -27, RenderDepth::ui });
-	NpcName->SetText( "돋움", _NpcName.data(), 13.0f, float4::WHITE, FW1_CENTER);
+	NpcName->SetText( "돋움", _NpcName.data(), 12.0f, float4::WHITE, FW1_CENTER);
 
 	MentText = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
 	MentText->SetText("돋움", "", 11.0f, float4::ZERO);
@@ -53,16 +53,17 @@ void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _N
 
 void OneButtonNpcMentFrame::MentOff()
 {
+	ContentNpc::CurMent = nullptr;
 	Off();
 	MentIndex = 0;
 	MentEnd = false;
-	MentText->SetText("돋움", "", 11.0f, float4::ZERO);
+	MentText->SetText("돋움", "", 12.0f, float4::ZERO);
 }
 
 void OneButtonNpcMentFrame::Update(float _Delta)
 {
-	MentUpdate(_Delta);
 	SkipUpdate(_Delta);
+	MentUpdate(_Delta);
 }
 
 void OneButtonNpcMentFrame::Release()
@@ -110,6 +111,13 @@ void OneButtonNpcMentFrame::MentUpdate(float _Delta)
 {
 	if (true == MentEnd)
 	{
+		if (true == GameEngineInput::IsDown(VK_ESCAPE, this))
+		{
+			MentOff();
+			Player::MainPlayer->InputObjectOn();
+			return;
+		}
+
 		return;
 	}
 
@@ -132,6 +140,11 @@ void OneButtonNpcMentFrame::MentUpdate(float _Delta)
 void OneButtonNpcMentFrame::SkipUpdate(float _Delta)
 {
 	if (L"" == Ment)
+	{
+		return;
+	}
+
+	if (true == MentEnd)
 	{
 		return;
 	}
@@ -177,6 +190,8 @@ void TwoButtonNpcMentFrame::Release()
 	ContentButton::ReleaseButton(OkButtonName);
 }
 
+OneButtonNpcMentFrame* ContentNpc::CurMent = nullptr;
+
 ContentNpc::ContentNpc()
 {
 
@@ -195,6 +210,7 @@ void ContentNpc::LevelEnd(GameEngineLevel* _NextLevel)
 		Ment = nullptr;
 	}
 
+	ContentNpc::CurMent = nullptr;
 	Death();
 }
 
@@ -235,6 +251,11 @@ void ContentNpc::Start()
 
 void ContentNpc::Update(float _Delta)
 {
+	if (nullptr != ContentNpc::CurMent)
+	{
+		return;
+	}
+
 	NpcCollision->CollisionEvent(CollisionOrder::Mouse, NpcEvent);
 }
 
@@ -357,6 +378,7 @@ void ContentNpc::CollisionStay(GameEngineCollision* _this, GameEngineCollision* 
 
 	if (true == GameEngineInput::IsDown(VK_LBUTTON, this))
 	{
+		ContentNpc::CurMent = Ment.get();
 		Ment->On();
 		Player::MainPlayer->InputObjectOff();
 	}

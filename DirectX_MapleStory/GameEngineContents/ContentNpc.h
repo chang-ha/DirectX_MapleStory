@@ -48,6 +48,8 @@ class TwoButtonNpcMentFrame : public OneButtonNpcMentFrame
 class ContentNpc : public GameEngineActor
 {
 public:
+	static OneButtonNpcMentFrame* CurMent;
+
 	// constructer destructer
 	ContentNpc();
 	~ContentNpc();
