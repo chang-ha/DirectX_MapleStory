@@ -156,7 +156,6 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 				HitSound.SetVolume(GlobalValue::HitVolume);
 			}
 		}
-
 		++StartIter;
 	}
 }

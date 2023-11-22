@@ -144,8 +144,6 @@ void Monsoon::Update(float _Delta)
 	CameraPos.Z = RenderDepth::skill;
 	SceneRenderer->Transform.SetWorldPosition(CameraPos);
 	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster ,"Monsoon_Hit", 12, -1, true);
-
-	// SkillCollision->Collision(CollisionOrder::Monster, std::bind(&Monsoon::CollisionEvent, this, std::placeholders::_1));
 }
 
 void Monsoon::Init()
@@ -174,19 +172,4 @@ void Monsoon::Release()
 	}
 
 	AttackFunction.CollisionActor.clear();
-}
-
-void Monsoon::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
-{
-	for (size_t i = 0; i < _CollisionGroup.size(); i++)
-	{
-		GameEngineCollision* _Other = _CollisionGroup[i];
-		GameEngineObject* _Object = _Other->GetParentObject();
-		if (true == CollisionActor.contains(_Object))
-		{
-			return;
-		}
-		HitRenderManager::MainHitRenderManager->HitPrint("Monsoon_Hit", 8, _Object, 40);
-		CollisionActor.insert(_Object);
-	}
 }

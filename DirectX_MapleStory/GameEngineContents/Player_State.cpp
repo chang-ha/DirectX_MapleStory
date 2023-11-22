@@ -7,8 +7,9 @@
 #define JUMP_HEIGHT 500.0f
 #define JUMP_DIS 50.0f
 
-#define DOUBLE_JUMP_DIS 420.0f
-#define DOUBLE_JUMP_HEIGHT 350.0f
+#define DOUBLE_JUMP_DIS 500.0f
+#define DOUBLE_JUMP_HEIGHT 150.0f
+#define DOUBLE_JUMP_MAXHEIGHT 400.0f
 #define DOUBLE_JUMP_MIN_DIS 500.0f
 
 #define LADDER_JUMP_DIS 200.0f
@@ -600,18 +601,7 @@ void Player::JumpUpdate(float _Delta)
 			PlusMoveVectorForce(float4(0, JUMP_HEIGHT /** 1.3f*/));
 			return;
 		}
-		//else if (true ==GameEngineInput::IsPress(VK_LEFT, this))
-		//{
-		//	PlusMoveVectorForce(float4(-DOUBLE_JUMP_DIS, DOUBLE_JUMP_HEIGHT));
-		//	return;
-		//}
-		//else if (true == GameEngineInput::IsPress(VK_RIGHT, this))
-		//{
-		//	PlusMoveVectorForce(float4(DOUBLE_JUMP_DIS , DOUBLE_JUMP_HEIGHT));
-		//	return;
-		//}
-
-		MoveVectorForceReset();
+		MoveVectorForceXReset();
 
 		switch (Dir)
 		{
@@ -627,10 +617,15 @@ void Player::JumpUpdate(float _Delta)
 			break;
 		}
 
-		//if (abs(DOUBLE_JUMP_MIN_DIS) > abs(MoveVectorForce.Y))
-		//{
-		//	MoveVectorForce.Y = -DOUBLE_JUMP_MIN_DIS;
-		//}
+		if (DOUBLE_JUMP_HEIGHT > MoveVectorForce.Y)
+		{
+			MoveVectorForce.Y = DOUBLE_JUMP_HEIGHT;
+		}
+
+		if (DOUBLE_JUMP_MAXHEIGHT < MoveVectorForce.Y)
+		{
+			MoveVectorForce.Y = DOUBLE_JUMP_MAXHEIGHT;
+		}
 	}
 }
 

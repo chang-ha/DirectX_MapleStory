@@ -24,8 +24,6 @@ protected:
 	void Update(float _Delta) override;
 	void Init() override;
 	void Release() override;
-	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
-
 
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> SceneRenderer = nullptr;

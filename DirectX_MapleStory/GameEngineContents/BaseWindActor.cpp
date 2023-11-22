@@ -224,7 +224,7 @@ void BaseWindActor::ReadyStart()
 	MainSpriteRenderer->ChangeAnimation("Ready");
 	MainSpriteRenderer->SetPivotValue({ 0.625f, 0.44f });
 	WindPlayer = GameEngineSound::SoundPlay(WindName + "_Ready.mp3");
-	WindPlayer.SetVolume(GlobalValue::SkillVolume);
+	WindPlayer.SetVolume(GlobalValue::HitVolume);
 }
 
 void BaseWindActor::AttackStart()
@@ -239,7 +239,7 @@ void BaseWindActor::HitStart()
 	HitCollision->Off();
 	DetectCollision->Off();
 	WindPlayer = GameEngineSound::SoundPlay(WindName + "_Hit.mp3");
-	WindPlayer.SetVolume(GlobalValue::SkillVolume);
+	WindPlayer.SetVolume(GlobalValue::HitVolume);
 }
 
 void BaseWindActor::DeathStart()

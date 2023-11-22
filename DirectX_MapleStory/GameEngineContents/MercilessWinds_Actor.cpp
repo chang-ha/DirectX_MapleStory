@@ -89,6 +89,7 @@ void MercilessWinds_Actor::HitStart()
 	DetectCollision->Off();
 
 	GameEngineSoundPlayer MercilessPlayer = GameEngineSound::SoundPlay("MercilessWinds_Hit.mp3");
+	MercilessPlayer.SetVolume(GlobalValue::HitVolume);
 }
 
 void MercilessWinds_Actor::DeathStart()

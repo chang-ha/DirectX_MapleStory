@@ -12,7 +12,6 @@ private:
 	std::vector<float4> RandomPivot;
 	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> HitAnimations;
 	// std::vector<std::shared_ptr<GameEngineSpriteRenderer>> DamageAnimations;
-	// Sound 추후 추가
 };
 
 class HitRenderManager : public GameEngineActor
