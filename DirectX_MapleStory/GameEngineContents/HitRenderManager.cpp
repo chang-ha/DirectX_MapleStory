@@ -99,7 +99,7 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 
 		_Data->HitAnimations[i] = _HitAnimation;
 	}
-
+	
 	ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
 	if (nullptr != _BaseActor)
 	{

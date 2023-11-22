@@ -389,6 +389,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Monsoon.cpp" />
+    <ClCompile Include="MultiKillManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MushRoom.cpp">
       <SubType>
       </SubType>
@@ -694,6 +698,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Monsoon.h" />
+    <ClInclude Include="MultiKillManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MushRoom.h">
       <SubType>
       </SubType>

@@ -259,6 +259,9 @@
     <ClCompile Include="PortalNpc.cpp">
       <Filter>Level\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="MultiKillManager.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -518,6 +521,9 @@
     </ClInclude>
     <ClInclude Include="PortalNpc.h">
       <Filter>Level\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiKillManager.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

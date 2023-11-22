@@ -1,6 +1,8 @@
 ﻿#include "PreCompile.h"
 #include "AttackFunction.h"
 #include "HitRenderManager.h"
+#include "ContentActor.h"
+#include "MultiKillManager.h"
 
 void OneHitAttackFunction::AttackUpdate(std::shared_ptr<GameEngineCollision> _AttackCollision, 
 	CollisionOrder _Order, 
@@ -23,17 +25,30 @@ void OneHitAttackFunction::AttackUpdate(std::shared_ptr<GameEngineCollision> _At
 
 	_AttackCollision->Collision(_Order, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
+			int KillCount = 0;
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)
 			{
 				GameEngineCollision* _Other = _CollisionGroup[i];
 				std::shared_ptr<GameEngineObject> _Object = _Other->GetParentObject()->shared_from_this();
 				if (true == CollisionActor.contains(_Object))
 				{
-					return;
+					continue;
 				}
 				HitRenderManager::MainHitRenderManager->HitPrint(_HitAniName, _HitCount, _Object.get(), _Damage, _RandomPivot, _PivotType);
 				CollisionActor.insert(_Object);
+
+				std::shared_ptr<ContentBaseActor> _Actor = _Object->GetDynamic_Cast_This<ContentBaseActor>();
+				if (nullptr == _Actor)
+				{
+					continue;
+				}
+
+				if (0 >= _Actor->GetHP())
+				{
+					++KillCount;
+				}
 			}
+			MultiKillManager::MultiKillPrint(KillCount);
 		}
 	);
 }
@@ -67,6 +82,7 @@ void HitTimeAttackFunction::AttackUpdate(std::shared_ptr<GameEngineCollision> _A
 
 	_AttackCollision->Collision(_Order, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
 		{
+			int KillCount = 0;
 			for (size_t i = 0; i < _CollisionGroup.size(); i++)
 			{
 				std::shared_ptr<GameEngineCollision> _Other = std::dynamic_pointer_cast<GameEngineCollision>(_CollisionGroup[i]->shared_from_this());
@@ -80,7 +96,20 @@ void HitTimeAttackFunction::AttackUpdate(std::shared_ptr<GameEngineCollision> _A
 					HitRenderManager::MainHitRenderManager->HitPrint(_HitAniName, _HitCount, _Other->GetParentObject(), _Damage, _RandomPivot, _PivotType);
 					CollisionTime[_Other] = _Hit_Time;
 				}
+
+				std::shared_ptr<GameEngineObject> _Object = _Other->GetParentObject()->shared_from_this();
+				std::shared_ptr<ContentBaseActor> _Actor = _Object->GetDynamic_Cast_This<ContentBaseActor>();
+				if (nullptr == _Actor)
+				{
+					continue;
+				}
+
+				if (0 >= _Actor->GetHP())
+				{
+					++KillCount;
+				}
 			}
+			MultiKillManager::MultiKillPrint(KillCount);
 		}
 	);
 }
