@@ -32,6 +32,9 @@ Lucid_Phase1::~Lucid_Phase1()
 
 void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "10.Boss_WaitingRoom";
+	NextLevel = "14.Lucid_Phase2";
+
 	ContentLevel::LevelStart(_PrevLevel);
 
 	FadeOutObject->SetChangeLevel("13.Lucid_Next");
@@ -287,6 +290,49 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 	if (nullptr != GameEngineSprite::Find("Phase1_Hit"))
 	{
 		ReleaseFunction::FolderRelease("Phase1_Hit", "Phase1_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Golem_Ready"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Ready", "Phase1_Golem_Ready_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Attack", "Phase1_Golem_Attack_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Death", "Phase1_Golem_Death_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Idle", "Phase1_Golem_Idle_");
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Revive", "Phase1_Golem_Revive_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Golem_TakeDown_Hit"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_TakeDown_Hit", "TakeDown_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Phase1_ButterFly_Ready"))
+	{
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Ready", "Phase1_ButterFly_Ready_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Attack", "Phase1_ButterFly_Attack_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Move", "Phase1_ButterFly_Move_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Death", "Phase1_ButterFly_Death_");
+
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Ball_Ball", "Phase1_ButterFly_Ball_Ball_");
+		ReleaseFunction::FolderRelease("Phase1_ButterFly_Ball_Hit", "Phase1_ButterFly_Ball_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("PhantasmalWind"))
+	{
+		ReleaseFunction::FolderRelease("PhantasmalWind", "PhantasmalWind_");
+		ReleaseFunction::FolderRelease("PhantasmalWind_Hit", "PhantasmalWind_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("WarningMent_Start.png"))
+	{
+		GameEngineTexture::Release("WarningMent_Start.png");
+		GameEngineSprite::Release("WarningMent_Start.png");
+
+		GameEngineTexture::Release("WarningMent_Middle.png");
+		GameEngineSprite::Release("WarningMent_Middle.png");
+
+		GameEngineTexture::Release("WarningMent_End.png");
+		GameEngineSprite::Release("WarningMent_End.png");
 	}
 }
 

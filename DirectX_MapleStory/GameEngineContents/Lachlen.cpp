@@ -299,6 +299,26 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	_FireWork->Init(FireWorkType::FireWork1);
 	_FireWork->Transform.SetLocalPosition({ 1780, -320 });
 
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({ 2300, -120 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork3);
+	_FireWork->Transform.SetLocalPosition({ 2200, -260 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork2);
+	_FireWork->Transform.SetLocalPosition({ 2600, -120 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork1);
+	_FireWork->Transform.SetLocalPosition({ 3000, -220 });
+
+	_FireWork = CreateActor<FireWork>(UpdateOrder::BackGround);
+	_FireWork->Init(FireWorkType::FireWork4);
+	_FireWork->Transform.SetLocalPosition({ 3000, -250 });
+
 	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 2700, -817 });
 	_Npc->Init("BeautyMask", "미녀가면", ActorDir::Left, 0.18f);

@@ -170,12 +170,15 @@ Lucid_Phase2::~Lucid_Phase2()
 
 void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	PrevLevel = "12.Lucid_Phase1";
+	NextLevel = "15.Boss_ClearRoom";
+
 	OnceFadeAlphaSetting = true;
 	ContentLevel::LevelStart(_PrevLevel);
 
 	FadeInObject->SetWhiteFade();
 
-	FadeOutObject->SetChangeLevel("10.Boss_WaitingRoom");
+	FadeOutObject->SetChangeLevel("15.Boss_ClearRoom");
 
 	GetMainCamera()->SetZSort(RenderOrder::BACKGROUNDOBJECT);
 	GetMainCamera()->SetZSort(RenderOrder::MAP);
@@ -803,6 +806,22 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+
+	if (nullptr != CurMap)
+	{
+		CurMap = nullptr;
+	}
+
+	if (nullptr != Back)
+	{
+		Back = nullptr;
+	}
+
+	if (nullptr != BG_LucidLaser)
+	{
+		BG_LucidLaser = nullptr;
+	}
+
 	if (nullptr != CurPlayer)
 	{
 		CurPlayer = nullptr;
@@ -902,6 +921,51 @@ void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 	if (nullptr != GameEngineSprite::Find("Phase1_Hit"))
 	{
 		ReleaseFunction::FolderRelease("Phase1_Hit", "Phase1_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_Phase2_Golem_Ready"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Ready", "Phase2_Golem_Ready_");
+		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Attack", "Phase2_Golem_Attack_");
+		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Death", "Phase2_Golem_Death_");
+		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Idle", "Phase2_Golem_Idle_");
+		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Revive", "Phase2_Golem_Revive_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Phase2_ButterFly_Ready"))
+	{
+		ReleaseFunction::FolderRelease("Phase2_ButterFly_Ready", "Phase2_ButterFly_Ready_");
+		ReleaseFunction::FolderRelease("Phase2_ButterFly_Attack", "Phase2_ButterFly_Attack_");
+		ReleaseFunction::FolderRelease("Phase2_ButterFly_Move", "Phase2_ButterFly_Move_");
+		ReleaseFunction::FolderRelease("Phase2_ButterFly_Death", "Phase2_ButterFly_Death_");
+
+		ReleaseFunction::FolderRelease("Phase2_ButterFly_Ball_Ball", "Phase2_ButterFly_Ball_Ball_");
+		ReleaseFunction::FolderRelease("Phase2_ButterFly_Ball_Hit", "Phase2_ButterFly_Ball_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("PhantasmalWind"))
+	{
+		ReleaseFunction::FolderRelease("PhantasmalWind", "PhantasmalWind_");
+		ReleaseFunction::FolderRelease("PhantasmalWind_Hit", "PhantasmalWind_Hit_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("Lucid_BodySlam_Ready"))
+	{
+		ReleaseFunction::FolderRelease("Lucid_BodySlam_Ready", "Lucid_BodySlam_Ready_");
+		ReleaseFunction::FolderRelease("Lucid_BodySlam_Attack", "Lucid_BodySlam_Attack_");
+		ReleaseFunction::FolderRelease("Lucid_BodySlam_Death", "Lucid_BodySlam_Death_");
+	}
+
+	if (nullptr != GameEngineSprite::Find("WarningMent_Start.png"))
+	{
+		GameEngineTexture::Release("WarningMent_Start.png");
+		GameEngineSprite::Release("WarningMent_Start.png");
+
+		GameEngineTexture::Release("WarningMent_Middle.png");
+		GameEngineSprite::Release("WarningMent_Middle.png");
+
+		GameEngineTexture::Release("WarningMent_End.png");
+		GameEngineSprite::Release("WarningMent_End.png");
 	}
 }
 

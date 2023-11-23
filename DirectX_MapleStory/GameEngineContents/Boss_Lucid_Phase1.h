@@ -5,6 +5,13 @@
 #define Summon_Mush_Cooldown 7.0f 
 #define Summon_Golem_Cooldown 5.0f 
 
+class Lucid_Phase1_GUI : public GameEngineGUIWindow
+{
+public:
+	void Start() override;
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
+};
+
 enum class LucidState
 {
 	Idle,

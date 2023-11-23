@@ -68,6 +68,21 @@ public:
 		return FindIter->second;
 	}
 
+	static void DeathGUIWindows(std::string_view _Name)
+	{
+		std::string UpperName = GameEngineString::ToUpperReturn(_Name);
+
+		if (false == GUIWindows.contains(UpperName))
+		{
+			return;
+		}
+
+		std::shared_ptr<GameEngineGUIWindow> _FindGUIWindow = FindGUIWindow(UpperName);
+		_FindGUIWindow->Death();
+
+		GUIWindows.erase(UpperName);
+	}
+
 protected:
 
 private:

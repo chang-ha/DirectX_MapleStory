@@ -83,7 +83,7 @@ void ContentActor::Gravity(float _Delta)
 
 			if (true == CheckGround(float4(0, Count)))
 			{
-				MoveVectorForceReset();
+				// MoveVectorForceReset();
 				break;
 			}
 		}
@@ -251,7 +251,7 @@ bool ContentActor::CheckGround(float4 PlusCheckPos /*= float4::ZERO*/)
 	GameEngineColor CheckColor = ContentLevel::CurContentLevel->GetCurMap()->GetColor(Transform.GetWorldPosition() + PlusCheckPos/*, GameEngineColor(0, 0, 0, 255)*/);
 	if (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor)
 	{
-		GravityReset();
+		// GravityReset();
 		Result = true;
 	}
 
