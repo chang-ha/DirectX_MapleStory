@@ -169,7 +169,11 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
 			_CurData->HitAnimations[_CurData->CurIndex]->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
-			_CurData->DamageSkinRenderers[_CurData->CurIndex]->On();
+			Player* _PlayerObject = dynamic_cast<Player*>(_CurData->Object);
+			if (nullptr == _PlayerObject)
+			{
+				_CurData->DamageSkinRenderers[_CurData->CurIndex]->On();
+			}
 			_CurData->CurIndex += 1;
 			_CurData->DelayTime = HIT_DELAY;
 

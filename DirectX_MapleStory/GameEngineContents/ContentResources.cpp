@@ -57,6 +57,8 @@ void ContentResources::ContentResourcesInit()
 		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("DamageSkinTexture");
 		Mat->SetVertexShader("DamageSkinShader_VS");
 		Mat->SetPixelShader("DamageSkinShader_PS");
+		Mat->SetDepthState("AlwaysDepth");
+		Mat->SetRasterizer("EngineRasterizer");
 	}
 
 	//{
