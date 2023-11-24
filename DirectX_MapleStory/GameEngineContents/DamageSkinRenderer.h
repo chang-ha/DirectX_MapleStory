@@ -33,15 +33,9 @@ public:
 		Pivot = _Value;
 	}
 
-	//float4 GetPivotValue()
-	//{
-	//	return Pivot;
-	//}
-
 	/// <summary>
 	/// Damage Maxdigit = 8
 	/// </summary>
-	/// <param name="_Damage"></param>
 	void SetDamage(int _Damage);
 
 protected:

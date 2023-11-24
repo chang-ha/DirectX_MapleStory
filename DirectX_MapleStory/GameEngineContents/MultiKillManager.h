@@ -24,7 +24,6 @@ private:
 	void LevelStart(class GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(class GameEngineLevel* _NextLevel) override;
 	void Start() override;
-	void Update(float _Delta) override;
 	void Release() override;
 
 	void Init(int _KillCount);

@@ -1,4 +1,7 @@
 ﻿#include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
 #include "FireWork.h"
 #include "ReleaseFunction.h"
 
@@ -82,5 +85,9 @@ void FireWork::Init(int _Type)
 	default:
 		break;
 	}
-	FireWorkRenderer->ChangeAnimation("FireWork");
+
+	GameEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<long long>(this));
+	int RandomInt = Random.RandomInt(0, 10);
+	FireWorkRenderer->ChangeAnimation("FireWork", true, RandomInt);
 }

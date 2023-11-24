@@ -75,6 +75,11 @@ void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 
+	if (nullptr != CurMap)
+	{
+		CurMap = nullptr;
+	}
+
 	if (nullptr != GameEngineSprite::Find("Logo"))
 	{
 		ReleaseFunction::FolderRelease("Logo", "Logo_");

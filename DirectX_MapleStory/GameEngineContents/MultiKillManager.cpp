@@ -80,11 +80,6 @@ void MultiKillManager::Start()
 	}
 }
 
-void MultiKillManager::Update(float _Delta)
-{
-	
-}
-
 void MultiKillManager::Release()
 {
 	if (nullptr != MultiKill_BG_Renderer)

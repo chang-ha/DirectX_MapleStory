@@ -22,10 +22,6 @@ void DamageSkinRenderer::AddImageScale(const float4& _Scale)
 void DamageSkinRenderer::Start()
 {
 	GameEngineRenderer::Start();
-	// DataTransform에 ImageTransform을 넣어줌
-	// DataTransform = &ImageTransform;
-	// 부모로는 나(액터)의 Transform을 넣어줌으로서 액터의 Transform과 Renderer의 Transform을 분리함
-
 	ImageTransform.SetParent(Transform);
 	GameEngineRenderer::SetMesh("Rect");
 	GameEngineRenderer::SetMaterial("DamageSkinTexture");
@@ -70,7 +66,6 @@ void DamageSkinRenderer::SetSprite(std::string_view _Name, unsigned int Index /*
 	}
 
 	CurSprite = Sprite->GetSpriteData(Index);
-	// SetImageScale(CurSprite.GetScale());
 }
 
 void DamageSkinRenderer::Render(GameEngineCamera* _Camera, float _Delta)
@@ -90,13 +85,11 @@ void DamageSkinRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
 
 	GetShaderResHelper().SetTexture("DamageSkinTex", CurSprite.Texture, true);
-	// GetShaderResHelper().SetSampler();
 	GameEngineRenderer::Render(_Camera, _Delta);
 }
 
 void DamageSkinRenderer::SetMaterialEvent(std::string_view _Name, int _Index)
 {
-	// 현재 ImageTransform을 ConstantBuufer에 세팅해줌
 	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
 	GetShaderResHelper().SetConstantBufferLink("TransformData", Data);
 	GetShaderResHelper().SetConstantBufferLink("RenderBaseInfo", RenderBaseInfoValue);

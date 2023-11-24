@@ -3,7 +3,6 @@
 
 struct GameEngineVertex2D
 {
-    // POSITION은 View직전까지 곱한 녀석 -> W값을 나누고 ViewPort를 곱해주는건 Rasterizer가 자동으로 곱해줌
     float4 POSITION : POSITION;
     float4 TEXCOORD : TEXCOORD;
 };
@@ -11,18 +10,9 @@ struct GameEngineVertex2D
 
 struct PixelOutPut
 {
-    // SV_POSITION이란 ViewPort까지 다 곱한 녀석
     float4 POSITION : SV_POSITION;
     float4 TEXCOORD : TEXCOORD;
 };
-
-//cbuffer SpriteData : register(b1)
-//{
-//    float Pos2DX;
-//    float Pos2DY;
-//    float Scale2DX;
-//    float Scale2DY;
-//};
 
 cbuffer UVInfo : register(b2)
 {
@@ -40,11 +30,8 @@ cbuffer UVInfo : register(b2)
 
 PixelOutPut DamageSkinShader_VS(GameEngineVertex2D _Input)
 {
-    // _Input은 VertexBuffer값 0.5, 0.5등 이 6번 들어옴
-    // Init PixelOutput
     PixelOutPut Result = (PixelOutPut) 0;
 
-    // 해당 VertexBuffer에 WorldViewProjection을 곱해줌
     Result.POSITION = mul(_Input.POSITION, WorldViewProjectionMatrix);
 
     Result.TEXCOORD.x = _Input.TEXCOORD.x * Ratio;
@@ -53,15 +40,13 @@ PixelOutPut DamageSkinShader_VS(GameEngineVertex2D _Input)
     return Result;
 }
 
-// 규칙
-// Texture이름이 A이면 Sampler이름은 ASampler << 규칙을 지켜야 내가 만든 자동 쉐이더 컴파일이 작동함
 Texture2D DamageSkinTex : register(t0);
 SamplerState DamageSkinTexSampler : register(s0);
 
 cbuffer ColorData : register(b3)
 {
-    float4 PlusColor; // 최종색상에 더한다.
-    float4 MulColor; // 최종색상에 곱한다.
+    float4 PlusColor; 
+    float4 MulColor; 
 };
 
 struct PixelOut

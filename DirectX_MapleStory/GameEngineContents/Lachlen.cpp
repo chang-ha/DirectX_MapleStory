@@ -176,7 +176,7 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		_Actor->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
 		_Actor->Renderer->SetPivotType(PivotType::Bottom);
 		_Actor->Renderer->CreateAnimation("Boat1", "Boat1", 0.24f);
-		_Actor->Renderer->ChangeAnimation("Boat1");
+		_Actor->Renderer->ChangeAnimation("Boat1", true, 3);
 
 		_Actor->Transform.SetLocalPosition({ 768.0f, -1100.0f, 1.0f });
 	}
@@ -214,7 +214,7 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		_Actor->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
 		_Actor->Renderer->SetPivotType(PivotType::Bottom);
 		_Actor->Renderer->CreateAnimation("Boat1", "Boat1", 0.24f);
-		_Actor->Renderer->ChangeAnimation("Boat1");
+		_Actor->Renderer->ChangeAnimation("Boat1", true, 3);
 
 		_Actor->Transform.SetLocalPosition({ 2820.0f, -1120.0f, 1.0f });
 	}

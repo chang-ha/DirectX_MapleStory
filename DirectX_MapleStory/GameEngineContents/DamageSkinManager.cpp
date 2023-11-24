@@ -43,16 +43,6 @@ void DamageSkinManager::Start()
 	}
 }
 
-void DamageSkinManager::Update(float _Delta)
-{
-	
-}
-
-void DamageSkinManager::Release()
-{
-
-}
-
 std::shared_ptr<DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(ContentBaseActor* _Actor, int _Damage)
 {
 	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(RenderOrder::UI);
@@ -73,15 +63,3 @@ std::shared_ptr<class DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(co
 	_Renderer->Transform.SetLocalPosition(RenderPos + float4(0, 0, RenderDepth::ui));
 	return _Renderer;
 }
-
-//
-//std::shared_ptr<DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(class ContentBaseActor* _Actor, int _Damage, int _DamageCount)
-//{
-//	GameEngineRandom Random;
-//	for (size_t i = 0; i < _DamageCount; i++)
-//	{
-//		Random.SetSeed(reinterpret_cast<long long>(_Actor) + _DamageCount * time(nullptr));
-//		int RandomDamage = Random.RandomInt(10000000, 99999999);
-//
-//	}
-//}
