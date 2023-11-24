@@ -265,6 +265,8 @@ void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 
 void Boss_Lucid_Phase1::Start()
 {
+	DamageSkinPivot = { 0, 370 };
+
 	GameEngineInput::AddInputObject(this);
 
 	BaseBossActor::Start();

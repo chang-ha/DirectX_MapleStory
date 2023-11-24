@@ -29,6 +29,7 @@ void MushRoom::Start()
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "MushRoom_Death.mp3");
 	}
 
+	DamageSkinPivot = { 0, 230 };
 	HP = 50;
 
 	MushRenderer = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::MONSTER);

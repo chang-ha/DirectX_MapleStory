@@ -6,6 +6,7 @@ struct HitRenderData
 private:
 	std::string HitSpriteName = "";
 	bool AniEnd = false;
+	bool IsPlayer = false;
 	int CurIndex = 0;
 	float DelayTime = 0.0f;
 	class ContentBaseActor* Object = nullptr;

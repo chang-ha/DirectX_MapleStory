@@ -270,7 +270,7 @@ void BaseWindActor::AttackUpdate(float _Delta)
 			if (nullptr != _BaseActor)
 			{
 				GameEngineRandom Random;
-				Random.SetSeed(reinterpret_cast<long long>(_BaseActor) + time(nullptr));
+				Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr));
 				int RandomDamage = Random.RandomInt(10000000, 99999999);
 
 				_BaseActor->AddHP(-1);

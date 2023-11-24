@@ -55,19 +55,22 @@ void DamageSkinManager::Release()
 
 std::shared_ptr<DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(ContentBaseActor* _Actor, int _Damage)
 {
-	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(UpdateOrder::UI);
+	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(RenderOrder::UI);
 	_Renderer->SetDamage(_Damage);
-	_Renderer->Transform.SetLocalPosition(_Actor->Transform.GetWorldPosition() + _Actor->GetDamageSkinPivot());
+	float4 RenderPos = _Actor->Transform.GetWorldPosition() + _Actor->GetDamageSkinPivot();
+	RenderPos.Z = 0.0f;
+	_Renderer->Transform.SetLocalPosition(RenderPos + float4(0, 0, RenderDepth::ui));
 
 	return _Renderer;
 }
 
 std::shared_ptr<class DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(const float4& _RenderPos, int _Damage)
 {
-	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(UpdateOrder::UI);
+	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(RenderOrder::UI);
 	_Renderer->SetDamage(_Damage);
-	_Renderer->Transform.SetLocalPosition(_RenderPos);
-
+	float4 RenderPos = _RenderPos;
+	RenderPos.Z = 0.0f;
+	_Renderer->Transform.SetLocalPosition(RenderPos + float4(0, 0, RenderDepth::ui));
 	return _Renderer;
 }
 

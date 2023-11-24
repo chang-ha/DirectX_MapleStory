@@ -53,8 +53,9 @@ void DamageSkinRenderer::Update(float _Delta)
 	
 	ColorDataValue.MulColor.A -= _Delta;
 
-	if (0.0f >= ColorDataValue.MulColor.A)
+	if (0.0f > ColorDataValue.MulColor.A)
 	{
+		ColorDataValue.MulColor.A = 0.0f;
 		Death();
 	}
 }
@@ -89,6 +90,7 @@ void DamageSkinRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
 
 	GetShaderResHelper().SetTexture("DamageSkinTex", CurSprite.Texture, true);
+	// GetShaderResHelper().SetSampler();
 	GameEngineRenderer::Render(_Camera, _Delta);
 }
 
@@ -98,7 +100,6 @@ void DamageSkinRenderer::SetMaterialEvent(std::string_view _Name, int _Index)
 	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
 	GetShaderResHelper().SetConstantBufferLink("TransformData", Data);
 	GetShaderResHelper().SetConstantBufferLink("RenderBaseInfo", RenderBaseInfoValue);
-	// GetShaderResHelper().SetConstantBufferLink("SpriteData", CurSprite.SpritePivot);
 	GetShaderResHelper().SetConstantBufferLink("ColorData", ColorDataValue);
 	GetShaderResHelper().SetConstantBufferLink("UVInfo", UVValues);
 	SetSprite("DamageSkin_Num_Merge.png");

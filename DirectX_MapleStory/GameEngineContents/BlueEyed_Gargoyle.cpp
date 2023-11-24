@@ -27,6 +27,7 @@ void BlueEyed_Gargoyle::Start()
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Gargoyle_Attack.mp3");
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "Gargoyle_Death.mp3");
 	}
+	DamageSkinPivot = { 0, 150 };
 
 	FieldMonster::Start();
 	FieldMonster::Init("BlueEyed_Gargoyle");

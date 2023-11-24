@@ -19,6 +19,7 @@ void NightmareMusicBox::LevelEnd(GameEngineLevel* _NextLevel)
 
 void NightmareMusicBox::Start()
 {
+	DamageSkinPivot = { 25, 150 };
 	HP = 100;
 
 	if (nullptr == GameEngineSprite::Find("NightmareMusicBox_Death"))

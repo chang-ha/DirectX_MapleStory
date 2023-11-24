@@ -125,19 +125,21 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 		 Player* _PlayerObject = dynamic_cast<Player*>(_BaseActor);
 		if (nullptr != _PlayerObject)
 		{
+			_Data->IsPlayer = true;
+
 			continue;
 		}
 
 		int RandomDamage = RandomActor.RandomInt(10000000, 99999999);
-
 		_Data->DamageSkinRenderers[i] = DamageSkinManager::MainDamageSkinManager->CreateDamageSkin(_BaseActor, RandomDamage);
 		_Data->DamageSkinRenderers[i]->Transform.AddLocalPosition({0, 25.0f * i});
 		_Data->DamageSkinRenderers[i]->Off();
-	}
 
-	Player* _Player = dynamic_cast<Player*>(_Object);
-	if (nullptr == _Player)
-	{
+		float RandomFloat = RandomActor.RandomFloat(0.0f, 1.0f);
+		if (0.5f < RandomFloat)
+		{
+			continue;
+		}
 		BaseWindActor::CreateTriflingWind();
 	}
 
@@ -169,8 +171,7 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
 			_CurData->HitAnimations[_CurData->CurIndex]->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
-			Player* _PlayerObject = dynamic_cast<Player*>(_CurData->Object);
-			if (nullptr == _PlayerObject)
+			if (false == _CurData->IsPlayer)
 			{
 				_CurData->DamageSkinRenderers[_CurData->CurIndex]->On();
 			}

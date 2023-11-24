@@ -63,6 +63,8 @@ void Laser::Init(std::string_view _LaserName, int _ReadyEndIndex, float _AniSpee
 	//	GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	//}
 
+
+
 	LaserRenderer->CreateAnimation("Ready", _LaserName, _AniSpeed, 0, _ReadyEndIndex);
 	LaserRenderer->CreateAnimation("Attack", _LaserName, _AniSpeed, _ReadyEndIndex);
 	LaserRenderer->ChangeAnimation("Ready");
@@ -100,12 +102,8 @@ void Laser::Init(std::string_view _LaserName, int _ReadyEndIndex, float _AniSpee
 		GameEngineSound::SoundLoad(FilePath.GetStringPath());
 	}
 
-	LaserRenderer->SetFrameEvent("Attack", _ReadyEndIndex, [=](GameEngineSpriteRenderer*)
-		{
-			GameEngineSoundPlayer LaserPlayer = GameEngineSound::SoundPlay("LaserRain.mp3");
-			LaserPlayer.SetVolume(0.7f);
-		}
-	);
+	GameEngineSoundPlayer LaserPlayer = GameEngineSound::SoundPlay("LaserRain.mp3");
+	LaserPlayer.SetVolume(0.7f);
 }
 
 void Laser::SetAngle(float _Angle)

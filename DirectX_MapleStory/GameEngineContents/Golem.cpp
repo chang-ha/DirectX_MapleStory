@@ -31,6 +31,7 @@ void Golem::Start()
 	}
 
 	ContentActor::Start();
+	DamageSkinPivot = {0, 200};
 	HP = 25;
 
 	if (nullptr == MainSpriteRenderer)

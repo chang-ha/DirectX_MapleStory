@@ -29,7 +29,7 @@ void Dreamkeeper::Start()
 		GameEngineSound::SoundLoad(FilePath.GetStringPath() + "DreamKeeper_Attack.mp3");
 	}
 
-	DamageSkinPivot = {0, 100};
+	DamageSkinPivot = {0, 150};
 	FieldMonster::Start();
 	FieldMonster::Init("Dreamkeeper");
 
