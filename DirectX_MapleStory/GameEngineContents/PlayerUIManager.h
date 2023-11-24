@@ -44,6 +44,7 @@ private:
 	BarFrame HP;
 	BarFrame MP;
 	std::shared_ptr<GameEngineUIRenderer> Bar_Name = nullptr;
+	std::vector<std::shared_ptr<class ContentButton>> PlayerUIButtons;
 
 	void PlayerStatusUpdate(float _Delta);
 	void HPUpdate(float _Delta);

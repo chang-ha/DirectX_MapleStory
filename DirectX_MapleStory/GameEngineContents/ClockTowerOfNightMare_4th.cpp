@@ -9,6 +9,7 @@
 #include "ClockTowerOfNightMare_5th.h"
 #include "LinkPortal.h"
 #include "ReleaseFunction.h"
+#include "ContentNpc.h"
 
 ClockTowerOfNightMare_4th::ClockTowerOfNightMare_4th()
 {
@@ -75,6 +76,12 @@ void ClockTowerOfNightMare_4th::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<Lamp> _Lamp = CreateActor<Lamp>(UpdateOrder::Map);
 	_Lamp->Init(LampType::Lamp9);
 	_Lamp->Transform.SetLocalPosition({ 1115, -530 });
+
+	std::shared_ptr<ContentNpc> _Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
+	_Npc->Transform.SetLocalPosition({ 870, -2710 });
+	_Npc->Init("OldMan", "영감님", ActorDir::Left);
+	_Npc->CreateOneButtonMent("Npc_Ok");
+	_Npc->SetMentText(L"영감님");
 
 	CreateMonster<RedEyed_Gargoyle>({ 650, -349 });
 	CreateMonster<RedEyed_Gargoyle>({ 820, -475 });

@@ -1,6 +1,7 @@
 ﻿#include "PreCompile.h"
 #include "PlayerUIManager.h"
 #include "Player.h"
+#include "ContentButton.h"
 
 PlayerUIManager::PlayerUIManager()
 {
@@ -161,6 +162,32 @@ void PlayerUIManager::LevelStart(class GameEngineLevel* _PrevLevel)
 	HP.Bar->SetImageScale({ 171.0f * (CurHPScale * 0.01f), 13, 1 });
 	CurMPScale = static_cast<float>(Player::MainPlayer->MP);
 	MP.Bar->SetImageScale({ 171.0f * (CurMPScale * 0.01f), 13, 1 });
+
+	PlayerUIButtons.resize(6);
+
+	PlayerUIButtons[0] = GetLevel()->CreateActor<ContentButton>(UpdateOrder::UI);
+	PlayerUIButtons[0]->Init("PlayerUI_Cash");
+
+	PlayerUIButtons[1] = GetLevel()->CreateActor<ContentButton>(UpdateOrder::UI);
+	PlayerUIButtons[1]->Init("PlayerUI_Event");
+
+	PlayerUIButtons[2] = GetLevel()->CreateActor<ContentButton>(UpdateOrder::UI);
+	PlayerUIButtons[2]->Init("PlayerUI_Character");
+
+	PlayerUIButtons[3] = GetLevel()->CreateActor<ContentButton>(UpdateOrder::UI);
+	PlayerUIButtons[3]->Init("PlayerUI_Community");
+
+	PlayerUIButtons[4] = GetLevel()->CreateActor<ContentButton>(UpdateOrder::UI);
+	PlayerUIButtons[4]->Init("PlayerUI_Setting");
+
+	PlayerUIButtons[5] = GetLevel()->CreateActor<ContentButton>(UpdateOrder::UI);
+	PlayerUIButtons[5]->Init("PlayerUI_Menu");
+
+	for (size_t i = 0; i < PlayerUIButtons.size(); i++)
+	{
+		PlayerUIButtons[i]->SetButtonCollisionScale({18, 18});
+		PlayerUIButtons[i]->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() + 122 + 37.0f * i, -GlobalValue::WinScale.Y + 28.5f });
+	}
 }
 
 void PlayerUIManager::LevelEnd(class GameEngineLevel* _NextLevel)
@@ -240,6 +267,15 @@ void PlayerUIManager::Release()
 	{
 		Bar_Name->Death();
 		Bar_Name = nullptr;
+	}
+
+	for (size_t i = 0; i < PlayerUIButtons.size(); i++)
+	{
+		if (nullptr != PlayerUIButtons[i])
+		{
+			// sPlayerUIButtons[i]->Death();
+			PlayerUIButtons[i] = nullptr;
+		}
 	}
 }
 
