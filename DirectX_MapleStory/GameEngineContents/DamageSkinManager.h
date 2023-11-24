@@ -1,0 +1,35 @@
+#pragma once
+
+class DamageSkin : public GameEngineActor
+{
+
+};
+
+class DamageSkinManager : public GameEngineActor
+{
+public:
+	// constructer destructer
+	DamageSkinManager();
+	~DamageSkinManager();
+
+	// delete function
+	DamageSkinManager(const DamageSkinManager& _Ohter) = delete;
+	DamageSkinManager(DamageSkinManager&& _Ohter) noexcept = delete;
+	DamageSkinManager& operator=(const DamageSkinManager& _Other) = delete;
+	DamageSkinManager& operator=(DamageSkinManager&& _Other) noexcept = delete;
+
+	static void DamageSkinPrint(int _DamageSkinCount, int _Damage);
+
+protected:
+
+private:
+
+	void LevelStart(class GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(class GameEngineLevel* _NextLevel) override;
+	void Start() override;
+	void Update(float _Delta) override;
+	void Release() override;
+
+	void Init();
+};
+

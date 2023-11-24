@@ -4,6 +4,9 @@
     <Filter Include="FadeEffect">
       <UniqueIdentifier>{f795ee4d-4785-47a9-9de1-b56366791fb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DamageSkin">
+      <UniqueIdentifier>{c9f96cc0-153d-4e10-a724-57c4102a3bf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FadeInObjectEffect.fx">
@@ -14,6 +17,9 @@
     </FxCompile>
     <FxCompile Include="FadeOutObjectEffect.fx">
       <Filter>FadeEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="DamageSkinShader.fx">
+      <Filter>DamageSkin</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

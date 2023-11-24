@@ -53,6 +53,12 @@ void ContentResources::ContentResourcesInit()
 		Mat->SetRasterizer("EngineRasterizer");
 	}
 
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("DamageSkinTexture");
+		Mat->SetVertexShader("DamageSkinShader_VS");
+		Mat->SetPixelShader("DamageSkinShader_PS");
+	}
+
 	//{
 	//	std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("BackGroundActor");
 	//	Mat->SetVertexShader("BackGroundShader_VS");

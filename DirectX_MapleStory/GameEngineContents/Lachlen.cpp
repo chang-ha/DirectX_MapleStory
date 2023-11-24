@@ -13,6 +13,9 @@
 #include "ContentNpc.h"
 #include "ReleaseFunction.h"
 
+//test
+#include "DamageSkinManager.h"
+
 Lachlen::Lachlen()
 {
 
@@ -375,6 +378,10 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 
 	Minimap::CreateMinimap("Minimap_Lachlen.png", "레헬른 중심가");
 
+	//test
+	CreateActor<DamageSkinManager>();
+	///
+
 	if (false == BGMPlayer.IsPlaying())
 	{
 		BGMPlayer = GameEngineSound::SoundPlay("Lachlen.mp3", 10000);
@@ -387,6 +394,7 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		BGMPlayer.Stop();
 		BGMPlayer = GameEngineSound::SoundPlay("Lachlen.mp3", 10000);
 	}
+
 }
 
 void Lachlen::LevelEnd(GameEngineLevel* _NextLevel)
