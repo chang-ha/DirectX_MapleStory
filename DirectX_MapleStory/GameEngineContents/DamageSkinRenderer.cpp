@@ -43,6 +43,20 @@ void DamageSkinRenderer::Update(float _Delta)
 	//}
 
 	//RenderBaseInfoValue.RenderScreenScale = CurSprite.GetScale();
+
+	Transform.AddLocalPosition({0, UpSpeed * _Delta});
+	if (0.0 < AlphaDelay)
+	{
+		AlphaDelay -= _Delta;
+		return;
+	}
+	
+	ColorDataValue.MulColor.A -= _Delta;
+
+	if (0.0f >= ColorDataValue.MulColor.A)
+	{
+		Death();
+	}
 }
 
 void DamageSkinRenderer::SetSprite(std::string_view _Name, unsigned int Index /*= 0*/)

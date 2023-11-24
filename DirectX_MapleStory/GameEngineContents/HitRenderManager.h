@@ -8,10 +8,10 @@ private:
 	bool AniEnd = false;
 	int CurIndex = 0;
 	float DelayTime = 0.0f;
-	GameEngineObject* Object = nullptr;
+	class ContentBaseActor* Object = nullptr;
 	std::vector<float4> RandomPivot;
 	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> HitAnimations;
-	// std::vector<std::shared_ptr<GameEngineSpriteRenderer>> DamageAnimations;
+	std::vector<std::shared_ptr<class DamageSkinRenderer>> DamageSkinRenderers;
 };
 
 class HitRenderManager : public GameEngineActor

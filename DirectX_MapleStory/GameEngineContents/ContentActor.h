@@ -31,9 +31,15 @@ public:
 		return MP;
 	}
 
+	const float4 GetDamageSkinPivot()
+	{
+		return DamageSkinPivot;
+	}
+
 protected:
 	int HP = 0;
 	int MP = 0;
+	float4 DamageSkinPivot = float4::ZERO;
 };
 
 #define MAX_GRAVITY_FORCE 1400.0f

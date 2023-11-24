@@ -12,8 +12,6 @@
 #include "FireWork.h"
 #include "ContentNpc.h"
 #include "ReleaseFunction.h"
-
-//test
 #include "DamageSkinManager.h"
 
 Lachlen::Lachlen()

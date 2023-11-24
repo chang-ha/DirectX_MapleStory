@@ -51,6 +51,8 @@ protected:
 	void SetMaterialEvent(std::string_view _Name, int _Index) override;
 
 private:
+	float UpSpeed = 30.0f;
+	float AlphaDelay = 1.0f;
 	std::shared_ptr<GameEngineSprite> Sprite;
 	std::shared_ptr<class GameEngineSampler> Sampler;
 	SpriteData CurSprite;

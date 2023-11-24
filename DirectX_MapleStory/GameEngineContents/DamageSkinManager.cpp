@@ -1,8 +1,14 @@
 ﻿#include "PreCompile.h"
+
+#include <GameEngineBase\GameEngineRandom.h>
+
 #include "DamageSkinManager.h"
 #include "ContentLevel.h"
 #include "DamageSkinRenderer.h"
 #include "Player.h"
+
+DamageSkinManager* DamageSkinManager::MainDamageSkinManager = nullptr;
+
 
 DamageSkinManager::DamageSkinManager()
 {
@@ -16,11 +22,12 @@ DamageSkinManager::~DamageSkinManager()
 
 void DamageSkinManager::LevelStart(class GameEngineLevel* _PrevLevel)
 {
-
+	MainDamageSkinManager = this;
 }
 
 void DamageSkinManager::LevelEnd(class GameEngineLevel* _NextLevel)
 {
+	MainDamageSkinManager = nullptr;
 	Death();
 }
 
@@ -34,10 +41,6 @@ void DamageSkinManager::Start()
 		GameEngineTexture::Load(File.GetStringPath());
 		GameEngineSprite::CreateSingle(File.GetFileName());
 	}
-
-	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(RenderOrder::UI);
-	_Renderer->SetDamage(19283746);
-	_Renderer->Transform.SetWorldPosition(float4(3500, -717));
 }
 
 void DamageSkinManager::Update(float _Delta)
@@ -50,12 +53,32 @@ void DamageSkinManager::Release()
 
 }
 
-void DamageSkinManager::DamageSkinPrint(int _DamageSkinCount, int _Damage)
+std::shared_ptr<DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(ContentBaseActor* _Actor, int _Damage)
 {
+	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(UpdateOrder::UI);
+	_Renderer->SetDamage(_Damage);
+	_Renderer->Transform.SetLocalPosition(_Actor->Transform.GetWorldPosition() + _Actor->GetDamageSkinPivot());
 
+	return _Renderer;
 }
 
-void DamageSkinManager::Init()
+std::shared_ptr<class DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(const float4& _RenderPos, int _Damage)
 {
+	std::shared_ptr<DamageSkinRenderer> _Renderer = CreateComponent<DamageSkinRenderer>(UpdateOrder::UI);
+	_Renderer->SetDamage(_Damage);
+	_Renderer->Transform.SetLocalPosition(_RenderPos);
 
+	return _Renderer;
 }
+
+//
+//std::shared_ptr<DamageSkinRenderer> DamageSkinManager::CreateDamageSkin(class ContentBaseActor* _Actor, int _Damage, int _DamageCount)
+//{
+//	GameEngineRandom Random;
+//	for (size_t i = 0; i < _DamageCount; i++)
+//	{
+//		Random.SetSeed(reinterpret_cast<long long>(_Actor) + _DamageCount * time(nullptr));
+//		int RandomDamage = Random.RandomInt(10000000, 99999999);
+//
+//	}
+//}

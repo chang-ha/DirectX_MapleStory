@@ -5,6 +5,7 @@
 #include "ContentLevel.h"
 #include "BaseWindActor.h"
 #include "Player.h"
+#include "DamageSkinManager.h"
 
 #define DETECT_XRANGE 1500
 #define DETECT_YRANGE 1000
@@ -268,7 +269,12 @@ void BaseWindActor::AttackUpdate(float _Delta)
 			ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Other->GetParentObject());
 			if (nullptr != _BaseActor)
 			{
+				GameEngineRandom Random;
+				Random.SetSeed(reinterpret_cast<long long>(_BaseActor) + time(nullptr));
+				int RandomDamage = Random.RandomInt(10000000, 99999999);
+
 				_BaseActor->AddHP(-1);
+				DamageSkinManager::MainDamageSkinManager->CreateDamageSkin(_BaseActor, RandomDamage);
 			}
 		}
 	);

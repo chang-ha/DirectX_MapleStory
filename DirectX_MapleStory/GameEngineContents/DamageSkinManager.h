@@ -8,6 +8,8 @@ class DamageSkin : public GameEngineActor
 class DamageSkinManager : public GameEngineActor
 {
 public:
+	static DamageSkinManager* MainDamageSkinManager;
+
 	// constructer destructer
 	DamageSkinManager();
 	~DamageSkinManager();
@@ -18,18 +20,17 @@ public:
 	DamageSkinManager& operator=(const DamageSkinManager& _Other) = delete;
 	DamageSkinManager& operator=(DamageSkinManager&& _Other) noexcept = delete;
 
-	static void DamageSkinPrint(int _DamageSkinCount, int _Damage);
+	std::shared_ptr<class DamageSkinRenderer> CreateDamageSkin(class ContentBaseActor* _Actor, int _Damage);
+	std::shared_ptr<class DamageSkinRenderer> CreateDamageSkin(const float4& _RenderPos, int _Damage);
+	// std::shared_ptr<class DamageSkinRenderer> CreateDamageSkin(class ContentBaseActor* _Actor, int _Damage, int _DamageCount);
 
 protected:
 
 private:
-
 	void LevelStart(class GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(class GameEngineLevel* _NextLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
-
-	void Init();
 };
 

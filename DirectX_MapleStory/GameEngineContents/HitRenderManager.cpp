@@ -6,6 +6,8 @@
 #include "ContentActor.h"
 #include "Player.h"
 #include "BaseWindActor.h"
+#include "DamageSkinManager.h"
+#include "DamageSkinRenderer.h"
 
 #define HIT_ANI_TIME 0.04f
 #define HIT_DELAY 0.12f
@@ -45,38 +47,58 @@ void HitRenderManager::Update(float _Delta)
 
 void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, GameEngineObject* _Object, int _Damage, bool _RandomPivot /*= true*/, PivotType _PivotType /*= PivotType::Bottom*/)
 {
+	if (0 > _HitCount)
+	{
+		MsgBoxAssert("히트 카운트가 잘못입력되었습니다.");
+		return;
+	}
+
+	if (nullptr == _Object)
+	{
+		MsgBoxAssert("존재하지 않는 오브젝트입니다.");
+		return;
+	}
+
+	ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
+	if (nullptr == _BaseActor)
+	{
+		MsgBoxAssert("잘못된 Object가 들어왔습니다.");
+		return;
+	}
+
+	if (nullptr != _BaseActor)
+	{
+		if (-1 == _Damage)
+		{
+			_BaseActor->AddHP(-_HitCount);
+		}
+		else
+		{
+			_BaseActor->AddHP(-_Damage);
+		}
+	}
+
 	if ("" == _HitSpriteName)
 	{
-		ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
-		if (nullptr != _BaseActor)
-		{
-			if (-1 == _Damage)
-			{
-				_BaseActor->AddHP(-_HitCount);
-			}
-			else
-			{
-				_BaseActor->AddHP(-_Damage);
-			}
-		}
 		return;
 	}
 
 	GameEngineRandom RandomActor;
 	std::shared_ptr<HitRenderData> _Data = std::make_shared<HitRenderData>();
 	_Data->HitSpriteName = _HitSpriteName;
-	_Data->Object = _Object;
+	_Data->Object = _BaseActor;
 	_Data->HitAnimations.resize(_HitCount);
 	_Data->RandomPivot.resize(_HitCount);
-	// _Data.DamageAnimations.resize(_HitCount);
+	_Data->DamageSkinRenderers.resize(_HitCount);
 
 	for (int i = 0; i < _HitCount; i++)
 	{
+		/// Hit Ani
 		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::HITANI);
 
+		RandomActor.SetSeed(reinterpret_cast<long long>(_BaseActor) + time(nullptr) + i);
 		if (true == _RandomPivot)
 		{
-			RandomActor.SetSeed(reinterpret_cast<long long>(_Object) + time(nullptr) + i);
 			float4 RandomValue = RandomActor.RandomVectorBox2D(-RANDOMRANGE, RANDOMRANGE, -RANDOMRANGE, RANDOMRANGE);
 			_Data->RandomPivot[i].X = RandomValue.X;
 			_Data->RandomPivot[i].Y = RandomValue.Y;
@@ -84,7 +106,7 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 
 		_HitAnimation->CreateAnimation("Hit", _HitSpriteName, HIT_ANI_TIME);
 		_HitAnimation->ChangeAnimation("Hit");
-		float4 Pos = _Object->Transform.GetWorldPosition() + _Data->RandomPivot[i];
+		float4 Pos = _BaseActor->Transform.GetWorldPosition() + _Data->RandomPivot[i];
 		Pos.Z = RenderDepth::hitani;
 		_HitAnimation->Transform.SetLocalPosition(Pos);
 		_HitAnimation->AutoSpriteSizeOn();
@@ -98,19 +120,19 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 		_HitAnimation->SetPivotType(_PivotType);
 
 		_Data->HitAnimations[i] = _HitAnimation;
-	}
-	
-	ContentBaseActor* _BaseActor = dynamic_cast<ContentBaseActor*>(_Object);
-	if (nullptr != _BaseActor)
-	{
-		if (-1 == _Damage)
+
+		/// DamageSkin
+		 Player* _PlayerObject = dynamic_cast<Player*>(_BaseActor);
+		if (nullptr != _PlayerObject)
 		{
-			_BaseActor->AddHP(-_HitCount);
+			continue;
 		}
-		else
-		{
-			_BaseActor->AddHP(-_Damage);
-		}
+
+		int RandomDamage = RandomActor.RandomInt(10000000, 99999999);
+
+		_Data->DamageSkinRenderers[i] = DamageSkinManager::MainDamageSkinManager->CreateDamageSkin(_BaseActor, RandomDamage);
+		_Data->DamageSkinRenderers[i]->Transform.AddLocalPosition({0, 25.0f * i});
+		_Data->DamageSkinRenderers[i]->Off();
 	}
 
 	Player* _Player = dynamic_cast<Player*>(_Object);
@@ -147,6 +169,7 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
 			_CurData->HitAnimations[_CurData->CurIndex]->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
+			_CurData->DamageSkinRenderers[_CurData->CurIndex]->On();
 			_CurData->CurIndex += 1;
 			_CurData->DelayTime = HIT_DELAY;
 
@@ -155,6 +178,7 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 				GameEngineSoundPlayer HitSound = GameEngineSound::SoundPlay(_CurData->HitSpriteName + ".mp3");
 				HitSound.SetVolume(GlobalValue::HitVolume);
 			}
+
 		}
 		++StartIter;
 	}

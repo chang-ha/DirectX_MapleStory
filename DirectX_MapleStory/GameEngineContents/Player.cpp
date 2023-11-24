@@ -10,6 +10,7 @@
 #include "ContentMap.h"
 #include "SkillManager.h"
 #include "PlayerUIManager.h"
+#include "DamageSkinManager.h"
 
 #define MIN_CAMERA_MOVE 15.0f
 
@@ -162,6 +163,11 @@ void Player::Start()
 	{
 		UIManager = GetLevel()->CreateActor<PlayerUIManager>(UpdateOrder::UI);
 	}
+
+	if (nullptr == DamageSkinManagerActor)
+	{
+		DamageSkinManagerActor = GetLevel()->CreateActor<DamageSkinManager>(UpdateOrder::UI);
+	}
 }
 
 void Player::Update(float _Delta)
@@ -244,6 +250,12 @@ void Player::Release()
 	{
 		UIManager->Death();
 		UIManager = nullptr;
+	}
+
+	if (nullptr != DamageSkinManagerActor)
+	{
+		DamageSkinManagerActor->Death();
+		DamageSkinManagerActor = nullptr;
 	}
 }
 
