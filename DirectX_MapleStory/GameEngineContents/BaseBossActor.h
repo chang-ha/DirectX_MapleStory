@@ -5,6 +5,7 @@
 #define PhantasmalWind_Cooldown 4.0f
 #define Summon_Dragon_Cooldown 13.0f
 #define Summon_Fly_Cooldown 5.0f
+#define Boss_MAX_HP 1000
 
 class BaseBossActor : public ContentBaseActor
 {
@@ -21,6 +22,10 @@ public:
 
 protected:
 	bool IsCoolDownUpdate = true;
+	bool ThreeQuarters = false;
+	bool TwoQuarters = false;
+	bool OneQuarters = false;
+
 	std::shared_ptr<GameEngineSpriteRenderer> BossRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BossCollision = nullptr;
 	std::shared_ptr<WarningMent> BossWarningMent = nullptr;

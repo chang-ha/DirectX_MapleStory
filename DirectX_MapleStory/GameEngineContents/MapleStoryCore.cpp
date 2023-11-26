@@ -80,7 +80,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase2>("14.Lucid_Phase2");
 	GameEngineCore::CreateLevel<Boss_ClearRoom>("15.Boss_ClearRoom");
 
-	GameEngineCore::ChangeLevel("14.Lucid_Phase2");
+	GameEngineCore::ChangeLevel("12.Lucid_Phase1");
 }
 
 
