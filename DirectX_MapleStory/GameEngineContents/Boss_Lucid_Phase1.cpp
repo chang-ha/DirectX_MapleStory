@@ -22,6 +22,54 @@ void Lucid_Phase1_GUI::Start()
 
 void Lucid_Phase1_GUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	if (false == IsGUIUpdate)
+	{
+		return;
+	}
+
+	float Button_XSizze = 125.0f;
+	float Button_YSizze = 20.0f;
+	ImGui::Checkbox("BossCoolDown", &_CurBoss->IsCoolDownUpdate);
+
+	if (ImGui::Button("Idle", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Idle);
+	}
+
+	if (ImGui::Button("PhantasmalWind", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::PhantasmalWind);
+	}
+
+	if (ImGui::Button("TeleportSkill", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::TeleportSkill);
+	}
+
+	if (ImGui::Button("Summon_Dragon", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Summon_Dragon);
+	}
+
+	if (ImGui::Button("Summon_Mush", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Summon_Mush);
+	}
+
+	if (ImGui::Button("Summon_Golem", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Summon_Golem);
+	}
+
+	if (ImGui::Button("Summon_ButterFly", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Summon_ButterFly);
+	}
+
+	if (ImGui::Button("Death", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Death);
+	}
 }
 
 Boss_Lucid_Phase1::Boss_Lucid_Phase1()
@@ -36,7 +84,10 @@ Boss_Lucid_Phase1::~Boss_Lucid_Phase1()
 
 void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	GameEngineGUI::CreateGUIWindow<Lucid_Phase1_GUI>("LucidState");
+	IsCoolDownUpdate = true;
+
+	BossGui = GameEngineGUI::CreateGUIWindow<Lucid_Phase1_GUI>("LucidState");
+	BossGui->_CurBoss = this;
 
 	BaseBossActor::LevelStart(_PrevLevel);
 	SkillInfo.resize(6);
@@ -243,6 +294,7 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 
 	BossRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
+			BossGui->IsGUIUpdate = false;
 			ContentLevel::CurContentLevel->FadeOutObject->FadeStart();
 		}
 	);
@@ -260,7 +312,8 @@ void Boss_Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 void Boss_Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	BaseBossActor::LevelEnd(_NextLevel);
-
+	BossGui->IsGUIUpdate = true;
+	GameEngineGUI::DeathGUIWindows("LucidState");
 }
 
 void Boss_Lucid_Phase1::Start()
@@ -281,37 +334,6 @@ void Boss_Lucid_Phase1::Update(float _Delta)
 	{
 		ChangeState(LucidState::Death);
 	}
-
-	// TestCode
-	if (true == GameEngineInput::IsDown('5', this))
-	{
-		ChangeState(LucidState::PhantasmalWind);
-	}
-
-	if (true == GameEngineInput::IsDown('6', this))
-	{
-		ChangeState(LucidState::Summon_Dragon);
-	}
-
-	if (true == GameEngineInput::IsDown('7', this))
-	{
-		ChangeState(LucidState::TeleportSkill);
-	}
-
-	if (true == GameEngineInput::IsDown('8', this))
-	{
-		ChangeState(LucidState::Summon_Mush);
-	}
-
-	if (true == GameEngineInput::IsDown('9', this))
-	{
-		ChangeState(LucidState::Summon_ButterFly);
-	}
-
-	if (true == GameEngineInput::IsDown('0', this))
-	{
-		ChangeState(LucidState::Death);
-	}
 }
 
 void Boss_Lucid_Phase1::Release()
@@ -327,6 +349,11 @@ void Boss_Lucid_Phase1::Release()
 	{
 		TeleportRenderer->Death();
 		TeleportRenderer = nullptr;
+	}
+	
+	if (nullptr != BossGui)
+	{
+		BossGui = nullptr;
 	}
 
 	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Death"))
@@ -513,6 +540,11 @@ void Boss_Lucid_Phase1::Summon_ButterFlyStart()
 
 void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 {
+	if (false == IsCoolDownUpdate)
+	{
+		return;
+	}
+
 	for (size_t i = 0; i < SkillInfo.size(); i++)
 	{
 		SkillInfo[i].SkillCooldown -= _Delta;
@@ -589,7 +621,6 @@ void Boss_Lucid_Phase1::DeathEnd()
 	BossRenderer->Transform.SetLocalPosition({ 37, 321, RenderDepth::monster });
 	FlowerRenderer->On();
 
-	GameEngineGUI::DeathGUIWindows("LucidState");
 }
 
 void Boss_Lucid_Phase1::PhantasmalWindEnd()

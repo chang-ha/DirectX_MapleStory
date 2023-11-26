@@ -10,6 +10,17 @@
 #define Default_MoveSpeed 200.0f
 #define Max_MoveSpeed 350.0f
 
+class Lucid_Phase2_GUI : public GameEngineGUIWindow
+{
+	friend class Boss_Lucid_Phase2;
+private:
+	bool IsGUIUpdate = true;
+	Boss_Lucid_Phase2* _CurBoss = nullptr;
+	void Start() override;
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
+};
+
+
 enum class LucidState
 {
 	Idle,
@@ -41,7 +52,9 @@ struct Phase2_Boss_Skill_Info
 
 class Boss_Lucid_Phase2 : public BaseBossActor
 {
+	friend Lucid_Phase2_GUI;
 public:
+
 	// constructer destructer
 	Boss_Lucid_Phase2();
 	~Boss_Lucid_Phase2();
@@ -63,6 +76,7 @@ protected:
 	void Update(float _Delta) override;
 	void Release() override;
 private:
+	bool IsCoolDownUpdate = true;
 	int CurLocationIndex = 0;
 	float MoveSpeed = Default_MoveSpeed;
 	float MoveDelay = 1.5f;
@@ -74,7 +88,7 @@ private:
 	LucidState State = LucidState::Idle;
 	std::vector<Phase2_Boss_Skill_Info> SkillInfo;
 	GameEngineSoundPlayer BossPlayer;
-
+	std::shared_ptr<Lucid_Phase2_GUI> BossGui = nullptr;
 	///// State
 	// Start
 	void IdleStart();

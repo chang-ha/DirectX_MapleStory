@@ -1047,7 +1047,7 @@ void Lucid_Phase2::CallDragon()
 	}
 }
 
-void Lucid_Phase2::SummonGolem()
+void Lucid_Phase2::SummonGolem(int _FootHold /*= -1*/)
 {
 	FootHoldsNumber.clear();
 	for (int i = 0; i <= 10; i++)
@@ -1064,7 +1064,14 @@ void Lucid_Phase2::SummonGolem()
 	int RandomInt = Random.RandomInt(0, static_cast<int>(FootHoldsNumber.size() - 1));
 	float RandomFloat = Random.RandomFloat(-50.0f, 50.0f);
 
-	PrevFootHold = FootHoldsNumber[RandomInt];
+	if (-1 == _FootHold)
+	{
+		PrevFootHold = FootHoldsNumber[RandomInt];
+	}
+	else
+	{
+		PrevFootHold = _FootHold;
+	}
 
 	std::shared_ptr<FootHold> _CurFootHold = AllFootHolds[PrevFootHold];
 	std::shared_ptr<Golem_Phase2> _CurGolme = CreateActor<Golem_Phase2>(UpdateOrder::Monster);

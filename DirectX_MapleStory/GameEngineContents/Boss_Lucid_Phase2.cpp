@@ -13,6 +13,70 @@
 #include "Player.h"
 #include "ReleaseFunction.h"
 
+void Lucid_Phase2_GUI::Start()
+{
+
+}
+
+void Lucid_Phase2_GUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
+{
+	if (false == IsGUIUpdate)
+	{
+		return;
+	}
+
+	float Button_XSizze = 125.0f;
+	float Button_YSizze = 20.0f;
+	ImGui::Checkbox("BossCoolDown", &_CurBoss->IsCoolDownUpdate);
+
+	if (ImGui::Button("Idle", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Idle);
+	}
+
+	if (ImGui::Button("PhantasmalWind", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::PhantasmalWind);
+	}
+
+	if (ImGui::Button("Laser", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Laser);
+	}
+
+	if (ImGui::Button("BodySlam", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::BodySlam);
+	}
+
+	if (ImGui::Button("Summon_Dragon", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Summon_Dragon);
+	}
+
+	if (ImGui::Button("Summon_Golem", { Button_XSizze, Button_YSizze }))
+	{
+		Lucid_Phase2* _BossLevel = dynamic_cast<Lucid_Phase2*>(ContentLevel::CurContentLevel);
+		if (nullptr == _BossLevel)
+		{
+			MsgBoxAssert("잘못된 레벨에서 GUI를 사용하였습니다.");
+			return;
+		}
+
+		_BossLevel->SummonGolem(1);
+	}
+
+	if (ImGui::Button("Summon_ButterFly", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Summon_ButterFly);
+	}
+
+	if (ImGui::Button("Death", { Button_XSizze, Button_YSizze }))
+	{
+		_CurBoss->ChangeState(LucidState::Death);
+	}
+}
+
 Boss_Lucid_Phase2::Boss_Lucid_Phase2()
 {
 
@@ -25,6 +89,11 @@ Boss_Lucid_Phase2::~Boss_Lucid_Phase2()
 
 void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	IsCoolDownUpdate = true;
+
+	BossGui = GameEngineGUI::CreateGUIWindow<Lucid_Phase2_GUI>("LucidState");
+	BossGui->_CurBoss = this;
+
 	BaseBossActor::LevelStart(_PrevLevel);
 
 	GameEngineRandom Random;
@@ -151,7 +220,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	BossRenderer->CreateAnimation("Idle", "Lucid_Phase2_Idle");
-	BossRenderer->CreateAnimation("Death", "Lucid_Phase2_Death");
+	BossRenderer->CreateAnimation("Death", "Lucid_Phase2_Death", 0.1f, -1, -1, false);
 	BossRenderer->CreateAnimation("PhantasmalWind", "Lucid_Phase2_PhantasmalWind", 0.12f);
 	BossRenderer->CreateAnimation("Summon_Dragon", "Lucid_Phase2_Summon_Dragon");
 	BossRenderer->CreateAnimation("Laser", "Lucid_Phase2_Laser", 0.09f, -1, -1, false);
@@ -261,7 +330,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 
 	BossRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
 		{
-			Death();
+			BossGui->IsGUIUpdate = false;
 			ContentLevel::CurContentLevel->FadeOutObject->FadeStart();
 		}
 	);
@@ -280,6 +349,8 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 void Boss_Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	BaseBossActor::LevelEnd(_NextLevel);
+	BossGui->IsGUIUpdate = true;
+	GameEngineGUI::DeathGUIWindows("LucidState");
 }
 
 void Boss_Lucid_Phase2::Start()
@@ -299,41 +370,16 @@ void Boss_Lucid_Phase2::Update(float _Delta)
 
 	BaseBossActor::Update(_Delta);
 	StateUpdate(_Delta);
-
-	if (true == GameEngineInput::IsDown('4', this))
-	{
-		ChangeState(LucidState::Death);
-	}
-
-	if (true == GameEngineInput::IsDown('5', this))
-	{
-		ChangeState(LucidState::PhantasmalWind);
-	}
-
-	if (true == GameEngineInput::IsDown('6', this))
-	{
-		ChangeState(LucidState::Summon_Dragon);
-	}
-
-	if (true == GameEngineInput::IsDown('7', this))
-	{
-		ChangeState(LucidState::Laser);
-	}
-
-	if (true == GameEngineInput::IsDown('8', this))
-	{
-		ChangeState(LucidState::BodySlam);
-	}
-
-	if (true == GameEngineInput::IsDown('0', this))
-	{
-		ChangeState(LucidState::Summon_ButterFly);
-	}
 }
 
 void Boss_Lucid_Phase2::Release()
 {
 	BaseBossActor::Release();
+
+	if (nullptr != BossGui)
+	{
+		BossGui = nullptr;
+	}
 
 	if (nullptr != GameEngineSprite::Find("Lucid_Phase2_Death"))
 	{
@@ -595,6 +641,10 @@ void Boss_Lucid_Phase2::IdleUpdate(float _Delta)
 	// Skill Cooldown
 	for (size_t i = 0; i < SkillInfo.size(); i++)
 	{
+		if (false == IsCoolDownUpdate)
+		{
+			continue;
+		}
 		SkillInfo[i].SkillCooldown -= _Delta;
 
 		if (0.0f >= SkillInfo[i].SkillCooldown)

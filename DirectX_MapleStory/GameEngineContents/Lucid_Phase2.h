@@ -63,7 +63,7 @@ public:
 	Lucid_Phase2& operator=(Lucid_Phase2&& _Other) noexcept = delete;
 
 	void CallDragon();
-	void SummonGolem();
+	void SummonGolem(int _FootHold = -1);
 	void BreakFootHold(int _FootHoldNumber);
 	void LucidLaserOn();
 	void LucidLaserOff()

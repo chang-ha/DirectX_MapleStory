@@ -20,6 +20,7 @@ public:
 	BaseBossActor& operator=(BaseBossActor&& _Other) noexcept = delete;
 
 protected:
+	bool IsCoolDownUpdate = true;
 	std::shared_ptr<GameEngineSpriteRenderer> BossRenderer = nullptr;
 	std::shared_ptr<GameEngineCollision> BossCollision = nullptr;
 	std::shared_ptr<WarningMent> BossWarningMent = nullptr;

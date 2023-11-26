@@ -7,7 +7,10 @@
 
 class Lucid_Phase1_GUI : public GameEngineGUIWindow
 {
-public:
+	friend class Boss_Lucid_Phase1;
+private:
+	bool IsGUIUpdate = true;
+	Boss_Lucid_Phase1* _CurBoss = nullptr;
 	void Start() override;
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 };
@@ -44,7 +47,9 @@ struct Phase1_Boss_Skill_Info
 
 class Boss_Lucid_Phase1 : public BaseBossActor
 {
+	friend Lucid_Phase1_GUI;
 public:
+
 	// constructer destructer
 	Boss_Lucid_Phase1();
 	~Boss_Lucid_Phase1();
@@ -73,6 +78,7 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> TeleportRenderer = nullptr;
 	LucidState State = LucidState::Idle;
 	GameEngineSoundPlayer BossPlayer;
+	std::shared_ptr<Lucid_Phase1_GUI> BossGui = nullptr;
 
 	///// State
 	// Start
