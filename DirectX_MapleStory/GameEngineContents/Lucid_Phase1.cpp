@@ -128,31 +128,53 @@ void Lucid_Phase1::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	// BackGround Object
-	for (size_t i = 0; i < 4; i++)
 	{
 		std::shared_ptr<RenderActor> BackObject1 = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		BackObject1->Init(RenderOrder::BACKGROUND, RenderDepth::background);
 		BackObject1->Renderer->SetSprite("BackObject1.png");
 		BackObject1->Renderer->SetPivotType(PivotType::Bottom);
-		BackObject1->Transform.SetLocalPosition({ 285 + static_cast<float>(i) * 571, -700});
+		BackObject1->Renderer->AutoSpriteSizeOff();
+		BackObject1->Transform.SetLocalPosition({ 285 + 571, -700 });
+
+		std::shared_ptr<GameEngineTexture> _Texture = GameEngineTexture::Find("BackObject1.png");
+		float4 _TextureScale = _Texture->GetScale();
+
+		BackObject1->Renderer->SetImageScale({ _TextureScale.X * 4.0f, _TextureScale.Y });
+		BackObject1->Renderer->SetSampler("EngineBaseWRAPSampler");
+		BackObject1->Renderer->RenderBaseInfoValue.VertexUVMul.X = 4.0f;
 	}
 
-	for (size_t i = 0; i < 3; i++)
 	{
 		std::shared_ptr<RenderActor> BackObject2 = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		BackObject2->Init(RenderOrder::BACKGROUND, RenderDepth::background);
 		BackObject2->Renderer->SetSprite("BackObject2.png");
 		BackObject2->Renderer->SetPivotType(PivotType::Bottom);
-		BackObject2->Transform.SetLocalPosition({ 326 + static_cast<float>(i) * 652, -700 });
+		BackObject2->Renderer->AutoSpriteSizeOff();
+		BackObject2->Transform.SetLocalPosition({ 326 + 652, -700 });
+
+		std::shared_ptr<GameEngineTexture> _Texture = GameEngineTexture::Find("BackObject2.png");
+		float4 _TextureScale = _Texture->GetScale();
+
+		BackObject2->Renderer->SetImageScale({ _TextureScale.X * 3.0f, _TextureScale.Y });
+		BackObject2->Renderer->SetSampler("EngineBaseWRAPSampler");
+		BackObject2->Renderer->RenderBaseInfoValue.VertexUVMul.X = 3.0f;
+
 	}
 
-	for (size_t i = 0; i < 3; i++)
 	{
 		std::shared_ptr<RenderActor> BackObject3 = CreateActor<RenderActor>(UpdateOrder::RenderActor);
 		BackObject3->Init(RenderOrder::BACKGROUND, RenderDepth::background);
 		BackObject3->Renderer->SetSprite("BackObject3.png");
 		BackObject3->Renderer->SetPivotType(PivotType::Bottom);
-		BackObject3->Transform.SetLocalPosition({ static_cast<float>(i) * 888, -700 });	
+		BackObject3->Renderer->AutoSpriteSizeOff();
+		BackObject3->Transform.SetLocalPosition({ 888, -700 });
+
+		std::shared_ptr<GameEngineTexture> _Texture = GameEngineTexture::Find("BackObject3.png");
+		float4 _TextureScale = _Texture->GetScale();
+
+		BackObject3->Renderer->SetImageScale({ _TextureScale.X * 3.0f, _TextureScale.Y });
+		BackObject3->Renderer->SetSampler("EngineBaseWRAPSampler");
+		BackObject3->Renderer->RenderBaseInfoValue.VertexUVMul.X = 3.0f;
 	}
 
 	for (size_t i = 1; i < 5; i++)

@@ -91,7 +91,7 @@ void MushRoom::Update(float _Delta)
 		ChangeState(MushState::Death);
 	}
 
-	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, "", 0.5f, 1, 10, false);
+	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, "", 1.0f, 1, 10, false);
 	AttackFunction.CollisionTimeUpdate(_Delta);
 }
 
