@@ -112,6 +112,11 @@ public:
 		HitCollision->On();
 	}
 
+	std::shared_ptr<class SkillManager> GetSkillManager()
+	{
+		return SkillManagerActor;
+	}
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;

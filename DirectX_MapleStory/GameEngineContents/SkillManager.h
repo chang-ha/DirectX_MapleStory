@@ -68,6 +68,7 @@ public:
 	void UseSkill(std::string_view _SkillName);
 	void EndSkill(std::string_view _SkillName);
 	bool IsSkillUsing(std::string_view _SkillName);
+	void ResetAllSkillCoolDown();
 
 protected:
 	void LevelEnd(class GameEngineLevel* _NextLevel) override;

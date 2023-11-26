@@ -6,6 +6,8 @@
 #include "ContentMouse.h"
 #include "ContentButton.h"
 #include "RenderActor.h"
+#include "Player.h"
+#include "SkillManager.h"
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
@@ -55,6 +57,21 @@ void LevelDebug::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
 	ImGui::Checkbox("MapCollision", &ContentMap::IsCollisionDebug);
 	ImGui::Checkbox("Collision", &GameEngineLevel::IsDebug);
+	ImGui::SliderFloat("SkillEffectAlpha", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
+	ImGui::SliderFloat("BGVolume", &GlobalValue::BGVolume, 0.0f, 1.0f);
+	ImGui::SliderFloat("SkillVolume", &GlobalValue::SkillVolume, 0.0f, 1.0f);
+	ImGui::SliderFloat("HitVolume", &GlobalValue::HitVolume, 0.0f, 1.0f);
+	ImGui::SliderFloat("FieldMonsterVolume", &GlobalValue::FieldMonsterVolume, 0.0f, 1.0f);
+
+	if (nullptr == Player::MainPlayer)
+	{
+		return;
+	}
+
+	if (true == ImGui::Button("SkillCoolDowmReset", { 150, 20 }))
+	{
+		Player::MainPlayer->GetSkillManager()->ResetAllSkillCoolDown();
+	}
 }
 
 ContentLevel::ContentLevel()
@@ -73,7 +90,7 @@ GameEngineSoundPlayer ContentLevel::BGMPlayer;
 void ContentLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
-	GameEngineGUI::CreateGUIWindow<LevelDebug>("LevelDebug");
+	GameEngineGUI::CreateGUIWindow<LevelDebug>("Option");
 
 	std::shared_ptr<GameEngineCamera> UICamera = GetCamera(static_cast<int>(ECAMERAORDER::UI));
 	UICamera->Transform.SetLocalPosition(GlobalValue::GetDirectXWinScale().Half());

@@ -174,6 +174,16 @@ void Lucid_Next::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
 
+	if (nullptr != CurMap)
+	{
+		CurMap = nullptr;
+	}
+
+	if (nullptr != Back)
+	{
+		Back = nullptr;
+	}
+
 	if (nullptr != PlayerRender)
 	{
 		PlayerRender->Death();

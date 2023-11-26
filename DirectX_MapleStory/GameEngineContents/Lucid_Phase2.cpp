@@ -806,6 +806,7 @@ void Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	ContentLevel::LevelEnd(_NextLevel);
+	LaserPatternValue = false;
 
 	if (nullptr != CurMap)
 	{

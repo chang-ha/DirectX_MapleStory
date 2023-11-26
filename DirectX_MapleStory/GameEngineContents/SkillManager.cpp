@@ -87,6 +87,14 @@ bool SkillManager::IsSkillUsing(std::string_view _SkillName)
 	return Skill->IsSkillUsing();
 }
 
+void SkillManager::ResetAllSkillCoolDown()
+{
+	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
+	{
+		_Pair.second->Skill->SkillCurCoolDown = 0.0f;
+	}
+}
+
 void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 {
 	Release();

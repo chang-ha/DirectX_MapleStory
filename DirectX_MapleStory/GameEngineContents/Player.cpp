@@ -43,6 +43,7 @@ void Player::LevelEnd(GameEngineLevel* _NextLevel)
 	PlayerMP = MP;
 	ContentActor::LevelEnd(_NextLevel);
 	Death();
+	Player::MainPlayer = nullptr;
 }
 
 void Player::Start()

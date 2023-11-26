@@ -2,20 +2,6 @@
 #include "GlobalValue.h"
 #include "MapleStoryCore.h"
 
-void GlobalValueGUI::Start()
-{
-
-}
-
-void GlobalValueGUI::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
-{
-	ImGui::SliderFloat("SkillEffectAlpha", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
-	ImGui::SliderFloat("BGVolume", &GlobalValue::BGVolume, 0.0f, 1.0f);
-	ImGui::SliderFloat("SkillVolume", &GlobalValue::SkillVolume, 0.0f, 1.0f);
-	ImGui::SliderFloat("HitVolume", &GlobalValue::HitVolume, 0.0f, 1.0f);
-	ImGui::SliderFloat("FieldMonsterVolume", &GlobalValue::FieldMonsterVolume, 0.0f, 1.0f);
-}
-
 GlobalValue::GlobalValue()
 {
 }

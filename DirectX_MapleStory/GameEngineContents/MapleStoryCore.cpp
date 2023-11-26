@@ -58,7 +58,6 @@ void MapleStoryCore::Start()
 	ContentResources::ContentResourcesInit();
 
 	GameEngineGUI::CreateGUIWindow<LevelChangeGUI>("LevelChange");
-	GameEngineGUI::CreateGUIWindow<GlobalValueGUI>("Option");
 
 	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({1.0f, 1.0f, 1.0f, 1.0f});
 
@@ -81,7 +80,7 @@ void MapleStoryCore::Start()
 	GameEngineCore::CreateLevel<Lucid_Phase2>("14.Lucid_Phase2");
 	GameEngineCore::CreateLevel<Boss_ClearRoom>("15.Boss_ClearRoom");
 
-	GameEngineCore::ChangeLevel("12.Lucid_Phase1");
+	GameEngineCore::ChangeLevel("14.Lucid_Phase2");
 }
 
 

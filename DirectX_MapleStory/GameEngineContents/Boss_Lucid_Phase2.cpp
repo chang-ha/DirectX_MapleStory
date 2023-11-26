@@ -304,7 +304,7 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	);
 
-	BossRenderer->SetFrameEvent("Summon", 7, [&](GameEngineRenderer* _Renderer)
+	BossRenderer->SetFrameEvent("Summon", 7, [=](GameEngineRenderer* _Renderer)
 		{
 			switch (State)
 			{
@@ -315,9 +315,10 @@ void Boss_Lucid_Phase2::LevelStart(GameEngineLevel* _PrevLevel)
 					std::shared_ptr<ButterFly> _CurButterFly = ContentLevel::CurContentLevel->CreateActor<ButterFly>(UpdateOrder::Monster);
 					_CurButterFly->Init(ButterFly_Phase::Phase2);
 
+					GameEngineRandom _Random;
 					float4 CurBossPos = Transform.GetWorldPosition();
-					Random.SetSeed(reinterpret_cast<long long>(_CurButterFly.get()));
-					float4 RandomFloat4 = Random.RandomVectorBox2D(-300.0f, 300.0f, -300.0f, 300.0f);
+					_Random.SetSeed(reinterpret_cast<long long>(_CurButterFly.get()));
+					float4 RandomFloat4 = _Random.RandomVectorBox2D(-300.0f, 300.0f, -300.0f, 300.0f);
 					_CurButterFly->Transform.SetLocalPosition({ CurBossPos + RandomFloat4 });
 				}
 				break;
