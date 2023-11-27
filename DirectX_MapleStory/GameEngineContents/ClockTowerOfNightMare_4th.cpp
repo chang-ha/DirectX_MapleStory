@@ -81,7 +81,6 @@ void ClockTowerOfNightMare_4th::LevelStart(GameEngineLevel* _PrevLevel)
 	_Npc->Transform.SetLocalPosition({ 870, -2710 });
 	_Npc->Init("OldMan", "영감님", ActorDir::Left);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"영감님");
 
 	CreateMonster<RedEyed_Gargoyle>({ 650, -349 });
 	CreateMonster<RedEyed_Gargoyle>({ 820, -475 });

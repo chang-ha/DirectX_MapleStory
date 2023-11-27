@@ -111,7 +111,7 @@ void ClockTowerOfNightMare_2th::LevelStart(GameEngineLevel* _PrevLevel)
 	_Npc->Transform.SetLocalPosition({ 700, -2890 });
 	_Npc->Init("WaterMelonMask", "수박가면", ActorDir::Left);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"수박가면");
+	_Npc->SetMentText(L"클리너는 위험하잖아~ 이 도시를 벗어나야 하잖아~");
 }
 
 void ClockTowerOfNightMare_2th::LevelEnd(GameEngineLevel* _NextLevel)

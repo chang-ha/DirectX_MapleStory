@@ -112,7 +112,7 @@ void ClockTowerOfNightMare_3th::LevelStart(GameEngineLevel* _PrevLevel)
 	_Npc->Transform.SetLocalPosition({ 500, -2505 });
 	_Npc->Init("DarkMask", "검은가면", ActorDir::Right);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"검은가면");
+	_Npc->SetMentText(L"그들은 위험해. 너는 이 곳을 꼭 벗어나도록 해.");
 
 	CurMapScale = ContentLevel::CurContentLevel->GetCurMap()->GetMapScale();
 	Minimap::CreateMinimap("Minimap_ClockTowerOfNightMare_3th.png", "악몽의시계탑 3층");

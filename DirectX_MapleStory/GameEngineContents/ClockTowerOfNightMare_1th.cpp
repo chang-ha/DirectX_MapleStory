@@ -112,7 +112,7 @@ void ClockTowerOfNightMare_1th::LevelStart(GameEngineLevel* _PrevLevel)
 	_Npc->Transform.SetLocalPosition({ 620, -2868 });
 	_Npc->Init("ShrimpMask", "새우가면", ActorDir::Left);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"새우가면");
+	_Npc->SetMentText(L"어서 가요. 제 힘으로는 문을 오래 열어두지 못해요. 그리고\n 조심하세요.");
 }
 
 void ClockTowerOfNightMare_1th::LevelEnd(GameEngineLevel* _NextLevel)

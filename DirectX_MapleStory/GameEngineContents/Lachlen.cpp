@@ -149,17 +149,17 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		_Actor->Renderer->SetPivotType(PivotType::Bottom);
 		_Actor->Renderer->SetSprite("Bridge.png");
 
-		_Actor->Transform.SetLocalPosition({ 1960, -845 });
+		_Actor->Transform.SetLocalPosition({ 1959, -912 });
 	}
 
-	//{
-	//	_Actor = CreateActor<RenderActor>(UpdateOrder::Map);
-	//	_Actor->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
-	//	_Actor->Renderer->SetPivotType(PivotType::Bottom);
-	//	_Actor->Renderer->SetSprite("Wood1.png");
+	{
+		_Actor = CreateActor<RenderActor>(UpdateOrder::Map);
+		_Actor->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+		_Actor->Renderer->SetPivotType(PivotType::Bottom);
+		_Actor->Renderer->SetSprite("Bridge.png");
 
-	//	_Actor->Transform.SetLocalPosition({ 3000, -1180 });
-	//}
+		_Actor->Transform.SetLocalPosition({ 3274, -913 });
+	}
 
 	{
 		_Actor = CreateActor<RenderActor>(UpdateOrder::Map);
@@ -324,55 +324,55 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	_Npc->Transform.SetLocalPosition({ 2700, -817 });
 	_Npc->Init("BeautyMask", "미녀가면", ActorDir::Left, 0.18f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"미녀가면");
+	_Npc->SetMentText(L"어머, 정말 멋진 가면이에요");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 2550, -817 });
 	_Npc->Init("GentleCatMask", "신사고냥이가면", ActorDir::Right, 0.18f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"신사고냥이가면");
+	_Npc->SetMentText(L"빨리 빵이 먹고싶다냥");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 2360, -817 });
 	_Npc->Init("RabbitMask", "토끼가면", ActorDir::Left);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"토끼가면");
+	_Npc->SetMentText(L"저는 토끼예요!");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 2260, -817 });
 	_Npc->Init("CatMask", "고양이가면", ActorDir::Left, 0.21f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"고양이가면");
+	_Npc->SetMentText(L"제 가면이 제일 멋있죠?");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1600, -817 });
 	_Npc->Init("PiedPiperMask", "피리리가면", ActorDir::Left, 0.18f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"피리리가면");
+	_Npc->SetMentText(L"내 연주솜씨가 어때?");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1500, -817 });
 	_Npc->Init("GasMask", "방독면", ActorDir::Right);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"방독면");
+	_Npc->SetMentText(L"이 정신 나간 도시에서 벗어나고 싶습니다.");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1270, -790 });
 	_Npc->Init("ShrimpMask_Ani", "새우가면", ActorDir::Right, 0.15f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"새우가면");
+	_Npc->SetMentText(L"너도 여기서 나가고 싶니?");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 1100, -790 });
 	_Npc->Init("OctopusMask", "문어가면", ActorDir::Left, 0.15f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"문어가면");
+	_Npc->SetMentText(L"사 가든가 말든가. 꿀꺽 꿀꺽!");
 
 	_Npc = CreateActor<ContentNpc>(UpdateOrder::RenderActor);
 	_Npc->Transform.SetLocalPosition({ 980, -500 });
 	_Npc->Init("DandyMask", "멋쟁이가면", ActorDir::Right, 0.18f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"멋쟁이가면");
+	_Npc->SetMentText(L"당신의 소중한 물건, 안전하게 지켜드립니다~");
 
 	Minimap::CreateMinimap("Minimap_Lachlen.png", "레헬른 중심가");
 
