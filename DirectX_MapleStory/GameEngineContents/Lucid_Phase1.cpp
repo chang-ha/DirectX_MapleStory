@@ -321,6 +321,7 @@ void Lucid_Phase1::LevelEnd(GameEngineLevel* _NextLevel)
 		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Death", "Phase1_Golem_Death_");
 		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Idle", "Phase1_Golem_Idle_");
 		ReleaseFunction::FolderRelease("Lucid_Phase1_Golem_Revive", "Phase1_Golem_Revive_");
+		ReleaseFunction::FolderRelease("Golem_Attack_Hit", "Golem_Attack_Hit_");
 	}
 
 	if (nullptr != GameEngineSprite::Find("Lucid_Phase1_Golem_TakeDown_Hit"))

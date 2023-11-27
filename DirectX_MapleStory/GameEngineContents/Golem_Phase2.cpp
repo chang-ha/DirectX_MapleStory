@@ -76,17 +76,15 @@ void Golem_Phase2::IdleStart()
 {
 	Golem::IdleStart();
 	MainSpriteRenderer->SetPivotValue({ 0.49f, 0.915f });
-	// MainSpriteRenderer->SetPivotValue();
 }
 
 void Golem_Phase2::AttackStart()
 {
 	Golem::AttackStart();
-	// MainSpriteRenderer->SetPivotValue();
+	MainSpriteRenderer->SetPivotValue({ 0.45f, 0.72f });
 }
 
 void Golem_Phase2::DeathStart()
 {
 	Golem::DeathStart();
-	// MainSpriteRenderer->SetPivotValue();
 }

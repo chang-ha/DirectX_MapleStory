@@ -338,6 +338,7 @@ void Player::ChasingCamera(float _Delta)
 		CameraPos.Y = -(CurMapScale.Y - GlobalValue::WinScale.hY());
 	}
 
+	CameraPos.Floor();
 	CameraPos.Z = 0.0f;
 	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(CameraPos);
 }

@@ -13,10 +13,6 @@ BaseBossActor::~BaseBossActor()
 
 void BaseBossActor::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == BossWarningMent)
-	{
-		BossWarningMent = GetLevel()->CreateActor<WarningMent>(UpdateOrder::UI);
-	}
 }
 
 void BaseBossActor::LevelEnd(GameEngineLevel* _NextLevel)
@@ -41,6 +37,11 @@ void BaseBossActor::Start()
 	if (nullptr == BossCollision)
 	{
 		BossCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Monster);
+	}
+
+	if (nullptr == BossWarningMent)
+	{
+		BossWarningMent = GetLevel()->CreateActor<WarningMent>(UpdateOrder::UI);
 	}
 }
 

@@ -104,6 +104,7 @@ void BossHpBar::Start()
 	BossHpBarFrame.DeathCountBG->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 329, -20, RenderDepth::ui });
 	BossHpBarFrame.DeathCountNum->Transform.SetLocalPosition({ GlobalValue::WinScale.hX() - 310, -22, RenderDepth::ui});
 
+	BossHpBarFrame.HpMiddle->SetSampler("EngineBaseWRAPSampler");
 	BossHpBarFrame.HpMiddle->SetImageScale({ 650 , 20, 1 });
 	BossHpBarFrame.HpMiddle->RenderBaseInfoValue.VertexUVMul.X = 650;
 

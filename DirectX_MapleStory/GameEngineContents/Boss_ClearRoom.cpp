@@ -78,7 +78,7 @@ void Boss_ClearRoom::LevelStart(GameEngineLevel* _PrevLevel)
 	_FireWork->Transform.SetLocalPosition({ 430, -150 });
 
 	std::shared_ptr<NightmareMusicBox> _MusicBox = CreateActor<NightmareMusicBox>(UpdateOrder::Monster);
-	_MusicBox->Transform.SetLocalPosition({ 1000, -842 });
+	_MusicBox->Transform.SetLocalPosition({ 1050, -842 });
 
 	std::shared_ptr<Portal> _Portal = CreateActor<Portal>(UpdateOrder::Portal);
 	_Portal->Transform.SetLocalPosition({750, -845});

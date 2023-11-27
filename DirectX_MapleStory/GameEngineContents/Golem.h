@@ -1,5 +1,7 @@
 #pragma once
 
+#define ATTACK_COOLDOWN 1.0f
+
 #include "ContentActor.h"
 #include "AttackFunction.h"
 
@@ -67,7 +69,11 @@ protected:
 
 	void Init(int _PhaseNumber);
 private:
-	std::shared_ptr<GameEngineCollision> TakeDownCollision = nullptr;
+	float AttackCoolDown = ATTACK_COOLDOWN;
+	std::shared_ptr<GameEngineCollision> AttackCollision = nullptr;
 	OneHitAttackFunction AttackFunction;
+
+	std::shared_ptr<GameEngineCollision> TakeDownCollision = nullptr;
+	OneHitAttackFunction TakeDownAttackFunction;
 };
 

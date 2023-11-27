@@ -49,6 +49,14 @@ void Golem::Start()
 		GolemCollision->Off();
 	}
 
+	if (nullptr == AttackCollision)
+	{
+		AttackCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
+		AttackCollision->Transform.SetLocalScale({ 580, 25 });
+		AttackCollision->Transform.SetLocalPosition({ 0, 75 });
+		AttackCollision->Off();
+	}
+
 	if (nullptr == TakeDownCollision)
 	{
 		TakeDownCollision = CreateComponent<GameEngineCollision>(CollisionOrder::MonsterAttack);
@@ -70,7 +78,7 @@ void Golem::Update(float _Delta)
 
 	if (Golem_Phase::Phase1 == Phase)
 	{
-		AttackFunction.AttackUpdate(TakeDownCollision, CollisionOrder::Player, "Lucid_Phase1_Golem_TakeDown_Hit", 1, 33, false);
+		TakeDownAttackFunction.AttackUpdate(TakeDownCollision, CollisionOrder::Player, "Lucid_Phase1_Golem_TakeDown_Hit", 1, 33, false);
 	}
 }
 
@@ -84,6 +92,12 @@ void Golem::Release()
 		GolemCollision = nullptr;
 	}
 
+	if (nullptr != AttackCollision)
+	{
+		AttackCollision->Death();
+		AttackCollision = nullptr;
+	}
+
 	if (nullptr != TakeDownCollision)
 	{
 		TakeDownCollision->Death();
@@ -91,6 +105,7 @@ void Golem::Release()
 	}
 
 	AttackFunction.CollisionActor.clear();
+	TakeDownAttackFunction.CollisionActor.clear();
 }
 
 void Golem::Init(int _PhaseNumber)
@@ -112,10 +127,18 @@ void Golem::Init(int _PhaseNumber)
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("Golem_Attack_Hit"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Golem_Attack_Hit");
+		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	}
+
 	MainSpriteRenderer->CreateAnimation("Ready", "Lucid_Phase" + PhaseNumber + "_Golem_Ready", 0.09f, -1, -1, false);
 	MainSpriteRenderer->CreateAnimation("Revive", "Lucid_Phase" + PhaseNumber + "_Golem_Revive", 0.1f, -1, -1, false);
 	MainSpriteRenderer->CreateAnimation("Idle", "Lucid_Phase" + PhaseNumber + "_Golem_Idle");
-	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Phase" + PhaseNumber + "_Golem_Attack");
+	MainSpriteRenderer->CreateAnimation("Attack", "Lucid_Phase" + PhaseNumber + "_Golem_Attack", 0.09f);
 	MainSpriteRenderer->CreateAnimation("Death", "Lucid_Phase" + PhaseNumber + "_Golem_Death", 0.09f);
 
 	ReadyStart();
@@ -132,6 +155,18 @@ void Golem::Init(int _PhaseNumber)
 	MainSpriteRenderer->SetFrameEvent("Revive", 2, [&](GameEngineSpriteRenderer*)
 		{
 			TakeDownCollision->Off();
+		}
+	);
+
+	MainSpriteRenderer->SetFrameEvent("Attack", 6, [&](GameEngineSpriteRenderer*)
+		{
+			AttackCollision->On();
+		}
+	);
+
+	MainSpriteRenderer->SetFrameEvent("Attack", 10, [&](GameEngineSpriteRenderer*)
+		{
+			AttackCollision->Off();
 		}
 	);
 
@@ -243,6 +278,7 @@ void Golem::ReviveStart()
 
 void Golem::IdleStart()
 {
+	AttackCoolDown = ATTACK_COOLDOWN;
 	GolemCollision->On();
 	MainSpriteRenderer->ChangeAnimation("Idle");
 	MainSpriteRenderer->SetPivotValue({0.49f, 1.0f});
@@ -251,7 +287,7 @@ void Golem::IdleStart()
 void Golem::AttackStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Attack");
-	MainSpriteRenderer->SetPivotValue({ 0.473f, 0.808f });
+	MainSpriteRenderer->SetPivotValue({ 0.405f, 0.78f });
 }
 
 void Golem::DeathStart()
@@ -272,12 +308,29 @@ void Golem::ReviveUpdate(float _Delta)
 
 void Golem::IdleUpdate(float _Delta)
 {
+	AttackCoolDown -= _Delta;
 
+	if (0.0f < AttackCoolDown)
+	{
+		return;
+	}
+
+	if (true == GolemCollision->Collision(CollisionOrder::Player))
+	{
+		ChangeState(GolemState::Attack);
+	}
 }
 
 void Golem::AttackUpdate(float _Delta)
 {
-	
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		AttackFunction.CollisionActor.clear();
+		ChangeState(GolemState::Idle);
+		return;
+	}
+
+	AttackFunction.AttackUpdate(AttackCollision, CollisionOrder::Player, "Golem_Attack_Hit", 1, 10, false);
 }
 
 void Golem::DeathUpdate(float _Delta)

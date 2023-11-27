@@ -931,6 +931,7 @@ void Lucid_Phase2::LevelEnd(GameEngineLevel* _NextLevel)
 		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Death", "Phase2_Golem_Death_");
 		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Idle", "Phase2_Golem_Idle_");
 		ReleaseFunction::FolderRelease("Lucid_Phase2_Golem_Revive", "Phase2_Golem_Revive_");
+		ReleaseFunction::FolderRelease("Golem_Attack_Hit", "Golem_Attack_Hit_");
 	}
 
 	if (nullptr != GameEngineSprite::Find("Phase2_ButterFly_Ready"))

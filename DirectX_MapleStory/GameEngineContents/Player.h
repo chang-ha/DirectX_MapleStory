@@ -142,7 +142,7 @@ private:
 	float CameraSpeed = 2.0f;
 	float LadderPivot = 0.0f;
 	float AlertTime = 0.0f;
-
+	
 	float SkipGround = 0.0f;
 	std::set<float> NotGround;
 

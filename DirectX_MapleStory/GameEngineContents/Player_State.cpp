@@ -132,6 +132,7 @@ void Player::DownStart()
 		MsgBoxAssert("존재하지 않는 방향입니다.");
 		break;
 	}
+	IsDirCheck = false;
 
 	MainSpriteRenderer->ChangeAnimation("Down");
 	HitCollision->Transform.SetLocalScale({ 32, 40 });
@@ -369,6 +370,7 @@ void Player::JumpEnd()
 
 void Player::DownEnd()
 {
+	IsDirCheck = true;
 	HitCollision->Transform.SetLocalScale({ 32, 70 });
 	HitCollision->Transform.SetLocalPosition({ 0, 35 });
 }

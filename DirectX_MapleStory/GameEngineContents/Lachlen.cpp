@@ -143,14 +143,14 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		_Actor->Transform.SetLocalPosition({1484, -818});
 	}
 
-	//{
-	//	_Actor = CreateActor<RenderActor>(UpdateOrder::Map);
-	//	_Actor->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
-	//	_Actor->Renderer->SetPivotType(PivotType::Bottom);
-	//	_Actor->Renderer->SetSprite("Bridge.png");
+	{
+		_Actor = CreateActor<RenderActor>(UpdateOrder::Map);
+		_Actor->Init(RenderOrder::RENDERACTOR, RenderDepth::renderactor);
+		_Actor->Renderer->SetPivotType(PivotType::Bottom);
+		_Actor->Renderer->SetSprite("Bridge.png");
 
-	//	_Actor->Transform.SetLocalPosition({ 1960, -845 });
-	//}
+		_Actor->Transform.SetLocalPosition({ 1960, -845 });
+	}
 
 	//{
 	//	_Actor = CreateActor<RenderActor>(UpdateOrder::Map);

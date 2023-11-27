@@ -182,6 +182,11 @@ void Minimap::Init(std::string_view _MinimapName, std::string_view _MinimapTextN
 	MinimapObject.MB->SetSprite("Map_MB.png");
 	MinimapObject.MT->SetSprite("Map_MT.png");
 
+	MinimapObject.RM->SetSampler("EngineBaseWRAPSampler");
+	MinimapObject.LM->SetSampler("EngineBaseWRAPSampler");
+	MinimapObject.MB->SetSampler("EngineBaseWRAPSampler");
+	MinimapObject.MT->SetSampler("EngineBaseWRAPSampler");
+
 	MinimapObject.MiniPlayer->SetSprite("user.png");
 
 	MinimapObject.LT->Transform.SetLocalPosition({0, 0, RenderDepth::ui});

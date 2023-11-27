@@ -1,10 +1,5 @@
 #pragma once
 
-class DamageSkin : public GameEngineActor
-{
-
-};
-
 class DamageSkinManager : public GameEngineActor
 {
 public:
