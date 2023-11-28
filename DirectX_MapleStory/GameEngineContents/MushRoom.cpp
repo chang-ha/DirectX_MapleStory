@@ -66,7 +66,7 @@ void MushRoom::Start()
 	MushRenderer->CreateAnimation("Death", "Lucid_Phase1_MushRoom_Death");
 	MushRenderer->ChangeAnimation("Ready");
 	MushRoomPlayer = GameEngineSound::SoundPlay("MushRoom_Summon.mp3");
-	MushRoomPlayer.SetVolume(0.5f);
+	MushRoomPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 
 	////// Render Event
 	MushRenderer->SetEndEvent("Ready", [&](GameEngineSpriteRenderer*)
@@ -207,7 +207,7 @@ void MushRoom::DeathStart()
 	AttackCollision->Off();
 	MushRenderer->ChangeAnimation("Death");
 	MushRoomPlayer = GameEngineSound::SoundPlay("MushRoom_Death.mp3");
-	MushRoomPlayer.SetVolume(0.5f);
+	MushRoomPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 }
 
 void MushRoom::IdleUpdate(float _Delta)

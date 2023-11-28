@@ -17,4 +17,5 @@ float GlobalValue::BGVolume = 1.0f;
 float GlobalValue::SkillVolume = 0.5f;
 float GlobalValue::HitVolume = 0.5f;
 float GlobalValue::FieldMonsterVolume = 0.3f;
+float GlobalValue::BossMonsterVolume = 1.0f;
 

@@ -143,7 +143,7 @@ void Monsoon::Update(float _Delta)
 	float4 CameraPos = ContentLevel::CurContentLevel->GetMainCamera()->Transform.GetWorldPosition();
 	CameraPos.Z = RenderDepth::skill;
 	SceneRenderer->Transform.SetWorldPosition(CameraPos);
-	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster ,"Monsoon_Hit", 12, -1, true);
+	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster ,"Monsoon_Hit", 15, -1, true);
 }
 
 void Monsoon::Init()

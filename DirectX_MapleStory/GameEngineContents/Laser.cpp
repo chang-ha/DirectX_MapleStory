@@ -54,17 +54,6 @@ void Laser::Release()
 
 void Laser::Init(std::string_view _LaserName, int _ReadyEndIndex, float _AniSpeed)
 {
-	//if (nullptr == GameEngineSprite::Find(std::string(_LaserName.data())))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentResources");
-	//	Dir.MoveChild("ContentResources\\Textures\\Boss\\Lucid\\Laser");
-	//	Dir.MoveChild(_LaserName);
-	//	GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
-	//}
-
-
-
 	LaserRenderer->CreateAnimation("Ready", _LaserName, _AniSpeed, 0, _ReadyEndIndex);
 	LaserRenderer->CreateAnimation("Attack", _LaserName, _AniSpeed, _ReadyEndIndex);
 	LaserRenderer->ChangeAnimation("Ready");
@@ -103,7 +92,7 @@ void Laser::Init(std::string_view _LaserName, int _ReadyEndIndex, float _AniSpee
 	}
 
 	GameEngineSoundPlayer LaserPlayer = GameEngineSound::SoundPlay("LaserRain.mp3");
-	LaserPlayer.SetVolume(0.7f);
+	LaserPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Laser::SetAngle(float _Angle)

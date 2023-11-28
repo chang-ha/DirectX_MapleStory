@@ -156,6 +156,7 @@ void Lucid_BodySlam::AttackStart()
 	BodySlamRenderer->ChangeAnimation("Attack");
 	BodySlamRenderer->SetPivotValue({ 0.515f, 0.535f });
 	GameEngineSoundPlayer RushPlayer = GameEngineSound::SoundPlay("Rush.mp3");
+	RushPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Lucid_BodySlam::DeathStart()

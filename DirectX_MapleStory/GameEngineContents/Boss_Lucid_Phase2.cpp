@@ -522,6 +522,7 @@ void Boss_Lucid_Phase2::PhantasmalWindStart()
 	}
 
 	BossPlayer = GameEngineSound::SoundPlay("PhantasmalWind.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase2::LaserStart()
@@ -571,6 +572,7 @@ void Boss_Lucid_Phase2::BodySlamStart()
 
 	BossWarningMent->SetWarningMent("루시드가 강력한 공격을 사용하려 합니다!");
 	BossPlayer = GameEngineSound::SoundPlay("RushPrepare.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase2::Summon_DragonStart()
@@ -596,6 +598,7 @@ void Boss_Lucid_Phase2::Summon_DragonStart()
 	BossWarningMent->SetWarningMent("루시드가 강력한 소환수를 소환했습니다!");
 
 	BossPlayer = GameEngineSound::SoundPlay("CallDragon.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase2::Summon_ButterFlyStart()
@@ -603,7 +606,7 @@ void Boss_Lucid_Phase2::Summon_ButterFlyStart()
 	BossRenderer->ChangeAnimation("Summon");
 	BossRenderer->SetPivotValue({ 0.5f, 0.635f });
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
-	BossPlayer.SetVolume(0.5f);
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 ///// Update

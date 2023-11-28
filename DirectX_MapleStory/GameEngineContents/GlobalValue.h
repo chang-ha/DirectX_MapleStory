@@ -15,6 +15,7 @@ public:
 	static float SkillVolume;
 	static float HitVolume;
 	static float FieldMonsterVolume;
+	static float BossMonsterVolume;
 
 	// constrcuter destructer
 	GlobalValue();

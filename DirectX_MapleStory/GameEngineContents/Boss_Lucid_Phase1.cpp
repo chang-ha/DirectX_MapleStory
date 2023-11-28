@@ -472,6 +472,7 @@ void Boss_Lucid_Phase1::DeathStart()
 	BossCollision->Off();
 	Player::MainPlayer->InvincibilityOn();
 	BossPlayer = GameEngineSound::SoundPlay("Phase1_Death.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase1::PhantasmalWindStart()
@@ -485,6 +486,7 @@ void Boss_Lucid_Phase1::PhantasmalWindStart()
 	}
 
 	BossPlayer = GameEngineSound::SoundPlay("PhantasmalWind.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase1::Summon_DragonStart()
@@ -494,6 +496,7 @@ void Boss_Lucid_Phase1::Summon_DragonStart()
 	BossWarningMent->SetWarningMent("루시드가 강력한 소환수를 소환했습니다!");
 
 	BossPlayer = GameEngineSound::SoundPlay("CallDragon.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase1::TeleportSkillStart()
@@ -501,6 +504,7 @@ void Boss_Lucid_Phase1::TeleportSkillStart()
 	BossRenderer->SetPivotValue({ 0.215f, 0.648f });
 	BossRenderer->ChangeAnimation("TeleportSkill");
 	BossPlayer = GameEngineSound::SoundPlay("Teleport.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase1::Summon_MushStart()
@@ -508,6 +512,7 @@ void Boss_Lucid_Phase1::Summon_MushStart()
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Summon");
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase1::Summon_GolemStart()
@@ -515,6 +520,7 @@ void Boss_Lucid_Phase1::Summon_GolemStart()
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Summon");
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
 
 void Boss_Lucid_Phase1::Summon_ButterFlyStart()
@@ -522,8 +528,8 @@ void Boss_Lucid_Phase1::Summon_ButterFlyStart()
 	BossRenderer->SetPivotValue({ 0.452f, 0.444f });
 	BossRenderer->ChangeAnimation("Summon");
 	BossPlayer = GameEngineSound::SoundPlay("Summon.mp3");
+	BossPlayer.SetVolume(GlobalValue::BossMonsterVolume);
 }
-
 
 void Boss_Lucid_Phase1::IdleUpdate(float _Delta)
 {

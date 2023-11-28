@@ -281,6 +281,7 @@ void Dragon::BreathStart()
 	}
 
 	GameEngineSoundPlayer BreathSound = GameEngineSound::SoundPlay("DragonBreath.mp3");
+	BreathSound.SetVolume(GlobalValue::FieldMonsterVolume);
 }
 
 void Dragon::IdleUpdate(float _Delta)

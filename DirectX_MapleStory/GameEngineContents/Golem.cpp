@@ -268,6 +268,7 @@ void Golem::ReadyStart()
 	MainSpriteRenderer->ChangeAnimation("Ready");
 	MainSpriteRenderer->SetPivotValue({ 0.48f, 0.8f });
 	GolemPlayer = GameEngineSound::SoundPlay("Golem_Summon.mp3");
+	GolemPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 }
 
 void Golem::ReviveStart()
@@ -296,6 +297,7 @@ void Golem::DeathStart()
 	MainSpriteRenderer->SetPivotValue({ 0.52f, 0.9f });
 	GolemCollision->Off();
 	GolemPlayer = GameEngineSound::SoundPlay("Golem_Death.mp3");
+	GolemPlayer.SetVolume(GlobalValue::FieldMonsterVolume);
 }
 
 void Golem::ReviveUpdate(float _Delta)

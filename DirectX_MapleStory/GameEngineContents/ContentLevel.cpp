@@ -62,6 +62,7 @@ void LevelDebug::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	ImGui::SliderFloat("SkillVolume", &GlobalValue::SkillVolume, 0.0f, 1.0f);
 	ImGui::SliderFloat("HitVolume", &GlobalValue::HitVolume, 0.0f, 1.0f);
 	ImGui::SliderFloat("FieldMonsterVolume", &GlobalValue::FieldMonsterVolume, 0.0f, 1.0f);
+	ImGui::SliderFloat("BossMonsterVolume", &GlobalValue::BossMonsterVolume, 0.0f, 1.0f);
 
 	if (nullptr == Player::MainPlayer)
 	{
