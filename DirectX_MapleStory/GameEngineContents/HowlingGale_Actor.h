@@ -46,6 +46,7 @@ protected:
 	void Init(int _Stack);
 
 private:
+	std::shared_ptr<GameEngineCollision> DetectCollision = nullptr;
 	int Stack = 0;
 	HowlingGaleState State = HowlingGaleState::Ready;
 	GameEngineSoundPlayer HowlingGalePlayer;

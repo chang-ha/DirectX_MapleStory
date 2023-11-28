@@ -55,9 +55,12 @@ void LevelDebug::Start()
 
 void LevelDebug::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	ImGui::Text("CollisionDebug");
 	ImGui::Checkbox("MapCollision", &ContentMap::IsCollisionDebug);
 	ImGui::Checkbox("Collision", &GameEngineLevel::IsDebug);
+	ImGui::Text("SetSkillEffect");
 	ImGui::SliderFloat("SkillEffectAlpha", &GlobalValue::SkillEffectAlpha, 0.2f, 1.0f);
+	ImGui::Text("SetVolume");
 	ImGui::SliderFloat("BGVolume", &GlobalValue::BGVolume, 0.0f, 1.0f);
 	ImGui::SliderFloat("SkillVolume", &GlobalValue::SkillVolume, 0.0f, 1.0f);
 	ImGui::SliderFloat("HitVolume", &GlobalValue::HitVolume, 0.0f, 1.0f);

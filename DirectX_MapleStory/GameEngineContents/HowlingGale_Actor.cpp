@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "HitRenderManager.h"
 #include "BaseWindActor.h"
+#include "ContentActor.h"
 
 #define SPEED 130.0f
 
@@ -38,6 +39,11 @@ void HowlingGale_Actor::Start()
 {
 	BaseSkillActor::Start();
 
+	if (nullptr == DetectCollision)
+	{
+		DetectCollision = CreateComponent<GameEngineCollision>(CollisionOrder::Detect);
+		// DetectCollision->Off();
+	}
 	MainHowlingGale = this;
 }
 
@@ -76,11 +82,70 @@ void HowlingGale_Actor::Update(float _Delta)
 	}
 
 	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "HowlingGale_Hit", 0.4f, 3, 6);
+
+	// Detect Monster & Set Dir
+	if (true == SkillCollision->Collision(CollisionOrder::Monster))
+	{
+		return;
+	}
+
+	if (false == DetectCollision->Collision(CollisionOrder::Monster))
+	{
+		return;
+	}
+
+	DetectCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*> _Collisions)
+		{
+			ContentBaseActor* _TargetActor = nullptr;
+			for (size_t i = 0; i < _Collisions.size(); i++)
+			{
+				ContentBaseActor* _Actor = dynamic_cast<ContentBaseActor*>(_Collisions[i]->GetParentObject());
+
+				if (nullptr == _Actor)
+				{
+					MsgBoxAssert("ContentBaseActor를 상속받지 않는 몬스터가 존재합니다.");
+					return;
+				}
+
+				int MostHP = 0;
+				int CompareHP = _Actor->GetHP();
+
+				if (MostHP < CompareHP)
+				{
+					MostHP = CompareHP;
+					_TargetActor = _Actor;
+				}
+			}
+
+			if (nullptr == _TargetActor)
+			{
+				return;
+			}
+
+			float4 CurPos = this->Transform.GetWorldPosition();
+			float4 TargetPos = _TargetActor->Transform.GetWorldPosition();
+
+			if (0.0f > CurPos.X - TargetPos.X)
+			{
+				SetDir(ActorDir::Right);
+			}
+			else
+			{
+				SetDir(ActorDir::Left);
+			}
+		});
 }
 
 void HowlingGale_Actor::Release()
 {
 	BaseSkillActor::Release();
+
+	if (nullptr != DetectCollision)
+	{
+		DetectCollision->Death();
+		DetectCollision = nullptr;
+	}
+
 	AttackFunction.CollisionTime.clear();
 }
 
@@ -126,8 +191,12 @@ void HowlingGale_Actor::Init(int _Stack)
 		MsgBoxAssert("잘못된 스택값이 들어왔습니다.");
 		break;
 	}
+
 	SkillCollision->Transform.SetLocalScale(Scale);
 	SkillCollision->Transform.SetLocalPosition({ 0, Scale.hY()});
+
+	DetectCollision->Transform.SetLocalScale({1500, Scale.Y});
+	DetectCollision->Transform.SetLocalPosition({ 0, Scale.hY() });
 
 	HowlingGalePlayer = GameEngineSound::SoundPlay("HowlingGale_Loop.mp3", 10000);
 	HowlingGalePlayer.SetVolume(GlobalValue::SkillVolume);
