@@ -13,6 +13,7 @@ private:
 	std::vector<float4> RandomPivot;
 	std::vector<std::shared_ptr<GameEngineSpriteRenderer>> HitAnimations;
 	std::vector<std::shared_ptr<class DamageSkinRenderer>> DamageSkinRenderers;
+	std::vector<GameEngineSoundPlayer> HitSoundPlayers;
 };
 
 class HitRenderManager : public GameEngineActor

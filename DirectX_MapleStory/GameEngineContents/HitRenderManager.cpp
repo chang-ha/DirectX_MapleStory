@@ -90,6 +90,7 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 	_Data->HitAnimations.resize(_HitCount);
 	_Data->RandomPivot.resize(_HitCount);
 	_Data->DamageSkinRenderers.resize(_HitCount);
+	_Data->HitSoundPlayers.resize(_HitCount);
 
 	for (int i = 0; i < _HitCount; i++)
 	{
@@ -120,6 +121,13 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 		_HitAnimation->SetPivotType(_PivotType);
 
 		_Data->HitAnimations[i] = _HitAnimation;
+
+		if (nullptr != GameEngineSound::FindSound(_Data->HitSpriteName + ".mp3"))
+		{
+			_Data->HitSoundPlayers[i] = GameEngineSound::SoundPlay(_Data->HitSpriteName + ".mp3");
+			_Data->HitSoundPlayers[i].SetVolume(GlobalValue::HitVolume);
+			_Data->HitSoundPlayers[i].Pause();
+		}
 
 		/// DamageSkin
 		 Player* _PlayerObject = dynamic_cast<Player*>(_BaseActor);
@@ -171,19 +179,13 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
 			_CurData->HitAnimations[_CurData->CurIndex]->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
+			_CurData->HitSoundPlayers[_CurData->CurIndex].Resume();
 			if (false == _CurData->IsPlayer)
 			{
 				_CurData->DamageSkinRenderers[_CurData->CurIndex]->On();
 			}
 			_CurData->CurIndex += 1;
 			_CurData->DelayTime = HIT_DELAY;
-
-			if (nullptr != GameEngineSound::FindSound(_CurData->HitSpriteName + ".mp3"))
-			{
-				GameEngineSoundPlayer HitSound = GameEngineSound::SoundPlay(_CurData->HitSpriteName + ".mp3");
-				HitSound.SetVolume(GlobalValue::HitVolume);
-			}
-
 		}
 		++StartIter;
 	}

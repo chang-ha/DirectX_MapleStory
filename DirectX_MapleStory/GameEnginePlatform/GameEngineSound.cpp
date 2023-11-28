@@ -28,6 +28,16 @@ void GameEngineSoundPlayer::Stop()
 	Control->stop();
 }
 
+void GameEngineSoundPlayer::Pause()
+{
+	Control->setPaused(true);
+}
+
+void GameEngineSoundPlayer::Resume()
+{
+	Control->setPaused(false);
+}
+
 bool GameEngineSoundPlayer::IsPlaying()
 {
 	bool Result = false;

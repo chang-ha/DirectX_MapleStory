@@ -14,6 +14,8 @@ public:
 	void SetLoop(int _Count);
 	void SetVolume(float _Volume);
 	void Stop();
+	void Pause();
+	void Resume();
 	bool IsPlaying();
 	std::string GetCurSoundName();
 
