@@ -57,24 +57,6 @@ void VortexSphere_Actor::Update(float _Delta)
 	}
 
 	AttackFunction.AttackUpdate(SkillCollision, CollisionOrder::Monster, "VortexSphere_Hit", 0.4f, 6, 12);
-	//SkillCollision->Collision(CollisionOrder::Monster, [&](std::vector<GameEngineCollision*>& _CollisionGroup)
-	//	{
-	//		for (size_t i = 0; i < _CollisionGroup.size(); i++)
-	//		{
-	//			std::shared_ptr<GameEngineCollision> _Other = std::dynamic_pointer_cast<GameEngineCollision>(_CollisionGroup[i]->shared_from_this());
-	//			if (false == CollisionTime.contains(_Other))
-	//			{
-	//				CollisionTime[_Other] = 0.0f;
-	//			}
-
-	//			if (0.0f >= CollisionTime[_Other])
-	//			{
-	//				HitRenderManager::MainHitRenderManager->HitPrint("VortexSphere_Hit", 6, _Other->GetParentObject());
-	//				CollisionTime[_Other] = HIT_TIME;
-	//			}
-	//		}
-	//	}
-	//);
 }
 
 void VortexSphere_Actor::MoveUpdate(float _Delta)

@@ -398,35 +398,6 @@ void Boss_Lucid_Phase2::ChangeState(LucidState _State)
 {
 	if (_State != State)
 	{
-		// State End
-		switch (State)
-		{
-		case LucidState::Idle:
-			IdleEnd();
-			break;
-		case LucidState::Death:
-			DeathEnd();
-			break;
-		case LucidState::PhantasmalWind:
-			PhantasmalWindEnd();
-			break;
-		case LucidState::Laser:
-			LaserEnd();
-			break;
-		case LucidState::BodySlam:
-			BodySlamEnd();
-			break;
-		case LucidState::Summon_Dragon:
-			Summon_DragonEnd();
-			break;
-		case LucidState::Summon_ButterFly:
-			Summon_ButterFlyEnd();
-			break;
-		default:
-			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
-			break;
-		}
-
 		// State Start
 		switch (_State)
 		{
@@ -757,40 +728,4 @@ void Boss_Lucid_Phase2::Summon_ButterFlyUpdate(float _Delta)
 	{
 		ChangeState(LucidState::Idle);
 	}
-}
-
-
-///// End
-
-void Boss_Lucid_Phase2::IdleEnd()
-{
-
-}
-void Boss_Lucid_Phase2::DeathEnd()
-{
-}
-
-void Boss_Lucid_Phase2::PhantasmalWindEnd()
-{
-
-}
-
-void Boss_Lucid_Phase2::LaserEnd()
-{
-
-}
-
-void Boss_Lucid_Phase2::BodySlamEnd()
-{
-
-}
-
-void Boss_Lucid_Phase2::Summon_DragonEnd()
-{
-
-}
-
-void Boss_Lucid_Phase2::Summon_ButterFlyEnd()
-{
-
 }

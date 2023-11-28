@@ -98,13 +98,13 @@ void ContentLevel::Start()
 
 void ContentLevel::Update(float _Delta)
 {
-	if ("" != PrevLevel && true == GameEngineInput::IsDown(VK_F5, this))
+	if ("" != PrevLevel && true == GameEngineInput::IsDown('9', this))
 	{
 		FadeOutObject->SetChangeLevel(PrevLevel);
 		FadeOutObject->FadeStart();
 	}
 
-	if ("" != NextLevel && true == GameEngineInput::IsDown(VK_F6, this))
+	if ("" != NextLevel && true == GameEngineInput::IsDown('0', this))
 	{
 		FadeOutObject->SetChangeLevel(NextLevel);
 		FadeOutObject->FadeStart();

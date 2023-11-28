@@ -376,29 +376,16 @@ void Boss_Lucid_Phase1::ChangeState(LucidState _State)
 		// State End
 		switch (State)
 		{
-		case LucidState::Idle:
-			IdleEnd();
-			break;
 		case LucidState::Death:
 			DeathEnd();
 			break;
+		case LucidState::Idle:
 		case LucidState::PhantasmalWind:
-			PhantasmalWindEnd();
-			break;
 		case LucidState::Summon_Dragon:
-			Summon_DragonEnd();
-			break;
 		case LucidState::TeleportSkill:
-			TeleportSkillEnd();
-			break;
 		case LucidState::Summon_Mush:
-			Summon_MushEnd();
-			break;
 		case LucidState::Summon_Golem:
-			Summon_GolemEnd();
-			break;
 		case LucidState::Summon_ButterFly:
-			Summon_ButterFlyEnd();
 			break;
 		default:
 			MsgBoxAssert("존재하지 않는 상태값으로 변경하려고 했습니다.");
@@ -611,44 +598,8 @@ void Boss_Lucid_Phase1::Summon_ButterFlyUpdate(float _Delta)
 	}
 }
 
-void Boss_Lucid_Phase1::IdleEnd()
-{
-
-}
-
 void Boss_Lucid_Phase1::DeathEnd()
 {
 	BossRenderer->Transform.SetLocalPosition({ 37, 321, RenderDepth::monster });
 	FlowerRenderer->On();
-
-}
-
-void Boss_Lucid_Phase1::PhantasmalWindEnd()
-{
-
-}
-
-void Boss_Lucid_Phase1::Summon_DragonEnd()
-{
-
-}
-
-void Boss_Lucid_Phase1::TeleportSkillEnd()
-{
-
-}
-
-void Boss_Lucid_Phase1::Summon_MushEnd()
-{
-
-}
-
-void Boss_Lucid_Phase1::Summon_GolemEnd()
-{
-
-}
-
-void Boss_Lucid_Phase1::Summon_ButterFlyEnd()
-{
-
 }

@@ -98,7 +98,6 @@ private:
 	void BodySlamStart();
 	void Summon_DragonStart();
 	void Summon_ButterFlyStart();
-	//
 	// Update
 	void IdleUpdate(float _Delta);
 	void DeathUpdate(float _Delta);
@@ -107,16 +106,6 @@ private:
 	void BodySlamUpdate(float _Delta);
 	void Summon_DragonUpdate(float _Delta);
 	void Summon_ButterFlyUpdate(float _Delta);
-	// 
-	// End
-	void IdleEnd();
-	void DeathEnd();
-	void PhantasmalWindEnd();
-	void LaserEnd();
-	void BodySlamEnd();
-	void Summon_DragonEnd();
-	void Summon_ButterFlyEnd();
-	// 
 	/////
 };
 

@@ -102,14 +102,7 @@ private:
 	void Summon_ButterFlyUpdate(float _Delta);
 	// 
 	// End
-	void IdleEnd();
 	void DeathEnd();
-	void PhantasmalWindEnd();
-	void Summon_DragonEnd();
-	void TeleportSkillEnd();
-	void Summon_MushEnd();
-	void Summon_GolemEnd();
-	void Summon_ButterFlyEnd();
 	// 
 	/////
 };
