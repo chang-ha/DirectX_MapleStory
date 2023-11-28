@@ -8,6 +8,12 @@ enum class HowlingGaleState
 	Death
 };
 
+enum class HowlingStack
+{
+	Stack1 = 1,
+	Stack2 = 2,
+};
+
 class HowlingGale_Actor : public BaseSkillActor
 {
 	friend class HowlingGale;
@@ -25,6 +31,11 @@ public:
 	HowlingGale_Actor& operator=(const HowlingGale_Actor& _Other) = delete;
 	HowlingGale_Actor& operator=(HowlingGale_Actor&& _Other) noexcept = delete;
 
+	void Init(HowlingStack _Stack)
+	{
+		Init(static_cast<int>(_Stack));
+	}
+
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -32,7 +43,10 @@ protected:
 	void Update(float _Delta) override;
 	void Release() override;
 
+	void Init(int _Stack);
+
 private:
+	int Stack = 0;
 	HowlingGaleState State = HowlingGaleState::Ready;
 	GameEngineSoundPlayer HowlingGalePlayer;
 };

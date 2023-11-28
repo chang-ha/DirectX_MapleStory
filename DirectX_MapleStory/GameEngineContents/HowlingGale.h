@@ -1,5 +1,6 @@
 #pragma once
 #include "ContentSkill.h"
+#include "HowlingGale_Actor.h"
 
 class HowlingGale : public ContentSkill
 {
@@ -25,6 +26,6 @@ protected:
 	void Release() override;
 
 private:
-
+	HowlingStack _SummonStack = HowlingStack::Stack1;
 };
 

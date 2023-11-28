@@ -41,6 +41,15 @@ void HowlingGale::UseSkill()
 
 	SkillPlayer = GameEngineSound::SoundPlay("HowlingGale_Use.mp3");
 	SkillPlayer.SetVolume(GlobalValue::SkillVolume);
+
+	if (true == GameEngineInput::IsPress(VK_DOWN, this))
+	{
+		_SummonStack = HowlingStack::Stack2;
+	}
+	else
+	{
+		_SummonStack = HowlingStack::Stack1;
+	}
 }
 
 void HowlingGale::EndSkill()
@@ -54,6 +63,8 @@ void HowlingGale::Start()
 {
 	ContentSkill::Start();
 
+	GameEngineInput::AddInputObject(this);
+
 	if (nullptr == GameEngineSprite::Find("HowlingGale_Effect"))
 	{
 		GameEngineDirectory Dir;
@@ -66,23 +77,33 @@ void HowlingGale::Start()
 			GameEngineDirectory& Childs = Directorys[i];
 			GameEngineSprite::CreateFolder("HowlingGale_" + Childs.GetFileName(), Childs.GetStringPath());
 		}
-
 	}
 
 	if (nullptr == GameEngineSprite::Find("Ready_Stack1"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentResources");
-		Dir.MoveChild("ContentResources\\Textures\\Skill\\HowlingGale_Actor");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\HowlingGale_Actor\\Stack1");
+
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-		for (size_t y = 0; y < Directorys.size(); y++)
+		for (size_t i = 0; i < Directorys.size(); i++)
 		{
-			std::vector<GameEngineDirectory> Directory = Directorys[y].GetAllDirectory();
-			for (size_t i = 0; i < Directory.size(); i++)
-			{
-				GameEngineDirectory& Childs = Directory[i];
-				GameEngineSprite::CreateFolder(Childs.GetFileName() + "_Stack" + std::to_string(y + 1), Childs.GetStringPath());
-			}
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder(Childs.GetFileName() + "_Stack1", Childs.GetStringPath());
+		}
+	}
+
+	if (nullptr == GameEngineSprite::Find("Ready_Stack2"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentResources");
+		Dir.MoveChild("ContentResources\\Textures\\Skill\\HowlingGale_Actor\\Stack2");
+
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Childs = Directorys[i];
+			GameEngineSprite::CreateFolder(Childs.GetFileName() + "_Stack2", Childs.GetStringPath());
 		}
 	}
 
@@ -114,6 +135,7 @@ void HowlingGale::Start()
 			std::shared_ptr<HowlingGale_Actor> _Actor = GetLevel()->CreateActor<HowlingGale_Actor>(UpdateOrder::Skill);
 			_Actor->Transform.SetLocalPosition(PlayerPos);
 			_Actor->SetDir(PlayerDir);
+			_Actor->Init(_SummonStack);
 		});
 
 	SkillRenderer1->SetEndEvent("Effect", [&](GameEngineRenderer* _Renderer)
@@ -141,6 +163,6 @@ void HowlingGale::Init()
 	Key = 'F';
 	InputTypeValue = InputType::IsDown;
 	SkillCoolDown = 20.0f;
-	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk;
+	UseState = PlayerState::Idle | PlayerState::Alert | PlayerState::Walk | PlayerState::Down;
 	ChangeState = PlayerState::HowlingGale;
 }

@@ -37,38 +37,8 @@ void HowlingGale_Actor::LevelEnd(GameEngineLevel* _NextLevel)
 void HowlingGale_Actor::Start()
 {
 	BaseSkillActor::Start();
+
 	MainHowlingGale = this;
-	LiveTime = 20.0f;
-	Speed = SPEED;
-
-	MainSpriteRenderer->AutoSpriteSizeOn();
-	MainSpriteRenderer->CreateAnimation("Ready", "Ready_Stack1", 0.04f);
-	MainSpriteRenderer->CreateAnimation("Attack", "Attack_Stack1");
-	MainSpriteRenderer->CreateAnimation("Death", "Death_Stack1");
-	MainSpriteRenderer->ChangeAnimation("Ready");
-	MainSpriteRenderer->SetPivotValue(float4(0.5f, 0.965f));
-
-	// Renderer Event 1stack
-	MainSpriteRenderer->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer)
-		{
-			MainSpriteRenderer->ChangeAnimation("Attack");
-		}
-	);
-
-	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
-		{
-			IsUpdate = false;
-			Death();
-			MainHowlingGale = nullptr;
-		}
-	);
-
-	Scale = { 100, 600 };
-	SkillCollision->Transform.SetLocalScale(Scale);
-	SkillCollision->Transform.SetLocalPosition({0, 300});
-
-	HowlingGalePlayer = GameEngineSound::SoundPlay("HowlingGale_Loop.mp3", 10000);
-	HowlingGalePlayer.SetVolume(GlobalValue::SkillVolume);
 }
 
 void HowlingGale_Actor::Update(float _Delta)
@@ -112,4 +82,53 @@ void HowlingGale_Actor::Release()
 {
 	BaseSkillActor::Release();
 	AttackFunction.CollisionTime.clear();
+}
+
+void HowlingGale_Actor::Init(int _Stack)
+{
+	Stack = _Stack;
+	std::string StackString = std::to_string(Stack);
+
+	LiveTime = 20.0f;
+	Speed = SPEED;
+
+	MainSpriteRenderer->AutoSpriteSizeOn();
+	MainSpriteRenderer->CreateAnimation("Ready", "Ready_Stack" + StackString, 0.04f);
+	MainSpriteRenderer->CreateAnimation("Attack", "Attack_Stack" + StackString);
+	MainSpriteRenderer->CreateAnimation("Death", "Death_Stack" + StackString);
+	MainSpriteRenderer->ChangeAnimation("Ready");
+	MainSpriteRenderer->SetPivotValue(float4(0.5f, 0.965f));
+
+	// Renderer Event
+	MainSpriteRenderer->SetEndEvent("Ready", [&](GameEngineRenderer* _Renderer)
+		{
+			MainSpriteRenderer->ChangeAnimation("Attack");
+		}
+	);
+
+	MainSpriteRenderer->SetEndEvent("Death", [&](GameEngineRenderer* _Renderer)
+		{
+			IsUpdate = false;
+			Death();
+			MainHowlingGale = nullptr;
+		}
+	);
+
+	switch (Stack)
+	{
+	case 1:
+		Scale = { 100, 600 };
+		break;
+	case 2:
+		Scale = { 330, 800 };
+		break;
+	default:
+		MsgBoxAssert("잘못된 스택값이 들어왔습니다.");
+		break;
+	}
+	SkillCollision->Transform.SetLocalScale(Scale);
+	SkillCollision->Transform.SetLocalPosition({ 0, Scale.hY()});
+
+	HowlingGalePlayer = GameEngineSound::SoundPlay("HowlingGale_Loop.mp3", 10000);
+	HowlingGalePlayer.SetVolume(GlobalValue::SkillVolume);
 }
