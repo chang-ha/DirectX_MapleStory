@@ -55,6 +55,7 @@ void HowlingGale_Actor::Update(float _Delta)
 	}
 
 	LiveTime -= _Delta;
+	DetectTime -= _Delta;
 	if (0.0f >= LiveTime && false == MainSpriteRenderer->IsCurAnimation("Death"))
 	{
 		MainSpriteRenderer->ChangeAnimation("Death");
@@ -90,6 +91,11 @@ void HowlingGale_Actor::Update(float _Delta)
 	}
 
 	if (false == DetectCollision->Collision(CollisionOrder::Monster))
+	{
+		return;
+	}
+
+	if (0.0f < DetectTime)
 	{
 		return;
 	}
@@ -133,6 +139,7 @@ void HowlingGale_Actor::Update(float _Delta)
 			{
 				SetDir(ActorDir::Left);
 			}
+			DetectTime = DETECT_TIME;
 		});
 }
 

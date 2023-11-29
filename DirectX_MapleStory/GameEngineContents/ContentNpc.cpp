@@ -34,7 +34,7 @@ void OneButtonNpcMentFrame::StructStart(ContentNpc* _Parent, std::string_view _N
 	NpcName->SetText( "돋움", _NpcName.data(), 12.0f, float4::WHITE, FW1_CENTER);
 
 	MentText = CreateComponent<GameEngineUIRenderer>(RenderOrder::UI);
-	MentText->SetText("돋움", "", 11.0f, float4::ZERO);
+	MentText->SetText("돋움", "", 12.0f, float4::ZERO);
 	MentText->Transform.SetLocalPosition({-90, 20});
 
 	CancelButton = ContentLevel::CurContentLevel->CreateActor<ContentButton>(UpdateOrder::UI);

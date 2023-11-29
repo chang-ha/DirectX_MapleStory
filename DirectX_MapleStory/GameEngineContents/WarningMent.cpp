@@ -84,6 +84,7 @@ void WarningMent::Release()
 void WarningMent::SetWarningMent(std::string_view _Ment)
 {
 	On();
+	WarningTime = WarningTime_Value;
 
 	float TextBoxSize = static_cast<float>(_Ment.size()) * 11.0f;
 

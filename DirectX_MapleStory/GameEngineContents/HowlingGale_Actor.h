@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseSkillActor.h"
 
+#define DETECT_TIME 0.5f
+
 enum class HowlingGaleState
 {
 	Ready,
@@ -46,9 +48,10 @@ protected:
 	void Init(int _Stack);
 
 private:
-	std::shared_ptr<GameEngineCollision> DetectCollision = nullptr;
 	int Stack = 0;
+	float DetectTime = DETECT_TIME;
 	HowlingGaleState State = HowlingGaleState::Ready;
+	std::shared_ptr<GameEngineCollision> DetectCollision = nullptr;
 	GameEngineSoundPlayer HowlingGalePlayer;
 };
 

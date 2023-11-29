@@ -93,3 +93,29 @@ void MapleStoryCore::Release()
 {
 
 }
+
+void MapleStoryCore::ContentWindowCursorOn()
+{
+	CURSORINFO CursorInfo = { sizeof(CursorInfo) };
+	GetCursorInfo(&CursorInfo);
+
+	if (1 == CursorInfo.flags)
+	{
+		return;
+	}
+
+	ShowCursor(TRUE);
+}
+
+void MapleStoryCore::ContentWindowCursorOff()
+{
+	CURSORINFO CursorInfo = { sizeof(CursorInfo) };
+	GetCursorInfo(&CursorInfo);
+
+	if (0 == CursorInfo.flags)
+	{
+		return;
+	}
+
+	ShowCursor(FALSE);
+}

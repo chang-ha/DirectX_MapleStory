@@ -96,7 +96,7 @@ void ClockTowerOfNightMare_3th::LevelStart(GameEngineLevel* _PrevLevel)
 	CreateMonster<BlueEyed_Gargoyle>({ 1100, -1790 });
 	CreateMonster<BlueEyed_Gargoyle>({ 1330, -1713 });
 	CreateMonster<BlueEyed_Gargoyle>({ 1000	, -1963 });
-	CreateMonster<BlueEyed_Gargoyle>({ 750	, -2070 });
+	CreateMonster<BlueEyed_Gargoyle>({ 750	, -2110 });
 	CreateMonster<BlueEyed_Gargoyle>({ 550	, -2188 });
 	CreateMonster<BlueEyed_Gargoyle>({ 800	, -2506 });
 	CreateMonster<BlueEyed_Gargoyle>({ 1200	, -2506 });

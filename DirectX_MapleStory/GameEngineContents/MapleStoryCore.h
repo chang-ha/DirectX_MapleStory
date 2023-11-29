@@ -35,6 +35,9 @@ public:
 	{
 		return { 50, 50 };
 	}
+
+	static void ContentWindowCursorOn();
+	static void ContentWindowCursorOff();
 protected:
 	void Start() override;
 	void Update(float _Delta) override;

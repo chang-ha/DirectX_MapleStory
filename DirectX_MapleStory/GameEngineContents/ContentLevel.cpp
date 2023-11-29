@@ -8,6 +8,7 @@
 #include "RenderActor.h"
 #include "Player.h"
 #include "SkillManager.h"
+#include "MapleStoryCore.h"
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
@@ -55,6 +56,11 @@ void LevelDebug::Start()
 
 void LevelDebug::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	if (true == ImGui::IsWindowFocused(4))
+	{
+		MapleStoryCore::ContentWindowCursorOn();
+	}
+
 	ImGui::Text("CollisionDebug");
 	ImGui::Checkbox("MapCollision", &ContentMap::IsCollisionDebug);
 	ImGui::Checkbox("Collision", &GameEngineLevel::IsDebug);
@@ -102,6 +108,12 @@ void ContentLevel::Start()
 
 void ContentLevel::Update(float _Delta)
 {
+	if (true == GameEngineCore::MainWindow.IsFocus())
+	{
+		MapleStoryCore::ContentWindowCursorOff();
+	}
+
+
 	if ("" != PrevLevel && true == GameEngineInput::IsDown('9', this))
 	{
 		FadeOutObject->SetChangeLevel(PrevLevel);

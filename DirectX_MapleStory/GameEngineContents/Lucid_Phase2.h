@@ -45,7 +45,7 @@ private:
 	void BreakUpdate(float _Delta);
 };
 
-#define Lase_Cooldown 0.7f
+#define Lase_Cooldown 0.5f
 #define Golem_Cooldown 10.0f 
 
 class Lucid_Phase2 : public ContentLevel
