@@ -209,32 +209,32 @@ void ContentActor::CalcuMove(float _Delta)
 		}
 
 		// 이동중 땅을 만나면 멈춤
-		//if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
-		//{
-		//	Transform.AddLocalPosition(MovePos);
-		//	GameEngineColor UpPixel = CheckGroundColor(MovePos + float4::UP);
-		//	GameEngineColor DownPixel = CheckGroundColor(MovePos + float4::DOWN);
-		//	GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
-		//	GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
+		if (false == IsGround && 0.0f == DownYPivot && (GROUND_COLOR == CheckColor || FLOOR_COLOR == CheckColor))
+		{
+			Transform.AddLocalPosition(MovePos);
+			GameEngineColor UpPixel = CheckGroundColor(MovePos + float4::UP);
+			GameEngineColor DownPixel = CheckGroundColor(MovePos + float4::DOWN);
+			GameEngineColor RightPixel = CheckGroundColor(MovePos + float4::RIGHT);
+			GameEngineColor LeftPixel = CheckGroundColor(MovePos + float4::LEFT);
 
-		//	if (false == IsGroundVectorReset)
-		//	{
-		//		break;
-		//	}
+			if (false == IsGroundVectorReset)
+			{
+				break;
+			}
 
-		//	if ((GROUND_COLOR == UpPixel || FLOOR_COLOR == UpPixel) && (GROUND_COLOR == DownPixel || FLOOR_COLOR == DownPixel))
-		//	{
-		//		break;
-		//	}
+			if ((GROUND_COLOR == UpPixel || FLOOR_COLOR == UpPixel) && (GROUND_COLOR == DownPixel || FLOOR_COLOR == DownPixel))
+			{
+				break;
+			}
 
-		//	if ((GROUND_COLOR == RightPixel || FLOOR_COLOR == RightPixel) && (GROUND_COLOR == LeftPixel || FLOOR_COLOR == LeftPixel))
-		//	{
-		//		break;
-		//	}
+			if ((GROUND_COLOR == RightPixel || FLOOR_COLOR == RightPixel) && (GROUND_COLOR == LeftPixel || FLOOR_COLOR == LeftPixel))
+			{
+				break;
+			}
 
-		//	MoveVectorForceReset();
-		//	break;
-		//}
+			MoveVectorForceReset();
+			break;
+		}
 
 		Transform.AddLocalPosition(MovePos);
 	}
