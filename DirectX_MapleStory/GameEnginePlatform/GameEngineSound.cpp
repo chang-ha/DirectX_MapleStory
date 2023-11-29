@@ -30,12 +30,24 @@ void GameEngineSoundPlayer::Stop()
 
 void GameEngineSoundPlayer::Pause()
 {
-	Control->setPaused(true);
+	FMOD_RESULT Result = {};
+	Result = Control->setPaused(true);
+
+	if (FMOD_OK != Result)
+	{
+		int a = 0;
+	}
 }
 
 void GameEngineSoundPlayer::Resume()
 {
-	Control->setPaused(false);
+	FMOD_RESULT Result = {};
+	Result = Control->setPaused(false);
+
+	if (FMOD_OK != Result)
+	{
+		int a = 0;
+	}
 }
 
 bool GameEngineSoundPlayer::IsPlaying()
@@ -82,7 +94,7 @@ public:
 			MsgBoxAssert("사운드 시스템 생성에 실패했습니다.");
 		}
 
-		if (FMOD_RESULT::FMOD_OK != SoundSystem->init(32, FMOD_DEFAULT, nullptr))
+		if (FMOD_RESULT::FMOD_OK != SoundSystem->init(1024, FMOD_DEFAULT, nullptr))
 		{
 			MsgBoxAssert("사운드 시스템 이니셜라이즈에 실패했습니다.");
 		}
@@ -126,23 +138,6 @@ GameEngineSound::~GameEngineSound()
 		SoundHandle->release();
 	}
 }
-
-//
-//void GameEngineSound::Init()
-//{
-//	static bool IsOnce = false;
-//
-//	if (true == IsOnce)
-//	{
-//		return;
-//	}
-//
-//
-//
-//
-//	// Fmod를 사용하기 위한 준비를 하는 함수
-//	IsOnce = true;
-//}
 
 std::shared_ptr<GameEngineSound> GameEngineSound::FindSound(std::string_view _Name)
 {
@@ -227,6 +222,8 @@ FMOD::Channel* GameEngineSound::Play()
 	FMOD::Channel* SoundControl = nullptr;
 
  	SoundSystem->playSound(SoundHandle, nullptr, false, &SoundControl);
+
+	SoundControl->setPriority(256);
 
 	return SoundControl;
 }

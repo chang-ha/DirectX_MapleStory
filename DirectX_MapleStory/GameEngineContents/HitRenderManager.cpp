@@ -179,11 +179,15 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 		{
 			_CurData->HitAnimations[_CurData->CurIndex]->On();
 			_CurData->HitAnimations[_CurData->CurIndex]->GetColorData().MulColor.A = GlobalValue::SkillEffectAlpha;
-			_CurData->HitSoundPlayers[_CurData->CurIndex].Resume();
 			if (false == _CurData->IsPlayer)
 			{
 				_CurData->DamageSkinRenderers[_CurData->CurIndex]->On();
 			}
+			if (nullptr != GameEngineSound::FindSound(_CurData->HitSpriteName + ".mp3"))
+			{
+				_CurData->HitSoundPlayers[_CurData->CurIndex].Resume();
+			}
+
 			_CurData->CurIndex += 1;
 			_CurData->DelayTime = HIT_DELAY;
 		}
