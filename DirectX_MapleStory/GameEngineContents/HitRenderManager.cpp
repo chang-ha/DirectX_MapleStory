@@ -90,7 +90,6 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 	_Data->HitAnimations.resize(_HitCount);
 	_Data->RandomPivot.resize(_HitCount);
 	_Data->DamageSkinRenderers.resize(_HitCount);
-	_Data->HitSoundPlayers.resize(_HitCount);
 
 	for (int i = 0; i < _HitCount; i++)
 	{
@@ -124,6 +123,7 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 
 		if (nullptr != GameEngineSound::FindSound(_Data->HitSpriteName + ".mp3"))
 		{
+			_Data->HitSoundPlayers.resize(_HitCount);
 			_Data->HitSoundPlayers[i] = GameEngineSound::SoundPlay(_Data->HitSpriteName + ".mp3");
 			_Data->HitSoundPlayers[i].SetVolume(GlobalValue::HitVolume);
 			_Data->HitSoundPlayers[i].Pause();
@@ -143,8 +143,13 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 		_Data->DamageSkinRenderers[i]->Transform.AddLocalPosition({0, 25.0f * i});
 		_Data->DamageSkinRenderers[i]->Off();
 
+		if (0 == _BaseActor->GetHP())
+		{
+			continue;
+		}
+
 		float RandomFloat = RandomActor.RandomFloat(0.0f, 1.0f);
-		if (0.5f < RandomFloat)
+		if (0.3f < RandomFloat)
 		{
 			continue;
 		}
@@ -183,7 +188,7 @@ void HitRenderManager::HitPrintUpdate(float _Delta)
 			{
 				_CurData->DamageSkinRenderers[_CurData->CurIndex]->On();
 			}
-			if (nullptr != GameEngineSound::FindSound(_CurData->HitSpriteName + ".mp3"))
+			if (0 != _CurData->HitSoundPlayers.size())
 			{
 				_CurData->HitSoundPlayers[_CurData->CurIndex].Resume();
 			}

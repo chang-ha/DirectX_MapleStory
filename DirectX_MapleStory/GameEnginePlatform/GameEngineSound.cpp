@@ -94,6 +94,7 @@ public:
 			MsgBoxAssert("사운드 시스템 생성에 실패했습니다.");
 		}
 
+		SoundSystem->setSoftwareChannels(1024);
 		if (FMOD_RESULT::FMOD_OK != SoundSystem->init(1024, FMOD_DEFAULT, nullptr))
 		{
 			MsgBoxAssert("사운드 시스템 이니셜라이즈에 실패했습니다.");
@@ -222,8 +223,6 @@ FMOD::Channel* GameEngineSound::Play()
 	FMOD::Channel* SoundControl = nullptr;
 
  	SoundSystem->playSound(SoundHandle, nullptr, false, &SoundControl);
-
-	SoundControl->setPriority(256);
 
 	return SoundControl;
 }
