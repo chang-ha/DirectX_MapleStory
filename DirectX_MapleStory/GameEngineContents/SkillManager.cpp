@@ -129,7 +129,7 @@ void SkillManager::Start()
 		Dir.MoveChild("ContentResources\\Textures\\UI\\QuickSlot\\CoolDownAni");
 		std::vector<GameEngineFile> Directorys = Dir.GetAllFile();
 
-		for (size_t i = 0; i < Directorys.size(); i++)
+		for (size_t i = 0; i < Directorys.size(); i++) 
 		{
 			GameEngineFile& ChildFile = Directorys[i];
 			GameEngineTexture::Load(ChildFile.GetStringPath());
@@ -406,7 +406,7 @@ void SkillManager::QuickSlotCoolDownCreate(int _Key, int _Index_X, int _Index_Y)
 void SkillManager::QuickSlotUpdate(float _Delta)
 {
 	// CurCoolDowm/CoolDown -> 0 ~ 1사이 값
-	// * 16 -> 0 ~ 16사이 값
+	// * 16 -> 0 ~ 16사이 값 (쿨타임 애니메이션이 16프레임)
 	// 16 - 결과값
 	for (std::pair<const std::string, std::shared_ptr<SkillInfo>>& _Pair : AllSkills)
 	{

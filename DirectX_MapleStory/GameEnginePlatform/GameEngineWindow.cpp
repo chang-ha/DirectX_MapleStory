@@ -53,7 +53,9 @@ void GameEngineWindow::Open(const std::string& _Title, HINSTANCE _hInstance)
 		return;
 	}
 
+	// 내가 만들 윈도우창의 설정 등록
 	MyRegisterClass();
+	// 윈도우를 실제로 만드는 함수
 	InitInstance();
 }
 
@@ -80,15 +82,19 @@ void GameEngineWindow::InitInstance()
 
 	// WS_OVERLAPPEDWINDOW
 
+	// 윈도우를 만들기 위해 CreateWindow
 	hWnd = CreateWindowA("DefaultWindow", Title.c_str(), WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, Instance, nullptr);
 
+	// 윈도우를 만드는데 실패했을때 방어코드
 	if (!hWnd)
 	{
 		MsgBoxAssert("윈도우 생성에 실패했습니다.");
 		return;
 	}
 
+	// 윈도우 핸들에서 디바이스 컨텍스트(DC)를 얻어옴
+	// DC-> 디바이스에 그리기 특성에 대한 정보를 포함
 	Hdc = ::GetDC(hWnd);
 
 	WindowBuffer = new GameEngineWindowTexture();
@@ -144,6 +150,7 @@ LRESULT CALLBACK GameEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wPara
 
 void GameEngineWindow::MyRegisterClass()
 {
+	// 윈도우 등록을 한번만 하기 위해 static bool값 으로 체크
 	static bool Check = false;
 
 	if (true == Check)
@@ -155,7 +162,7 @@ void GameEngineWindow::MyRegisterClass()
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	// LRESULT(CALLBACK* WNDPROC)(HWND, unsigned int, unsigned int, unsigned int);
-	wcex.lpfnWndProc = GameEngineWindow::WndProc;
+	wcex.lpfnWndProc = GameEngineWindow::WndProc; // 창 프로시저 함수의 포인터
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
 	wcex.hInstance = Instance;
