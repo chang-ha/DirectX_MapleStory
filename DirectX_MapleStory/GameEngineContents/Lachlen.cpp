@@ -13,6 +13,7 @@
 #include "ContentNpc.h"
 #include "ReleaseFunction.h"
 #include "DamageSkinManager.h"
+#include "TestMonster.h"
 
 Lachlen::Lachlen()
 {
@@ -122,10 +123,13 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		else
 		{
-			CurPlayer->Transform.SetLocalPosition(float4(3500, -817));
-			GetMainCamera()->Transform.SetLocalPosition(float4(3500, -817, -100000));
+			CurPlayer->Transform.SetLocalPosition(float4(1000, -817));
+			GetMainCamera()->Transform.SetLocalPosition(float4(1000, -817, -100000));
 		}
 	}
+
+	std::shared_ptr<TestMonster> _TestMonster = CreateActor<TestMonster>(UpdateOrder::Monster);
+	_TestMonster->Transform.SetLocalPosition({ 500, -817 });
 
 	std::shared_ptr<GameEngineFrameAnimation> _Animation = nullptr;
 	std::shared_ptr<RenderActor> _Actor = nullptr;
@@ -372,7 +376,6 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 	_Npc->Transform.SetLocalPosition({ 980, -500 });
 	_Npc->Init("DandyMask", "멋쟁이가면", ActorDir::Right, 0.18f);
 	_Npc->CreateOneButtonMent("Npc_Ok");
-	_Npc->SetMentText(L"당신의 소중한 물건, 안전하게 지켜드립니다~");
 
 	Minimap::CreateMinimap("Minimap_Lachlen.png", "레헬른 중심가");
 

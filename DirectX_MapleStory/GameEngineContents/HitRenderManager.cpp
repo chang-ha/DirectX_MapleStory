@@ -149,7 +149,7 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 		}
 
 		float RandomFloat = RandomActor.RandomFloat(0.0f, 1.0f);
-		if (0.3f < RandomFloat)
+		if (0.5f < RandomFloat)
 		{
 			continue;
 		}
