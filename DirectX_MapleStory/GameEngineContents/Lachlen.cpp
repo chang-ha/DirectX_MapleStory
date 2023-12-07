@@ -379,9 +379,7 @@ void Lachlen::LevelStart(GameEngineLevel* _PrevLevel)
 
 	Minimap::CreateMinimap("Minimap_Lachlen.png", "레헬른 중심가");
 
-	//test
 	CreateActor<DamageSkinManager>();
-	///
 
 	if (false == BGMPlayer.IsPlaying())
 	{

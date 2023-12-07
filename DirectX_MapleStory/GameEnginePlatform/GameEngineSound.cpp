@@ -32,22 +32,12 @@ void GameEngineSoundPlayer::Pause()
 {
 	FMOD_RESULT Result = {};
 	Result = Control->setPaused(true);
-
-	if (FMOD_OK != Result)
-	{
-		int a = 0;
-	}
 }
 
 void GameEngineSoundPlayer::Resume()
 {
 	FMOD_RESULT Result = {};
 	Result = Control->setPaused(false);
-
-	if (FMOD_OK != Result)
-	{
-		int a = 0;
-	}
 }
 
 bool GameEngineSoundPlayer::IsPlaying()
