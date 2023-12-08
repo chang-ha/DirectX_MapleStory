@@ -11,6 +11,7 @@ enum class WindState
 class BaseWindActor : public GameEngineActor
 {
 public:
+	static bool IsCreateWind;
 	// constructer destructer
 	BaseWindActor();
 	~BaseWindActor();

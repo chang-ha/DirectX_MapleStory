@@ -10,6 +10,8 @@
 #define DETECT_XRANGE 1500
 #define DETECT_YRANGE 1000
 
+bool BaseWindActor::IsCreateWind = true;
+
 BaseWindActor::BaseWindActor()
 {
 
@@ -22,6 +24,11 @@ BaseWindActor::~BaseWindActor()
 
 void BaseWindActor::CreateTriflingWind()
 {
+	if (false == IsCreateWind)
+	{
+		return;
+	}
+
 	std::shared_ptr<BaseWindActor> _Wind = ContentLevel::CurContentLevel->CreateActor<BaseWindActor>(UpdateOrder::Skill);
 
 	GameEngineRandom Random;

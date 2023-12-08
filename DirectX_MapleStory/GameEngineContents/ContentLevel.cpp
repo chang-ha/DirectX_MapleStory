@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "SkillManager.h"
 #include "MapleStoryCore.h"
+#include "BaseWindActor.h"
 
 void FlowObject::Init(std::string_view _SpriteName, float _ObjectSpeed, const float4& _StartPos, const float4& _EndPos)
 {
@@ -78,6 +79,8 @@ void LevelDebug::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		return;
 	}
 
+	ImGui::Text("PlayerDebug");
+	ImGui::Checkbox("CreateWind", &BaseWindActor::IsCreateWind);
 	if (true == ImGui::Button("SkillCoolDowmReset", { 150, 20 }))
 	{
 		Player::MainPlayer->GetSkillManager()->ResetAllSkillCoolDown();
