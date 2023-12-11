@@ -10,7 +10,7 @@
 #define DETECT_XRANGE 1500
 #define DETECT_YRANGE 1000
 
-bool BaseWindActor::IsCreateWind = true;
+bool BaseWindActor::IsCreateWind = false;
 
 BaseWindActor::BaseWindActor()
 {

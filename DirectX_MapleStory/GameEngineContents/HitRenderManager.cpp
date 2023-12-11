@@ -96,7 +96,7 @@ void HitRenderManager::HitPrint(std::string_view _HitSpriteName, int _HitCount, 
 		/// Hit Ani
 		std::shared_ptr<GameEngineSpriteRenderer> _HitAnimation = CreateComponent<GameEngineSpriteRenderer>(RenderOrder::HITANI);
 
-		RandomActor.SetSeed(reinterpret_cast<long long>(_BaseActor) + time(nullptr) + i);
+		RandomActor.SetSeed(reinterpret_cast<long long>(_HitAnimation.get()) + time(nullptr) + i);
 		if (true == _RandomPivot)
 		{
 			float4 RandomValue = RandomActor.RandomVectorBox2D(-RANDOMRANGE, RANDOMRANGE, -RANDOMRANGE, RANDOMRANGE);
