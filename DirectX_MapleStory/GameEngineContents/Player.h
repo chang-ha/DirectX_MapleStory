@@ -16,20 +16,20 @@
 
 enum PlayerState
 {
-	Null = 0b0000000000000000, // StartValue
-	Idle = 0b0000000000000001,
-	Alert = 0b0000000000000010,
-	Walk = 0b0000000000000100,
-	Jump = 0b0000000000001000,
-	Down = 0b0000000000010000,
-	Ladder = 0b0000000000100000,
-	SongOfHeaven = 0b0000000010000000,
-	FairySpiral = 0b0000000100000000,
-	WindWalk = 0b0000001000000000,
-	HowlingGale = 0b0000010000000000,
-	VortexSphere = 0b0000100000000000,
-	MercilessWinds = 0b0001000000000000,
-	Monsoon = 0b0010000000000000,
+	Null = 0, // StartValue
+	Idle = 1 << 0,
+	Alert = 1 << 1,
+	Walk = 1 << 2,
+	Jump = 1 << 3,
+	Down = 1 << 4,
+	Ladder = 1 << 5,
+	SongOfHeaven = 1 << 6,
+	FairySpiral = 1 << 7,
+	WindWalk = 1 << 8,
+	HowlingGale = 1 << 9,
+	VortexSphere = 1 << 10,
+	MercilessWinds = 1 << 11,
+	Monsoon = 1 << 12,
 };
 
 #include "ContentActor.h"
