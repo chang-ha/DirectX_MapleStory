@@ -26,7 +26,7 @@ SkillManager::SkillManager()
 
 SkillManager::~SkillManager()
 {
-
+	Release();
 }
 
 void SkillManager::UseSkill(std::string_view _SkillName)

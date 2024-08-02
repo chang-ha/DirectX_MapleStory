@@ -154,7 +154,7 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> NameBGRenderer = nullptr;
 	std::shared_ptr<class SkillManager> SkillManagerActor = nullptr;
 	std::shared_ptr<class DamageSkinManager> DamageSkinManagerActor = nullptr;
-	std::shared_ptr<class PlayerUIManager> UIManager;
+	std::shared_ptr<class PlayerUIManager> UIManager = nullptr;
 
 	GameEngineSoundPlayer CharPlayer;
 
