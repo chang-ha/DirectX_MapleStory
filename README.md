@@ -1,5 +1,5 @@
 # DirectX_2D MapleStory 모작
-해당 팀프로젝트는 DirectX_2D 공부 목적으로 만든 프로젝트입니다.  
+해당 프로젝트는 DirectX_2D 공부 목적으로 만든 프로젝트입니다.  
 
     모작 게임 : MapleStory
     참여 인원 : 1명
