@@ -139,7 +139,7 @@ private:
 	float Speed = 200.0f;
 	float AirSpeed = 200.0f;
 	float JumpAirSpeed = 30.0f;
-	float CameraSpeed = 2.0f;
+	float CameraSpeed = 4.0f;
 	float LadderPivot = 0.0f;
 	float AlertTime = 0.0f;
 	

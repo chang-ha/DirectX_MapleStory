@@ -1,13 +1,32 @@
 # DirectX_2D MapleStory 모작
-해당 팀프로젝트는 DirectX_2D 공부 목적으로 만든 프로젝트입니다.  
+해당 프로젝트는 DirectX_2D 공부 목적으로 만든 프로젝트입니다.  
 
     모작 게임 : MapleStory
     참여 인원 : 1명
     개발 기간 : 약 3개월
 
 ## 실행전 주의사항
-1. #### 프로젝트 실행전에 `Maplestory Light.ttf`, `Maplestory Bold.ttf` 파일을 실행해서 폰트를 설치해 주세요. 
-1. #### `Maple` 프로젝트를 시작 프로젝트로 설정해 주세요.
+1. #### 프로젝트 실행전에 프로젝트 폴더의 `Maplestory Light.ttf`, `Maplestory Bold.ttf` 파일을 실행해서 폰트를 설치해 주세요. 
+2. #### `Maple` 프로젝트를 시작 프로젝트로 설정해 주세요.
+
+### 조작키
+
+|가상키|역할|
+|:---:|:---:|
+|W,A,S,D|상,하,좌,우 이동키|
+|D|Player 점프|
+|D + D or 공중에서 D|더블 점프|
+|Q|Player 포션 사용|
+|Space|Player 이동스킬1|
+|Shift|Player 공격스킬1|
+|W|Player 공격스킬2|
+|R|Player 공격스킬3|
+|A 키 다운|Player 공격스킬4|
+|E|Player 공격스킬5|
+|S|Player 공격스킬6|
+|F|Player 공격스킬7|
+
+***
 
 ### Thrid Party
 * [FMOD Core API 2.02][FMOD]
